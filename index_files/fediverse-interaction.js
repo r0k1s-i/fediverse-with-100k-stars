@@ -2,13 +2,17 @@ var fediverseInteraction = {
     mouse: new THREE.Vector2(),
     raycaster: new THREE.Raycaster(),
     intersected: null,
-    baseThreshold: 100.0
+    baseThreshold: 100.0,
+    clickHandled: false,
+    lastClickTime: 0
 };
 
 function getInteractionThreshold() {
     if (typeof camera === 'undefined') return fediverseInteraction.baseThreshold;
     var z = camera.position.z;
-    return Math.max(fediverseInteraction.baseThreshold, z * 0.15);
+    // Reduced from 0.15 to 0.025 to prevent "black hole" effect at origin when zoomed out
+    // 0.025 corresponds to roughly 3% of screen height (approx 30px on 1080p)
+    return Math.max(fediverseInteraction.baseThreshold, z * 0.025);
 }
 
 function initFediverseInteraction() {
@@ -18,7 +22,7 @@ function initFediverseInteraction() {
     }
     
     document.addEventListener('mousemove', onFediverseMouseMove, false);
-    document.addEventListener('click', onFediverseClick, false);
+    document.addEventListener('click', onFediverseClick, true);
 }
 
 function onFediverseMouseMove(event) {
@@ -71,7 +75,7 @@ function handleHover(object) {
         
         if (object) {
             $starName.html("<span>" + object.name + "</span>");
-            $starName.show();
+            $starName.css('opacity', 1.0).show();
             document.body.style.cursor = 'pointer';
         } else {
             $starName.hide();
@@ -87,11 +91,104 @@ function handleHover(object) {
     }
 }
 
-function onFediverseClick(event) {
-    if (fediverseInteraction.intersected) {
-        var data = fediverseInteraction.intersected.instanceData || fediverseInteraction.intersected;
-        showInstanceDetails(data);
+function isClickOnUI(event) {
+    var target = event.target;
+    while (target && target !== document.body) {
+        var id = target.id || '';
+        var className = target.className || '';
+        if (id === 'detailContainer' || 
+            id === 'detailTitle' ||
+            id === 'detailBody' ||
+            id === 'detailClose' ||
+            id === 'ex-out' || 
+            id === 'zoom-back' ||
+            id === 'icon-nav' ||
+            id === 'css-container' ||
+            id === 'css-camera' ||
+            id === 'minimap' ||
+            id === 'about' ||
+            className.indexOf('marker') !== -1 ||
+            className.indexOf('legacy-marker') !== -1) {
+            return true;
+        }
+        target = target.parentNode;
     }
+    return false;
+}
+
+function onFediverseClick(event) {
+    if (!enableFediverse) return;
+    
+    if (isClickOnUI(event)) return;
+    
+    var now = Date.now();
+    if (now - fediverseInteraction.lastClickTime < 300) return;
+    fediverseInteraction.lastClickTime = now;
+    
+    if (!fediverseInteraction.intersected) return;
+    
+    event.stopPropagation();
+    event.preventDefault();
+    
+    var data = fediverseInteraction.intersected.instanceData || fediverseInteraction.intersected;
+    if (!data || !data.position) return;
+    
+    var position = new THREE.Vector3(
+        data.position.x,
+        data.position.y,
+        data.position.z
+    );
+    
+    if (position.length() > 0.001) {
+        if (typeof window.showSunButton === 'function') {
+            window.showSunButton();
+        }
+    } else {
+        if (typeof window.hideSunButton === 'function') {
+            window.hideSunButton();
+        }
+    }
+    
+    if (typeof window.setMinimap === 'function') {
+        window.setMinimap(true);
+    }
+    
+    var userCount = data.stats ? data.stats.user_count : 1;
+    var instanceSize = Math.max(15.0, Math.log(userCount + 1) * 8);
+    
+    var MIN_STAR_SCALE = 0.5;
+    var modelScale = Math.max(MIN_STAR_SCALE, instanceSize * 0.05);
+    var zoomLevel = modelScale * 3.0;
+    
+    if (typeof starModel !== 'undefined' && typeof enableStarModel !== 'undefined' && enableStarModel) {
+        starModel.position.copy(position);
+        
+        var spectralIndex = 0.5;
+        if (data.color && data.color.hsl) {
+            spectralIndex = data.color.hsl.h / 360;
+        }
+        starModel.setSpectralIndex(spectralIndex);
+        starModel.setScale(modelScale);
+        starModel.randomizeSolarFlare();
+    }
+    
+    var offset = new THREE.Vector3(0, 0, 0);
+    if (typeof getOffsetByStarRadius === 'function') {
+        offset = getOffsetByStarRadius(modelScale);
+    }
+    var targetPosition = position.clone().add(offset);
+    
+    if (typeof centerOn === 'function') {
+        centerOn(targetPosition);
+    }
+    
+    if (typeof zoomIn === 'function') {
+        zoomIn(zoomLevel);
+    }
+    
+    $starName.find('span').html(data.domain);
+    
+    showInstanceDetails(data);
 }
 
 function showInstanceDetails(data) {
