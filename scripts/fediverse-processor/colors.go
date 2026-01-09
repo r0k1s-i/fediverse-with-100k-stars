@@ -125,26 +125,69 @@ func CalculateColor(instance *Instance, cfg Config) *Color {
 
 	ageDays := getAgeDays(createdAt)
 	maxAgeDays := getMaxAgeDays(cfg)
-	ageNorm := logNormalize(ageDays, maxAgeDays)
+	// Use linear normalization for age (not logarithmic)
+	// This ensures young instances are truly young on the spectrum
+	ageNormRaw := math.Min(ageDays/maxAgeDays, 1.0)
+	// Invert: old instances (high ageNormRaw) become low, young instances (low ageNormRaw) become high
+	ageNorm := 1.0 - ageNormRaw
 
-	hue := cfg.HueYoung - (ageNorm * (cfg.HueYoung - cfg.HueOld))
+	// Map age to hue: young (ageNorm=1) → HueYoung (240°), old (ageNorm=0) → HueOld (0°)
+	hue := cfg.HueOld + (ageNorm * (cfg.HueYoung - cfg.HueOld))
 
+	// Apply era offset and domain hash perturbation
+	// For very low hues (red, near 0°), we need to constrain adjustments to avoid wrapping to 330°+
+	eraOffset := getEraOffset(createdAt, cfg)
 	hashValue := domainHash(instance.Domain)
 	perturbation := (hashValue - 0.5) * 2 * cfg.DomainHashRange
-	hue += perturbation
+	
+	// For red hues (low values < 60°), we need to constrain the total adjustment
+	// to keep the result in the [0, 60°) range and avoid wrapping to 300°+
+	if hue < 60.0 {
+		// Red zone - clamp total adjustment to keep in [0, 60°)
+		maxPositiveAdjustment := 60.0 - hue
+		maxNegativeAdjustment := hue - 0.0
+		totalAdjustment := eraOffset + perturbation
+		
+		if totalAdjustment > maxPositiveAdjustment {
+			totalAdjustment = maxPositiveAdjustment
+		}
+		if totalAdjustment < -maxNegativeAdjustment {
+			totalAdjustment = -maxNegativeAdjustment
+		}
+		
+		hue += totalAdjustment
+	} else {
+		// Not in red zone, apply normally
+		hue += eraOffset
+		hue += perturbation
+		
+		// Normalize to [0, 360) range
+		hue = math.Mod(hue, 360.0)
+		if hue < 0 {
+			hue += 360.0
+		}
+	}
 
-	eraOffset := getEraOffset(createdAt, cfg)
-	hue += eraOffset
-
-	hue = math.Mod(math.Mod(hue, 360)+360, 360)
-
+	// Calculate saturation based on user count (logarithmic scaling with diminishing returns)
 	userCount := 0
 	if instance.Stats != nil {
 		userCount = instance.Stats.UserCount
 	}
-	userNorm := logNormalize(float64(userCount), float64(cfg.MaxUserCount))
-	saturation := cfg.SaturationMin + (userNorm * (cfg.SaturationMax - cfg.SaturationMin))
+	// Use (userCount-1) to ensure that 1 user gives saturation = SaturationMin
+	userNorm := logNormalize(float64(userCount-1), float64(cfg.MaxUserCount))
+	// Apply square root to userNorm for diminishing returns
+	// This ensures that the increase from 100->1000 users is larger than 1000->10000
+	userNormDiminishing := math.Sqrt(userNorm)
+	saturation := cfg.SaturationMin + (userNormDiminishing * (cfg.SaturationMax - cfg.SaturationMin))
+	// Clamp saturation to configured range
+	if saturation > cfg.SaturationMax {
+		saturation = cfg.SaturationMax
+	}
+	if saturation < cfg.SaturationMin {
+		saturation = cfg.SaturationMin
+	}
 
+	// Calculate lightness based on activity ratio
 	mau := 0
 	totalUsers := 1
 	if instance.Stats != nil {
@@ -155,6 +198,13 @@ func CalculateColor(instance *Instance, cfg Config) *Color {
 	}
 	activityRatio := math.Min(float64(mau)/float64(totalUsers), 1)
 	lightness := cfg.LightnessMin + (activityRatio * (cfg.LightnessMax - cfg.LightnessMin))
+	// Clamp lightness to [0, 100]
+	if lightness > 100 {
+		lightness = 100
+	}
+	if lightness < 0 {
+		lightness = 0
+	}
 
 	rgb := hslToRGB(hue, saturation, lightness)
 	hexColor := rgbToHex(rgb)

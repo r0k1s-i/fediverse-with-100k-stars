@@ -1522,12 +1522,7 @@
       "monthly_active_users": 1651
     },
     "first_seen_at": "2022-11-03T09:01:41.000000Z",
-    "last_seen_at": "2026-01-08T14:00:47.000000Z",
-    "creation_time": {
-      "created_at": "2022-11-03T09:01:41.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    }
+    "last_seen_at": "2026-01-08T14:00:47.000000Z"
   },
   {
     "id": 66445,
@@ -1552,12 +1547,7 @@
       "monthly_active_users": 2509
     },
     "first_seen_at": "2023-06-05T16:30:06.000000Z",
-    "last_seen_at": "2026-01-08T14:01:19.000000Z",
-    "creation_time": {
-      "created_at": "2023-06-05T16:30:06.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    }
+    "last_seen_at": "2026-01-08T14:01:19.000000Z"
   },
   {
     "id": 49780,
@@ -1582,12 +1572,7 @@
       "monthly_active_users": 825
     },
     "first_seen_at": "2023-01-10T11:02:38.000000Z",
-    "last_seen_at": "2026-01-08T15:01:08.000000Z",
-    "creation_time": {
-      "created_at": "2023-01-10T11:02:38.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    }
+    "last_seen_at": "2026-01-08T15:01:08.000000Z"
   },
   {
     "id": 143261,
@@ -1612,12 +1597,7 @@
       "monthly_active_users": 2409
     },
     "first_seen_at": "2024-11-06T08:33:13.000000Z",
-    "last_seen_at": "2026-01-08T16:26:56.000000Z",
-    "creation_time": {
-      "created_at": "2024-11-06T08:33:13.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    }
+    "last_seen_at": "2026-01-08T16:26:56.000000Z"
   },
   {
     "id": 31624,
@@ -1642,12 +1622,7 @@
       "monthly_active_users": 1853
     },
     "first_seen_at": "2022-11-12T13:30:25.000000Z",
-    "last_seen_at": "2026-01-08T16:15:38.000000Z",
-    "creation_time": {
-      "created_at": "2022-11-12T13:30:25.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    }
+    "last_seen_at": "2026-01-08T16:15:38.000000Z"
   },
   {
     "id": 155136,
@@ -1672,12 +1647,7 @@
       "monthly_active_users": 400
     },
     "first_seen_at": "2025-02-11T02:15:32.000000Z",
-    "last_seen_at": "2026-01-08T18:02:07.000000Z",
-    "creation_time": {
-      "created_at": "2025-02-11T02:15:32.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    }
+    "last_seen_at": "2026-01-08T18:02:07.000000Z"
   },
   {
     "id": 10472,
@@ -1702,12 +1672,7 @@
       "monthly_active_users": 1695
     },
     "first_seen_at": "2021-03-21T06:52:20.000000Z",
-    "last_seen_at": "2026-01-08T12:05:18.000000Z",
-    "creation_time": {
-      "created_at": "2021-03-21T06:52:20.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    }
+    "last_seen_at": "2026-01-08T12:05:18.000000Z"
   },
   {
     "id": 17912,
@@ -1732,12 +1697,7 @@
       "monthly_active_users": 697
     },
     "first_seen_at": "2021-03-30T20:10:43.000000Z",
-    "last_seen_at": "2026-01-08T10:00:37.000000Z",
-    "creation_time": {
-      "created_at": "2021-03-30T20:10:43.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    }
+    "last_seen_at": "2026-01-08T10:00:37.000000Z"
   },
   {
     "id": 17945,
@@ -1762,12 +1722,7 @@
       "monthly_active_users": 0
     },
     "first_seen_at": "2021-03-21T07:02:57.000000Z",
-    "last_seen_at": "2026-01-08T07:00:46.000000Z",
-    "creation_time": {
-      "created_at": "2021-03-21T07:02:57.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    }
+    "last_seen_at": "2026-01-08T07:00:46.000000Z"
   },
   {
     "id": 15725,
@@ -1792,12 +1747,7 @@
       "monthly_active_users": 1157
     },
     "first_seen_at": "2021-03-21T06:59:35.000000Z",
-    "last_seen_at": "2026-01-08T06:00:42.000000Z",
-    "creation_time": {
-      "created_at": "2021-03-21T06:59:35.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    }
+    "last_seen_at": "2026-01-08T06:00:42.000000Z"
   },
   {
     "id": 23804,
@@ -1822,12 +1772,7 @@
       "monthly_active_users": 448
     },
     "first_seen_at": "2022-04-27T21:01:55.000000Z",
-    "last_seen_at": "2026-01-08T08:22:49.000000Z",
-    "creation_time": {
-      "created_at": "2022-04-27T21:01:55.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    }
+    "last_seen_at": "2026-01-08T08:22:49.000000Z"
   },
   {
     "id": 87959,
@@ -1852,12 +1797,7 @@
       "monthly_active_users": 144
     },
     "first_seen_at": "2024-09-23T18:02:48.000000Z",
-    "last_seen_at": "2026-01-08T14:02:37.000000Z",
-    "creation_time": {
-      "created_at": "2024-09-23T18:02:48.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    }
+    "last_seen_at": "2026-01-08T14:02:37.000000Z"
   },
   {
     "id": 27050,
@@ -1882,12 +1822,7 @@
       "monthly_active_users": 963
     },
     "first_seen_at": "2022-10-14T22:01:59.000000Z",
-    "last_seen_at": "2026-01-08T13:00:34.000000Z",
-    "creation_time": {
-      "created_at": "2022-10-14T22:01:59.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    }
+    "last_seen_at": "2026-01-08T13:00:34.000000Z"
   },
   {
     "id": 46470,
@@ -1912,12 +1847,7 @@
       "monthly_active_users": 177
     },
     "first_seen_at": "2022-12-16T01:00:18.000000Z",
-    "last_seen_at": "2026-01-08T09:04:52.000000Z",
-    "creation_time": {
-      "created_at": "2022-12-16T01:00:18.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    }
+    "last_seen_at": "2026-01-08T09:04:52.000000Z"
   },
   {
     "id": 32162,
@@ -1942,12 +1872,7 @@
       "monthly_active_users": 813
     },
     "first_seen_at": "2022-11-14T15:02:19.000000Z",
-    "last_seen_at": "2026-01-08T14:00:55.000000Z",
-    "creation_time": {
-      "created_at": "2022-11-14T15:02:19.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    }
+    "last_seen_at": "2026-01-08T14:00:55.000000Z"
   },
   {
     "id": 16467,
@@ -1972,12 +1897,7 @@
       "monthly_active_users": 1988
     },
     "first_seen_at": "2021-03-21T07:00:46.000000Z",
-    "last_seen_at": "2026-01-08T12:11:18.000000Z",
-    "creation_time": {
-      "created_at": "2021-03-21T07:00:46.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    }
+    "last_seen_at": "2026-01-08T12:11:18.000000Z"
   },
   {
     "id": 81614,
@@ -2002,12 +1922,7 @@
       "monthly_active_users": 1857
     },
     "first_seen_at": "2023-12-09T06:10:02.000000Z",
-    "last_seen_at": "2026-01-08T18:01:22.000000Z",
-    "creation_time": {
-      "created_at": "2023-12-09T06:10:02.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    }
+    "last_seen_at": "2026-01-08T18:01:22.000000Z"
   },
   {
     "id": 24308,
@@ -2032,12 +1947,7 @@
       "monthly_active_users": 1787
     },
     "first_seen_at": "2022-05-02T22:07:55.000000Z",
-    "last_seen_at": "2026-01-08T07:00:58.000000Z",
-    "creation_time": {
-      "created_at": "2022-05-02T22:07:55.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    }
+    "last_seen_at": "2026-01-08T07:00:58.000000Z"
   },
   {
     "id": 18010,
@@ -2062,12 +1972,7 @@
       "monthly_active_users": 3228
     },
     "first_seen_at": "2021-03-21T07:03:03.000000Z",
-    "last_seen_at": "2026-01-08T07:00:47.000000Z",
-    "creation_time": {
-      "created_at": "2021-03-21T07:03:03.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    }
+    "last_seen_at": "2026-01-08T07:00:47.000000Z"
   },
   {
     "id": 25409,
@@ -2092,12 +1997,7 @@
       "monthly_active_users": 2670
     },
     "first_seen_at": "2022-06-16T02:01:15.000000Z",
-    "last_seen_at": "2026-01-08T08:23:15.000000Z",
-    "creation_time": {
-      "created_at": "2022-06-16T02:01:15.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    }
+    "last_seen_at": "2026-01-08T08:23:15.000000Z"
   },
   {
     "id": 19562,
@@ -2122,12 +2022,7 @@
       "monthly_active_users": 224
     },
     "first_seen_at": "2021-07-08T19:46:42.000000Z",
-    "last_seen_at": "2026-01-08T11:00:31.000000Z",
-    "creation_time": {
-      "created_at": "2021-07-08T19:46:42.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    }
+    "last_seen_at": "2026-01-08T11:00:31.000000Z"
   },
   {
     "id": 18018,
@@ -2152,12 +2047,7 @@
       "monthly_active_users": 3645
     },
     "first_seen_at": "2021-03-21T07:03:03.000000Z",
-    "last_seen_at": "2026-01-08T08:21:01.000000Z",
-    "creation_time": {
-      "created_at": "2021-03-21T07:03:03.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    }
+    "last_seen_at": "2026-01-08T08:21:01.000000Z"
   },
   {
     "id": 17520,
@@ -2182,12 +2072,7 @@
       "monthly_active_users": 2973
     },
     "first_seen_at": "2021-03-21T07:02:21.000000Z",
-    "last_seen_at": "2026-01-09T06:02:42.000000Z",
-    "creation_time": {
-      "created_at": "2021-03-21T07:02:21.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    }
+    "last_seen_at": "2026-01-09T06:02:42.000000Z"
   },
   {
     "id": 157000,
@@ -2212,12 +2097,7 @@
       "monthly_active_users": null
     },
     "first_seen_at": "2025-03-17T05:23:33.000000Z",
-    "last_seen_at": "2026-01-09T01:01:35.000000Z",
-    "creation_time": {
-      "created_at": "2025-03-17T05:23:33.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    }
+    "last_seen_at": "2026-01-09T01:01:35.000000Z"
   },
   {
     "id": 12319,
@@ -2242,12 +2122,7 @@
       "monthly_active_users": 1410
     },
     "first_seen_at": "2021-03-21T06:54:58.000000Z",
-    "last_seen_at": "2026-01-09T05:22:00.000000Z",
-    "creation_time": {
-      "created_at": "2021-03-21T06:54:58.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    }
+    "last_seen_at": "2026-01-09T05:22:00.000000Z"
   },
   {
     "id": 18699,
@@ -2272,12 +2147,7 @@
       "monthly_active_users": 487
     },
     "first_seen_at": "2021-05-21T01:56:03.000000Z",
-    "last_seen_at": "2026-01-08T08:21:11.000000Z",
-    "creation_time": {
-      "created_at": "2021-05-21T01:56:03.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    }
+    "last_seen_at": "2026-01-08T08:21:11.000000Z"
   },
   {
     "id": 17971,
@@ -2302,12 +2172,7 @@
       "monthly_active_users": 699
     },
     "first_seen_at": "2021-03-21T07:03:00.000000Z",
-    "last_seen_at": "2026-01-08T10:00:37.000000Z",
-    "creation_time": {
-      "created_at": "2021-03-21T07:03:00.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    }
+    "last_seen_at": "2026-01-08T10:00:37.000000Z"
   },
   {
     "id": 16856,
@@ -2332,12 +2197,7 @@
       "monthly_active_users": 1460
     },
     "first_seen_at": "2021-03-21T07:01:20.000000Z",
-    "last_seen_at": "2026-01-09T06:02:14.000000Z",
-    "creation_time": {
-      "created_at": "2021-03-21T07:01:20.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    }
+    "last_seen_at": "2026-01-09T06:02:14.000000Z"
   },
   {
     "id": 24471,
@@ -2362,12 +2222,7 @@
       "monthly_active_users": 255
     },
     "first_seen_at": "2022-05-05T21:01:42.000000Z",
-    "last_seen_at": "2026-01-08T16:10:44.000000Z",
-    "creation_time": {
-      "created_at": "2022-05-05T21:01:42.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    }
+    "last_seen_at": "2026-01-08T16:10:44.000000Z"
   },
   {
     "id": 150707,
@@ -2392,1111 +2247,6 @@
       "monthly_active_users": null
     },
     "first_seen_at": "2024-11-15T15:29:26.000000Z",
-    "last_seen_at": "2026-01-08T13:03:41.000000Z",
-    "creation_time": {
-      "created_at": "2024-11-15T15:29:26.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    }
-  },
-  {
-    "id": 27722,
-    "domain": "newsie.social",
-    "open_registration": false,
-    "description": "A large and professionally administered Mastodon server that hosts a large number of journalists and news outlets. Content focuses heavily on news and current events. #newstodon",
-    "banner_url": "https://fedidb.pixelcdn.net/instances/27722/dywytytd_thumbnail.png",
-    "location": {
-      "city": null,
-      "country": null
-    },
-    "software": {
-      "id": 2,
-      "name": "Mastodon",
-      "url": "https://fedidb.org/software/mastodon",
-      "version": "4.5.4",
-      "slug": "mastodon"
-    },
-    "stats": {
-      "status_count": 1553441,
-      "user_count": 20727,
-      "monthly_active_users": 595
-    },
-    "first_seen_at": "2022-11-01T08:01:28.000000Z",
-    "last_seen_at": "2026-01-08T09:02:07.000000Z",
-    "creation_time": {
-      "created_at": "2022-11-01T08:01:28.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    }
-  },
-  {
-    "id": 15709,
-    "domain": "pixelfed.tokyo",
-    "open_registration": true,
-    "description": "Pixelfed.Tokyoは東京にサーバーを置くPixefedサーバーです。自由でオープンなイメージシェアの場を広く提供する目的で維持・管理されています。\nPixelfed.Tokyo is a Pixelfed server located in Tokyo, Japan. It is maintained with the aim of providing a free and open forum for image sharing.",
-    "banner_url": "https://fedidb.pixelcdn.net/instances/15709/ahainoqu_thumbnail.jpg",
-    "location": {
-      "city": null,
-      "country": null
-    },
-    "software": {
-      "id": 1,
-      "name": "Pixelfed",
-      "url": "https://fedidb.org/software/pixelfed",
-      "version": "0.12.6",
-      "slug": "pixelfed"
-    },
-    "stats": {
-      "status_count": 384823,
-      "user_count": 20647,
-      "monthly_active_users": 470
-    },
-    "first_seen_at": "2021-03-21T06:59:34.000000Z",
-    "last_seen_at": "2026-01-09T06:01:32.000000Z",
-    "creation_time": {
-      "created_at": "2021-03-21T06:59:34.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    }
-  },
-  {
-    "id": 17616,
-    "domain": "sushi.ski",
-    "open_registration": true,
-    "description": null,
-    "banner_url": null,
-    "location": {
-      "city": null,
-      "country": null
-    },
-    "software": {
-      "id": 12,
-      "name": "Misskey",
-      "url": "https://fedidb.org/software/misskey",
-      "version": "2025.9.0",
-      "slug": "misskey"
-    },
-    "stats": {
-      "status_count": 10109322,
-      "user_count": 19576,
-      "monthly_active_users": 825
-    },
-    "first_seen_at": "2021-03-21T07:02:29.000000Z",
-    "last_seen_at": "2026-01-09T06:02:43.000000Z",
-    "creation_time": {
-      "created_at": "2021-03-21T07:02:29.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    }
-  },
-  {
-    "id": 66715,
-    "domain": "lemmy.dbzer0.com",
-    "open_registration": true,
-    "description": null,
-    "banner_url": null,
-    "location": {
-      "city": null,
-      "country": "France"
-    },
-    "software": {
-      "id": 59,
-      "name": "Lemmy",
-      "url": "https://fedidb.org/software/lemmy",
-      "version": "0.19.15",
-      "slug": "lemmy"
-    },
-    "stats": {
-      "status_count": 55473,
-      "user_count": 19165,
-      "monthly_active_users": 1412
-    },
-    "first_seen_at": "2023-06-17T21:31:46.000000Z",
-    "last_seen_at": "2026-01-08T15:02:29.000000Z",
-    "creation_time": {
-      "created_at": "2023-06-17T21:31:46.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    }
-  },
-  {
-    "id": 17094,
-    "domain": "nrw.social",
-    "open_registration": true,
-    "description": "Wir sind eine freundliche Mastodon Instanz aus Nordrhein-Westfalen. Ob NRW'ler oder NRW-Sympathifanten, jeder ist hier willkommen.",
-    "banner_url": "https://fedidb.pixelcdn.net/instances/17094/k7sy2ro1_thumbnail.png",
-    "location": {
-      "city": "Falkenstein",
-      "country": "Germany"
-    },
-    "software": {
-      "id": 2,
-      "name": "Mastodon",
-      "url": "https://fedidb.org/software/mastodon",
-      "version": "4.4.10",
-      "slug": "mastodon"
-    },
-    "stats": {
-      "status_count": 2003196,
-      "user_count": 18939,
-      "monthly_active_users": 2553
-    },
-    "first_seen_at": "2021-03-21T07:01:40.000000Z",
-    "last_seen_at": "2026-01-08T08:20:43.000000Z",
-    "creation_time": {
-      "created_at": "2021-03-21T07:01:40.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    }
-  },
-  {
-    "id": 54086,
-    "domain": "tomes.tchncs.de",
-    "open_registration": false,
-    "description": "Welcome! This instance is currently **being tested** until April 6th. This means that it is still to be evaluated whether it (technically) qualifies for a long-term commitment of your admin. If it does not, there will be an announcement, giving you enough time to find a different instance. Otherwise it will just continue operating. \n\nNote that it was just deployed on march 6. Please notify your admin about errors that may be caused by misconfigurations. Note also that by the time of writing, the flagship instance of Bookwyrm is VERY slow and currently causes imports to time out.",
-    "banner_url": "https://fedidbcdn.com/instances/54086/iybwmjav_thumbnail.png",
-    "location": {
-      "city": "Vienna",
-      "country": "Austria"
-    },
-    "software": {
-      "id": 10,
-      "name": "Bookwyrm",
-      "url": "https://fedidb.org/software/bookwyrm",
-      "version": "0.8.2",
-      "slug": "bookwyrm"
-    },
-    "stats": {
-      "status_count": 5730,
-      "user_count": 18734,
-      "monthly_active_users": 20
-    },
-    "first_seen_at": "2023-03-06T20:03:07.000000Z",
-    "last_seen_at": "2026-01-08T17:01:21.000000Z",
-    "creation_time": {
-      "created_at": "2023-03-06T20:03:07.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    }
-  },
-  {
-    "id": 32830,
-    "domain": "defcon.social",
-    "open_registration": true,
-    "description": null,
-    "banner_url": "https://fedidbcdn.com/instances/32830/dxcgxbyw_thumbnail.png",
-    "location": {
-      "city": "Houston",
-      "country": "United States"
-    },
-    "software": {
-      "id": 2,
-      "name": "Mastodon",
-      "url": "https://fedidb.org/software/mastodon",
-      "version": "4.5.4",
-      "slug": "mastodon"
-    },
-    "stats": {
-      "status_count": 422498,
-      "user_count": 18524,
-      "monthly_active_users": 1941
-    },
-    "first_seen_at": "2022-11-16T02:30:12.000000Z",
-    "last_seen_at": "2026-01-08T20:10:14.000000Z",
-    "creation_time": {
-      "created_at": "2022-11-16T02:30:12.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    }
-  },
-  {
-    "id": 30053,
-    "domain": "mastodon-japan.net",
-    "open_registration": false,
-    "description": null,
-    "banner_url": "https://fedidbcdn.com/instances/30053/2eeomi5h_thumbnail.png",
-    "location": {
-      "city": null,
-      "country": null
-    },
-    "software": {
-      "id": 2,
-      "name": "Mastodon",
-      "url": "https://fedidb.org/software/mastodon",
-      "version": "4.3.15",
-      "slug": "mastodon"
-    },
-    "stats": {
-      "status_count": 6618709,
-      "user_count": 18157,
-      "monthly_active_users": 1835
-    },
-    "first_seen_at": "2022-11-09T10:03:11.000000Z",
-    "last_seen_at": "2026-01-08T08:23:57.000000Z",
-    "creation_time": {
-      "created_at": "2022-11-09T10:03:11.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    }
-  },
-  {
-    "id": 18052,
-    "domain": "o3o.ca",
-    "open_registration": false,
-    "description": "欢迎来到o3o(嘟站)！这是一个泛话题社区，无论你的兴趣是什么，你都可以自由地通过发布“嘟嘟”来吐槽一切、摸鱼扯皮。\n本社区由位于加拿大的 O3O.Foundation 项目运营。我们相信由社会组织运营基本通讯软件和设施是必要的，它们不应被控制在大型企业和政府手中。",
-    "banner_url": "https://fedidb.pixelcdn.net/instances/18052/egrdhqjp_thumbnail.png",
-    "location": {
-      "city": null,
-      "country": null
-    },
-    "software": {
-      "id": 2,
-      "name": "Mastodon",
-      "url": "https://fedidb.org/software/mastodon",
-      "version": "4.5.4",
-      "slug": "mastodon"
-    },
-    "stats": {
-      "status_count": 9562061,
-      "user_count": 17963,
-      "monthly_active_users": 2447
-    },
-    "first_seen_at": "2021-03-21T07:03:06.000000Z",
-    "last_seen_at": "2026-01-08T09:00:31.000000Z",
-    "creation_time": {
-      "created_at": "2021-03-21T07:03:06.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    }
-  },
-  {
-    "id": 71658,
-    "domain": "oekakiskey.com",
-    "open_registration": true,
-    "description": null,
-    "banner_url": null,
-    "location": {
-      "city": null,
-      "country": null
-    },
-    "software": {
-      "id": 12,
-      "name": "Misskey",
-      "url": "https://fedidb.org/software/misskey",
-      "version": "2025.10.2",
-      "slug": "misskey"
-    },
-    "stats": {
-      "status_count": 3707517,
-      "user_count": 17857,
-      "monthly_active_users": null
-    },
-    "first_seen_at": "2023-07-02T15:30:13.000000Z",
-    "last_seen_at": "2026-01-08T11:03:55.000000Z",
-    "creation_time": {
-      "created_at": "2023-07-02T15:30:13.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    }
-  },
-  {
-    "id": 17304,
-    "domain": "p.lu",
-    "open_registration": true,
-    "description": null,
-    "banner_url": null,
-    "location": {
-      "city": null,
-      "country": null
-    },
-    "software": {
-      "id": 3,
-      "name": "PeerTube",
-      "url": "https://fedidb.org/software/peertube",
-      "version": "8.0.1",
-      "slug": "peertube"
-    },
-    "stats": {
-      "status_count": 860,
-      "user_count": 17758,
-      "monthly_active_users": 15
-    },
-    "first_seen_at": "2021-03-21T07:02:00.000000Z",
-    "last_seen_at": "2026-01-08T07:00:44.000000Z",
-    "creation_time": {
-      "created_at": "2021-03-21T07:02:00.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    }
-  },
-  {
-    "id": 3635,
-    "domain": "mastodon.nu",
-    "open_registration": true,
-    "description": "Mastodon.nu etablerades 2021 och är den största servern i Norden samt öppen för alla. Den drivs ideellt på ett professionellt vis och med 100% förnybar energi. Välkommen! Velkommen! Tervetuloa!",
-    "banner_url": "https://fedidb.pixelcdn.net/instances/3635/yml73ibd_thumbnail.png",
-    "location": {
-      "city": null,
-      "country": null
-    },
-    "software": {
-      "id": 2,
-      "name": "Mastodon",
-      "url": "https://fedidb.org/software/mastodon",
-      "version": "4.5.4",
-      "slug": "mastodon"
-    },
-    "stats": {
-      "status_count": 1078540,
-      "user_count": 17472,
-      "monthly_active_users": 1238
-    },
-    "first_seen_at": "2021-03-21T06:33:26.000000Z",
-    "last_seen_at": "2026-01-09T05:10:11.000000Z",
-    "creation_time": {
-      "created_at": "2021-03-21T06:33:26.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    }
-  },
-  {
-    "id": 17908,
-    "domain": "abdl.link",
-    "open_registration": true,
-    "description": "ABDL.link is a community-led microblogging platform. We’re part of a decentralised federated network. ABDL.link is run on our own servers, supported by our patrons – we don’t sell your personal data.",
-    "banner_url": "https://fedidb.pixelcdn.net/instances/17908/xa5kni73_thumbnail.png",
-    "location": {
-      "city": null,
-      "country": null
-    },
-    "software": {
-      "id": 2,
-      "name": "Mastodon",
-      "url": "https://fedidb.org/software/mastodon",
-      "version": "4.5.2",
-      "slug": "mastodon"
-    },
-    "stats": {
-      "status_count": 317795,
-      "user_count": 17411,
-      "monthly_active_users": 286
-    },
-    "first_seen_at": "2021-03-21T07:02:54.000000Z",
-    "last_seen_at": "2026-01-08T07:00:46.000000Z",
-    "creation_time": {
-      "created_at": "2021-03-21T07:02:54.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    }
-  },
-  {
-    "id": 155211,
-    "domain": "qlub.social",
-    "open_registration": true,
-    "description": "Qlub, le réseau social québécois favorisant des échanges authentiques, sans algorithmes oppressants et respectueux de la vie privée. Rejoignez la communauté dès maintenant !",
-    "banner_url": "https://fedidb.pixelcdn.net/instances/155211/syue3oll_thumbnail.png",
-    "location": {
-      "city": null,
-      "country": "Canada"
-    },
-    "software": {
-      "id": 2,
-      "name": "Mastodon",
-      "url": "https://fedidb.org/software/mastodon",
-      "version": "4.3.6",
-      "slug": "mastodon"
-    },
-    "stats": {
-      "status_count": 139821,
-      "user_count": 17357,
-      "monthly_active_users": 902
-    },
-    "first_seen_at": "2025-02-16T14:44:52.000000Z",
-    "last_seen_at": "2026-01-08T21:02:50.000000Z",
-    "creation_time": {
-      "created_at": "2025-02-16T14:44:52.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    }
-  },
-  {
-    "id": 12333,
-    "domain": "mastodontech.de",
-    "open_registration": true,
-    "description": "Offen für alle (über 16) und bereitgestellt von Markus'Blog",
-    "banner_url": "https://fedidb.pixelcdn.net/instances/12333/i7omaqaj_thumbnail.png",
-    "location": {
-      "city": "Frankfurt am Main",
-      "country": "Germany"
-    },
-    "software": {
-      "id": 2,
-      "name": "Mastodon",
-      "url": "https://fedidb.org/software/mastodon",
-      "version": "4.5.4",
-      "slug": "mastodon"
-    },
-    "stats": {
-      "status_count": 655034,
-      "user_count": 16547,
-      "monthly_active_users": 1401
-    },
-    "first_seen_at": "2021-03-21T06:54:59.000000Z",
-    "last_seen_at": "2026-01-09T05:21:59.000000Z",
-    "creation_time": {
-      "created_at": "2021-03-21T06:54:59.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    }
-  },
-  {
-    "id": 152715,
-    "domain": "torikago-suki.net",
-    "open_registration": true,
-    "description": null,
-    "banner_url": null,
-    "location": {
-      "city": null,
-      "country": null
-    },
-    "software": {
-      "id": 12,
-      "name": "Misskey",
-      "url": "https://fedidb.org/software/misskey",
-      "version": "2025.12.2",
-      "slug": "misskey"
-    },
-    "stats": {
-      "status_count": 422713,
-      "user_count": 16532,
-      "monthly_active_users": null
-    },
-    "first_seen_at": "2024-12-29T15:26:47.000000Z",
-    "last_seen_at": "2026-01-08T12:26:24.000000Z",
-    "creation_time": {
-      "created_at": "2024-12-29T15:26:47.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    }
-  },
-  {
-    "id": 50763,
-    "domain": "flipboard.social",
-    "open_registration": true,
-    "description": null,
-    "banner_url": "https://fedidbcdn.com/instances/50763/awij606u_thumbnail.png",
-    "location": {
-      "city": null,
-      "country": "United States"
-    },
-    "software": {
-      "id": 2,
-      "name": "Mastodon",
-      "url": "https://fedidb.org/software/mastodon",
-      "version": "4.5.4",
-      "slug": "mastodon"
-    },
-    "stats": {
-      "status_count": 842488,
-      "user_count": 16093,
-      "monthly_active_users": 2860
-    },
-    "first_seen_at": "2023-01-22T03:30:18.000000Z",
-    "last_seen_at": "2026-01-08T13:01:48.000000Z",
-    "creation_time": {
-      "created_at": "2023-01-22T03:30:18.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    }
-  },
-  {
-    "id": 68434,
-    "domain": "misskey-square.net",
-    "open_registration": true,
-    "description": null,
-    "banner_url": null,
-    "location": {
-      "city": null,
-      "country": null
-    },
-    "software": {
-      "id": 12,
-      "name": "Misskey",
-      "url": "https://fedidb.org/software/misskey",
-      "version": "2025.9.0-square.5",
-      "slug": "misskey"
-    },
-    "stats": {
-      "status_count": 9249072,
-      "user_count": 16021,
-      "monthly_active_users": null
-    },
-    "first_seen_at": "2023-06-17T03:23:46.000000Z",
-    "last_seen_at": "2026-01-08T23:00:51.000000Z",
-    "creation_time": {
-      "created_at": "2023-06-17T03:23:46.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    }
-  },
-  {
-    "id": 15707,
-    "domain": "ieji.de",
-    "open_registration": true,
-    "description": "ieji.de is a generalistic mastodon instance, with the goal of being the fastest mastodon instance in Europe and with a focus on user privacy, like being usable via the tor network.",
-    "banner_url": "https://fedidb.pixelcdn.net/instances/15707/gbbe3ji6_thumbnail.png",
-    "location": {
-      "city": "Nuremberg",
-      "country": "Germany"
-    },
-    "software": {
-      "id": 2,
-      "name": "Mastodon",
-      "url": "https://fedidb.org/software/mastodon",
-      "version": "4.5.3",
-      "slug": "mastodon"
-    },
-    "stats": {
-      "status_count": 513282,
-      "user_count": 15909,
-      "monthly_active_users": 1050
-    },
-    "first_seen_at": "2021-03-21T06:59:34.000000Z",
-    "last_seen_at": "2026-01-08T07:00:39.000000Z",
-    "creation_time": {
-      "created_at": "2021-03-21T06:59:34.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    }
-  },
-  {
-    "id": 17975,
-    "domain": "skeptikon.fr",
-    "open_registration": true,
-    "description": null,
-    "banner_url": null,
-    "location": {
-      "city": null,
-      "country": "France"
-    },
-    "software": {
-      "id": 3,
-      "name": "PeerTube",
-      "url": "https://fedidb.org/software/peertube",
-      "version": "8.0.1",
-      "slug": "peertube"
-    },
-    "stats": {
-      "status_count": 1925,
-      "user_count": 15652,
-      "monthly_active_users": 665
-    },
-    "first_seen_at": "2021-03-21T07:03:00.000000Z",
-    "last_seen_at": "2026-01-08T12:12:22.000000Z",
-    "creation_time": {
-      "created_at": "2021-03-21T07:03:00.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    }
-  },
-  {
-    "id": 18023,
-    "domain": "tech.lgbt",
-    "open_registration": true,
-    "description": "This Mastodon instance is for tech workers, academics, students, furries, and others interested in tech who are LGBTQIA+ or Allies. All are welcome to join us!",
-    "banner_url": "https://fedidbcdn.com/instances/18023/xfl5fz59_thumbnail.png",
-    "location": {
-      "city": "North Bergen",
-      "country": "United States"
-    },
-    "software": {
-      "id": 2,
-      "name": "Mastodon",
-      "url": "https://fedidb.org/software/mastodon",
-      "version": "4.5.3+glitch.techlgbt",
-      "slug": "mastodon"
-    },
-    "stats": {
-      "status_count": 4288551,
-      "user_count": 15457,
-      "monthly_active_users": 2492
-    },
-    "first_seen_at": "2021-03-21T07:03:03.000000Z",
-    "last_seen_at": "2026-01-08T08:21:00.000000Z"
-  },
-  {
-    "id": 30058,
-    "domain": "theblower.au",
-    "open_registration": true,
-    "description": "Do you need to sort it out? Get on The Blower, a public social network site that's part of a global federation! Give it a go!\n\nYou don't have to be Australian to post here, but it helps.",
-    "banner_url": "https://fedidb.pixelcdn.net/instances/30058/kxxb1l7s_thumbnail.png",
-    "location": {
-      "city": "Melbourne",
-      "country": "Australia"
-    },
-    "software": {
-      "id": 2,
-      "name": "Mastodon",
-      "url": "https://fedidb.org/software/mastodon",
-      "version": "4.5.3",
-      "slug": "mastodon"
-    },
-    "stats": {
-      "status_count": 477580,
-      "user_count": 15446,
-      "monthly_active_users": 226
-    },
-    "first_seen_at": "2022-11-09T11:03:03.000000Z",
-    "last_seen_at": "2026-01-08T08:23:56.000000Z"
-  },
-  {
-    "id": 155001,
-    "domain": "events.pol-rev.com",
-    "open_registration": true,
-    "description": null,
-    "banner_url": null,
-    "location": {
-      "city": null,
-      "country": null
-    },
-    "software": {
-      "id": 27,
-      "name": "Mobilizon",
-      "url": "https://fedidb.org/software/mobilizon",
-      "version": "5.1.3-40-g5a906b8a",
-      "slug": "mobilizon"
-    },
-    "stats": {
-      "status_count": 4527,
-      "user_count": 15356,
-      "monthly_active_users": null
-    },
-    "first_seen_at": "2025-02-04T15:31:54.000000Z",
-    "last_seen_at": "2026-01-08T23:02:33.000000Z"
-  },
-  {
-    "id": 52007,
-    "domain": "ummah.ps",
-    "open_registration": false,
-    "description": "",
-    "banner_url": "https://fedidbcdn.com/instances/52007/ybshqe9c_thumbnail.png",
-    "location": {
-      "city": "Luxembourg",
-      "country": "Luxembourg"
-    },
-    "software": {
-      "id": 4,
-      "name": "Pleroma",
-      "url": "https://fedidb.org/software/pleroma",
-      "version": "2.5.54-0-g81483a04d.dockerise-app+soapbox",
-      "slug": "pleroma"
-    },
-    "stats": {
-      "status_count": 63221,
-      "user_count": 15063,
-      "monthly_active_users": 278
-    },
-    "first_seen_at": "2023-02-05T03:30:06.000000Z",
-    "last_seen_at": "2026-01-08T06:03:36.000000Z"
-  },
-  {
-    "id": 16959,
-    "domain": "glasgow.social",
-    "open_registration": true,
-    "description": "A place for communities in and around Glasgow, Scotland.",
-    "banner_url": "https://fedidb.pixelcdn.net/instances/16959/tk3schmd_thumbnail.png",
-    "location": {
-      "city": "Manchester",
-      "country": "United Kingdom"
-    },
-    "software": {
-      "id": 2,
-      "name": "Mastodon",
-      "url": "https://fedidb.org/software/mastodon",
-      "version": "4.3.4",
-      "slug": "mastodon"
-    },
-    "stats": {
-      "status_count": 284939,
-      "user_count": 15002,
-      "monthly_active_users": 302
-    },
-    "first_seen_at": "2021-03-21T07:01:28.000000Z",
-    "last_seen_at": "2026-01-08T08:20:31.000000Z"
-  },
-  {
-    "id": 23756,
-    "domain": "sueden.social",
-    "open_registration": true,
-    "description": "Eine Community für alle, die sich dem Süden hingezogen fühlen. Wir können alles außer Hochdeutsch.",
-    "banner_url": "https://fedidb.pixelcdn.net/instances/23756/kezkqdil_thumbnail.png",
-    "location": {
-      "city": "Nuremberg",
-      "country": "Germany"
-    },
-    "software": {
-      "id": 2,
-      "name": "Mastodon",
-      "url": "https://fedidb.org/software/mastodon",
-      "version": "4.5.4",
-      "slug": "mastodon"
-    },
-    "stats": {
-      "status_count": 1008442,
-      "user_count": 14729,
-      "monthly_active_users": 1837
-    },
-    "first_seen_at": "2022-04-27T21:01:50.000000Z",
-    "last_seen_at": "2026-01-08T06:01:47.000000Z"
-  },
-  {
-    "id": 17947,
-    "domain": "norden.social",
-    "open_registration": true,
-    "description": "Moin! Dies ist die Mastodon-Instanz für Nordlichter, Schnacker und alles dazwischen. Folge dem Leuchtturm.",
-    "banner_url": "https://fedidb.pixelcdn.net/instances/17947/dbo2hrwg_thumbnail.png",
-    "location": {
-      "city": "Falkenstein",
-      "country": "Germany"
-    },
-    "software": {
-      "id": 2,
-      "name": "Mastodon",
-      "url": "https://fedidb.org/software/mastodon",
-      "version": "4.5.4",
-      "slug": "mastodon"
-    },
-    "stats": {
-      "status_count": 3631461,
-      "user_count": 14226,
-      "monthly_active_users": 3348
-    },
-    "first_seen_at": "2021-03-21T07:02:58.000000Z",
-    "last_seen_at": "2026-01-08T10:00:37.000000Z"
-  },
-  {
-    "id": 22205,
-    "domain": "beehaw.org",
-    "open_registration": true,
-    "description": null,
-    "banner_url": null,
-    "location": {
-      "city": "Clifton",
-      "country": "United States"
-    },
-    "software": {
-      "id": 59,
-      "name": "Lemmy",
-      "url": "https://fedidb.org/software/lemmy",
-      "version": "0.19.13",
-      "slug": "lemmy"
-    },
-    "stats": {
-      "status_count": 28766,
-      "user_count": 14105,
-      "monthly_active_users": 332
-    },
-    "first_seen_at": "2022-02-06T09:12:39.000000Z",
-    "last_seen_at": "2026-01-08T10:00:55.000000Z"
-  },
-  {
-    "id": 17594,
-    "domain": "mobilizon.fr",
-    "open_registration": true,
-    "description": null,
-    "banner_url": null,
-    "location": {
-      "city": "Falkenstein",
-      "country": "Germany"
-    },
-    "software": {
-      "id": 27,
-      "name": "Mobilizon",
-      "url": "https://fedidb.org/software/mobilizon",
-      "version": "5.2.0",
-      "slug": "mobilizon"
-    },
-    "stats": {
-      "status_count": 15592,
-      "user_count": 14014,
-      "monthly_active_users": null
-    },
-    "first_seen_at": "2021-03-21T07:02:27.000000Z",
-    "last_seen_at": "2026-01-08T08:20:52.000000Z"
-  },
-  {
-    "id": 17923,
-    "domain": "chaos.social",
-    "open_registration": false,
-    "description": "chaos.social – a Fediverse instance for &amp; by the Chaos community",
-    "banner_url": "https://fedidb.pixelcdn.net/instances/17923/0osqp7z9_thumbnail.png",
-    "location": {
-      "city": "Falkenstein",
-      "country": "Germany"
-    },
-    "software": {
-      "id": 2,
-      "name": "Mastodon",
-      "url": "https://fedidb.org/software/mastodon",
-      "version": "4.5.4",
-      "slug": "mastodon"
-    },
-    "stats": {
-      "status_count": 9374423,
-      "user_count": 13679,
-      "monthly_active_users": 6673
-    },
-    "first_seen_at": "2021-03-21T07:02:55.000000Z",
-    "last_seen_at": "2026-01-08T08:21:00.000000Z"
-  },
-  {
-    "id": 16127,
-    "domain": "noc.social",
-    "open_registration": true,
-    "description": "This instance is focused on technology, networking, linux, privacy, security, infosec, engineering, but open to anyone. Civil discourse, polite and open. Managed by the noc.org / trunc.org team. ",
-    "banner_url": "https://fedidb.pixelcdn.net/instances/16127/nwnqarqk_thumbnail.png",
-    "location": {
-      "city": "Los Angeles",
-      "country": "United States"
-    },
-    "software": {
-      "id": 2,
-      "name": "Mastodon",
-      "url": "https://fedidb.org/software/mastodon",
-      "version": "4.1.24",
-      "slug": "mastodon"
-    },
-    "stats": {
-      "status_count": 447771,
-      "user_count": 13498,
-      "monthly_active_users": 555
-    },
-    "first_seen_at": "2021-03-21T07:00:14.000000Z",
-    "last_seen_at": "2026-01-08T08:19:23.000000Z"
-  },
-  {
-    "id": 19319,
-    "domain": "pixey.org",
-    "open_registration": false,
-    "description": "Pixey is an image sharing platform, an ethical alternative to centralized platforms build with ActivityPub!",
-    "banner_url": "https://fedidb.pixelcdn.net/instances/19319/vzynglbk_thumbnail.jpg",
-    "location": {
-      "city": "Nuremberg",
-      "country": "Germany"
-    },
-    "software": {
-      "id": 1,
-      "name": "Pixelfed",
-      "url": "https://fedidb.org/software/pixelfed",
-      "version": "0.12.6",
-      "slug": "pixelfed"
-    },
-    "stats": {
-      "status_count": 60700,
-      "user_count": 13190,
-      "monthly_active_users": 434
-    },
-    "first_seen_at": "2021-06-17T15:30:52.000000Z",
-    "last_seen_at": "2026-01-08T09:00:40.000000Z"
-  },
-  {
-    "id": 17235,
-    "domain": "meow.social",
-    "open_registration": false,
-    "description": "This instance is focused around the furry fandom and is open to all fluffies and scalies!",
-    "banner_url": "https://fedidb.pixelcdn.net/instances/17235/i8nohbpp_thumbnail.png",
-    "location": {
-      "city": null,
-      "country": null
-    },
-    "software": {
-      "id": 2,
-      "name": "Mastodon",
-      "url": "https://fedidb.org/software/mastodon",
-      "version": "4.5.2+glitch",
-      "slug": "mastodon"
-    },
-    "stats": {
-      "status_count": 2675549,
-      "user_count": 13150,
-      "monthly_active_users": 1590
-    },
-    "first_seen_at": "2021-03-21T07:01:52.000000Z",
-    "last_seen_at": "2026-01-08T08:20:45.000000Z"
-  },
-  {
-    "id": 17972,
-    "domain": "eldritch.cafe",
-    "open_registration": false,
-    "description": "Une instance se voulant accueillante pour les personnes queers, féministes et anarchistes ainsi que pour leurs sympathisant·e·s. Nous sommes principalement francophone.",
-    "banner_url": "https://fedidb.pixelcdn.net/instances/17972/zysvercx_thumbnail.png",
-    "location": {
-      "city": null,
-      "country": "France"
-    },
-    "software": {
-      "id": 2,
-      "name": "Mastodon",
-      "url": "https://fedidb.org/software/mastodon",
-      "version": "4.5.4+glitch",
-      "slug": "mastodon"
-    },
-    "stats": {
-      "status_count": 3474954,
-      "user_count": 13025,
-      "monthly_active_users": 938
-    },
-    "first_seen_at": "2021-03-21T07:03:00.000000Z",
-    "last_seen_at": "2026-01-08T08:21:01.000000Z"
-  },
-  {
-    "id": 10706,
-    "domain": "mstdn.plus",
-    "open_registration": true,
-    "description": null,
-    "banner_url": "https://fedidbcdn.com/instances/10706/42zfc6fc_thumbnail.png",
-    "location": {
-      "city": null,
-      "country": null
-    },
-    "software": {
-      "id": 2,
-      "name": "Mastodon",
-      "url": "https://fedidb.org/software/mastodon",
-      "version": "4.5.1",
-      "slug": "mastodon"
-    },
-    "stats": {
-      "status_count": 233978,
-      "user_count": 12776,
-      "monthly_active_users": 510
-    },
-    "first_seen_at": "2021-03-21T06:52:42.000000Z",
-    "last_seen_at": "2026-01-08T07:00:31.000000Z"
-  },
-  {
-    "id": 187207,
-    "domain": "forums.ubports.com",
-    "open_registration": true,
-    "description": null,
-    "banner_url": null,
-    "location": {
-      "city": "Amsterdam",
-      "country": "The Netherlands"
-    },
-    "software": {
-      "id": 177,
-      "name": "NodeBB",
-      "url": "https://fedidb.org/software/nodebb",
-      "version": "4.7.2",
-      "slug": "nodebb"
-    },
-    "stats": {
-      "status_count": 11543,
-      "user_count": 12626,
-      "monthly_active_users": 346
-    },
-    "first_seen_at": "2025-12-19T10:18:01.000000Z",
-    "last_seen_at": "2026-01-08T13:04:43.000000Z"
-  },
-  {
-    "id": 16189,
-    "domain": "toot.io",
-    "open_registration": false,
-    "description": null,
-    "banner_url": "https://fedidbcdn.com/instances/16189/unyubx0k_thumbnail.png",
-    "location": {
-      "city": "Ashburn",
-      "country": "United States"
-    },
-    "software": {
-      "id": 2,
-      "name": "Mastodon",
-      "url": "https://fedidb.org/software/mastodon",
-      "version": "4.5.4",
-      "slug": "mastodon"
-    },
-    "stats": {
-      "status_count": 265718,
-      "user_count": 12529,
-      "monthly_active_users": 435
-    },
-    "first_seen_at": "2021-03-21T07:00:19.000000Z",
-    "last_seen_at": "2026-01-09T06:01:41.000000Z"
-  },
-  {
-    "id": 35467,
-    "domain": "cyberplace.social",
-    "open_registration": true,
-    "description": null,
-    "banner_url": "https://fedidbcdn.com/instances/35467/4sus6xcb_thumbnail.png",
-    "location": {
-      "city": "Helsinki",
-      "country": "Finland"
-    },
-    "software": {
-      "id": 2,
-      "name": "Mastodon",
-      "url": "https://fedidb.org/software/mastodon",
-      "version": "4.5.4",
-      "slug": "mastodon"
-    },
-    "stats": {
-      "status_count": 178590,
-      "user_count": 12248,
-      "monthly_active_users": 793
-    },
-    "first_seen_at": "2022-11-22T21:04:56.000000Z",
-    "last_seen_at": "2026-01-08T11:01:07.000000Z"
-  },
-  {
-    "id": 17431,
-    "domain": "social.cologne",
-    "open_registration": true,
-    "description": "social.cologne is eine Mastodon Instanz für alle, die sich mit Köln verbunden fühlen.",
-    "banner_url": "https://fedidb.pixelcdn.net/instances/17431/rg2odrxt_thumbnail.png",
-    "location": {
-      "city": "Falkenstein",
-      "country": "Germany"
-    },
-    "software": {
-      "id": 2,
-      "name": "Mastodon",
-      "url": "https://fedidb.org/software/mastodon",
-      "version": "4.5.3",
-      "slug": "mastodon"
-    },
-    "stats": {
-      "status_count": 927532,
-      "user_count": 12153,
-      "monthly_active_users": 1081
-    },
-    "first_seen_at": "2021-03-21T07:02:14.000000Z",
-    "last_seen_at": "2026-01-08T06:00:53.000000Z"
-  },
-  {
-    "id": 17024,
-    "domain": "indieweb.social",
-    "open_registration": true,
-    "description": "INDIEWEB.SOCIAL is an instance focused on the evolution of #Openweb, #Indieweb, #Fediverse, #Mastodon, #Humanetech and #Calm technologies. ",
-    "banner_url": "https://fedidb.pixelcdn.net/instances/17024/0get2sje_thumbnail.png",
-    "location": {
-      "city": "Lisbon",
-      "country": "Portugal"
-    },
-    "software": {
-      "id": 2,
-      "name": "Mastodon",
-      "url": "https://fedidb.org/software/mastodon",
-      "version": "4.5.4",
-      "slug": "mastodon"
-    },
-    "stats": {
-      "status_count": 846565,
-      "user_count": 12099,
-      "monthly_active_users": 1039
-    },
-    "first_seen_at": "2021-03-21T07:01:34.000000Z",
-    "last_seen_at": "2026-01-08T12:11:50.000000Z"
+    "last_seen_at": "2026-01-08T13:03:41.000000Z"
   }
 ]

@@ -10,7 +10,7 @@ import (
 
 func main() {
 	fmt.Println("🌌 Fediverse Data Processor (Golang)")
-	fmt.Println("=====================================\n")
+	fmt.Println("=====================================")
 
 	// Configuration
 	cfg := DefaultConfig
