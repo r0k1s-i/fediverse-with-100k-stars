@@ -373,7 +373,12 @@ function initScene() {
 		setTimeout( playA, 15000 );
 	}, false);
 
-	document.getElementById('bgmusicA').play();
+	var playPromise = document.getElementById('bgmusicA').play();
+	if (playPromise !== undefined) {
+		playPromise.catch(function(error) {
+			console.log("Autoplay prevented by browser policy.");
+		});
+	}
 
 	if( localStorage && localStorage.getItem('sound') == 0 ){
 		// console.log('localstorage sound is off');

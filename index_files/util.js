@@ -244,3 +244,19 @@ function random(low, high) {
 function map( value, istart, istop, ostart, ostop) {
   return ostart + (ostop - ostart) * ((value - istart) / (istop - istart));
 }
+
+function getZoomByStarRadius( radius ){
+  return radius * 2.0;
+}
+
+function getOffsetByStarRadius( radius ){
+  return new THREE.Vector3(0, 0, 0);
+}
+
+function getZoomByStarRadius( radius ){
+  return radius * 2.0; // Safe distance factor
+}
+
+function getOffsetByStarRadius( radius ){
+  return new THREE.Vector3(0, 0, 0); // Centered for now
+}
