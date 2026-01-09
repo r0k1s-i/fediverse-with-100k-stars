@@ -242,5 +242,150 @@
       "withCreationTime": 100,
       "softwareTypes": 10
     }
+  },
+  {
+    "timestamp": "2026-01-09T06:06:39.005Z",
+    "message": "运行模式: 测试（限制 100 个实例）",
+    "data": null
+  },
+  {
+    "timestamp": "2026-01-09T06:06:39.006Z",
+    "message": "开始抓取Fediverse实例数据",
+    "data": null
+  },
+  {
+    "timestamp": "2026-01-09T06:06:39.014Z",
+    "message": "请求第 1 页",
+    "data": {
+      "cursor": null
+    }
+  },
+  {
+    "timestamp": "2026-01-09T06:06:39.646Z",
+    "message": "已获取 40 个实例",
+    "data": null
+  },
+  {
+    "timestamp": "2026-01-09T06:06:40.646Z",
+    "message": "请求第 2 页",
+    "data": {
+      "cursor": "https://api.fedidb.org/v1/servers?limit=40&cursor=eyJ1c2VyX2NvdW50IjozOTM1MywiX3BvaW50c1RvTmV4dEl0ZW1zIjp0cnVlfQ"
+    }
+  },
+  {
+    "timestamp": "2026-01-09T06:06:40.875Z",
+    "message": "已获取 80 个实例",
+    "data": null
+  },
+  {
+    "timestamp": "2026-01-09T06:06:41.876Z",
+    "message": "请求第 3 页",
+    "data": {
+      "cursor": "https://api.fedidb.org/v1/servers?limit=40&cursor=eyJ1c2VyX2NvdW50IjoyMDc1OSwiX3BvaW50c1RvTmV4dEl0ZW1zIjp0cnVlfQ"
+    }
+  },
+  {
+    "timestamp": "2026-01-09T06:06:42.118Z",
+    "message": "已获取 120 个实例",
+    "data": null
+  },
+  {
+    "timestamp": "2026-01-09T06:06:42.118Z",
+    "message": "达到限制 100，停止抓取",
+    "data": null
+  },
+  {
+    "timestamp": "2026-01-09T06:06:42.126Z",
+    "message": "✅ 抓取完成！总计 120 个实例",
+    "data": null
+  },
+  {
+    "timestamp": "2026-01-09T06:06:42.126Z",
+    "message": "开始数据清洗",
+    "data": null
+  },
+  {
+    "timestamp": "2026-01-09T06:06:42.127Z",
+    "message": "清洗完成: 120 → 120 个实例",
+    "data": null
+  },
+  {
+    "timestamp": "2026-01-09T06:06:42.127Z",
+    "message": "开始获取 100 个实例的创建时间",
+    "data": null
+  },
+  {
+    "timestamp": "2026-01-09T06:06:42.128Z",
+    "message": "进度: 10/100 (10%)",
+    "data": null
+  },
+  {
+    "timestamp": "2026-01-09T06:06:42.629Z",
+    "message": "进度: 20/100 (20%)",
+    "data": null
+  },
+  {
+    "timestamp": "2026-01-09T06:06:43.129Z",
+    "message": "进度: 30/100 (30%)",
+    "data": null
+  },
+  {
+    "timestamp": "2026-01-09T06:06:43.630Z",
+    "message": "进度: 40/100 (40%)",
+    "data": null
+  },
+  {
+    "timestamp": "2026-01-09T06:06:44.130Z",
+    "message": "进度: 50/100 (50%)",
+    "data": null
+  },
+  {
+    "timestamp": "2026-01-09T06:06:44.631Z",
+    "message": "进度: 60/100 (60%)",
+    "data": null
+  },
+  {
+    "timestamp": "2026-01-09T06:06:45.132Z",
+    "message": "进度: 70/100 (70%)",
+    "data": null
+  },
+  {
+    "timestamp": "2026-01-09T06:06:45.633Z",
+    "message": "进度: 80/100 (80%)",
+    "data": null
+  },
+  {
+    "timestamp": "2026-01-09T06:06:46.134Z",
+    "message": "进度: 90/100 (90%)",
+    "data": null
+  },
+  {
+    "timestamp": "2026-01-09T06:06:46.635Z",
+    "message": "进度: 100/100 (100%)",
+    "data": null
+  },
+  {
+    "timestamp": "2026-01-09T06:06:47.135Z",
+    "message": "创建时间获取完成",
+    "data": {
+      "total": 100,
+      "reliable": 100,
+      "unreliable": 0,
+      "reliablePercent": "100%"
+    }
+  },
+  {
+    "timestamp": "2026-01-09T06:06:47.137Z",
+    "message": "✅ 数据已保存到: /home/cc/Projects/100k-Star-Challenge/data/fediverse_raw.json",
+    "data": null
+  },
+  {
+    "timestamp": "2026-01-09T06:06:47.144Z",
+    "message": "统计信息",
+    "data": {
+      "total": 120,
+      "withCreationTime": 100,
+      "softwareTypes": 120
+    }
   }
 ]
