@@ -6,12 +6,18 @@ var fediverseInteraction = {
 };
 
 function initFediverseInteraction() {
+    if (typeof camera === 'undefined') {
+        setTimeout(initFediverseInteraction, 500);
+        return;
+    }
+    
     document.addEventListener('mousemove', onFediverseMouseMove, false);
     document.addEventListener('click', onFediverseClick, false);
 }
 
 function onFediverseMouseMove(event) {
     if (!enableFediverse) return;
+    if (typeof camera === 'undefined') return;
     
     fediverseInteraction.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
     fediverseInteraction.mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
@@ -33,6 +39,7 @@ function onFediverseMouseMove(event) {
     }
     
     var closestInstance = null;
+    
     if (typeof fediverseInstances !== 'undefined' && typeof InteractionMath !== 'undefined') {
         closestInstance = InteractionMath.findClosestInstance(
             fediverseInteraction.raycaster.ray.origin,
