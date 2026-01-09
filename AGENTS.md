@@ -276,6 +276,11 @@ Modify `GALAXY_TOUR` constant (defined elsewhere, used by `Tour` class).
 ### Documentation Updates
 1. **Update plan document** (`FEDIVERSE_IMPLEMENTATION_PLAN.md`) on every new discussion or technical decision change
 2. **Update plan document** after completing code modifications or implementations
+3. **Update "当前状态" section** in plan document after each task completion:
+   - Mark completed phases with `[x]`
+   - Update "更新时间" timestamp
+   - Update "当前阶段" description
+   - Update "下一步行动" list
 
 ### Git Commit Rules
 1. **Auto-commit** code changes after completing each task
