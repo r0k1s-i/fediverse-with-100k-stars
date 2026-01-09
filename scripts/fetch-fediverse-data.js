@@ -18,15 +18,11 @@
 const fs = require("fs");
 const path = require("path");
 const fetch = require("node-fetch");
+const { HttpsProxyAgent } = require("https-proxy-agent");
 
-const USE_PROXY = false;
-let fetchOptions = {};
-
-if (USE_PROXY) {
-  const { SocksProxyAgent } = require("socks-proxy-agent");
-  const proxyAgent = new SocksProxyAgent("socks5://127.0.0.1:7890");
-  fetchOptions = { agent: proxyAgent };
-}
+const PROXY_URL = "http://127.0.0.1:7890";
+const proxyAgent = new HttpsProxyAgent(PROXY_URL);
+const fetchOptions = { agent: proxyAgent };
 
 const CONFIG = {
   API_BASE: "https://api.fedidb.org/v1/servers",
