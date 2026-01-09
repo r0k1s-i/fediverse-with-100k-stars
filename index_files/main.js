@@ -300,6 +300,7 @@ function initScene() {
 	sceneSetup();
 
 	initCSS3D();
+	initFediverseLabels();
 
 	// Close Button
 
@@ -545,6 +546,7 @@ function animate() {
 
   	updateMarkers();
   	updateLegacyMarkers();
+	updateFediverseLabels();
 
   	requestAnimationFrame( animate );
 
