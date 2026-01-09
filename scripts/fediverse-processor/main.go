@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"flag"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -9,57 +10,81 @@ import (
 )
 
 func main() {
-	fmt.Println("🌌 Fediverse Data Processor (Golang)")
-	fmt.Println("=====================================")
+	// Parse command-line arguments
+	opts := ParseCLI()
+
+	if opts.Help {
+		flag.Usage()
+		os.Exit(0)
+	}
+
+	// Set verbose mode if requested
+	if opts.Verbose {
+		os.Setenv("VERBOSE", "1")
+	}
 
 	// Configuration
 	cfg := DefaultConfig
-	inputPath := filepath.Join("..", "..", "data", "fediverse_raw.json")
-	outputPath := filepath.Join("..", "..", "data", "fediverse_final.json")
 
-	// Step 1: Load raw data
-	fmt.Printf("📂 Loading data from: %s\n", inputPath)
-	instances, err := loadInstances(inputPath)
+	// Load configuration from file if specified
+	if opts.ConfigFile != "" {
+		if opts.Verbose {
+			fmt.Fprintf(os.Stderr, "📋 Loading configuration from: %s\n", opts.ConfigFile)
+		}
+		// TODO: Load config from file (YAML/JSON)
+		// newCfg, err := LoadConfig(opts.ConfigFile)
+		// if err != nil { ... }
+		// cfg = newCfg
+	}
+
+	// Header
+	if !opts.JSONOutput && opts.OutputFile != "-" {
+		fmt.Println("🌌 Fediverse Data Processor (Golang)")
+		fmt.Println("=====================================")
+	}
+
+	// Step 1: Load input data
+	if opts.Verbose {
+		fmt.Fprintf(os.Stderr, "📂 Loading instances from: %s\n", opts.InputFile)
+	}
+	instances, err := ReadInstances(opts.InputFile)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "❌ Failed to load input: %v\n", err)
 		os.Exit(1)
 	}
-	fmt.Printf("✅ Loaded %d instances\n\n", len(instances))
+	if opts.Verbose {
+		fmt.Fprintf(os.Stderr, "✅ Loaded %d instances\n\n", len(instances))
+	}
 
-	// Step 2: Process colors
-	fmt.Println("🎨 Phase 2: Calculating colors...")
+	// Step 2-3: Process instances (colors and/or positions)
 	startTime := time.Now()
-	instances = ProcessColors(instances, cfg)
-	colorDuration := time.Since(startTime)
-	fmt.Printf("✅ Colors calculated in %v\n\n", colorDuration)
+	instances = ProcessInstances(instances, cfg, opts)
+	totalDuration := time.Since(startTime)
 
-	// Step 3: Process positions
-	fmt.Println("📍 Phase 3: Calculating positions...")
-	startTime = time.Now()
-	instances = ProcessPositions(instances, cfg)
-	posDuration := time.Since(startTime)
-	fmt.Printf("✅ Positions calculated in %v\n\n", posDuration)
-
-	// Step 4: Save final data
-	fmt.Printf("💾 Saving to: %s\n", outputPath)
-	if err := saveInstances(outputPath, instances); err != nil {
+	// Step 4: Save output
+	if opts.Verbose {
+		fmt.Fprintf(os.Stderr, "💾 Saving output to: %s\n", opts.OutputFile)
+	}
+	if err := WriteInstances(opts.OutputFile, instances); err != nil {
 		fmt.Fprintf(os.Stderr, "❌ Failed to save output: %v\n", err)
 		os.Exit(1)
 	}
-	fmt.Printf("✅ Saved successfully\n\n")
+	if opts.Verbose {
+		fmt.Fprintf(os.Stderr, "✅ Saved successfully\n\n")
+	}
 
 	// Step 5: Print statistics
-	printStatistics(instances)
-
-	// Summary
-	fmt.Println("\n📊 Processing Summary:")
-	fmt.Println("─────────────────────────────────────")
-	fmt.Printf("Total instances: %d\n", len(instances))
-	fmt.Printf("Color processing: %v\n", colorDuration)
-	fmt.Printf("Position processing: %v\n", posDuration)
-	fmt.Printf("Total time: %v\n", colorDuration+posDuration)
-	fmt.Println("─────────────────────────────────────")
-	fmt.Println("\n✨ All done! Ready for Phase 5 (WebGL integration)")
+	if opts.JSONOutput {
+		PrintStatisticsJSON(instances)
+	} else if opts.OutputFile != "-" {
+		printStatistics(instances)
+		fmt.Println("\n📊 Processing Summary:")
+		fmt.Println("─────────────────────────────────────")
+		fmt.Printf("Total instances: %d\n", len(instances))
+		fmt.Printf("Processing time: %v\n", totalDuration)
+		fmt.Println("─────────────────────────────────────")
+		fmt.Println("\n✨ All done! Ready for Phase 5 (WebGL integration)")
+	}
 }
 
 // loadInstances reads instances from JSON file
