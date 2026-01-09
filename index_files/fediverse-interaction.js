@@ -2,8 +2,14 @@ var fediverseInteraction = {
     mouse: new THREE.Vector2(),
     raycaster: new THREE.Raycaster(),
     intersected: null,
-    threshold: 100.0 
+    baseThreshold: 100.0
 };
+
+function getInteractionThreshold() {
+    if (typeof camera === 'undefined') return fediverseInteraction.baseThreshold;
+    var z = camera.position.z;
+    return Math.max(fediverseInteraction.baseThreshold, z * 0.15);
+}
 
 function initFediverseInteraction() {
     if (typeof camera === 'undefined') {
@@ -45,7 +51,7 @@ function onFediverseMouseMove(event) {
             fediverseInteraction.raycaster.ray.origin,
             fediverseInteraction.raycaster.ray.direction,
             fediverseInstances,
-            fediverseInteraction.threshold
+            getInteractionThreshold()
         );
     }
     

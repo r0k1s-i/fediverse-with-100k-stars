@@ -260,3 +260,6 @@ function getZoomByStarRadius( radius ){
 function getOffsetByStarRadius( radius ){
   return new THREE.Vector3(0, 0, 0); // Centered for now
 }
+
+var enableFediverse = (gup('fediverse') == 1) || true;
+var fediverseDataPath = 'data/fediverse_final.json';

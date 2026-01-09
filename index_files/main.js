@@ -16,9 +16,6 @@ var enableStarModel = true;
 var enableTour = true;
 var enableDirector = true;
 
-var enableFediverse = (gup('fediverse') == 1) || true;
-var fediverseDataPath = 'data/fediverse_final.json';
-
 var firstTime = localStorage ? (localStorage.getItem('first') == null) : true;
 
 // Tour
@@ -243,7 +240,7 @@ function initScene() {
 	//	-----------------------------------------------------------------------------
 	//	Setup our camera
 	camera = new THREE.PerspectiveCamera( 30, window.innerWidth / window.innerHeight, 0.5, 10000000 );
-	camera.position.z = enableFediverse ? 50000 : 2000;
+	camera.position.z = enableFediverse ? 500 : 2000;
 	camera.rotation.vx = 0;
 	camera.rotation.vy = 0;
 	camera.position.target = { x: 0, z: enableFediverse ? 50000 : 2000, pz: enableFediverse ? 50000 : 2000 };

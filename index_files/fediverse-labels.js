@@ -62,7 +62,7 @@ function updateFediverseLabels() {
     for (var i = 0; i < limit; i++) {
         var inst = fediverseLabels.sortedInstances[i];
         
-        vector.set(inst.x, inst.y, inst.z);
+        vector.set(inst.position.x, inst.position.y, inst.position.z);
         
         projector.projectVector(vector, camera);
         
