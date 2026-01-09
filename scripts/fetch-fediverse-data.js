@@ -10,16 +10,18 @@
 
 const fs = require('fs');
 const path = require('path');
+const { SocksProxyAgent } = require('socks-proxy-agent');
 
-// ========== 配置 ==========
+const PROXY_URL = 'socks5://127.0.0.1:7890';
+const proxyAgent = new SocksProxyAgent(PROXY_URL);
+
 const CONFIG = {
     API_BASE: 'https://api.fedidb.org/v1/servers',
-    API_LIMIT: 40,               // 每次请求最大数量
-    RATE_LIMIT: 3,              // 每分钟最多请求次数
-    RATE_LIMIT_WINDOW: 60000,   // 60秒
+    API_LIMIT: 40,
+    RATE_LIMIT: 3,
+    RATE_LIMIT_WINDOW: 60000,
     FEDIDB_START: new Date('2021-03-21T00:00:00.000Z'),
     
-    // 输出文件
     OUTPUT_RAW: path.join(__dirname, '../data/fediverse_raw.json'),
     OUTPUT_LOG: path.join(__dirname, '../data/fetch_log.json'),
 };
@@ -59,7 +61,7 @@ async function fetchPage(cursor = null) {
     }
     
     try {
-        const response = await fetch(url);
+        const response = await fetch(url, { agent: proxyAgent });
         
         if (!response.ok) {
             throw new Error(`HTTP ${response.status}: ${response.statusText}`);
