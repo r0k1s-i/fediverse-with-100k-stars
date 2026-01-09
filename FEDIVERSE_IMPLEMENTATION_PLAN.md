@@ -532,10 +532,36 @@ if (requestCount > 0 && requestCount % 3 === 0) {
 
 ## ⏭️ 当前状态
 
-**当前阶段**: 准备开始Phase 1
+**更新时间**: 2025-01-09 14:55
 
-**下一步行动**:
-1. 编写 `scripts/fetch-fediverse-data.js`
-2. 测试抓取100个实例验证API格式
-3. 实现创建时间获取逻辑
+**当前阶段**: Phase 5 完成 (基础集成)
+
+### 已完成
+- [x] Phase 1: 数据获取脚本 (`scripts/fetch-fediverse-data.js`)
+- [x] Phase 2: 颜色计算 (`scripts/calculate-colors.js`)
+- [x] Phase 3: 位置计算 (`scripts/calculate-positions.js`)
+- [x] Phase 4: 数据转换管线 (raw → colors → final)
+- [x] Phase 5: 基础Three.js集成 (`index_files/fediverse.js`)
+- [x] 独立预览页面 (`preview/index.html`)
+
+### 测试数据
+- 已抓取: 100个实例 (测试模式)
+- 去重后: 10个唯一实例
+- 软件类型: 4种 (Mastodon, Misskey, Pixelfed, Lemmy)
+
+### 下一步行动
+1. **完整数据抓取**: `node scripts/fetch-fediverse-data.js` (无limit，约5.5小时)
+2. **Phase 6**: Canvas标签系统 (300个附近实例标签)
+3. **Phase 7**: 性能优化 (40k实例 @ 60fps)
+4. **Phase 8**: 视觉增强 (搜索、过滤、统计面板)
+
+### 运行方式
+```bash
+# 启动开发服务器
+npx serve . -p 8080
+
+# 访问
+# 主可视化: http://localhost:8080/
+# 预览页面: http://localhost:8080/preview/
+```
 
