@@ -495,24 +495,22 @@ if (requestCount > 0 && requestCount % 3 === 0) {
 
 ```
 100k-Star-Challenge/
-├── docs/
-│   └── DEVELOPMENT_DECISIONS.md
 ├── scripts/
 │   ├── fetch-fediverse-data.js     # Phase 1
 │   ├── calculate-colors.js          # Phase 2
 │   ├── calculate-positions.js       # Phase 3
-│   ├── generate-star-data.js        # Phase 4
-│   └── preview/
-│       ├── colors.html              # 颜色预览
-│       └── positions.html           # 位置预览
+│   └── generate-star-data.js        # Phase 4
+├── preview/
+│   └── index.html                   # 3D预览页面
 ├── data/
 │   ├── fediverse_raw.json           # 原始API数据
 │   ├── fediverse_with_colors.json   # 含颜色
-│   └── fediverse_stars.json         # 最终格式
+│   └── fediverse_final.json         # 最终格式
 ├── index_files/
-│   ├── fediverse_stars.json         # 部署用数据
+│   ├── fediverse.js                 # Fediverse集成
 │   ├── fediverse-interaction.js     # Phase 5
 │   └── fediverse-labels.js          # Phase 6
+├── AGENTS.md                        # 编码规范和commit规范
 └── FEDIVERSE_IMPLEMENTATION_PLAN.md # 本文件
 ```
 
@@ -529,26 +527,6 @@ if (requestCount > 0 && requestCount % 3 === 0) {
 5. **对数映射曲线** - 年龄分布是否均匀？
 
 **调试方法**: 实现预览页面，可视化调整
-
----
-
-## 📝 开发规范
-
-### Commit规范
-```
-feat: 新功能
-fix: 修复
-refactor: 重构
-perf: 性能优化
-docs: 文档
-test: 测试
-```
-
-### 代码风格
-- 遵循现有项目全局变量风格
-- 函数驼峰命名
-- 常量大写下划线
-- 注释中英文混合
 
 ---
 
