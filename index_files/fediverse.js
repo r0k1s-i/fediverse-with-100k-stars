@@ -10,6 +10,14 @@ function loadFediverseData(dataFile, callback) {
     setLoadMessage("Fetching Fediverse data");
     xhr.addEventListener('load', function(event) {
         var parsed = JSON.parse(xhr.responseText);
+        var SCALE_FACTOR = 100;
+        for (var i = 0; i < parsed.length; i++) {
+            if (parsed[i].position) {
+                parsed[i].position.x /= SCALE_FACTOR;
+                parsed[i].position.y /= SCALE_FACTOR;
+                parsed[i].position.z /= SCALE_FACTOR;
+            }
+        }
         if (callback) {
             setLoadMessage("Parsing instance data");
             callback(parsed);
@@ -105,14 +113,14 @@ function generateFediverseInstances() {
             gyroInstance.add(preview);
             
             preview.update = function() {
-                this.material.opacity = constrain(Math.pow(camera.position.z * 0.00005, 2), 0, 1);
+                this.material.opacity = constrain(Math.pow(camera.position.z * 0.002, 2), 0, 1);
                 if (this.material.opacity < 0.1)
                     this.material.opacity = 0.0;
-                if (this.material <= 0.0)
+                if (this.material.opacity <= 0.0)
                     this.visible = false;
                 else
                     this.visible = true;
-                this.scale.setLength(constrain(Math.pow(camera.position.z * 0.00003, 2), 0, 1));
+                this.scale.setLength(constrain(Math.pow(camera.position.z * 0.001, 2), 0, 1));
             };
             
             var g = new THREE.Gyroscope();
@@ -121,6 +129,7 @@ function generateFediverseInstances() {
             g.instanceData = instance;
             g.position.copy(p);
             g.scale.setLength(0.2);
+            g.visible = true;  // Ensure parent is visible for legacy markers
             
             if (instance.positionType === 'three_star_center') {
                 attachMarker(g, 1.0);
@@ -201,10 +210,10 @@ function generateFediverseInstances() {
     container.add(pSystem);
     
     container.update = function() {
-        var blueshift = (camera.position.z + 5000.0) / 600000.0;
+        var blueshift = (camera.position.z + 5000.0) / 60000.0;
         blueshift = constrain(blueshift, 0.0, 0.2);
         
-        var brightnessScale = constrain(100 / Math.sqrt(camera.position.z), 0, 1);
+        var brightnessScale = constrain(10 / Math.sqrt(camera.position.z), 0, 1);
         
         if (container.heatVision) {
             fediverseUniforms.cameraDistance.value = 0.0;
@@ -219,22 +228,22 @@ function generateFediverseInstances() {
             fediverseUniforms.heatVision.value = 0.0;
         
         fediverseUniforms.cameraDistance.value = blueshift;
-        fediverseUniforms.zoomSize.value = constrain((camera.position.z) / 40000, 0, 1);
+        fediverseUniforms.zoomSize.value = constrain((camera.position.z) / 4000, 0, 1);
         
         var areaOfWindow = window.innerWidth * window.innerHeight;
         fediverseUniforms.scale.value = Math.sqrt(areaOfWindow) * 1.5;
         
-        fediverseUniforms.sceneSize.value = 100000;
+        fediverseUniforms.sceneSize.value = 10000;
     };
     
     lineMesh.update = function() {
-        if (camera.position.z < 15000) {
-            this.material.opacity = constrain((camera.position.z - 4000.0) * 0.0002, 0, 1);
+        if (camera.position.z < 1500) {
+            this.material.opacity = constrain((camera.position.z - 400.0) * 0.002, 0, 1);
         } else {
             this.material.opacity += (0.0 - this.material.opacity) * 0.1;
         }
         
-        if (camera.position.z < 2500)
+        if (camera.position.z < 250)
             this.visible = false;
         else
             this.visible = true;
