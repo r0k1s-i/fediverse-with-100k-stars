@@ -16,6 +16,9 @@ var enableStarModel = true;
 var enableTour = true;
 var enableDirector = true;
 
+var enableFediverse = (gup('fediverse') == 1) || true;
+var fediverseDataPath = 'data/fediverse_final.json';
+
 var firstTime = localStorage ? (localStorage.getItem('first') == null) : true;
 
 // Tour
@@ -108,7 +111,14 @@ var postStarGradientLoaded = function(){
 }
 
 var postShadersLoaded = function(){
-	if( enableDataStar ){
+	if( enableFediverse ){
+		loadFediverseData( fediverseDataPath, function(loadedData){
+			fediverseInstances = loadedData;
+			initScene();
+			animate();
+		});
+	}
+	else if( enableDataStar ){
 		loadStarData( "index_files/stars_all.json", function(loadedData){
 			starData = loadedData.stars;
 			initScene();
@@ -233,10 +243,10 @@ function initScene() {
 	//	-----------------------------------------------------------------------------
 	//	Setup our camera
 	camera = new THREE.PerspectiveCamera( 30, window.innerWidth / window.innerHeight, 0.5, 10000000 );
-	camera.position.z = 2000;
+	camera.position.z = enableFediverse ? 50000 : 2000;
 	camera.rotation.vx = 0;
 	camera.rotation.vy = 0;
-	camera.position.target = { x: 0, z: 2000, pz: 2000 };
+	camera.position.target = { x: 0, z: enableFediverse ? 50000 : 2000, pz: enableFediverse ? 50000 : 2000 };
 
 	if( enableSkybox ){
 		setupSkyboxScene();
@@ -386,7 +396,11 @@ function sceneSetup(){
 	}
 	
 
-	if( enableDataStar ){
+	if( enableFediverse ){
+		pSystem = generateFediverseInstances();
+		translating.add( pSystem );
+	}
+	else if( enableDataStar ){
 		pSystem = generateHipparcosStars();
 		translating.add( pSystem );
 	}
@@ -566,12 +580,23 @@ function unmuteSound(){
 
 function displayIntroMessage(){
 	Tour.meta.fadeIn();
-	tour.showMessage('Welcome to the stellar neighborhood.', 5000 )
-	.showMessage('This is a visualization of over 100,000 nearby stars.', 5000 )
-	.showMessage('Scroll and zoom to explore.', 4000, function(){
-		firstTime = false;
-		$(window).trigger('resize');
-		$iconNav.find('#tour-button').trigger('mouseover');
-	} )
-	.endMessages();	
+	if( enableFediverse ){
+		tour.showMessage('Welcome to the Fediverse Universe.', 5000 )
+		.showMessage('This is a visualization of Fediverse instances as stars.', 5000 )
+		.showMessage('Scroll and zoom to explore.', 4000, function(){
+			firstTime = false;
+			$(window).trigger('resize');
+			$iconNav.find('#tour-button').trigger('mouseover');
+		} )
+		.endMessages();
+	} else {
+		tour.showMessage('Welcome to the stellar neighborhood.', 5000 )
+		.showMessage('This is a visualization of over 100,000 nearby stars.', 5000 )
+		.showMessage('Scroll and zoom to explore.', 4000, function(){
+			firstTime = false;
+			$(window).trigger('resize');
+			$iconNav.find('#tour-button').trigger('mouseover');
+		} )
+		.endMessages();
+	}
 }
