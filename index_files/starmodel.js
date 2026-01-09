@@ -1,40 +1,26 @@
-var starModel;
-
 function makeStarModels(){
-	setLoadMessage("Forging stars")
-	var model = makeSun(
-		{
+	var sun = makeSun({
+		radius: 7.35144e-8,
+		spectral: 0.9
+	});
+	
+	sun.substars = [];
+	
+	for( var i=0; i<20; i++ ){
+		var sub = makeSun({
 			radius: 7.35144e-8,
-			spectral: 0.656,
-		}
-	);
-	model.visible = false;	
-
-	var substars = [];
-	for( var i=0; i<6; i++ ){
-		var submodel = makeSun(
-			{
-				radius: 7.35144e-8,
-				spectral: 0.656,
-			}
-		);	
-		substars.push( submodel );
-
-		//	we won't add it to the scene yet, as we'll want to direct the draw graph ourselves here
-		// model.add( submodel );
-
-		// submodel.position.x += AUToLY(1200) * 0.001;
+			spectral: 0.9
+		});
+		sun.substars.push( sub );
 	}
-	model.substars = substars;
-
-	return model;
+	
+	return sun;
 }
 
 function hideAllSubStars(){
-	var substars = starModel.substars;
-	for( var i in substars ){
-		substars[i].update = undefined;
-		starModel.remove( substars[i] );
+	for( var i=0; i<starModel.substars.length; i++ ){
+		var sub = starModel.substars[i];
+		starModel.remove( sub );
 	}
 }
 
@@ -49,6 +35,7 @@ function setStarModel( position, name ){
 	if( starSystem === undefined ){
     // console.log( name + ' not listed in systems database' );   
 		starModel.setSpectralIndex( 0 );
+        return;
 	}
 
 	// console.log( starSystem );
@@ -109,20 +96,4 @@ function setStarModel( position, name ){
 		
 	}
 
-}
-
-function getZoomByStarRadius( radius ){
-	var delta = constrain( radius-1, 0, 10000 );
-	return 1.0 + Math.sqrt(delta) * 0.12;
-}
-
-function getOffsetByStarRadius( radius ){
-	var offset = new THREE.Vector3();	
-
-	if( radius > 6 )
-		camera.position.target.x = constrain(0.000000025 * radius, -0.0000001, 1000 );
-	else
-		camera.position.target.x = -0.00000005;
-
-	return offset;
 }
