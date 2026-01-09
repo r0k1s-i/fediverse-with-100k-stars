@@ -150,21 +150,23 @@
 ```
 100k-Star-Challenge/
 ├── scripts/
-│   ├── fetch-fediverse-data.js      # Phase 1 (Node.js)
-│   └── fediverse-processor/         # Phase 2-4 (Golang)
-│       ├── main.go
-│       ├── colors.go
-│       ├── positions.go
-│       └── go.mod
+│   ├── fetch-fediverse-data.js      # Phase 1: 数据获取 (Node.js)
+│   └── fediverse-processor/         # Phase 2-4: 数据处理 (Golang)
+│       ├── main.go                  # 主程序入口
+│       ├── colors.go                # 颜色计算算法
+│       ├── positions.go             # 位置计算算法
+│       ├── types.go                 # 数据结构定义
+│       ├── go.mod                   # Go 模块配置
+│       └── fediverse-processor      # 编译后的二进制文件
 ├── data/
-│   ├── fediverse_raw.json           # Phase 1 输出
-│   └── fediverse_final.json         # Phase 4 输出
+│   ├── fediverse_raw.json           # Phase 1 输出（原始 API 数据）
+│   └── fediverse_final.json         # Phase 2-4 输出（处理后数据）
 ├── index_files/
-│   ├── fediverse.js
-│   ├── fediverse-interaction.js
-│   └── fediverse-labels.js
+│   ├── fediverse.js                 # Phase 5: WebGL 核心
+│   ├── fediverse-interaction.js     # Phase 5: 交互系统（待实现）
+│   └── fediverse-labels.js          # Phase 6: Canvas 标签（待实现）
 └── preview/
-    └── index.html
+    └── index.html                   # 预览页面
 ```
 
 ---
