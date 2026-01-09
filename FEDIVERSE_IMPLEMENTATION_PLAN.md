@@ -192,11 +192,16 @@
 
 ## ⏭️ 当前状态
 
-**更新时间**: 2026-01-09 18:08
+**更新时间**: 2026-01-09 21:55
 
-**当前阶段**: Phase 2-4 完成 ✅ → 完整数据抓取进行中 🔄
+**当前阶段**: Phase 5 完成 ✅ → Phase 6 Canvas标签渲染 🔄
 
 ### 已完成
+ - [x] **Phase 5 WebGL交互系统** - ✨ 已实现！
+   - [x] `index_files/fediverse-interaction.js` - 交互核心
+     - ✅ 鼠标悬停高亮 (Raycasting against 4k+ points)
+     - ✅ 点击显示详情面板 (Side panel integration)
+     - ✅ 性能优化: 纯数学计算替代 Raycaster.intersectPoints
  - [x] Phase 1 脚本 (`scripts/fetch-fediverse-data.js`) - 测试通过
  - [x] **Phase 2 颜色系统** - ✨ 所有38个测试通过！
   - [x] `scripts/fediverse-processor/colors.go` - 完全实现
@@ -243,14 +248,9 @@
   - 数据完整性: ✅ 所有字段正确生成
 
 ### 待执行
-- [ ] **Phase 5: WebGL交互系统** - 下一步
-  - 40k实例全部可点击
-  - WebGL拾取 + Canvas标签 + Tooltip
-- [x] **完整数据抓取** (~40,000实例，预计5-6小时)
-  - ✅ 已在后台启动: `tmux attach -t omo-fediverse-fetch`
-  - 支持断点续传: `node scripts/fetch-fediverse-data.js --resume`
-  - 使用管道: `cat data/raw.json | ./fediverse-processor -input=- -output=final.json`
-- [ ] Phase 6: Canvas标签渲染
+- [ ] **Phase 6: Canvas标签渲染** - 下一步
+  - 附近重要实例显示文字标签
+  - 避免文字重叠算法
 - [ ] Phase 7: 性能优化
 - [ ] Phase 8: 视觉增强
 
