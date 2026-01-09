@@ -32,34 +32,14 @@ function onFediverseMouseMove(event) {
         }
     }
     
-    var closestDist = Infinity;
     var closestInstance = null;
-    var ray = fediverseInteraction.raycaster.ray;
-    
-    var point = new THREE.Vector3();
-    var diff = new THREE.Vector3();
-    
-    if (typeof fediverseInstances !== 'undefined') {
-        for (var i = 0; i < fediverseInstances.length; i++) {
-            var instance = fediverseInstances[i];
-            
-            if (!instance.position) continue;
-            
-            point.set(instance.position.x, instance.position.y, instance.position.z);
-            
-            diff.subVectors(point, ray.origin);
-            var distSq = diff.cross(ray.direction).lengthSq();
-            
-            var directionDistance = diff.dot(ray.direction);
-            
-            if (directionDistance > 0 && distSq < fediverseInteraction.threshold * fediverseInteraction.threshold) {
-                var distToCam = point.distanceToSquared(camera.position);
-                if (distToCam < closestDist) {
-                    closestDist = distToCam;
-                    closestInstance = instance;
-                }
-            }
-        }
+    if (typeof fediverseInstances !== 'undefined' && typeof InteractionMath !== 'undefined') {
+        closestInstance = InteractionMath.findClosestInstance(
+            fediverseInteraction.raycaster.ray.origin,
+            fediverseInteraction.raycaster.ray.direction,
+            fediverseInstances,
+            fediverseInteraction.threshold
+        );
     }
     
     if (closestInstance) {
