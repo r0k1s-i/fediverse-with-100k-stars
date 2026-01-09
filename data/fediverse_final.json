@@ -70,7 +70,7 @@
       },
       "hex": "#8f690b",
       "debug": {
-        "ageDays": 1754,
+        "ageDays": 1755,
         "ageNorm": 0.921,
         "hashPerturbation": 23.7,
         "eraOffset": 0,
@@ -285,7 +285,7 @@
       },
       "hex": "#927410",
       "debug": {
-        "ageDays": 1754,
+        "ageDays": 1755,
         "ageNorm": 0.921,
         "hashPerturbation": 27.1,
         "eraOffset": 0,
@@ -371,7 +371,7 @@
       },
       "hex": "#941025",
       "debug": {
-        "ageDays": 1754,
+        "ageDays": 1755,
         "ageNorm": 0.921,
         "hashPerturbation": -28.4,
         "eraOffset": 0,
@@ -586,7 +586,7 @@
       },
       "hex": "#942012",
       "debug": {
-        "ageDays": 1754,
+        "ageDays": 1755,
         "ageNorm": 0.921,
         "hashPerturbation": -12.7,
         "eraOffset": 0,
@@ -629,7 +629,7 @@
       },
       "hex": "#a52c15",
       "debug": {
-        "ageDays": 1754,
+        "ageDays": 1755,
         "ageNorm": 0.921,
         "hashPerturbation": -9,
         "eraOffset": 0,
@@ -672,7 +672,7 @@
       },
       "hex": "#961321",
       "debug": {
-        "ageDays": 1754,
+        "ageDays": 1755,
         "ageNorm": 0.921,
         "hashPerturbation": -25.5,
         "eraOffset": 0,
@@ -930,7 +930,7 @@
       },
       "hex": "#8d6112",
       "debug": {
-        "ageDays": 1754,
+        "ageDays": 1755,
         "ageNorm": 0.921,
         "hashPerturbation": 19.2,
         "eraOffset": 0,
@@ -973,7 +973,7 @@
       },
       "hex": "#a23b15",
       "debug": {
-        "ageDays": 1754,
+        "ageDays": 1755,
         "ageNorm": 0.921,
         "hashPerturbation": -2.9,
         "eraOffset": 0,
@@ -1102,7 +1102,7 @@
       },
       "hex": "#a05015",
       "debug": {
-        "ageDays": 1754,
+        "ageDays": 1755,
         "ageNorm": 0.921,
         "hashPerturbation": 6.2,
         "eraOffset": 0,
@@ -1188,7 +1188,7 @@
       },
       "hex": "#8b2d13",
       "debug": {
-        "ageDays": 1754,
+        "ageDays": 1755,
         "ageNorm": 0.921,
         "hashPerturbation": -5.9,
         "eraOffset": 0,
@@ -1274,7 +1274,7 @@
       },
       "hex": "#a01627",
       "debug": {
-        "ageDays": 1754,
+        "ageDays": 1755,
         "ageNorm": 0.921,
         "hashPerturbation": -26.7,
         "eraOffset": 0,
@@ -1317,7 +1317,7 @@
       },
       "hex": "#a24a16",
       "debug": {
-        "ageDays": 1754,
+        "ageDays": 1755,
         "ageNorm": 0.921,
         "hashPerturbation": 3.2,
         "eraOffset": 0,
@@ -1360,7 +1360,7 @@
       },
       "hex": "#97152a",
       "debug": {
-        "ageDays": 1754,
+        "ageDays": 1755,
         "ageNorm": 0.921,
         "hashPerturbation": -28.7,
         "eraOffset": 0,
@@ -1446,7 +1446,7 @@
       },
       "hex": "#954015",
       "debug": {
-        "ageDays": 1754,
+        "ageDays": 1755,
         "ageNorm": 0.921,
         "hashPerturbation": 1.1,
         "eraOffset": 0,
@@ -1489,7 +1489,7 @@
       },
       "hex": "#986b15",
       "debug": {
-        "ageDays": 1754,
+        "ageDays": 1755,
         "ageNorm": 0.921,
         "hashPerturbation": 20.1,
         "eraOffset": 0,
@@ -1575,7 +1575,7 @@
       },
       "hex": "#ae7818",
       "debug": {
-        "ageDays": 1754,
+        "ageDays": 1755,
         "ageNorm": 0.921,
         "hashPerturbation": 19.3,
         "eraOffset": 0,
@@ -1584,8 +1584,8 @@
       }
     },
     "position": {
-      "x": -21650.6,
-      "y": -12500,
+      "x": -25000,
+      "y": 0,
       "z": 0
     },
     "positionType": "galaxy_center"
@@ -1670,8 +1670,8 @@
       }
     },
     "position": {
-      "x": -25000,
-      "y": 0,
+      "x": -21650.6,
+      "y": -12500,
       "z": 0
     },
     "positionType": "galaxy_center"
@@ -1704,7 +1704,7 @@
       },
       "hex": "#8f1420",
       "debug": {
-        "ageDays": 1754,
+        "ageDays": 1755,
         "ageNorm": 0.921,
         "hashPerturbation": -24.7,
         "eraOffset": 0,
@@ -1790,7 +1790,7 @@
       },
       "hex": "#bd601b",
       "debug": {
-        "ageDays": 1754,
+        "ageDays": 1755,
         "ageNorm": 0.921,
         "hashPerturbation": 6.6,
         "eraOffset": 0,
@@ -2048,7 +2048,7 @@
       },
       "hex": "#861326",
       "debug": {
-        "ageDays": 1754,
+        "ageDays": 1755,
         "ageNorm": 0.921,
         "hashPerturbation": -28.8,
         "eraOffset": 0,
@@ -2091,7 +2091,7 @@
       },
       "hex": "#a0172a",
       "debug": {
-        "ageDays": 1754,
+        "ageDays": 1755,
         "ageNorm": 0.921,
         "hashPerturbation": -27.3,
         "eraOffset": 0,
@@ -2134,7 +2134,7 @@
       },
       "hex": "#98161f",
       "debug": {
-        "ageDays": 1754,
+        "ageDays": 1755,
         "ageNorm": 0.921,
         "hashPerturbation": -23,
         "eraOffset": 0,
@@ -2159,11 +2159,6 @@
       "monthly_active_users": 1651
     },
     "first_seen_at": "2022-11-03T09:01:41.000000Z",
-    "creation_time": {
-      "created_at": "2022-11-03T09:01:41.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    },
     "color": {
       "hsl": {
         "h": 57.8,
@@ -2202,11 +2197,6 @@
       "monthly_active_users": 2509
     },
     "first_seen_at": "2023-06-05T16:30:06.000000Z",
-    "creation_time": {
-      "created_at": "2023-06-05T16:30:06.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    },
     "color": {
       "hsl": {
         "h": 46.5,
@@ -2245,11 +2235,6 @@
       "monthly_active_users": 825
     },
     "first_seen_at": "2023-01-10T11:02:38.000000Z",
-    "creation_time": {
-      "created_at": "2023-01-10T11:02:38.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    },
     "color": {
       "hsl": {
         "h": 13.6,
@@ -2288,11 +2273,6 @@
       "monthly_active_users": 2409
     },
     "first_seen_at": "2024-11-06T08:33:13.000000Z",
-    "creation_time": {
-      "created_at": "2024-11-06T08:33:13.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    },
     "color": {
       "hsl": {
         "h": 57.8,
@@ -2315,8 +2295,8 @@
       }
     },
     "position": {
-      "x": -0,
-      "y": -25000,
+      "x": -12500,
+      "y": -21650.6,
       "z": 0
     },
     "positionType": "galaxy_center"
@@ -2331,11 +2311,6 @@
       "monthly_active_users": 1853
     },
     "first_seen_at": "2022-11-12T13:30:25.000000Z",
-    "creation_time": {
-      "created_at": "2022-11-12T13:30:25.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    },
     "color": {
       "hsl": {
         "h": 31.2,
@@ -2374,11 +2349,6 @@
       "monthly_active_users": 400
     },
     "first_seen_at": "2025-02-11T02:15:32.000000Z",
-    "creation_time": {
-      "created_at": "2025-02-11T02:15:32.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    },
     "color": {
       "hsl": {
         "h": 114.3,
@@ -2417,11 +2387,6 @@
       "monthly_active_users": 1695
     },
     "first_seen_at": "2021-03-21T06:52:20.000000Z",
-    "creation_time": {
-      "created_at": "2021-03-21T06:52:20.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    },
     "color": {
       "hsl": {
         "h": 2.5,
@@ -2435,7 +2400,7 @@
       },
       "hex": "#911a15",
       "debug": {
-        "ageDays": 1754,
+        "ageDays": 1755,
         "ageNorm": 0.921,
         "hashPerturbation": -16.5,
         "eraOffset": 0,
@@ -2460,11 +2425,6 @@
       "monthly_active_users": 697
     },
     "first_seen_at": "2021-03-30T20:10:43.000000Z",
-    "creation_time": {
-      "created_at": "2021-03-30T20:10:43.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    },
     "color": {
       "hsl": {
         "h": 22.3,
@@ -2503,11 +2463,6 @@
       "monthly_active_users": 0
     },
     "first_seen_at": "2021-03-21T07:02:57.000000Z",
-    "creation_time": {
-      "created_at": "2021-03-21T07:02:57.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    },
     "color": {
       "hsl": {
         "h": 2.7,
@@ -2521,7 +2476,7 @@
       },
       "hex": "#851914",
       "debug": {
-        "ageDays": 1754,
+        "ageDays": 1755,
         "ageNorm": 0.921,
         "hashPerturbation": -16.2,
         "eraOffset": 0,
@@ -2546,11 +2501,6 @@
       "monthly_active_users": 1157
     },
     "first_seen_at": "2021-03-21T06:59:35.000000Z",
-    "creation_time": {
-      "created_at": "2021-03-21T06:59:35.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    },
     "color": {
       "hsl": {
         "h": 34.9,
@@ -2564,7 +2514,7 @@
       },
       "hex": "#8e5b15",
       "debug": {
-        "ageDays": 1754,
+        "ageDays": 1755,
         "ageNorm": 0.921,
         "hashPerturbation": 15.9,
         "eraOffset": 0,
@@ -2589,11 +2539,6 @@
       "monthly_active_users": 448
     },
     "first_seen_at": "2022-04-27T21:01:55.000000Z",
-    "creation_time": {
-      "created_at": "2022-04-27T21:01:55.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    },
     "color": {
       "hsl": {
         "h": 22.6,
@@ -2632,11 +2577,6 @@
       "monthly_active_users": 144
     },
     "first_seen_at": "2024-09-23T18:02:48.000000Z",
-    "creation_time": {
-      "created_at": "2024-09-23T18:02:48.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    },
     "color": {
       "hsl": {
         "h": 96,
@@ -2675,11 +2615,6 @@
       "monthly_active_users": 963
     },
     "first_seen_at": "2022-10-14T22:01:59.000000Z",
-    "creation_time": {
-      "created_at": "2022-10-14T22:01:59.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    },
     "color": {
       "hsl": {
         "h": 51.7,
@@ -2718,11 +2653,6 @@
       "monthly_active_users": 177
     },
     "first_seen_at": "2022-12-16T01:00:18.000000Z",
-    "creation_time": {
-      "created_at": "2022-12-16T01:00:18.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    },
     "color": {
       "hsl": {
         "h": 43.8,
@@ -2761,11 +2691,6 @@
       "monthly_active_users": 813
     },
     "first_seen_at": "2022-11-14T15:02:19.000000Z",
-    "creation_time": {
-      "created_at": "2022-11-14T15:02:19.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    },
     "color": {
       "hsl": {
         "h": 38.7,
@@ -2804,11 +2729,6 @@
       "monthly_active_users": 1988
     },
     "first_seen_at": "2021-03-21T07:00:46.000000Z",
-    "creation_time": {
-      "created_at": "2021-03-21T07:00:46.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    },
     "color": {
       "hsl": {
         "h": 349.8,
@@ -2822,7 +2742,7 @@
       },
       "hex": "#94162c",
       "debug": {
-        "ageDays": 1754,
+        "ageDays": 1755,
         "ageNorm": 0.921,
         "hashPerturbation": -29.2,
         "eraOffset": 0,
@@ -2847,11 +2767,6 @@
       "monthly_active_users": 1857
     },
     "first_seen_at": "2023-12-09T06:10:02.000000Z",
-    "creation_time": {
-      "created_at": "2023-12-09T06:10:02.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    },
     "color": {
       "hsl": {
         "h": 24.9,
@@ -2874,8 +2789,8 @@
       }
     },
     "position": {
-      "x": 12500,
-      "y": -21650.6,
+      "x": -0,
+      "y": -25000,
       "z": 0
     },
     "positionType": "galaxy_center"
@@ -2890,11 +2805,6 @@
       "monthly_active_users": 1787
     },
     "first_seen_at": "2022-05-02T22:07:55.000000Z",
-    "creation_time": {
-      "created_at": "2022-05-02T22:07:55.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    },
     "color": {
       "hsl": {
         "h": 28,
@@ -2933,11 +2843,6 @@
       "monthly_active_users": 3228
     },
     "first_seen_at": "2021-03-21T07:03:03.000000Z",
-    "creation_time": {
-      "created_at": "2021-03-21T07:03:03.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    },
     "color": {
       "hsl": {
         "h": 353.6,
@@ -2951,7 +2856,7 @@
       },
       "hex": "#a01827",
       "debug": {
-        "ageDays": 1754,
+        "ageDays": 1755,
         "ageNorm": 0.921,
         "hashPerturbation": -25.4,
         "eraOffset": 0,
@@ -2976,11 +2881,6 @@
       "monthly_active_users": 2670
     },
     "first_seen_at": "2022-06-16T02:01:15.000000Z",
-    "creation_time": {
-      "created_at": "2022-06-16T02:01:15.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    },
     "color": {
       "hsl": {
         "h": 23.5,
@@ -3019,11 +2919,6 @@
       "monthly_active_users": 224
     },
     "first_seen_at": "2021-07-08T19:46:42.000000Z",
-    "creation_time": {
-      "created_at": "2021-07-08T19:46:42.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    },
     "color": {
       "hsl": {
         "h": 36.4,
@@ -3046,7 +2941,7 @@
       }
     },
     "position": {
-      "x": -12500,
+      "x": 12500,
       "y": -21650.6,
       "z": 0
     },
@@ -3062,11 +2957,6 @@
       "monthly_active_users": 3645
     },
     "first_seen_at": "2021-03-21T07:03:03.000000Z",
-    "creation_time": {
-      "created_at": "2021-03-21T07:03:03.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    },
     "color": {
       "hsl": {
         "h": 12.6,
@@ -3080,7 +2970,7 @@
       },
       "hex": "#a43619",
       "debug": {
-        "ageDays": 1754,
+        "ageDays": 1755,
         "ageNorm": 0.921,
         "hashPerturbation": -6.3,
         "eraOffset": 0,
@@ -3105,11 +2995,6 @@
       "monthly_active_users": 2973
     },
     "first_seen_at": "2021-03-21T07:02:21.000000Z",
-    "creation_time": {
-      "created_at": "2021-03-21T07:02:21.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    },
     "color": {
       "hsl": {
         "h": 0.7,
@@ -3123,7 +3008,7 @@
       },
       "hex": "#9f1918",
       "debug": {
-        "ageDays": 1754,
+        "ageDays": 1755,
         "ageNorm": 0.921,
         "hashPerturbation": -18.3,
         "eraOffset": 0,
@@ -3148,11 +3033,6 @@
       "monthly_active_users": 0
     },
     "first_seen_at": "2025-03-17T05:23:33.000000Z",
-    "creation_time": {
-      "created_at": "2025-03-17T05:23:33.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    },
     "color": {
       "hsl": {
         "h": 109.4,
@@ -3191,11 +3071,6 @@
       "monthly_active_users": 1410
     },
     "first_seen_at": "2021-03-21T06:54:58.000000Z",
-    "creation_time": {
-      "created_at": "2021-03-21T06:54:58.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    },
     "color": {
       "hsl": {
         "h": 4.8,
@@ -3209,7 +3084,7 @@
       },
       "hex": "#912016",
       "debug": {
-        "ageDays": 1754,
+        "ageDays": 1755,
         "ageNorm": 0.921,
         "hashPerturbation": -14.2,
         "eraOffset": 0,
@@ -3234,11 +3109,6 @@
       "monthly_active_users": 487
     },
     "first_seen_at": "2021-05-21T01:56:03.000000Z",
-    "creation_time": {
-      "created_at": "2021-05-21T01:56:03.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    },
     "color": {
       "hsl": {
         "h": 22.2,
@@ -3277,11 +3147,6 @@
       "monthly_active_users": 699
     },
     "first_seen_at": "2021-03-21T07:03:00.000000Z",
-    "creation_time": {
-      "created_at": "2021-03-21T07:03:00.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    },
     "color": {
       "hsl": {
         "h": 7.5,
@@ -3295,7 +3160,7 @@
       },
       "hex": "#8b2415",
       "debug": {
-        "ageDays": 1754,
+        "ageDays": 1755,
         "ageNorm": 0.921,
         "hashPerturbation": -11.5,
         "eraOffset": 0,
@@ -3320,11 +3185,6 @@
       "monthly_active_users": 1460
     },
     "first_seen_at": "2021-03-21T07:01:20.000000Z",
-    "creation_time": {
-      "created_at": "2021-03-21T07:01:20.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    },
     "color": {
       "hsl": {
         "h": 38.3,
@@ -3338,7 +3198,7 @@
       },
       "hex": "#926516",
       "debug": {
-        "ageDays": 1754,
+        "ageDays": 1755,
         "ageNorm": 0.921,
         "hashPerturbation": 19.3,
         "eraOffset": 0,
@@ -3363,11 +3223,6 @@
       "monthly_active_users": 255
     },
     "first_seen_at": "2022-05-05T21:01:42.000000Z",
-    "creation_time": {
-      "created_at": "2022-05-05T21:01:42.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    },
     "color": {
       "hsl": {
         "h": 25.5,
@@ -3406,11 +3261,6 @@
       "monthly_active_users": 0
     },
     "first_seen_at": "2024-11-15T15:29:26.000000Z",
-    "creation_time": {
-      "created_at": "2024-11-15T15:29:26.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    },
     "color": {
       "hsl": {
         "h": 62.6,
@@ -3438,1625 +3288,5 @@
       "z": -605.2
     },
     "positionType": "galaxy_orbital"
-  },
-  {
-    "domain": "newsie.social",
-    "software": {
-      "name": "Mastodon"
-    },
-    "stats": {
-      "user_count": 20727,
-      "monthly_active_users": 595
-    },
-    "first_seen_at": "2022-11-01T08:01:28.000000Z",
-    "creation_time": {
-      "created_at": "2022-11-01T08:01:28.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    },
-    "color": {
-      "hsl": {
-        "h": 48.2,
-        "s": 73.3,
-        "l": 31.3
-      },
-      "rgb": {
-        "r": 138,
-        "g": 115,
-        "b": 21
-      },
-      "hex": "#8a7315",
-      "debug": {
-        "ageDays": 1164,
-        "ageNorm": 0.87,
-        "hashPerturbation": 17.1,
-        "eraOffset": 0,
-        "userNorm": 0.666,
-        "activityRatio": 0.029
-      }
-    },
-    "position": {
-      "x": 4318.9,
-      "y": 5484.6,
-      "z": 520.8
-    },
-    "positionType": "mastodon_orbital"
-  },
-  {
-    "domain": "pixelfed.tokyo",
-    "software": {
-      "name": "Pixelfed"
-    },
-    "stats": {
-      "user_count": 20647,
-      "monthly_active_users": 470
-    },
-    "first_seen_at": "2021-03-21T06:59:34.000000Z",
-    "creation_time": {
-      "created_at": "2021-03-21T06:59:34.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    },
-    "color": {
-      "hsl": {
-        "h": 27.6,
-        "s": 73.3,
-        "l": 31
-      },
-      "rgb": {
-        "r": 137,
-        "g": 74,
-        "b": 21
-      },
-      "hex": "#894a15",
-      "debug": {
-        "ageDays": 1754,
-        "ageNorm": 0.921,
-        "hashPerturbation": 8.6,
-        "eraOffset": 0,
-        "userNorm": 0.666,
-        "activityRatio": 0.023
-      }
-    },
-    "position": {
-      "x": 20315.8,
-      "y": 10824,
-      "z": 338.5
-    },
-    "positionType": "galaxy_orbital"
-  },
-  {
-    "domain": "sushi.ski",
-    "software": {
-      "name": "Misskey"
-    },
-    "stats": {
-      "user_count": 19576,
-      "monthly_active_users": 825
-    },
-    "first_seen_at": "2021-03-21T07:02:29.000000Z",
-    "creation_time": {
-      "created_at": "2021-03-21T07:02:29.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    },
-    "color": {
-      "hsl": {
-        "h": 28.4,
-        "s": 73.1,
-        "l": 31.9
-      },
-      "rgb": {
-        "r": 141,
-        "g": 78,
-        "b": 22
-      },
-      "hex": "#8d4e16",
-      "debug": {
-        "ageDays": 1754,
-        "ageNorm": 0.921,
-        "hashPerturbation": 9.5,
-        "eraOffset": 0,
-        "userNorm": 0.663,
-        "activityRatio": 0.042
-      }
-    },
-    "position": {
-      "x": 24026.5,
-      "y": -1482.9,
-      "z": 1279.2
-    },
-    "positionType": "galaxy_orbital"
-  },
-  {
-    "domain": "lemmy.dbzer0.com",
-    "software": {
-      "name": "Lemmy"
-    },
-    "stats": {
-      "user_count": 19165,
-      "monthly_active_users": 1412
-    },
-    "first_seen_at": "2023-06-17T21:31:46.000000Z",
-    "creation_time": {
-      "created_at": "2023-06-17T21:31:46.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    },
-    "color": {
-      "hsl": {
-        "h": 10.8,
-        "s": 73.1,
-        "l": 33.3
-      },
-      "rgb": {
-        "r": 147,
-        "g": 45,
-        "b": 23
-      },
-      "hex": "#932d17",
-      "debug": {
-        "ageDays": 936,
-        "ageNorm": 0.844,
-        "hashPerturbation": -26.8,
-        "eraOffset": 0,
-        "userNorm": 0.661,
-        "activityRatio": 0.074
-      }
-    },
-    "position": {
-      "x": 14536.5,
-      "y": 22366.6,
-      "z": -392.7
-    },
-    "positionType": "galaxy_orbital"
-  },
-  {
-    "domain": "nrw.social",
-    "software": {
-      "name": "Mastodon"
-    },
-    "stats": {
-      "user_count": 18939,
-      "monthly_active_users": 2553
-    },
-    "first_seen_at": "2021-03-21T07:01:40.000000Z",
-    "creation_time": {
-      "created_at": "2021-03-21T07:01:40.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    },
-    "color": {
-      "hsl": {
-        "h": 35.3,
-        "s": 73,
-        "l": 36.1
-      },
-      "rgb": {
-        "r": 159,
-        "g": 104,
-        "b": 25
-      },
-      "hex": "#9f6819",
-      "debug": {
-        "ageDays": 1754,
-        "ageNorm": 0.921,
-        "hashPerturbation": 16.3,
-        "eraOffset": 0,
-        "userNorm": 0.66,
-        "activityRatio": 0.135
-      }
-    },
-    "position": {
-      "x": 4218.7,
-      "y": 5358.9,
-      "z": 86.3
-    },
-    "positionType": "mastodon_orbital"
-  },
-  {
-    "domain": "tomes.tchncs.de",
-    "software": {
-      "name": "Bookwyrm"
-    },
-    "stats": {
-      "user_count": 18734,
-      "monthly_active_users": 20
-    },
-    "first_seen_at": "2023-03-06T20:03:07.000000Z",
-    "creation_time": {
-      "created_at": "2023-03-06T20:03:07.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    },
-    "color": {
-      "hsl": {
-        "h": 61.3,
-        "s": 73,
-        "l": 30
-      },
-      "rgb": {
-        "r": 130,
-        "g": 133,
-        "b": 21
-      },
-      "hex": "#828515",
-      "debug": {
-        "ageDays": 1039,
-        "ageNorm": 0.856,
-        "hashPerturbation": 26.8,
-        "eraOffset": 0,
-        "userNorm": 0.66,
-        "activityRatio": 0.001
-      }
-    },
-    "position": {
-      "x": 21650.6,
-      "y": -12500,
-      "z": 0
-    },
-    "positionType": "galaxy_center"
-  },
-  {
-    "domain": "defcon.social",
-    "software": {
-      "name": "Mastodon"
-    },
-    "stats": {
-      "user_count": 18524,
-      "monthly_active_users": 1941
-    },
-    "first_seen_at": "2022-11-16T02:30:12.000000Z",
-    "creation_time": {
-      "created_at": "2022-11-16T02:30:12.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    },
-    "color": {
-      "hsl": {
-        "h": 48.9,
-        "s": 72.9,
-        "l": 34.7
-      },
-      "rgb": {
-        "r": 153,
-        "g": 129,
-        "b": 24
-      },
-      "hex": "#998118",
-      "debug": {
-        "ageDays": 1150,
-        "ageNorm": 0.869,
-        "hashPerturbation": 17.4,
-        "eraOffset": 0,
-        "userNorm": 0.659,
-        "activityRatio": 0.105
-      }
-    },
-    "position": {
-      "x": 4387.6,
-      "y": 5416.4,
-      "z": 311.6
-    },
-    "positionType": "mastodon_orbital"
-  },
-  {
-    "domain": "mastodon-japan.net",
-    "software": {
-      "name": "Mastodon"
-    },
-    "stats": {
-      "user_count": 18157,
-      "monthly_active_users": 1835
-    },
-    "first_seen_at": "2022-11-09T10:03:11.000000Z",
-    "creation_time": {
-      "created_at": "2022-11-09T10:03:11.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    },
-    "color": {
-      "hsl": {
-        "h": 17.8,
-        "s": 72.9,
-        "l": 34.5
-      },
-      "rgb": {
-        "r": 152,
-        "g": 62,
-        "b": 24
-      },
-      "hex": "#983e18",
-      "debug": {
-        "ageDays": 1156,
-        "ageNorm": 0.87,
-        "hashPerturbation": -13.5,
-        "eraOffset": 0,
-        "userNorm": 0.658,
-        "activityRatio": 0.101
-      }
-    },
-    "position": {
-      "x": -227,
-      "y": 1482.6,
-      "z": 544.9
-    },
-    "positionType": "mastodon_orbital"
-  },
-  {
-    "domain": "o3o.ca",
-    "software": {
-      "name": "Mastodon"
-    },
-    "stats": {
-      "user_count": 17963,
-      "monthly_active_users": 2447
-    },
-    "first_seen_at": "2021-03-21T07:03:06.000000Z",
-    "creation_time": {
-      "created_at": "2021-03-21T07:03:06.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    },
-    "color": {
-      "hsl": {
-        "h": 18.7,
-        "s": 72.8,
-        "l": 36.1
-      },
-      "rgb": {
-        "r": 159,
-        "g": 67,
-        "b": 25
-      },
-      "hex": "#9f4319",
-      "debug": {
-        "ageDays": 1754,
-        "ageNorm": 0.921,
-        "hashPerturbation": -0.3,
-        "eraOffset": 0,
-        "userNorm": 0.657,
-        "activityRatio": 0.136
-      }
-    },
-    "position": {
-      "x": 6726.4,
-      "y": 35.8,
-      "z": 964.8
-    },
-    "positionType": "mastodon_orbital"
-  },
-  {
-    "domain": "oekakiskey.com",
-    "software": {
-      "name": "Misskey"
-    },
-    "stats": {
-      "user_count": 17857,
-      "monthly_active_users": 0
-    },
-    "first_seen_at": "2023-07-02T15:30:13.000000Z",
-    "creation_time": {
-      "created_at": "2023-07-02T15:30:13.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    },
-    "color": {
-      "hsl": {
-        "h": 22.3,
-        "s": 72.8,
-        "l": 30
-      },
-      "rgb": {
-        "r": 132,
-        "g": 62,
-        "b": 21
-      },
-      "hex": "#843e15",
-      "debug": {
-        "ageDays": 921,
-        "ageNorm": 0.842,
-        "hashPerturbation": -15.7,
-        "eraOffset": 0,
-        "userNorm": 0.656,
-        "activityRatio": 0
-      }
-    },
-    "position": {
-      "x": 25165.1,
-      "y": 2209.6,
-      "z": -95.7
-    },
-    "positionType": "galaxy_orbital"
-  },
-  {
-    "domain": "p.lu",
-    "software": {
-      "name": "PeerTube"
-    },
-    "stats": {
-      "user_count": 17758,
-      "monthly_active_users": 15
-    },
-    "first_seen_at": "2021-03-21T07:02:00.000000Z",
-    "creation_time": {
-      "created_at": "2021-03-21T07:02:00.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    },
-    "color": {
-      "hsl": {
-        "h": 14.8,
-        "s": 72.8,
-        "l": 30
-      },
-      "rgb": {
-        "r": 132,
-        "g": 48,
-        "b": 21
-      },
-      "hex": "#843015",
-      "debug": {
-        "ageDays": 1754,
-        "ageNorm": 0.921,
-        "hashPerturbation": -4.2,
-        "eraOffset": 0,
-        "userNorm": 0.656,
-        "activityRatio": 0.001
-      }
-    },
-    "position": {
-      "x": -14384.7,
-      "y": 22535.4,
-      "z": 769.4
-    },
-    "positionType": "galaxy_orbital"
-  },
-  {
-    "domain": "mastodon.nu",
-    "software": {
-      "name": "Mastodon"
-    },
-    "stats": {
-      "user_count": 17472,
-      "monthly_active_users": 1238
-    },
-    "first_seen_at": "2021-03-21T06:33:26.000000Z",
-    "creation_time": {
-      "created_at": "2021-03-21T06:33:26.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    },
-    "color": {
-      "hsl": {
-        "h": 41,
-        "s": 72.7,
-        "l": 33.2
-      },
-      "rgb": {
-        "r": 146,
-        "g": 107,
-        "b": 23
-      },
-      "hex": "#926b17",
-      "debug": {
-        "ageDays": 1755,
-        "ageNorm": 0.921,
-        "hashPerturbation": 22,
-        "eraOffset": 0,
-        "userNorm": 0.655,
-        "activityRatio": 0.071
-      }
-    },
-    "position": {
-      "x": 5020.4,
-      "y": 5797.4,
-      "z": -503
-    },
-    "positionType": "mastodon_orbital"
-  },
-  {
-    "domain": "abdl.link",
-    "software": {
-      "name": "Mastodon"
-    },
-    "stats": {
-      "user_count": 17411,
-      "monthly_active_users": 286
-    },
-    "first_seen_at": "2021-03-21T07:02:54.000000Z",
-    "creation_time": {
-      "created_at": "2021-03-21T07:02:54.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    },
-    "color": {
-      "hsl": {
-        "h": 4.8,
-        "s": 72.7,
-        "l": 30.7
-      },
-      "rgb": {
-        "r": 135,
-        "g": 30,
-        "b": 21
-      },
-      "hex": "#871e15",
-      "debug": {
-        "ageDays": 1754,
-        "ageNorm": 0.921,
-        "hashPerturbation": -14.2,
-        "eraOffset": 0,
-        "userNorm": 0.655,
-        "activityRatio": 0.016
-      }
-    },
-    "position": {
-      "x": -115,
-      "y": 1334.3,
-      "z": -884.2
-    },
-    "positionType": "mastodon_orbital"
-  },
-  {
-    "domain": "qlub.social",
-    "software": {
-      "name": "Mastodon"
-    },
-    "stats": {
-      "user_count": 17357,
-      "monthly_active_users": 902
-    },
-    "first_seen_at": "2025-02-16T14:44:52.000000Z",
-    "creation_time": {
-      "created_at": "2025-02-16T14:44:52.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    },
-    "color": {
-      "hsl": {
-        "h": 91.4,
-        "s": 72.7,
-        "l": 32.3
-      },
-      "rgb": {
-        "r": 80,
-        "g": 142,
-        "b": 22
-      },
-      "hex": "#508e16",
-      "debug": {
-        "ageDays": 326,
-        "ageNorm": 0.714,
-        "hashPerturbation": 2.7,
-        "eraOffset": 20,
-        "userNorm": 0.655,
-        "activityRatio": 0.052
-      }
-    },
-    "position": {
-      "x": 6478.6,
-      "y": -443,
-      "z": -258.1
-    },
-    "positionType": "mastodon_orbital"
-  },
-  {
-    "domain": "mastodontech.de",
-    "software": {
-      "name": "Mastodon"
-    },
-    "stats": {
-      "user_count": 16547,
-      "monthly_active_users": 1401
-    },
-    "first_seen_at": "2021-03-21T06:54:59.000000Z",
-    "creation_time": {
-      "created_at": "2021-03-21T06:54:59.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    },
-    "color": {
-      "hsl": {
-        "h": 12.3,
-        "s": 72.6,
-        "l": 33.8
-      },
-      "rgb": {
-        "r": 149,
-        "g": 49,
-        "b": 24
-      },
-      "hex": "#953118",
-      "debug": {
-        "ageDays": 1754,
-        "ageNorm": 0.921,
-        "hashPerturbation": -6.7,
-        "eraOffset": 0,
-        "userNorm": 0.651,
-        "activityRatio": 0.085
-      }
-    },
-    "position": {
-      "x": 6977.4,
-      "y": 858.4,
-      "z": -910
-    },
-    "positionType": "mastodon_orbital"
-  },
-  {
-    "domain": "torikago-suki.net",
-    "software": {
-      "name": "Misskey"
-    },
-    "stats": {
-      "user_count": 16532,
-      "monthly_active_users": 0
-    },
-    "first_seen_at": "2024-12-29T15:26:47.000000Z",
-    "creation_time": {
-      "created_at": "2024-12-29T15:26:47.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    },
-    "color": {
-      "hsl": {
-        "h": 92,
-        "s": 72.6,
-        "l": 30
-      },
-      "rgb": {
-        "r": 73,
-        "g": 132,
-        "b": 21
-      },
-      "hex": "#498415",
-      "debug": {
-        "ageDays": 375,
-        "ageNorm": 0.731,
-        "hashPerturbation": 7.5,
-        "eraOffset": 20,
-        "userNorm": 0.651,
-        "activityRatio": 0
-      }
-    },
-    "position": {
-      "x": 23554.6,
-      "y": -1445.4,
-      "z": 924.9
-    },
-    "positionType": "galaxy_orbital"
-  },
-  {
-    "domain": "flipboard.social",
-    "software": {
-      "name": "Mastodon"
-    },
-    "stats": {
-      "user_count": 16093,
-      "monthly_active_users": 2860
-    },
-    "first_seen_at": "2023-01-22T03:30:18.000000Z",
-    "creation_time": {
-      "created_at": "2023-01-22T03:30:18.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    },
-    "color": {
-      "hsl": {
-        "h": 29.7,
-        "s": 72.5,
-        "l": 38
-      },
-      "rgb": {
-        "r": 167,
-        "g": 96,
-        "b": 27
-      },
-      "hex": "#a7601b",
-      "debug": {
-        "ageDays": 1083,
-        "ageNorm": 0.861,
-        "hashPerturbation": -3.6,
-        "eraOffset": 0,
-        "userNorm": 0.649,
-        "activityRatio": 0.178
-      }
-    },
-    "position": {
-      "x": 6489.4,
-      "y": 589.7,
-      "z": -19.3
-    },
-    "positionType": "mastodon_orbital"
-  },
-  {
-    "domain": "misskey-square.net",
-    "software": {
-      "name": "Misskey"
-    },
-    "stats": {
-      "user_count": 16021,
-      "monthly_active_users": 0
-    },
-    "first_seen_at": "2023-06-17T03:23:46.000000Z",
-    "creation_time": {
-      "created_at": "2023-06-17T03:23:46.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    },
-    "color": {
-      "hsl": {
-        "h": 30.8,
-        "s": 72.5,
-        "l": 30
-      },
-      "rgb": {
-        "r": 132,
-        "g": 78,
-        "b": 21
-      },
-      "hex": "#844e15",
-      "debug": {
-        "ageDays": 937,
-        "ageNorm": 0.844,
-        "hashPerturbation": -6.8,
-        "eraOffset": 0,
-        "userNorm": 0.649,
-        "activityRatio": 0
-      }
-    },
-    "position": {
-      "x": 23309.3,
-      "y": 1451.2,
-      "z": 341.7
-    },
-    "positionType": "galaxy_orbital"
-  },
-  {
-    "domain": "ieji.de",
-    "software": {
-      "name": "Mastodon"
-    },
-    "stats": {
-      "user_count": 15909,
-      "monthly_active_users": 1050
-    },
-    "first_seen_at": "2021-03-21T06:59:34.000000Z",
-    "creation_time": {
-      "created_at": "2021-03-21T06:59:34.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    },
-    "color": {
-      "hsl": {
-        "h": 11.3,
-        "s": 72.4,
-        "l": 33
-      },
-      "rgb": {
-        "r": 145,
-        "g": 46,
-        "b": 23
-      },
-      "hex": "#912e17",
-      "debug": {
-        "ageDays": 1754,
-        "ageNorm": 0.921,
-        "hashPerturbation": -7.6,
-        "eraOffset": 0,
-        "userNorm": 0.649,
-        "activityRatio": 0.066
-      }
-    },
-    "position": {
-      "x": 7056.3,
-      "y": 970.7,
-      "z": -897.3
-    },
-    "positionType": "mastodon_orbital"
-  },
-  {
-    "domain": "skeptikon.fr",
-    "software": {
-      "name": "PeerTube"
-    },
-    "stats": {
-      "user_count": 15652,
-      "monthly_active_users": 665
-    },
-    "first_seen_at": "2021-03-21T07:03:00.000000Z",
-    "creation_time": {
-      "created_at": "2021-03-21T07:03:00.000Z",
-      "source": "first_seen_at",
-      "reliable": true
-    },
-    "color": {
-      "hsl": {
-        "h": 47,
-        "s": 72.4,
-        "l": 31.9
-      },
-      "rgb": {
-        "r": 140,
-        "g": 115,
-        "b": 22
-      },
-      "hex": "#8c7316",
-      "debug": {
-        "ageDays": 1754,
-        "ageNorm": 0.921,
-        "hashPerturbation": 28.1,
-        "eraOffset": 0,
-        "userNorm": 0.648,
-        "activityRatio": 0.042
-      }
-    },
-    "position": {
-      "x": -10287,
-      "y": 21193.6,
-      "z": -102.2
-    },
-    "positionType": "galaxy_orbital"
-  },
-  {
-    "domain": "tech.lgbt",
-    "software": {
-      "name": "Mastodon"
-    },
-    "stats": {
-      "user_count": 15457,
-      "monthly_active_users": 2492
-    },
-    "first_seen_at": "2021-03-21T07:03:03.000000Z",
-    "color": {
-      "hsl": {
-        "h": 10.6,
-        "s": 72.3,
-        "l": 37.3
-      },
-      "rgb": {
-        "r": 164,
-        "g": 51,
-        "b": 26
-      },
-      "hex": "#a4331a",
-      "debug": {
-        "ageDays": 1754,
-        "ageNorm": 0.921,
-        "hashPerturbation": -8.4,
-        "eraOffset": 0,
-        "userNorm": 0.647,
-        "activityRatio": 0.161
-      }
-    },
-    "position": {
-      "x": 7054.3,
-      "y": 1138.4,
-      "z": -683.9
-    },
-    "positionType": "mastodon_orbital"
-  },
-  {
-    "domain": "theblower.au",
-    "software": {
-      "name": "Mastodon"
-    },
-    "stats": {
-      "user_count": 15446,
-      "monthly_active_users": 226
-    },
-    "first_seen_at": "2022-11-09T11:03:03.000000Z",
-    "color": {
-      "hsl": {
-        "h": 36.8,
-        "s": 72.3,
-        "l": 30.7
-      },
-      "rgb": {
-        "r": 135,
-        "g": 91,
-        "b": 22
-      },
-      "hex": "#875b16",
-      "debug": {
-        "ageDays": 1156,
-        "ageNorm": 0.87,
-        "hashPerturbation": 5.5,
-        "eraOffset": 0,
-        "userNorm": 0.647,
-        "activityRatio": 0.015
-      }
-    },
-    "position": {
-      "x": 6950.1,
-      "y": -686.8,
-      "z": 1041.4
-    },
-    "positionType": "mastodon_orbital"
-  },
-  {
-    "domain": "events.pol-rev.com",
-    "software": {
-      "name": "Mobilizon"
-    },
-    "stats": {
-      "user_count": 15356,
-      "monthly_active_users": 0
-    },
-    "first_seen_at": "2025-02-04T15:31:54.000000Z",
-    "color": {
-      "hsl": {
-        "h": 75.3,
-        "s": 72.3,
-        "l": 30
-      },
-      "rgb": {
-        "r": 104,
-        "g": 132,
-        "b": 21
-      },
-      "hex": "#688415",
-      "debug": {
-        "ageDays": 338,
-        "ageNorm": 0.718,
-        "hashPerturbation": -12.2,
-        "eraOffset": 20,
-        "userNorm": 0.646,
-        "activityRatio": 0
-      }
-    },
-    "position": {
-      "x": -25608.2,
-      "y": 2041.7,
-      "z": -779.2
-    },
-    "positionType": "galaxy_orbital"
-  },
-  {
-    "domain": "ummah.ps",
-    "software": {
-      "name": "Pleroma"
-    },
-    "stats": {
-      "user_count": 15063,
-      "monthly_active_users": 278
-    },
-    "first_seen_at": "2023-02-05T03:30:06.000000Z",
-    "color": {
-      "hsl": {
-        "h": 56.8,
-        "s": 72.3,
-        "l": 30.8
-      },
-      "rgb": {
-        "r": 135,
-        "g": 129,
-        "b": 22
-      },
-      "hex": "#878116",
-      "debug": {
-        "ageDays": 1069,
-        "ageNorm": 0.86,
-        "hashPerturbation": 23.1,
-        "eraOffset": 0,
-        "userNorm": 0.645,
-        "activityRatio": 0.018
-      }
-    },
-    "position": {
-      "x": -10816.7,
-      "y": -23128.7,
-      "z": 395.9
-    },
-    "positionType": "galaxy_orbital"
-  },
-  {
-    "domain": "glasgow.social",
-    "software": {
-      "name": "Mastodon"
-    },
-    "stats": {
-      "user_count": 15002,
-      "monthly_active_users": 302
-    },
-    "first_seen_at": "2021-03-21T07:01:28.000000Z",
-    "color": {
-      "hsl": {
-        "h": 0.3,
-        "s": 72.2,
-        "l": 30.9
-      },
-      "rgb": {
-        "r": 136,
-        "g": 22,
-        "b": 22
-      },
-      "hex": "#881616",
-      "debug": {
-        "ageDays": 1754,
-        "ageNorm": 0.921,
-        "hashPerturbation": -18.7,
-        "eraOffset": 0,
-        "userNorm": 0.645,
-        "activityRatio": 0.02
-      }
-    },
-    "position": {
-      "x": 545,
-      "y": 1346.4,
-      "z": -754.5
-    },
-    "positionType": "mastodon_orbital"
-  },
-  {
-    "domain": "sueden.social",
-    "software": {
-      "name": "Mastodon"
-    },
-    "stats": {
-      "user_count": 14729,
-      "monthly_active_users": 1837
-    },
-    "first_seen_at": "2022-04-27T21:01:50.000000Z",
-    "color": {
-      "hsl": {
-        "h": 357.3,
-        "s": 72.2,
-        "l": 35.6
-      },
-      "rgb": {
-        "r": 156,
-        "g": 25,
-        "b": 31
-      },
-      "hex": "#9c191f",
-      "debug": {
-        "ageDays": 1352,
-        "ageNorm": 0.889,
-        "hashPerturbation": -29.4,
-        "eraOffset": 0,
-        "userNorm": 0.644,
-        "activityRatio": 0.125
-      }
-    },
-    "position": {
-      "x": 1464.5,
-      "y": 91,
-      "z": -734.2
-    },
-    "positionType": "mastodon_orbital"
-  },
-  {
-    "domain": "norden.social",
-    "software": {
-      "name": "Mastodon"
-    },
-    "stats": {
-      "user_count": 14226,
-      "monthly_active_users": 3348
-    },
-    "first_seen_at": "2021-03-21T07:02:58.000000Z",
-    "color": {
-      "hsl": {
-        "h": 47.5,
-        "s": 72.1,
-        "l": 40.6
-      },
-      "rgb": {
-        "r": 178,
-        "g": 147,
-        "b": 29
-      },
-      "hex": "#b2931d",
-      "debug": {
-        "ageDays": 1754,
-        "ageNorm": 0.921,
-        "hashPerturbation": 28.6,
-        "eraOffset": 0,
-        "userNorm": 0.641,
-        "activityRatio": 0.235
-      }
-    },
-    "position": {
-      "x": 5266.6,
-      "y": 6736,
-      "z": -1037
-    },
-    "positionType": "mastodon_orbital"
-  },
-  {
-    "domain": "beehaw.org",
-    "software": {
-      "name": "Lemmy"
-    },
-    "stats": {
-      "user_count": 14105,
-      "monthly_active_users": 332
-    },
-    "first_seen_at": "2022-02-06T09:12:39.000000Z",
-    "color": {
-      "hsl": {
-        "h": 19.7,
-        "s": 72,
-        "l": 31.1
-      },
-      "rgb": {
-        "r": 136,
-        "g": 60,
-        "b": 22
-      },
-      "hex": "#883c16",
-      "debug": {
-        "ageDays": 1432,
-        "ageNorm": 0.896,
-        "hashPerturbation": -5.2,
-        "eraOffset": 0,
-        "userNorm": 0.641,
-        "activityRatio": 0.024
-      }
-    },
-    "position": {
-      "x": 10757.3,
-      "y": 22717.3,
-      "z": -1049.2
-    },
-    "positionType": "galaxy_orbital"
-  },
-  {
-    "domain": "mobilizon.fr",
-    "software": {
-      "name": "Mobilizon"
-    },
-    "stats": {
-      "user_count": 14014,
-      "monthly_active_users": 0
-    },
-    "first_seen_at": "2021-03-21T07:02:27.000000Z",
-    "color": {
-      "hsl": {
-        "h": 34.8,
-        "s": 72,
-        "l": 30
-      },
-      "rgb": {
-        "r": 132,
-        "g": 85,
-        "b": 21
-      },
-      "hex": "#845515",
-      "debug": {
-        "ageDays": 1754,
-        "ageNorm": 0.921,
-        "hashPerturbation": 15.9,
-        "eraOffset": 0,
-        "userNorm": 0.64,
-        "activityRatio": 0
-      }
-    },
-    "position": {
-      "x": -24810.9,
-      "y": -2114.9,
-      "z": -881.5
-    },
-    "positionType": "galaxy_orbital"
-  },
-  {
-    "domain": "chaos.social",
-    "software": {
-      "name": "Mastodon"
-    },
-    "stats": {
-      "user_count": 13679,
-      "monthly_active_users": 6673
-    },
-    "first_seen_at": "2021-03-21T07:02:55.000000Z",
-    "color": {
-      "hsl": {
-        "h": 19,
-        "s": 71.9,
-        "l": 52
-      },
-      "rgb": {
-        "r": 221,
-        "g": 100,
-        "b": 44
-      },
-      "hex": "#dd642c",
-      "debug": {
-        "ageDays": 1754,
-        "ageNorm": 0.921,
-        "hashPerturbation": 0,
-        "eraOffset": 0,
-        "userNorm": 0.639,
-        "activityRatio": 0.488
-      }
-    },
-    "position": {
-      "x": 6603.2,
-      "y": -4.2,
-      "z": 890.6
-    },
-    "positionType": "mastodon_orbital"
-  },
-  {
-    "domain": "noc.social",
-    "software": {
-      "name": "Mastodon"
-    },
-    "stats": {
-      "user_count": 13498,
-      "monthly_active_users": 555
-    },
-    "first_seen_at": "2021-03-21T07:00:14.000000Z",
-    "color": {
-      "hsl": {
-        "h": 19.3,
-        "s": 71.9,
-        "l": 31.9
-      },
-      "rgb": {
-        "r": 140,
-        "g": 60,
-        "b": 23
-      },
-      "hex": "#8c3c17",
-      "debug": {
-        "ageDays": 1754,
-        "ageNorm": 0.921,
-        "hashPerturbation": 0.3,
-        "eraOffset": 0,
-        "userNorm": 0.638,
-        "activityRatio": 0.041
-      }
-    },
-    "position": {
-      "x": 6517.9,
-      "y": -52.5,
-      "z": 744.5
-    },
-    "positionType": "mastodon_orbital"
-  },
-  {
-    "domain": "pixey.org",
-    "software": {
-      "name": "Pixelfed"
-    },
-    "stats": {
-      "user_count": 13190,
-      "monthly_active_users": 434
-    },
-    "first_seen_at": "2021-06-17T15:30:52.000000Z",
-    "color": {
-      "hsl": {
-        "h": 354.8,
-        "s": 71.8,
-        "l": 31.5
-      },
-      "rgb": {
-        "r": 138,
-        "g": 23,
-        "b": 33
-      },
-      "hex": "#8a1721",
-      "debug": {
-        "ageDays": 1666,
-        "ageNorm": 0.915,
-        "hashPerturbation": -25.7,
-        "eraOffset": 0,
-        "userNorm": 0.636,
-        "activityRatio": 0.033
-      }
-    },
-    "position": {
-      "x": 23631.5,
-      "y": 13461,
-      "z": -729.5
-    },
-    "positionType": "galaxy_orbital"
-  },
-  {
-    "domain": "meow.social",
-    "software": {
-      "name": "Mastodon"
-    },
-    "stats": {
-      "user_count": 13150,
-      "monthly_active_users": 1590
-    },
-    "first_seen_at": "2021-03-21T07:01:52.000000Z",
-    "color": {
-      "hsl": {
-        "h": 1.3,
-        "s": 71.8,
-        "l": 35.4
-      },
-      "rgb": {
-        "r": 155,
-        "g": 28,
-        "b": 25
-      },
-      "hex": "#9b1c19",
-      "debug": {
-        "ageDays": 1754,
-        "ageNorm": 0.921,
-        "hashPerturbation": -17.7,
-        "eraOffset": 0,
-        "userNorm": 0.636,
-        "activityRatio": 0.121
-      }
-    },
-    "position": {
-      "x": 400.1,
-      "y": 1394,
-      "z": 817.9
-    },
-    "positionType": "mastodon_orbital"
-  },
-  {
-    "domain": "eldritch.cafe",
-    "software": {
-      "name": "Mastodon"
-    },
-    "stats": {
-      "user_count": 13025,
-      "monthly_active_users": 938
-    },
-    "first_seen_at": "2021-03-21T07:03:00.000000Z",
-    "color": {
-      "hsl": {
-        "h": 46.4,
-        "s": 71.8,
-        "l": 33.2
-      },
-      "rgb": {
-        "r": 146,
-        "g": 118,
-        "b": 24
-      },
-      "hex": "#927618",
-      "debug": {
-        "ageDays": 1754,
-        "ageNorm": 0.921,
-        "hashPerturbation": 27.4,
-        "eraOffset": 0,
-        "userNorm": 0.635,
-        "activityRatio": 0.072
-      }
-    },
-    "position": {
-      "x": 5271.5,
-      "y": 6569.3,
-      "z": 1016.7
-    },
-    "positionType": "mastodon_orbital"
-  },
-  {
-    "domain": "mstdn.plus",
-    "software": {
-      "name": "Mastodon"
-    },
-    "stats": {
-      "user_count": 12776,
-      "monthly_active_users": 510
-    },
-    "first_seen_at": "2021-03-21T06:52:42.000000Z",
-    "color": {
-      "hsl": {
-        "h": 8.4,
-        "s": 71.7,
-        "l": 31.8
-      },
-      "rgb": {
-        "r": 139,
-        "g": 39,
-        "b": 23
-      },
-      "hex": "#8b2717",
-      "debug": {
-        "ageDays": 1754,
-        "ageNorm": 0.921,
-        "hashPerturbation": -10.6,
-        "eraOffset": 0,
-        "userNorm": 0.634,
-        "activityRatio": 0.04
-      }
-    },
-    "position": {
-      "x": -740,
-      "y": 1483.3,
-      "z": -212.9
-    },
-    "positionType": "mastodon_orbital"
-  },
-  {
-    "domain": "forums.ubports.com",
-    "software": {
-      "name": "NodeBB"
-    },
-    "stats": {
-      "user_count": 12626,
-      "monthly_active_users": 346
-    },
-    "first_seen_at": "2025-12-19T10:18:01.000000Z",
-    "color": {
-      "hsl": {
-        "h": 141.3,
-        "s": 71.7,
-        "l": 31.2
-      },
-      "rgb": {
-        "r": 23,
-        "g": 137,
-        "b": 63
-      },
-      "hex": "#17893f",
-      "debug": {
-        "ageDays": 20,
-        "ageNorm": 0.38,
-        "hashPerturbation": -27.5,
-        "eraOffset": 20,
-        "userNorm": 0.633,
-        "activityRatio": 0.027
-      }
-    },
-    "position": {
-      "x": 1613.4,
-      "y": 25438.1,
-      "z": -1628.6
-    },
-    "positionType": "galaxy_orbital"
-  },
-  {
-    "domain": "toot.io",
-    "software": {
-      "name": "Mastodon"
-    },
-    "stats": {
-      "user_count": 12529,
-      "monthly_active_users": 435
-    },
-    "first_seen_at": "2021-03-21T07:00:19.000000Z",
-    "color": {
-      "hsl": {
-        "h": 28.4,
-        "s": 71.6,
-        "l": 31.6
-      },
-      "rgb": {
-        "r": 138,
-        "g": 77,
-        "b": 23
-      },
-      "hex": "#8a4d17",
-      "debug": {
-        "ageDays": 1754,
-        "ageNorm": 0.921,
-        "hashPerturbation": 9.4,
-        "eraOffset": 0,
-        "userNorm": 0.633,
-        "activityRatio": 0.035
-      }
-    },
-    "position": {
-      "x": 7078.5,
-      "y": -1394.2,
-      "z": -118.4
-    },
-    "positionType": "mastodon_orbital"
-  },
-  {
-    "domain": "cyberplace.social",
-    "software": {
-      "name": "Mastodon"
-    },
-    "stats": {
-      "user_count": 12248,
-      "monthly_active_users": 793
-    },
-    "first_seen_at": "2022-11-22T21:04:56.000000Z",
-    "color": {
-      "hsl": {
-        "h": 31.8,
-        "s": 71.6,
-        "l": 32.9
-      },
-      "rgb": {
-        "r": 144,
-        "g": 87,
-        "b": 24
-      },
-      "hex": "#905718",
-      "debug": {
-        "ageDays": 1143,
-        "ageNorm": 0.868,
-        "hashPerturbation": 0.1,
-        "eraOffset": 0,
-        "userNorm": 0.631,
-        "activityRatio": 0.065
-      }
-    },
-    "position": {
-      "x": 6325.6,
-      "y": -22.9,
-      "z": -138.5
-    },
-    "positionType": "mastodon_orbital"
-  },
-  {
-    "domain": "social.cologne",
-    "software": {
-      "name": "Mastodon"
-    },
-    "stats": {
-      "user_count": 12153,
-      "monthly_active_users": 1081
-    },
-    "first_seen_at": "2021-03-21T07:02:14.000000Z",
-    "color": {
-      "hsl": {
-        "h": 3.5,
-        "s": 71.5,
-        "l": 34
-      },
-      "rgb": {
-        "r": 149,
-        "g": 32,
-        "b": 25
-      },
-      "hex": "#952019",
-      "debug": {
-        "ageDays": 1754,
-        "ageNorm": 0.921,
-        "hashPerturbation": -15.5,
-        "eraOffset": 0,
-        "userNorm": 0.631,
-        "activityRatio": 0.089
-      }
-    },
-    "position": {
-      "x": 81.9,
-      "y": 1659.7,
-      "z": 260.2
-    },
-    "positionType": "mastodon_orbital"
-  },
-  {
-    "domain": "indieweb.social",
-    "software": {
-      "name": "Mastodon"
-    },
-    "stats": {
-      "user_count": 12099,
-      "monthly_active_users": 1039
-    },
-    "first_seen_at": "2021-03-21T07:01:34.000000Z",
-    "color": {
-      "hsl": {
-        "h": 28.5,
-        "s": 71.5,
-        "l": 33.9
-      },
-      "rgb": {
-        "r": 148,
-        "g": 83,
-        "b": 25
-      },
-      "hex": "#945319",
-      "debug": {
-        "ageDays": 1754,
-        "ageNorm": 0.921,
-        "hashPerturbation": 9.5,
-        "eraOffset": 0,
-        "userNorm": 0.63,
-        "activityRatio": 0.086
-      }
-    },
-    "position": {
-      "x": 7087.1,
-      "y": -1411.6,
-      "z": 79.6
-    },
-    "positionType": "mastodon_orbital"
   }
 ]
