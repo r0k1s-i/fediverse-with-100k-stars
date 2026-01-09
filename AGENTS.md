@@ -1,5 +1,83 @@
 # AGENTS.md - Coding Agent Guidelines
 
+---
+
+## 🔒 Constitutional Foundation: Enforcing Architectural Discipline
+
+**Source**: [GitHub Spec-Kit: Spec-Driven Development](https://github.com/github/spec-kit/blob/main/spec-driven.md#the-nine-articles-of-development)
+
+**These rules are MANDATORY and take precedence over all other guidelines in this document.**
+
+### Article I: Library-First Principle
+
+**Rule**: Every feature in this project MUST begin its existence as a standalone library. No feature shall be implemented directly within application code without first being abstracted into a reusable library component.
+
+**Requirements**:
+- All new features must be designed as independent, reusable library components first
+- Features cannot be implemented directly in application code
+- Libraries must have clear boundaries and minimal coupling
+- This ensures modular architecture from inception
+
+**Example Violations**:
+- ❌ Adding a new color calculation function directly in `index_files/fediverse.js`
+- ❌ Implementing position algorithms inline in application code
+
+**Correct Approach**:
+- ✅ Creating `scripts/fediverse-processor/colors.go` as a library module
+- ✅ Extracting reusable functions into separate modules/files first
+
+### Article II: CLI Interface Mandate
+
+**Rule**: All libraries must expose functionality through command-line interfaces.
+
+**Requirements**:
+- All CLI interfaces MUST:
+  - Accept text as input (via stdin, arguments, or files)
+  - Produce text as output (via stdout)
+  - Support JSON format for structured data exchange
+- Every capability must be accessible and verifiable through standard interfaces
+- Prioritize observability and testability
+- Prevent hiding functionality within opaque implementations
+
+**Example Compliance**:
+- ✅ `./fediverse-processor` accepts JSON input, produces JSON output
+- ✅ `node scripts/fetch-fediverse-data.js --limit=100` (CLI arguments)
+- ✅ Text-based logs and structured JSON output
+
+### Article III: Test-First Imperative
+
+**Rule**: All implementation MUST follow strict Test-Driven Development.
+
+**Requirements**:
+- No implementation code shall be written before:
+  1. Unit tests are written
+  2. Tests are validated and approved by the user
+  3. Tests are confirmed to FAIL (Red phase)
+- Generate comprehensive test suites FIRST
+- Obtain user approval for tests
+- Confirm tests fail (Red)
+- THEN implement solutions to make tests pass (Green)
+- This ensures behavior-driven design
+
+**Workflow**:
+1. 🔴 **RED**: Write failing tests first
+2. ✅ **User Approval**: Get explicit approval for test suite
+3. ✅ **Verify Failure**: Confirm tests fail as expected
+4. 🟢 **GREEN**: Implement code to pass tests
+5. ♻️ **REFACTOR**: Clean up while keeping tests green
+
+**When to Apply**:
+- All new features requiring code implementation
+- Bug fixes (write test that reproduces bug first)
+- Performance optimizations (write performance test first)
+
+**Exceptions**:
+- Documentation-only changes
+- Configuration file updates
+- Trivial refactoring with existing test coverage
+
+---
+
 ## Project Overview
 
 **100k-Star-Challenge** is a fork of Chrome Experiments' "100,000 Stars" - an interactive 3D WebGL visualization of the stellar neighborhood showing over 100,000 nearby stars. Built with Three.js (r58-era), jQuery, and vanilla JavaScript.
