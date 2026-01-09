@@ -303,6 +303,7 @@ function initScene() {
 
 	var $exout = $('#ex-out').click(function(e) {
 		e.preventDefault();
+		e.stopPropagation();
 		$detailContainer.fadeOut();
 		$('#css-container').css('display', 'block');
 		if ($detailContainer.hasClass('about')) {
@@ -312,6 +313,7 @@ function initScene() {
 
 	var $zoomback = $('#zoom-back').click(function(e) {
 		e.preventDefault();
+		e.stopPropagation();
 		$exout.click();
 		zoomOut(750);
 	});
@@ -348,7 +350,7 @@ function initScene() {
 			}, 500);
 		}
 
-		if( markers.length > 0 )
+		if( markers.length > 0 && !enableFediverse )
 			markers[0].select();
 
 	}, 500);
@@ -492,9 +494,12 @@ function animate() {
 		var isZoomedIn = camera.position.target.z < markerThreshold.min;
 		var isZoomedToSolarSystem = camera.position.target.z > markerThreshold.min;
 
+
+		var isFediverseHover = typeof fediverseInteraction !== 'undefined' && fediverseInteraction.intersected;
+
 		if (isZoomedIn && camera.position.z < markerThreshold.min && $detailContainer.css('display') == 'none' && $starName.css('display') == 'none') {
 			$starName.fadeIn();
-		} else if ((isZoomedToSolarSystem || $detailContainer.css('display') != 'none') && $starName.css('opacity') == 1.0) {
+		} else if (!isFediverseHover && (isZoomedToSolarSystem || $detailContainer.css('display') != 'none') && $starName.css('opacity') == 1.0) {
 			$starName.fadeOut();
 		}
 
