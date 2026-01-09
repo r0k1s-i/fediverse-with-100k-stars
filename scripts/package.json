@@ -1,0 +1,17 @@
+{
+  "name": "scripts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "fetch-fediverse-data.js",
+  "scripts": {
+    "test": "jest",
+    "fetch": "node fetch-fediverse-data.js",
+    "fetch:resume": "node fetch-fediverse-data.js --resume"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^30.2.0"
+  }
+}
