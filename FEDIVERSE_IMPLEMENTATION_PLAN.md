@@ -375,9 +375,11 @@ if (requestCount > 0 && requestCount % 3 === 0) {
 
 ---
 
-### Phase 2: 颜色系统
+### Phase 2: 颜色系统 (Golang)
 
 **目标**: 实现物理真实、视觉丰富的颜色映射
+
+**语言**: Golang (高性能处理40k+数据)
 
 **任务**:
 - [ ] 实现混合年龄映射函数（对数 + 纪元加权）
@@ -386,13 +388,15 @@ if (requestCount > 0 && requestCount % 3 === 0) {
 - [ ] spectralIndex 兼容现有shader
 - [ ] 颜色预览HTML生成（验证效果）
 
-**产出**: `scripts/calculate-colors.js`
+**产出**: `scripts/fediverse-processor/colors.go`
 
 ---
 
-### Phase 3: 位置聚类
+### Phase 3: 位置聚类 (Golang)
 
 **目标**: 三体系统 + 星系团布局
+
+**语言**: Golang (高性能处理40k+数据)
 
 **任务**:
 - [ ] 实现三恒星位置计算
@@ -402,13 +406,15 @@ if (requestCount > 0 && requestCount % 3 === 0) {
 - [ ] RA/DEC/Distance 格式转换
 - [ ] 位置预览（2D俯视图）
 
-**产出**: `scripts/calculate-positions.js`
+**产出**: `scripts/fediverse-processor/positions.go`
 
 ---
 
-### Phase 4: 数据转换管线
+### Phase 4: 数据转换管线 (Golang)
 
 **目标**: 生成100k-Stars兼容格式
+
+**语言**: Golang (整合处理管线)
 
 **任务**:
 - [ ] 整合颜色和位置数据
@@ -496,16 +502,19 @@ if (requestCount > 0 && requestCount % 3 === 0) {
 ```
 100k-Star-Challenge/
 ├── scripts/
-│   ├── fetch-fediverse-data.js     # Phase 1
-│   ├── calculate-colors.js          # Phase 2
-│   ├── calculate-positions.js       # Phase 3
-│   └── generate-star-data.js        # Phase 4
+│   ├── fetch-fediverse-data.js      # Phase 1 (Node.js - 网络请求)
+│   └── fediverse-processor/         # Phase 2-4 (Golang)
+│       ├── main.go                  # 入口：处理管线
+│       ├── colors.go                # 颜色计算
+│       ├── positions.go             # 位置计算
+│       └── go.mod                   # Go模块定义
 ├── preview/
 │   └── index.html                   # 3D预览页面
 ├── data/
-│   ├── fediverse_raw.json           # 原始API数据
-│   ├── fediverse_with_colors.json   # 含颜色
-│   └── fediverse_final.json         # 最终格式
+│   ├── fediverse_raw.json           # 原始API数据 (Phase 1输出)
+│   ├── fediverse_with_colors.json   # 含颜色 (Phase 2输出)
+│   ├── fediverse_with_positions.json # 含位置 (Phase 3输出)
+│   └── fediverse_final.json         # 最终格式 (Phase 4输出)
 ├── index_files/
 │   ├── fediverse.js                 # Fediverse集成
 │   ├── fediverse-interaction.js     # Phase 5
@@ -532,28 +541,40 @@ if (requestCount > 0 && requestCount % 3 === 0) {
 
 ## ⏭️ 当前状态
 
-**更新时间**: 2025-01-09 14:55
+**更新时间**: 2025-01-09 13:20
 
-**当前阶段**: Phase 5 完成 (基础集成)
+**当前阶段**: Phase 1 进行中 (数据抓取 - 测试完成，待完整抓取)
 
 ### 已完成
-- [x] Phase 1: 数据获取脚本 (`scripts/fetch-fediverse-data.js`)
-- [x] Phase 2: 颜色计算 (`scripts/calculate-colors.js`)
-- [x] Phase 3: 位置计算 (`scripts/calculate-positions.js`)
-- [x] Phase 4: 数据转换管线 (raw → colors → final)
-- [x] Phase 5: 基础Three.js集成 (`index_files/fediverse.js`)
+- [x] Phase 1 脚本: 数据获取脚本 (`scripts/fetch-fediverse-data.js`) - 测试运行通过
+- [x] Phase 2 脚本: 颜色计算 (`scripts/calculate-colors.js`) - 逻辑已实现
+- [x] Phase 3 脚本: 位置计算 (`scripts/calculate-positions.js`) - 逻辑已实现
+- [x] Phase 5 框架: 基础Three.js集成 (`index_files/fediverse.js`)
 - [x] 独立预览页面 (`preview/index.html`)
 
-### 测试数据
+### 待执行（完整数据流程）
+- [ ] **Phase 1**: 完整数据抓取 (~40,000实例，约5.5小时)
+- [ ] **Phase 2**: 用完整数据重新计算颜色
+- [ ] **Phase 3**: 用完整数据重新计算位置
+- [ ] **Phase 4**: 数据转换管线 (raw → colors → positions → final)
+- [ ] **Phase 6**: Canvas标签系统
+- [ ] **Phase 7**: 性能优化
+- [ ] **Phase 8**: 视觉增强
+
+### 测试数据 (当前)
 - 已抓取: 100个实例 (测试模式)
-- 去重后: 10个唯一实例
-- 软件类型: 4种 (Mastodon, Misskey, Pixelfed, Lemmy)
+- 软件类型: 10种
+
+### 技术决策变更
+**本地数据处理语言**: Node.js → **Golang**
+- 理由: 更好的性能，适合处理40k+数据集
+- 影响: Phase 2-4 脚本需用Golang重写
 
 ### 下一步行动
-1. **完整数据抓取**: `node scripts/fetch-fediverse-data.js` (无limit，约5.5小时)
-2. **Phase 6**: Canvas标签系统 (300个附近实例标签)
-3. **Phase 7**: 性能优化 (40k实例 @ 60fps)
-4. **Phase 8**: 视觉增强 (搜索、过滤、统计面板)
+1. **Golang重写**: 将 `calculate-colors.js` 和 `calculate-positions.js` 改为 Golang
+2. **完整数据抓取**: 运行抓取脚本 (无limit，约5.5小时)
+3. **数据处理**: 用Golang脚本处理完整数据
+4. **Phase 6+**: 继续后续开发
 
 ### 运行方式
 ```bash
