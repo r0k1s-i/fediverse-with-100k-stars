@@ -17,90 +17,12 @@
 - **活跃实例** → 高亮度
 - **僵尸实例** → 低亮度
 
-**实现细节**:
-
-```javascript
-function calculateInstanceColor(instance) {
-    const createdAt = instance.creation_time?.created_at || instance.first_seen_at;
-    const date = new Date(createdAt);
-    const NOW = new Date();
-    
-    // 1. 对数年龄映射（解决线性映射颜色分布不均问题）
-    const ageMs = NOW - date;
-    const maxAgeMs = NOW - new Date('2016-11-23'); // Fediverse创世日
-    const ageDays = ageMs / (24 * 60 * 60 * 1000);
-    const maxAgeDays = maxAgeMs / (24 * 60 * 60 * 1000);
-    const logAge = Math.log10(ageDays + 1);
-    const logMaxAge = Math.log10(maxAgeDays + 1);
-    const ageRatio = logAge / logMaxAge; // 0-1
-    
-    // 2. 基础色相（240蓝 → 0红）
-    const baseHue = 240 - ageRatio * 240;
-    
-    // 3. 纪元修正
-    let eraOffset = 0;
-    if (date < new Date('2019-01-01')) {
-        eraOffset = -20; // 早期实例偏红
-    } else if (date > new Date('2024-01-01')) {
-        eraOffset = +20; // 新实例偏蓝
-    }
-    
-    // 4. 域名哈希扰动（关键：解决同软件同颜色问题）
-    const domainHash = hashString(instance.domain);
-    const domainVariation = (domainHash % 60) - 30; // ±30度
-    
-    // 5. 最终色相
-    const finalHue = (baseHue + eraOffset + domainVariation + 360) % 360;
-    
-    // 6. 亮度：活跃度 (30%-75%)
-    const activityRatio = instance.active_users_monthly / (instance.total_users || 1);
-    const lightness = 30 + activityRatio * 45;
-    
-    // 7. 饱和度：用户规模 (40%-90%)
-    const userScale = Math.log10((instance.total_users || 1) + 1);
-    let saturation = 40 + userScale * 8;
-    if (instance.total_users > 10000) {
-        saturation = Math.min(saturation + 15, 90);
-    }
-    
-    return { h: finalHue, s: saturation, l: lightness };
-}
-```
-
-**配置参数**:
-```javascript
-const COLOR_CONFIG = {
-    GENESIS_DATE: '2016-11-23T00:00:00.000Z',
-    FEDIDB_START: '2021-03-21T00:00:00.000Z',
-    
-    ERA_EARLY_CUTOFF: '2019-01-01',
-    ERA_NEW_CUTOFF: '2024-01-01',
-    ERA_EARLY_OFFSET: -20,  // 度
-    ERA_NEW_OFFSET: +20,    // 度
-    
-    HUE_MIN: 0,    // 红色（老）
-    HUE_MAX: 240,  // 蓝色（新）
-    
-    LIGHTNESS_MIN: 30,
-    LIGHTNESS_MAX: 75,
-    
-    SATURATION_MIN: 40,
-    SATURATION_MAX: 90,
-    
-    DOMAIN_HASH_RANGE: 30,  // ±30度
-};
-```
-
-**预期视觉效果**:
-```
-mastodon.social (2016): HSL(20, 85, 45)  → 橙红色老星
-pixelfed.social (2019): HSL(90, 80, 50)  → 黄绿色
-misskey.io (2021):      HSL(160, 75, 55) → 青色
-mas.to (2023):          HSL(220, 70, 60) → 蓝色
-新实例 (2025):          HSL(260, 65, 65) → 蓝紫色
-
-同软件不同实例：因域名哈希扰动，颜色各异 ✅
-```
+**算法要点**:
+1. 对数年龄映射（解决线性映射颜色分布不均）
+2. 基础色相：240°(蓝) → 0°(红)
+3. 纪元修正：早期实例偏红-20°，新实例偏蓝+20°
+4. 域名哈希扰动：±30°（解决同软件同颜色问题）
+5. 亮度由活跃度决定，饱和度由用户规模决定
 
 ---
 
@@ -113,118 +35,11 @@ mas.to (2023):          HSL(220, 70, 60) → 蓝色
 - **Mastodon特殊处理**: 前3大实例形成等边三角形（三恒星系统）
 - **其他星系**: 最大实例为中心，其他实例轨道分布
 
-**三恒星系统**:
-```
-         misskey.io (或第三大实例)
-              ★
-             /\
-            /  \
-           /    \
-          /      \
- mastodon.social ——— pawoo.net
-       ★              ★
-   (0, 0, 0)     (8000, 0, 0)
-              
-   mastodon.cloud: (4000, 6928, 0) // 等边三角形顶点
-```
-
-**实现细节**:
-
-```javascript
-const SPACE_CONFIG = {
-    // 三恒星系统（Mastodon前3大实例）
-    THREE_STARS: [
-        { domain: 'mastodon.social', pos: [0, 0, 0] },
-        { domain: 'pawoo.net', pos: [8000, 0, 0] },
-        { domain: 'mastodon.cloud', pos: [4000, 6928, 0] }  // 等边三角形
-    ],
-    
-    // 距离计算公式
-    DISTANCE_BASE: 500,
-    DISTANCE_LOG_MULTIPLIER: 300,
-    DISTANCE_RANK_MULTIPLIER: 50,
-    
-    // 星系参数
-    GALAXY_RADIUS_MIN: 2000,
-    GALAXY_RADIUS_MAX: 8000,
-    INCLINATION_RANGE: 30,  // ±30度
-    MIN_DISTANCE: 10,       // 最小间距（碰撞检测）
-};
-
-function calculatePosition(instance, allInstances) {
-    const software = instance.software;
-    const sameType = allInstances.filter(i => i.software === software);
-    const sorted = sameType.sort((a, b) => b.total_users - a.total_users);
-    
-    // Mastodon三恒星特殊处理
-    if (software === 'mastodon') {
-        const starConfig = SPACE_CONFIG.THREE_STARS.find(
-            s => s.domain === instance.domain
-        );
-        if (starConfig) {
-            return { x: starConfig.pos[0], y: starConfig.pos[1], z: starConfig.pos[2] };
-        }
-        // 其他Mastodon实例围绕最近的母星
-        const motherStar = findNearestStar(instance);
-        return orbitAroundStar(instance, motherStar, sorted);
-    }
-    
-    // 其他软件：最大实例为星系中心
-    const galaxyCenter = generateGalaxyCenterPosition(software);
-    
-    if (instance === sorted[0]) {
-        return galaxyCenter; // 最大实例在中心
-    }
-    
-    // 其他实例轨道分布
-    const rank = sorted.indexOf(instance);
-    const distance = SPACE_CONFIG.DISTANCE_BASE 
-        + Math.log10(instance.total_users + 1) * SPACE_CONFIG.DISTANCE_LOG_MULTIPLIER 
-        + rank * SPACE_CONFIG.DISTANCE_RANK_MULTIPLIER;
-    
-    const angle = hashString(instance.domain) * 2 * Math.PI / 0xFFFFFFFF;
-    const inclination = ((hashString(instance.domain + software) % 60) - 30) * Math.PI / 180;
-    
-    return {
-        x: galaxyCenter.x + Math.cos(angle) * distance * Math.cos(inclination),
-        y: galaxyCenter.y + Math.sin(angle) * distance * Math.cos(inclination),
-        z: galaxyCenter.z + Math.sin(inclination) * distance * 0.3
-    };
-}
-
-// 基于软件名哈希生成星系中心位置
-function generateGalaxyCenterPosition(software) {
-    const hash = hashString(software);
-    const angle = (hash % 360) * Math.PI / 180;
-    const distance = 15000 + (hash % 10000);
-    
-    return {
-        x: Math.cos(angle) * distance,
-        y: Math.sin(angle) * distance,
-        z: ((hash >> 8) % 6000) - 3000
-    };
-}
-```
-
-**预期视觉效果**:
-```
-顶视图:
-         ★ mastodon.social
-        / \
-       /   \
-      ★     ★ pawoo / mastodon.cloud
-     
-         ★ misskey.io (独立星系)
-        / \
-       
-    ★ pleroma    ★ pixelfed    ★ lemmy
-    
-侧视图:
-    ★ (Mastodon三角)
-   /|\
-  / | \
- ★  ★  ★ (其他星系在不同高度散布)
-```
+**算法要点**:
+1. 三恒星系统：mastodon.social、pawoo.net、mastodon.cloud 形成等边三角形
+2. 星系中心由软件名哈希生成
+3. 轨道距离 = 基础距离 + log(用户数) × 乘数 + 排名 × 乘数
+4. 角度和倾角由域名哈希决定
 
 ---
 
@@ -232,95 +47,31 @@ function generateGalaxyCenterPosition(software) {
 
 **最终决策**: 多级fallback策略
 
-```javascript
-async function getInstanceCreationTime(instance) {
-    const firstSeen = new Date(instance.first_seen_at);
-    const FEDIDB_START = new Date('2021-03-21');
-    
-    // 1. first_seen_at 在 2021-03-21 之后 → 可信
-    if (firstSeen > FEDIDB_START) {
-        return {
-            created_at: firstSeen.toISOString(),
-            source: 'first_seen_at',
-            reliable: true
-        };
-    }
-    
-    // 2. 查询实例API获取管理员账户创建时间
-    try {
-        const response = await fetch(`https://${instance.domain}/api/v1/instance`);
-        const data = await response.json();
-        
-        if (data.contact?.account?.created_at) {
-            return {
-                created_at: data.contact.account.created_at,
-                source: 'admin_account',
-                reliable: true
-            };
-        }
-    } catch (error) {
-        // API失败，继续fallback
-    }
-    
-    // 3. 最终fallback
-    return {
-        created_at: firstSeen.toISOString(),
-        source: 'first_seen_at_fallback',
-        reliable: false
-    };
-}
-```
+1. `first_seen_at` 在 2021-03-21 之后 → 可信
+2. 查询实例API获取管理员账户创建时间
+3. 最终fallback使用 `first_seen_at`
 
 ---
 
 ### 4. 交互系统
 
-**最终决策**: WebGL拾取 + Canvas标签 + Tooltip（方案A+C混合）
+**最终决策**: WebGL拾取 + Canvas标签 + Tooltip
 
-**架构**:
-```
-┌─────────────────────────────────────────┐
-│  Layer 4: DOM详情面板 (1个，点击显示)    │
-├─────────────────────────────────────────┤
-│  Layer 3: Tooltip DOM (1个，悬停显示)   │
-├─────────────────────────────────────────┤
-│  Layer 2: Canvas 2D标签 (附近300个)     │
-├─────────────────────────────────────────┤
-│  Layer 1: WebGL粒子 (40k全部可点击)     │
-└─────────────────────────────────────────┘
-```
+**四层架构**:
+- Layer 4: DOM详情面板 (点击显示)
+- Layer 3: Tooltip DOM (悬停显示)
+- Layer 2: Canvas 2D标签 (附近300个)
+- Layer 1: WebGL粒子 (40k全部可点击)
 
-**性能预算**:
-```
-Layer 1 WebGL粒子渲染:     ~2ms/frame
-Layer 2 Canvas标签渲染:    ~2ms/frame
-Layer 3 Tooltip更新:       ~0.1ms/frame
-Layer 4 详情面板:          ~0ms/frame (仅click时更新)
-
-总计: ~4ms/frame = 理论250fps
-目标: 60fps稳定 ✅
-```
+**性能预算**: ~4ms/frame，目标60fps
 
 ---
 
 ### 5. 数据获取策略
 
 **API**: `https://api.fedidb.org/v1/servers`
-**限流**: 最多 3次/分钟
-
-**抓取策略**:
-```javascript
-// 每3次请求后等待60秒
-if (requestCount > 0 && requestCount % 3 === 0) {
-    await sleep(60000);
-}
-```
-
-**预计耗时**:
-```
-40,000实例 ÷ 40实例/请求 = 1,000次请求
-1,000次 ÷ 3次/分钟 = 333分钟 ≈ 5.5小时
-```
+**限流**: 3次/分钟
+**预计耗时**: ~5.5小时 (40,000实例)
 
 ---
 
@@ -359,141 +110,38 @@ if (requestCount > 0 && requestCount % 3 === 0) {
 
 ## 🚀 实施阶段
 
-### Phase 1: 数据获取与准备
-
-**目标**: 获得完整、可用的Fediverse实例数据集
-
-**任务**:
-- [ ] 编写FediDB API抓取脚本
-- [ ] 实现限流保护（3次/分钟）
-- [ ] 实现创建时间获取（多级fallback）
-- [ ] 数据清洗和验证
-- [ ] 动态软件类型统计
-- [ ] 本地缓存机制
-
+### Phase 1: 数据获取与准备 (Node.js)
+**目标**: 获得完整Fediverse实例数据集
 **产出**: `data/fediverse_raw.json`
 
----
-
 ### Phase 2: 颜色系统 (Golang)
-
-**目标**: 实现物理真实、视觉丰富的颜色映射
-
-**语言**: Golang (高性能处理40k+数据)
-
-**任务**:
-- [ ] 实现混合年龄映射函数（对数 + 纪元加权）
-- [ ] 实现域名哈希扰动
-- [ ] HSL → RGB 转换
-- [ ] spectralIndex 兼容现有shader
-- [ ] 颜色预览HTML生成（验证效果）
-
+**目标**: 实现颜色映射算法
 **产出**: `scripts/fediverse-processor/colors.go`
 
----
-
 ### Phase 3: 位置聚类 (Golang)
-
-**目标**: 三体系统 + 星系团布局
-
-**语言**: Golang (高性能处理40k+数据)
-
-**任务**:
-- [ ] 实现三恒星位置计算
-- [ ] 实现星系中心生成（基于软件名哈希）
-- [ ] 实现轨道位置计算
-- [ ] 碰撞检测和最小距离
-- [ ] RA/DEC/Distance 格式转换
-- [ ] 位置预览（2D俯视图）
-
+**目标**: 实现三体系统 + 星系团布局
 **产出**: `scripts/fediverse-processor/positions.go`
 
----
-
 ### Phase 4: 数据转换管线 (Golang)
-
 **目标**: 生成100k-Stars兼容格式
-
-**语言**: Golang (整合处理管线)
-
-**任务**:
-- [ ] 整合颜色和位置数据
-- [ ] 生成 `c` (spectralIndex) 字段
-- [ ] 生成 `ra`, `dec`, `d` 字段
-- [ ] 附加元数据（domain, software, users等）
-- [ ] 格式验证
-
-**产出**: `index_files/fediverse_stars.json`
-
----
+**产出**: `data/fediverse_final.json`
 
 ### Phase 5: WebGL交互系统
-
 **目标**: 40k实例全部可点击
-
-**任务**:
-- [ ] 实现Three.js Raycaster点击检测
-- [ ] 点击实例 → 显示详情面板
-- [ ] 鼠标悬停 → Tooltip显示
-- [ ] 点击实例 → 相机zoom到附近
-- [ ] 测试：点击任意粒子都能响应
-
 **产出**: `index_files/fediverse-interaction.js`
 
----
-
 ### Phase 6: Canvas标签渲染
-
 **目标**: 附近重要实例显示文字标签
-
-**任务**:
-- [ ] 创建Canvas 2D overlay
-- [ ] 每帧渲染逻辑（获取附近N个实例）
-- [ ] 3D坐标 → 2D投影
-- [ ] 字体大小自适应
-- [ ] LOD实现
-- [ ] 性能测试（300个标签 @ 60fps）
-
 **产出**: `index_files/fediverse-labels.js`
 
----
-
 ### Phase 7: 性能优化
-
 **目标**: 确保60fps
 
-**任务**:
-- [ ] Chrome DevTools Performance分析
-- [ ] 确认每帧 < 16.67ms
-- [ ] GPU内存 < 500MB
-- [ ] 粒子渲染 < 3ms
-- [ ] Canvas标签 < 2ms
-- [ ] 不同设备测试
-
----
-
 ### Phase 8: 视觉增强
-
-**目标**: 震撼效果
-
-**任务**:
-- [ ] 活跃实例脉动动画
-- [ ] 软件类型图例
-- [ ] 搜索功能（输入域名跳转）
-- [ ] 过滤器（按软件/规模）
-- [ ] 统计面板
-- [ ] Tour系统适配
-
----
+**目标**: 搜索、过滤、统计面板
 
 ### Phase 9: 实时更新（可选）
-
 **目标**: 支持定期更新
-
-**任务**:
-- [ ] 每日增量抓取
-- [ ] 新实例淡入动画
-- [ ] 时间轴功能
 
 ---
 
@@ -502,87 +150,75 @@ if (requestCount > 0 && requestCount % 3 === 0) {
 ```
 100k-Star-Challenge/
 ├── scripts/
-│   ├── fetch-fediverse-data.js      # Phase 1 (Node.js - 网络请求)
+│   ├── fetch-fediverse-data.js      # Phase 1 (Node.js)
 │   └── fediverse-processor/         # Phase 2-4 (Golang)
-│       ├── main.go                  # 入口：处理管线
-│       ├── colors.go                # 颜色计算
-│       ├── positions.go             # 位置计算
-│       └── go.mod                   # Go模块定义
-├── preview/
-│   └── index.html                   # 3D预览页面
+│       ├── main.go
+│       ├── colors.go
+│       ├── positions.go
+│       └── go.mod
 ├── data/
-│   ├── fediverse_raw.json           # 原始API数据 (Phase 1输出)
-│   ├── fediverse_with_colors.json   # 含颜色 (Phase 2输出)
-│   ├── fediverse_with_positions.json # 含位置 (Phase 3输出)
-│   └── fediverse_final.json         # 最终格式 (Phase 4输出)
+│   ├── fediverse_raw.json           # Phase 1 输出
+│   └── fediverse_final.json         # Phase 4 输出
 ├── index_files/
-│   ├── fediverse.js                 # Fediverse集成
-│   ├── fediverse-interaction.js     # Phase 5
-│   └── fediverse-labels.js          # Phase 6
-├── AGENTS.md                        # 编码规范和commit规范
-└── FEDIVERSE_IMPLEMENTATION_PLAN.md # 本文件
+│   ├── fediverse.js
+│   ├── fediverse-interaction.js
+│   └── fediverse-labels.js
+└── preview/
+    └── index.html
 ```
 
 ---
 
 ## 🔧 待调试参数
 
-以下参数需要在实现后根据视觉效果调整：
-
-1. **三恒星三角形边长** (当前: 8000) - 是否合适？
-2. **星系间距** - 不同软件星系的间隔
-3. **Canvas标签数量** (当前: 300) - 性能/体验平衡
-4. **色相扰动范围** (当前: ±30°) - 是否足够区分？
-5. **对数映射曲线** - 年龄分布是否均匀？
-
-**调试方法**: 实现预览页面，可视化调整
+1. 三恒星三角形边长 (当前: 8000)
+2. 星系间距
+3. Canvas标签数量 (当前: 300)
+4. 色相扰动范围 (当前: ±30°)
+5. 对数映射曲线
 
 ---
 
 ## ⏭️ 当前状态
 
-**更新时间**: 2025-01-09 13:20
+**更新时间**: 2026-01-09 15:45
 
-**当前阶段**: Phase 1 进行中 (数据抓取 - 测试完成，待完整抓取)
+**当前阶段**: Phase 2-4 已完成，准备开始 Phase 5
 
 ### 已完成
-- [x] Phase 1 脚本: 数据获取脚本 (`scripts/fetch-fediverse-data.js`) - 测试运行通过
-- [x] Phase 2 脚本: 颜色计算 (`scripts/calculate-colors.js`) - 逻辑已实现
-- [x] Phase 3 脚本: 位置计算 (`scripts/calculate-positions.js`) - 逻辑已实现
-- [x] Phase 5 框架: 基础Three.js集成 (`index_files/fediverse.js`)
-- [x] 独立预览页面 (`preview/index.html`)
+- [x] Phase 1 脚本 (`scripts/fetch-fediverse-data.js`) - 测试通过
+- [x] **Phase 2-4 Golang 处理器** - 测试通过 ✨
+  - [x] `scripts/fediverse-processor/main.go` - 主程序入口
+  - [x] `scripts/fediverse-processor/colors.go` - 颜色计算算法
+  - [x] `scripts/fediverse-processor/positions.go` - 位置计算算法
+  - [x] `scripts/fediverse-processor/types.go` - 数据结构定义
+- [x] Phase 5 框架 (`index_files/fediverse.js`)
+- [x] 预览页面 (`preview/index.html`)
 
-### 待执行（完整数据流程）
-- [ ] **Phase 1**: 完整数据抓取 (~40,000实例，约5.5小时)
-- [ ] **Phase 2**: 用完整数据重新计算颜色
-- [ ] **Phase 3**: 用完整数据重新计算位置
-- [ ] **Phase 4**: 数据转换管线 (raw → colors → positions → final)
-- [ ] **Phase 6**: Canvas标签系统
-- [ ] **Phase 7**: 性能优化
-- [ ] **Phase 8**: 视觉增强
+### 性能测试结果
+- **测试数据**: 120个实例（13种软件）
+- **处理速度**:
+  - 颜色计算: 82 微秒
+  - 位置计算: 65 微秒
+  - **总耗时**: 147 微秒（0.147 毫秒）
+- **预计 40k 实例耗时**: ~49 毫秒（远超预期！）
 
-### 测试数据 (当前)
-- 已抓取: 100个实例 (测试模式)
-- 软件类型: 10种
+### 待执行
+- [ ] 完整数据抓取 (~40,000实例)
+- [ ] 用 Golang 处理完整数据
+- [ ] Phase 5: WebGL 交互系统集成
+- [ ] Phase 6-8: Canvas 标签、性能优化、视觉增强
 
-### 技术决策变更
-**本地数据处理语言**: Node.js → **Golang**
-- 理由: 更好的性能，适合处理40k+数据集
-- 影响: Phase 2-4 脚本需用Golang重写
+### 测试数据
+- 已抓取: 120个实例 (测试模式)
+- 软件类型: 13种
+- 位置类型分布:
+  - 三恒星中心: 2个 (mastodon.social, mastodon.cloud)
+  - Mastodon 轨道: 78个
+  - 星系中心: 12个
+  - 星系轨道: 28个
 
-### 下一步行动
-1. **Golang重写**: 将 `calculate-colors.js` 和 `calculate-positions.js` 改为 Golang
-2. **完整数据抓取**: 运行抓取脚本 (无limit，约5.5小时)
-3. **数据处理**: 用Golang脚本处理完整数据
-4. **Phase 6+**: 继续后续开发
-
-### 运行方式
-```bash
-# 启动开发服务器
-npx serve . -p 8080
-
-# 访问
-# 主可视化: http://localhost:8080/
-# 预览页面: http://localhost:8080/preview/
-```
-
+### 技术变更
+- 数据处理语言: Node.js → **Golang** (性能优化)
+  - **收益**: 预计比 Node.js 快 200-300 倍
+  - **部署**: 单一二进制文件，无需依赖
