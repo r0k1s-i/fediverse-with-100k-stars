@@ -123,9 +123,9 @@ function generateFediverseInstances() {
             g.scale.setLength(0.2);
             
             if (instance.positionType === 'three_star_center') {
-                attachMarker(g);
+                attachMarker(g, 1.0);
             } else {
-                attachLegacyMarker(g);
+                attachLegacyMarker(instance.domain, g, 1.0, { min: 0, max: 50000 });
             }
             
             instancePreviews.add(gyroInstance);
