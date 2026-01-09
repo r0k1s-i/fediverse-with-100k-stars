@@ -1,0 +1,5102 @@
+[
+  {
+    "id": 18059,
+    "domain": "mastodon.social",
+    "open_registration": true,
+    "description": "The original server operated by the Mastodon gGmbH non-profit",
+    "banner_url": "https://fedidb.pixelcdn.net/instances/18059/9rss8g26_thumbnail.png",
+    "location": {
+      "city": "San Francisco",
+      "country": "United States"
+    },
+    "software": {
+      "id": 2,
+      "name": "Mastodon",
+      "url": "https://fedidb.org/software/mastodon",
+      "version": "4.6.0-alpha.2+pr-37417-5fea98c",
+      "slug": "mastodon"
+    },
+    "stats": {
+      "status_count": 159775433,
+      "user_count": 3054420,
+      "monthly_active_users": 280861
+    },
+    "first_seen_at": "2021-03-30T20:10:40.000000Z",
+    "last_seen_at": "2026-01-08T06:00:57.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-30T20:10:40.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 40,
+        "s": 90.1,
+        "l": 34.1
+      },
+      "rgb": {
+        "r": 165,
+        "g": 113,
+        "b": 9
+      },
+      "hex": "#a57109",
+      "debug": {
+        "ageDays": 1745,
+        "ageNorm": 0.92,
+        "hashPerturbation": 20.9,
+        "eraOffset": 0,
+        "userNorm": 1.001,
+        "activityRatio": 0.092
+      }
+    }
+  },
+  {
+    "id": 17937,
+    "domain": "misskey.io",
+    "open_registration": true,
+    "description": null,
+    "banner_url": null,
+    "location": {
+      "city": null,
+      "country": null
+    },
+    "software": {
+      "id": 12,
+      "name": "Misskey",
+      "url": "https://fedidb.org/software/misskey",
+      "version": "2025.4.1-io.11c-65581ca3cd",
+      "slug": "misskey"
+    },
+    "stats": {
+      "status_count": 148609078,
+      "user_count": 695407,
+      "monthly_active_users": 3070
+    },
+    "first_seen_at": "2021-03-21T07:02:57.000000Z",
+    "last_seen_at": "2026-01-08T07:00:48.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-21T07:02:57.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 42.7,
+        "s": 85.1,
+        "l": 30.2
+      },
+      "rgb": {
+        "r": 143,
+        "g": 105,
+        "b": 11
+      },
+      "hex": "#8f690b",
+      "debug": {
+        "ageDays": 1755,
+        "ageNorm": 0.921,
+        "hashPerturbation": 23.7,
+        "eraOffset": 0,
+        "userNorm": 0.902,
+        "activityRatio": 0.004
+      }
+    }
+  },
+  {
+    "id": 18006,
+    "domain": "pixelfed.social",
+    "open_registration": true,
+    "description": "The original Pixelfed instance, operated by the main developer @dansup",
+    "banner_url": "https://fedidb.pixelcdn.net/instances/18006/1lsmkcjc_thumbnail.jpg",
+    "location": {
+      "city": null,
+      "country": null
+    },
+    "software": {
+      "id": 1,
+      "name": "Pixelfed",
+      "url": "https://fedidb.org/software/pixelfed",
+      "version": "0.12.6",
+      "slug": "pixelfed"
+    },
+    "stats": {
+      "status_count": 16770303,
+      "user_count": 514274,
+      "monthly_active_users": 76685
+    },
+    "first_seen_at": "2021-03-30T20:10:44.000000Z",
+    "last_seen_at": "2026-01-08T08:21:00.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-30T20:10:44.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 9.6,
+        "s": 84.1,
+        "l": 36.7
+      },
+      "rgb": {
+        "r": 172,
+        "g": 40,
+        "b": 15
+      },
+      "hex": "#ac280f",
+      "debug": {
+        "ageDays": 1745,
+        "ageNorm": 0.92,
+        "hashPerturbation": -9.6,
+        "eraOffset": 0,
+        "userNorm": 0.882,
+        "activityRatio": 0.149
+      }
+    }
+  },
+  {
+    "id": 18033,
+    "domain": "mstdn.jp",
+    "open_registration": true,
+    "description": "Mastodon日本鯖です．\r\nよろしくお願いいたします。\r\n\r\n(Maintained by Sujitech, LLC)",
+    "banner_url": null,
+    "location": {
+      "city": null,
+      "country": null
+    },
+    "software": {
+      "id": 2,
+      "name": "Mastodon",
+      "url": "https://fedidb.org/software/mastodon",
+      "version": "4.1.25",
+      "slug": "mastodon"
+    },
+    "stats": {
+      "status_count": 83402549,
+      "user_count": 412947,
+      "monthly_active_users": 12383
+    },
+    "first_seen_at": "2021-03-30T20:10:41.000000Z",
+    "last_seen_at": "2026-01-08T08:21:01.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-30T20:10:41.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 24.5,
+        "s": 83.4,
+        "l": 31.3
+      },
+      "rgb": {
+        "r": 147,
+        "g": 68,
+        "b": 13
+      },
+      "hex": "#93440d",
+      "debug": {
+        "ageDays": 1745,
+        "ageNorm": 0.92,
+        "hashPerturbation": 5.3,
+        "eraOffset": 0,
+        "userNorm": 0.867,
+        "activityRatio": 0.03
+      }
+    }
+  },
+  {
+    "id": 17921,
+    "domain": "mastodon.cloud",
+    "open_registration": true,
+    "description": "Everyone is welcome as long as you follow our code of conduct! Thank you.\n\nMastodon.cloud is maintained by Sujitech, LLC.\n",
+    "banner_url": "https://fedidbcdn.com/instances/17921/j1ft9vyh_thumbnail.jpg",
+    "location": {
+      "city": null,
+      "country": null
+    },
+    "software": {
+      "id": 2,
+      "name": "Mastodon",
+      "url": "https://fedidb.org/software/mastodon",
+      "version": "4.1.25",
+      "slug": "mastodon"
+    },
+    "stats": {
+      "status_count": 6216099,
+      "user_count": 277961,
+      "monthly_active_users": 1644
+    },
+    "first_seen_at": "2021-03-30T20:10:42.000000Z",
+    "last_seen_at": "2026-01-08T09:00:30.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-30T20:10:42.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 28.3,
+        "s": 82,
+        "l": 30.3
+      },
+      "rgb": {
+        "r": 140,
+        "g": 74,
+        "b": 14
+      },
+      "hex": "#8c4a0e",
+      "debug": {
+        "ageDays": 1745,
+        "ageNorm": 0.92,
+        "hashPerturbation": 9.1,
+        "eraOffset": 0,
+        "userNorm": 0.84,
+        "activityRatio": 0.006
+      }
+    }
+  },
+  {
+    "id": 18048,
+    "domain": "mstdn.social",
+    "open_registration": true,
+    "description": "A general-purpose Mastodon server with a 500 character limit. All languages are welcome.",
+    "banner_url": "https://fedidb.pixelcdn.net/instances/18048/lh1cxcsa_thumbnail.png",
+    "location": {
+      "city": "Falkenstein",
+      "country": "Germany"
+    },
+    "software": {
+      "id": 2,
+      "name": "Mastodon",
+      "url": "https://fedidb.org/software/mastodon",
+      "version": "4.5.1",
+      "slug": "mastodon"
+    },
+    "stats": {
+      "status_count": 21980570,
+      "user_count": 268407,
+      "monthly_active_users": 10642
+    },
+    "first_seen_at": "2021-03-30T20:10:42.000000Z",
+    "last_seen_at": "2026-01-08T08:21:01.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-30T20:10:42.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 47.8,
+        "s": 81.9,
+        "l": 31.8
+      },
+      "rgb": {
+        "r": 147,
+        "g": 120,
+        "b": 15
+      },
+      "hex": "#93780f",
+      "debug": {
+        "ageDays": 1745,
+        "ageNorm": 0.92,
+        "hashPerturbation": 28.6,
+        "eraOffset": 0,
+        "userNorm": 0.838,
+        "activityRatio": 0.04
+      }
+    }
+  },
+  {
+    "id": 16811,
+    "domain": "mastodon.world",
+    "open_registration": true,
+    "description": "Generic Mastodon server for anyone to use.",
+    "banner_url": "https://fedidb.pixelcdn.net/instances/16811/nec8fki3_thumbnail.png",
+    "location": {
+      "city": "Helsinki",
+      "country": "Finland"
+    },
+    "software": {
+      "id": 2,
+      "name": "Mastodon",
+      "url": "https://fedidb.org/software/mastodon",
+      "version": "4.5.3",
+      "slug": "mastodon"
+    },
+    "stats": {
+      "status_count": 8367866,
+      "user_count": 194104,
+      "monthly_active_users": 7521
+    },
+    "first_seen_at": "2021-03-21T07:01:16.000000Z",
+    "last_seen_at": "2026-01-08T06:00:48.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-21T07:01:16.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 46.1,
+        "s": 80.8,
+        "l": 31.7
+      },
+      "rgb": {
+        "r": 146,
+        "g": 116,
+        "b": 16
+      },
+      "hex": "#927410",
+      "debug": {
+        "ageDays": 1755,
+        "ageNorm": 0.921,
+        "hashPerturbation": 27.1,
+        "eraOffset": 0,
+        "userNorm": 0.816,
+        "activityRatio": 0.039
+      }
+    }
+  },
+  {
+    "id": 18053,
+    "domain": "mastodon.online",
+    "open_registration": false,
+    "description": "A newer server operated by the Mastodon gGmbH non-profit",
+    "banner_url": "https://fedidb.pixelcdn.net/instances/18053/fan7ljlg_thumbnail.png",
+    "location": {
+      "city": "San Francisco",
+      "country": "United States"
+    },
+    "software": {
+      "id": 2,
+      "name": "Mastodon",
+      "url": "https://fedidb.org/software/mastodon",
+      "version": "4.6.0-nightly.2026-01-08-security",
+      "slug": "mastodon"
+    },
+    "stats": {
+      "status_count": 11825404,
+      "user_count": 189058,
+      "monthly_active_users": 8307
+    },
+    "first_seen_at": "2021-03-30T20:10:42.000000Z",
+    "last_seen_at": "2026-01-08T06:00:57.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-30T20:10:42.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 6,
+        "s": 80.7,
+        "l": 32
+      },
+      "rgb": {
+        "r": 147,
+        "g": 29,
+        "b": 16
+      },
+      "hex": "#931d10",
+      "debug": {
+        "ageDays": 1745,
+        "ageNorm": 0.92,
+        "hashPerturbation": -13.2,
+        "eraOffset": 0,
+        "userNorm": 0.815,
+        "activityRatio": 0.044
+      }
+    }
+  },
+  {
+    "id": 18040,
+    "domain": "mas.to",
+    "open_registration": false,
+    "description": "Hello! mas.to is a fast, up-to-date and fun Mastodon server.",
+    "banner_url": "https://fedidb.pixelcdn.net/instances/18040/gfv2qlhd_thumbnail.png",
+    "location": {
+      "city": null,
+      "country": null
+    },
+    "software": {
+      "id": 2,
+      "name": "Mastodon",
+      "url": "https://fedidb.org/software/mastodon",
+      "version": "4.5.3",
+      "slug": "mastodon"
+    },
+    "stats": {
+      "status_count": 12828406,
+      "user_count": 188226,
+      "monthly_active_users": 9247
+    },
+    "first_seen_at": "2021-03-21T07:03:05.000000Z",
+    "last_seen_at": "2026-01-08T10:00:37.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-21T07:03:05.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 350.6,
+        "s": 80.7,
+        "l": 32.2
+      },
+      "rgb": {
+        "r": 148,
+        "g": 16,
+        "b": 37
+      },
+      "hex": "#941025",
+      "debug": {
+        "ageDays": 1755,
+        "ageNorm": 0.921,
+        "hashPerturbation": -28.4,
+        "eraOffset": 0,
+        "userNorm": 0.814,
+        "activityRatio": 0.049
+      }
+    }
+  },
+  {
+    "id": 66350,
+    "domain": "lemmy.world",
+    "open_registration": true,
+    "description": null,
+    "banner_url": null,
+    "location": {
+      "city": null,
+      "country": null
+    },
+    "software": {
+      "id": 59,
+      "name": "Lemmy",
+      "url": "https://fedidb.org/software/lemmy",
+      "version": "0.19.15-4-g508853653",
+      "slug": "lemmy"
+    },
+    "stats": {
+      "status_count": 598900,
+      "user_count": 185738,
+      "monthly_active_users": 14207
+    },
+    "first_seen_at": "2023-06-03T00:30:08.000000Z",
+    "last_seen_at": "2026-01-08T20:17:04.000000Z",
+    "creation_time": {
+      "created_at": "2023-06-03T00:30:08.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 49.8,
+        "s": 80.7,
+        "l": 33.4
+      },
+      "rgb": {
+        "r": 154,
+        "g": 131,
+        "b": 16
+      },
+      "hex": "#9a8310",
+      "debug": {
+        "ageDays": 951,
+        "ageNorm": 0.845,
+        "hashPerturbation": 12.7,
+        "eraOffset": 0,
+        "userNorm": 0.813,
+        "activityRatio": 0.076
+      }
+    }
+  },
+  {
+    "id": 18059,
+    "domain": "mastodon.social",
+    "open_registration": true,
+    "description": "The original server operated by the Mastodon gGmbH non-profit",
+    "banner_url": "https://fedidb.pixelcdn.net/instances/18059/9rss8g26_thumbnail.png",
+    "location": {
+      "city": "San Francisco",
+      "country": "United States"
+    },
+    "software": {
+      "id": 2,
+      "name": "Mastodon",
+      "url": "https://fedidb.org/software/mastodon",
+      "version": "4.6.0-alpha.2+pr-37417-5fea98c",
+      "slug": "mastodon"
+    },
+    "stats": {
+      "status_count": 159775433,
+      "user_count": 3054420,
+      "monthly_active_users": 280861
+    },
+    "first_seen_at": "2021-03-30T20:10:40.000000Z",
+    "last_seen_at": "2026-01-08T06:00:57.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-30T20:10:40.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 40,
+        "s": 90.1,
+        "l": 34.1
+      },
+      "rgb": {
+        "r": 165,
+        "g": 113,
+        "b": 9
+      },
+      "hex": "#a57109",
+      "debug": {
+        "ageDays": 1745,
+        "ageNorm": 0.92,
+        "hashPerturbation": 20.9,
+        "eraOffset": 0,
+        "userNorm": 1.001,
+        "activityRatio": 0.092
+      }
+    }
+  },
+  {
+    "id": 17937,
+    "domain": "misskey.io",
+    "open_registration": true,
+    "description": null,
+    "banner_url": null,
+    "location": {
+      "city": null,
+      "country": null
+    },
+    "software": {
+      "id": 12,
+      "name": "Misskey",
+      "url": "https://fedidb.org/software/misskey",
+      "version": "2025.4.1-io.11c-65581ca3cd",
+      "slug": "misskey"
+    },
+    "stats": {
+      "status_count": 148609078,
+      "user_count": 695407,
+      "monthly_active_users": 3070
+    },
+    "first_seen_at": "2021-03-21T07:02:57.000000Z",
+    "last_seen_at": "2026-01-08T07:00:48.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-21T07:02:57.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 42.7,
+        "s": 85.1,
+        "l": 30.2
+      },
+      "rgb": {
+        "r": 143,
+        "g": 105,
+        "b": 11
+      },
+      "hex": "#8f690b",
+      "debug": {
+        "ageDays": 1755,
+        "ageNorm": 0.921,
+        "hashPerturbation": 23.7,
+        "eraOffset": 0,
+        "userNorm": 0.902,
+        "activityRatio": 0.004
+      }
+    }
+  },
+  {
+    "id": 18006,
+    "domain": "pixelfed.social",
+    "open_registration": true,
+    "description": "The original Pixelfed instance, operated by the main developer @dansup",
+    "banner_url": "https://fedidb.pixelcdn.net/instances/18006/1lsmkcjc_thumbnail.jpg",
+    "location": {
+      "city": null,
+      "country": null
+    },
+    "software": {
+      "id": 1,
+      "name": "Pixelfed",
+      "url": "https://fedidb.org/software/pixelfed",
+      "version": "0.12.6",
+      "slug": "pixelfed"
+    },
+    "stats": {
+      "status_count": 16770303,
+      "user_count": 514274,
+      "monthly_active_users": 76685
+    },
+    "first_seen_at": "2021-03-30T20:10:44.000000Z",
+    "last_seen_at": "2026-01-08T08:21:00.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-30T20:10:44.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 9.6,
+        "s": 84.1,
+        "l": 36.7
+      },
+      "rgb": {
+        "r": 172,
+        "g": 40,
+        "b": 15
+      },
+      "hex": "#ac280f",
+      "debug": {
+        "ageDays": 1745,
+        "ageNorm": 0.92,
+        "hashPerturbation": -9.6,
+        "eraOffset": 0,
+        "userNorm": 0.882,
+        "activityRatio": 0.149
+      }
+    }
+  },
+  {
+    "id": 18033,
+    "domain": "mstdn.jp",
+    "open_registration": true,
+    "description": "Mastodon日本鯖です．\r\nよろしくお願いいたします。\r\n\r\n(Maintained by Sujitech, LLC)",
+    "banner_url": null,
+    "location": {
+      "city": null,
+      "country": null
+    },
+    "software": {
+      "id": 2,
+      "name": "Mastodon",
+      "url": "https://fedidb.org/software/mastodon",
+      "version": "4.1.25",
+      "slug": "mastodon"
+    },
+    "stats": {
+      "status_count": 83402549,
+      "user_count": 412947,
+      "monthly_active_users": 12383
+    },
+    "first_seen_at": "2021-03-30T20:10:41.000000Z",
+    "last_seen_at": "2026-01-08T08:21:01.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-30T20:10:41.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 24.5,
+        "s": 83.4,
+        "l": 31.3
+      },
+      "rgb": {
+        "r": 147,
+        "g": 68,
+        "b": 13
+      },
+      "hex": "#93440d",
+      "debug": {
+        "ageDays": 1745,
+        "ageNorm": 0.92,
+        "hashPerturbation": 5.3,
+        "eraOffset": 0,
+        "userNorm": 0.867,
+        "activityRatio": 0.03
+      }
+    }
+  },
+  {
+    "id": 17921,
+    "domain": "mastodon.cloud",
+    "open_registration": true,
+    "description": "Everyone is welcome as long as you follow our code of conduct! Thank you.\n\nMastodon.cloud is maintained by Sujitech, LLC.\n",
+    "banner_url": "https://fedidbcdn.com/instances/17921/j1ft9vyh_thumbnail.jpg",
+    "location": {
+      "city": null,
+      "country": null
+    },
+    "software": {
+      "id": 2,
+      "name": "Mastodon",
+      "url": "https://fedidb.org/software/mastodon",
+      "version": "4.1.25",
+      "slug": "mastodon"
+    },
+    "stats": {
+      "status_count": 6216099,
+      "user_count": 277961,
+      "monthly_active_users": 1644
+    },
+    "first_seen_at": "2021-03-30T20:10:42.000000Z",
+    "last_seen_at": "2026-01-08T09:00:30.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-30T20:10:42.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 28.3,
+        "s": 82,
+        "l": 30.3
+      },
+      "rgb": {
+        "r": 140,
+        "g": 74,
+        "b": 14
+      },
+      "hex": "#8c4a0e",
+      "debug": {
+        "ageDays": 1745,
+        "ageNorm": 0.92,
+        "hashPerturbation": 9.1,
+        "eraOffset": 0,
+        "userNorm": 0.84,
+        "activityRatio": 0.006
+      }
+    }
+  },
+  {
+    "id": 18048,
+    "domain": "mstdn.social",
+    "open_registration": true,
+    "description": "A general-purpose Mastodon server with a 500 character limit. All languages are welcome.",
+    "banner_url": "https://fedidb.pixelcdn.net/instances/18048/lh1cxcsa_thumbnail.png",
+    "location": {
+      "city": "Falkenstein",
+      "country": "Germany"
+    },
+    "software": {
+      "id": 2,
+      "name": "Mastodon",
+      "url": "https://fedidb.org/software/mastodon",
+      "version": "4.5.1",
+      "slug": "mastodon"
+    },
+    "stats": {
+      "status_count": 21980570,
+      "user_count": 268407,
+      "monthly_active_users": 10642
+    },
+    "first_seen_at": "2021-03-30T20:10:42.000000Z",
+    "last_seen_at": "2026-01-08T08:21:01.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-30T20:10:42.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 47.8,
+        "s": 81.9,
+        "l": 31.8
+      },
+      "rgb": {
+        "r": 147,
+        "g": 120,
+        "b": 15
+      },
+      "hex": "#93780f",
+      "debug": {
+        "ageDays": 1745,
+        "ageNorm": 0.92,
+        "hashPerturbation": 28.6,
+        "eraOffset": 0,
+        "userNorm": 0.838,
+        "activityRatio": 0.04
+      }
+    }
+  },
+  {
+    "id": 16811,
+    "domain": "mastodon.world",
+    "open_registration": true,
+    "description": "Generic Mastodon server for anyone to use.",
+    "banner_url": "https://fedidb.pixelcdn.net/instances/16811/nec8fki3_thumbnail.png",
+    "location": {
+      "city": "Helsinki",
+      "country": "Finland"
+    },
+    "software": {
+      "id": 2,
+      "name": "Mastodon",
+      "url": "https://fedidb.org/software/mastodon",
+      "version": "4.5.3",
+      "slug": "mastodon"
+    },
+    "stats": {
+      "status_count": 8367866,
+      "user_count": 194104,
+      "monthly_active_users": 7521
+    },
+    "first_seen_at": "2021-03-21T07:01:16.000000Z",
+    "last_seen_at": "2026-01-08T06:00:48.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-21T07:01:16.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 46.1,
+        "s": 80.8,
+        "l": 31.7
+      },
+      "rgb": {
+        "r": 146,
+        "g": 116,
+        "b": 16
+      },
+      "hex": "#927410",
+      "debug": {
+        "ageDays": 1755,
+        "ageNorm": 0.921,
+        "hashPerturbation": 27.1,
+        "eraOffset": 0,
+        "userNorm": 0.816,
+        "activityRatio": 0.039
+      }
+    }
+  },
+  {
+    "id": 18053,
+    "domain": "mastodon.online",
+    "open_registration": false,
+    "description": "A newer server operated by the Mastodon gGmbH non-profit",
+    "banner_url": "https://fedidb.pixelcdn.net/instances/18053/fan7ljlg_thumbnail.png",
+    "location": {
+      "city": "San Francisco",
+      "country": "United States"
+    },
+    "software": {
+      "id": 2,
+      "name": "Mastodon",
+      "url": "https://fedidb.org/software/mastodon",
+      "version": "4.6.0-nightly.2026-01-08-security",
+      "slug": "mastodon"
+    },
+    "stats": {
+      "status_count": 11825404,
+      "user_count": 189058,
+      "monthly_active_users": 8307
+    },
+    "first_seen_at": "2021-03-30T20:10:42.000000Z",
+    "last_seen_at": "2026-01-08T06:00:57.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-30T20:10:42.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 6,
+        "s": 80.7,
+        "l": 32
+      },
+      "rgb": {
+        "r": 147,
+        "g": 29,
+        "b": 16
+      },
+      "hex": "#931d10",
+      "debug": {
+        "ageDays": 1745,
+        "ageNorm": 0.92,
+        "hashPerturbation": -13.2,
+        "eraOffset": 0,
+        "userNorm": 0.815,
+        "activityRatio": 0.044
+      }
+    }
+  },
+  {
+    "id": 18040,
+    "domain": "mas.to",
+    "open_registration": false,
+    "description": "Hello! mas.to is a fast, up-to-date and fun Mastodon server.",
+    "banner_url": "https://fedidb.pixelcdn.net/instances/18040/gfv2qlhd_thumbnail.png",
+    "location": {
+      "city": null,
+      "country": null
+    },
+    "software": {
+      "id": 2,
+      "name": "Mastodon",
+      "url": "https://fedidb.org/software/mastodon",
+      "version": "4.5.3",
+      "slug": "mastodon"
+    },
+    "stats": {
+      "status_count": 12828406,
+      "user_count": 188226,
+      "monthly_active_users": 9247
+    },
+    "first_seen_at": "2021-03-21T07:03:05.000000Z",
+    "last_seen_at": "2026-01-08T10:00:37.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-21T07:03:05.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 350.6,
+        "s": 80.7,
+        "l": 32.2
+      },
+      "rgb": {
+        "r": 148,
+        "g": 16,
+        "b": 37
+      },
+      "hex": "#941025",
+      "debug": {
+        "ageDays": 1755,
+        "ageNorm": 0.921,
+        "hashPerturbation": -28.4,
+        "eraOffset": 0,
+        "userNorm": 0.814,
+        "activityRatio": 0.049
+      }
+    }
+  },
+  {
+    "id": 66350,
+    "domain": "lemmy.world",
+    "open_registration": true,
+    "description": null,
+    "banner_url": null,
+    "location": {
+      "city": null,
+      "country": null
+    },
+    "software": {
+      "id": 59,
+      "name": "Lemmy",
+      "url": "https://fedidb.org/software/lemmy",
+      "version": "0.19.15-4-g508853653",
+      "slug": "lemmy"
+    },
+    "stats": {
+      "status_count": 598900,
+      "user_count": 185738,
+      "monthly_active_users": 14207
+    },
+    "first_seen_at": "2023-06-03T00:30:08.000000Z",
+    "last_seen_at": "2026-01-08T20:17:04.000000Z",
+    "creation_time": {
+      "created_at": "2023-06-03T00:30:08.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 49.8,
+        "s": 80.7,
+        "l": 33.4
+      },
+      "rgb": {
+        "r": 154,
+        "g": 131,
+        "b": 16
+      },
+      "hex": "#9a8310",
+      "debug": {
+        "ageDays": 951,
+        "ageNorm": 0.845,
+        "hashPerturbation": 12.7,
+        "eraOffset": 0,
+        "userNorm": 0.813,
+        "activityRatio": 0.076
+      }
+    }
+  },
+  {
+    "id": 18059,
+    "domain": "mastodon.social",
+    "open_registration": true,
+    "description": "The original server operated by the Mastodon gGmbH non-profit",
+    "banner_url": "https://fedidb.pixelcdn.net/instances/18059/9rss8g26_thumbnail.png",
+    "location": {
+      "city": "San Francisco",
+      "country": "United States"
+    },
+    "software": {
+      "id": 2,
+      "name": "Mastodon",
+      "url": "https://fedidb.org/software/mastodon",
+      "version": "4.6.0-alpha.2+pr-37417-5fea98c",
+      "slug": "mastodon"
+    },
+    "stats": {
+      "status_count": 159775433,
+      "user_count": 3054420,
+      "monthly_active_users": 280861
+    },
+    "first_seen_at": "2021-03-30T20:10:40.000000Z",
+    "last_seen_at": "2026-01-08T06:00:57.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-30T20:10:40.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 40,
+        "s": 90.1,
+        "l": 34.1
+      },
+      "rgb": {
+        "r": 165,
+        "g": 113,
+        "b": 9
+      },
+      "hex": "#a57109",
+      "debug": {
+        "ageDays": 1745,
+        "ageNorm": 0.92,
+        "hashPerturbation": 20.9,
+        "eraOffset": 0,
+        "userNorm": 1.001,
+        "activityRatio": 0.092
+      }
+    }
+  },
+  {
+    "id": 17937,
+    "domain": "misskey.io",
+    "open_registration": true,
+    "description": null,
+    "banner_url": null,
+    "location": {
+      "city": null,
+      "country": null
+    },
+    "software": {
+      "id": 12,
+      "name": "Misskey",
+      "url": "https://fedidb.org/software/misskey",
+      "version": "2025.4.1-io.11c-65581ca3cd",
+      "slug": "misskey"
+    },
+    "stats": {
+      "status_count": 148609078,
+      "user_count": 695407,
+      "monthly_active_users": 3070
+    },
+    "first_seen_at": "2021-03-21T07:02:57.000000Z",
+    "last_seen_at": "2026-01-08T07:00:48.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-21T07:02:57.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 42.7,
+        "s": 85.1,
+        "l": 30.2
+      },
+      "rgb": {
+        "r": 143,
+        "g": 105,
+        "b": 11
+      },
+      "hex": "#8f690b",
+      "debug": {
+        "ageDays": 1755,
+        "ageNorm": 0.921,
+        "hashPerturbation": 23.7,
+        "eraOffset": 0,
+        "userNorm": 0.902,
+        "activityRatio": 0.004
+      }
+    }
+  },
+  {
+    "id": 18006,
+    "domain": "pixelfed.social",
+    "open_registration": true,
+    "description": "The original Pixelfed instance, operated by the main developer @dansup",
+    "banner_url": "https://fedidb.pixelcdn.net/instances/18006/1lsmkcjc_thumbnail.jpg",
+    "location": {
+      "city": null,
+      "country": null
+    },
+    "software": {
+      "id": 1,
+      "name": "Pixelfed",
+      "url": "https://fedidb.org/software/pixelfed",
+      "version": "0.12.6",
+      "slug": "pixelfed"
+    },
+    "stats": {
+      "status_count": 16770303,
+      "user_count": 514274,
+      "monthly_active_users": 76685
+    },
+    "first_seen_at": "2021-03-30T20:10:44.000000Z",
+    "last_seen_at": "2026-01-08T08:21:00.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-30T20:10:44.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 9.6,
+        "s": 84.1,
+        "l": 36.7
+      },
+      "rgb": {
+        "r": 172,
+        "g": 40,
+        "b": 15
+      },
+      "hex": "#ac280f",
+      "debug": {
+        "ageDays": 1745,
+        "ageNorm": 0.92,
+        "hashPerturbation": -9.6,
+        "eraOffset": 0,
+        "userNorm": 0.882,
+        "activityRatio": 0.149
+      }
+    }
+  },
+  {
+    "id": 18033,
+    "domain": "mstdn.jp",
+    "open_registration": true,
+    "description": "Mastodon日本鯖です．\r\nよろしくお願いいたします。\r\n\r\n(Maintained by Sujitech, LLC)",
+    "banner_url": null,
+    "location": {
+      "city": null,
+      "country": null
+    },
+    "software": {
+      "id": 2,
+      "name": "Mastodon",
+      "url": "https://fedidb.org/software/mastodon",
+      "version": "4.1.25",
+      "slug": "mastodon"
+    },
+    "stats": {
+      "status_count": 83402549,
+      "user_count": 412947,
+      "monthly_active_users": 12383
+    },
+    "first_seen_at": "2021-03-30T20:10:41.000000Z",
+    "last_seen_at": "2026-01-08T08:21:01.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-30T20:10:41.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 24.5,
+        "s": 83.4,
+        "l": 31.3
+      },
+      "rgb": {
+        "r": 147,
+        "g": 68,
+        "b": 13
+      },
+      "hex": "#93440d",
+      "debug": {
+        "ageDays": 1745,
+        "ageNorm": 0.92,
+        "hashPerturbation": 5.3,
+        "eraOffset": 0,
+        "userNorm": 0.867,
+        "activityRatio": 0.03
+      }
+    }
+  },
+  {
+    "id": 17921,
+    "domain": "mastodon.cloud",
+    "open_registration": true,
+    "description": "Everyone is welcome as long as you follow our code of conduct! Thank you.\n\nMastodon.cloud is maintained by Sujitech, LLC.\n",
+    "banner_url": "https://fedidbcdn.com/instances/17921/j1ft9vyh_thumbnail.jpg",
+    "location": {
+      "city": null,
+      "country": null
+    },
+    "software": {
+      "id": 2,
+      "name": "Mastodon",
+      "url": "https://fedidb.org/software/mastodon",
+      "version": "4.1.25",
+      "slug": "mastodon"
+    },
+    "stats": {
+      "status_count": 6216099,
+      "user_count": 277961,
+      "monthly_active_users": 1644
+    },
+    "first_seen_at": "2021-03-30T20:10:42.000000Z",
+    "last_seen_at": "2026-01-08T09:00:30.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-30T20:10:42.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 28.3,
+        "s": 82,
+        "l": 30.3
+      },
+      "rgb": {
+        "r": 140,
+        "g": 74,
+        "b": 14
+      },
+      "hex": "#8c4a0e",
+      "debug": {
+        "ageDays": 1745,
+        "ageNorm": 0.92,
+        "hashPerturbation": 9.1,
+        "eraOffset": 0,
+        "userNorm": 0.84,
+        "activityRatio": 0.006
+      }
+    }
+  },
+  {
+    "id": 18048,
+    "domain": "mstdn.social",
+    "open_registration": true,
+    "description": "A general-purpose Mastodon server with a 500 character limit. All languages are welcome.",
+    "banner_url": "https://fedidb.pixelcdn.net/instances/18048/lh1cxcsa_thumbnail.png",
+    "location": {
+      "city": "Falkenstein",
+      "country": "Germany"
+    },
+    "software": {
+      "id": 2,
+      "name": "Mastodon",
+      "url": "https://fedidb.org/software/mastodon",
+      "version": "4.5.1",
+      "slug": "mastodon"
+    },
+    "stats": {
+      "status_count": 21980570,
+      "user_count": 268407,
+      "monthly_active_users": 10642
+    },
+    "first_seen_at": "2021-03-30T20:10:42.000000Z",
+    "last_seen_at": "2026-01-08T08:21:01.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-30T20:10:42.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 47.8,
+        "s": 81.9,
+        "l": 31.8
+      },
+      "rgb": {
+        "r": 147,
+        "g": 120,
+        "b": 15
+      },
+      "hex": "#93780f",
+      "debug": {
+        "ageDays": 1745,
+        "ageNorm": 0.92,
+        "hashPerturbation": 28.6,
+        "eraOffset": 0,
+        "userNorm": 0.838,
+        "activityRatio": 0.04
+      }
+    }
+  },
+  {
+    "id": 16811,
+    "domain": "mastodon.world",
+    "open_registration": true,
+    "description": "Generic Mastodon server for anyone to use.",
+    "banner_url": "https://fedidb.pixelcdn.net/instances/16811/nec8fki3_thumbnail.png",
+    "location": {
+      "city": "Helsinki",
+      "country": "Finland"
+    },
+    "software": {
+      "id": 2,
+      "name": "Mastodon",
+      "url": "https://fedidb.org/software/mastodon",
+      "version": "4.5.3",
+      "slug": "mastodon"
+    },
+    "stats": {
+      "status_count": 8367866,
+      "user_count": 194104,
+      "monthly_active_users": 7521
+    },
+    "first_seen_at": "2021-03-21T07:01:16.000000Z",
+    "last_seen_at": "2026-01-08T06:00:48.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-21T07:01:16.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 46.1,
+        "s": 80.8,
+        "l": 31.7
+      },
+      "rgb": {
+        "r": 146,
+        "g": 116,
+        "b": 16
+      },
+      "hex": "#927410",
+      "debug": {
+        "ageDays": 1755,
+        "ageNorm": 0.921,
+        "hashPerturbation": 27.1,
+        "eraOffset": 0,
+        "userNorm": 0.816,
+        "activityRatio": 0.039
+      }
+    }
+  },
+  {
+    "id": 18053,
+    "domain": "mastodon.online",
+    "open_registration": false,
+    "description": "A newer server operated by the Mastodon gGmbH non-profit",
+    "banner_url": "https://fedidb.pixelcdn.net/instances/18053/fan7ljlg_thumbnail.png",
+    "location": {
+      "city": "San Francisco",
+      "country": "United States"
+    },
+    "software": {
+      "id": 2,
+      "name": "Mastodon",
+      "url": "https://fedidb.org/software/mastodon",
+      "version": "4.6.0-nightly.2026-01-08-security",
+      "slug": "mastodon"
+    },
+    "stats": {
+      "status_count": 11825404,
+      "user_count": 189058,
+      "monthly_active_users": 8307
+    },
+    "first_seen_at": "2021-03-30T20:10:42.000000Z",
+    "last_seen_at": "2026-01-08T06:00:57.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-30T20:10:42.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 6,
+        "s": 80.7,
+        "l": 32
+      },
+      "rgb": {
+        "r": 147,
+        "g": 29,
+        "b": 16
+      },
+      "hex": "#931d10",
+      "debug": {
+        "ageDays": 1745,
+        "ageNorm": 0.92,
+        "hashPerturbation": -13.2,
+        "eraOffset": 0,
+        "userNorm": 0.815,
+        "activityRatio": 0.044
+      }
+    }
+  },
+  {
+    "id": 18040,
+    "domain": "mas.to",
+    "open_registration": false,
+    "description": "Hello! mas.to is a fast, up-to-date and fun Mastodon server.",
+    "banner_url": "https://fedidb.pixelcdn.net/instances/18040/gfv2qlhd_thumbnail.png",
+    "location": {
+      "city": null,
+      "country": null
+    },
+    "software": {
+      "id": 2,
+      "name": "Mastodon",
+      "url": "https://fedidb.org/software/mastodon",
+      "version": "4.5.3",
+      "slug": "mastodon"
+    },
+    "stats": {
+      "status_count": 12828406,
+      "user_count": 188226,
+      "monthly_active_users": 9247
+    },
+    "first_seen_at": "2021-03-21T07:03:05.000000Z",
+    "last_seen_at": "2026-01-08T10:00:37.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-21T07:03:05.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 350.6,
+        "s": 80.7,
+        "l": 32.2
+      },
+      "rgb": {
+        "r": 148,
+        "g": 16,
+        "b": 37
+      },
+      "hex": "#941025",
+      "debug": {
+        "ageDays": 1755,
+        "ageNorm": 0.921,
+        "hashPerturbation": -28.4,
+        "eraOffset": 0,
+        "userNorm": 0.814,
+        "activityRatio": 0.049
+      }
+    }
+  },
+  {
+    "id": 66350,
+    "domain": "lemmy.world",
+    "open_registration": true,
+    "description": null,
+    "banner_url": null,
+    "location": {
+      "city": null,
+      "country": null
+    },
+    "software": {
+      "id": 59,
+      "name": "Lemmy",
+      "url": "https://fedidb.org/software/lemmy",
+      "version": "0.19.15-4-g508853653",
+      "slug": "lemmy"
+    },
+    "stats": {
+      "status_count": 598900,
+      "user_count": 185738,
+      "monthly_active_users": 14207
+    },
+    "first_seen_at": "2023-06-03T00:30:08.000000Z",
+    "last_seen_at": "2026-01-08T20:17:04.000000Z",
+    "creation_time": {
+      "created_at": "2023-06-03T00:30:08.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 49.8,
+        "s": 80.7,
+        "l": 33.4
+      },
+      "rgb": {
+        "r": 154,
+        "g": 131,
+        "b": 16
+      },
+      "hex": "#9a8310",
+      "debug": {
+        "ageDays": 951,
+        "ageNorm": 0.845,
+        "hashPerturbation": 12.7,
+        "eraOffset": 0,
+        "userNorm": 0.813,
+        "activityRatio": 0.076
+      }
+    }
+  },
+  {
+    "id": 18059,
+    "domain": "mastodon.social",
+    "open_registration": true,
+    "description": "The original server operated by the Mastodon gGmbH non-profit",
+    "banner_url": "https://fedidb.pixelcdn.net/instances/18059/9rss8g26_thumbnail.png",
+    "location": {
+      "city": "San Francisco",
+      "country": "United States"
+    },
+    "software": {
+      "id": 2,
+      "name": "Mastodon",
+      "url": "https://fedidb.org/software/mastodon",
+      "version": "4.6.0-alpha.2+pr-37417-5fea98c",
+      "slug": "mastodon"
+    },
+    "stats": {
+      "status_count": 159775433,
+      "user_count": 3054420,
+      "monthly_active_users": 280861
+    },
+    "first_seen_at": "2021-03-30T20:10:40.000000Z",
+    "last_seen_at": "2026-01-08T06:00:57.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-30T20:10:40.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 40,
+        "s": 90.1,
+        "l": 34.1
+      },
+      "rgb": {
+        "r": 165,
+        "g": 113,
+        "b": 9
+      },
+      "hex": "#a57109",
+      "debug": {
+        "ageDays": 1745,
+        "ageNorm": 0.92,
+        "hashPerturbation": 20.9,
+        "eraOffset": 0,
+        "userNorm": 1.001,
+        "activityRatio": 0.092
+      }
+    }
+  },
+  {
+    "id": 17937,
+    "domain": "misskey.io",
+    "open_registration": true,
+    "description": null,
+    "banner_url": null,
+    "location": {
+      "city": null,
+      "country": null
+    },
+    "software": {
+      "id": 12,
+      "name": "Misskey",
+      "url": "https://fedidb.org/software/misskey",
+      "version": "2025.4.1-io.11c-65581ca3cd",
+      "slug": "misskey"
+    },
+    "stats": {
+      "status_count": 148609078,
+      "user_count": 695407,
+      "monthly_active_users": 3070
+    },
+    "first_seen_at": "2021-03-21T07:02:57.000000Z",
+    "last_seen_at": "2026-01-08T07:00:48.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-21T07:02:57.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 42.7,
+        "s": 85.1,
+        "l": 30.2
+      },
+      "rgb": {
+        "r": 143,
+        "g": 105,
+        "b": 11
+      },
+      "hex": "#8f690b",
+      "debug": {
+        "ageDays": 1755,
+        "ageNorm": 0.921,
+        "hashPerturbation": 23.7,
+        "eraOffset": 0,
+        "userNorm": 0.902,
+        "activityRatio": 0.004
+      }
+    }
+  },
+  {
+    "id": 18006,
+    "domain": "pixelfed.social",
+    "open_registration": true,
+    "description": "The original Pixelfed instance, operated by the main developer @dansup",
+    "banner_url": "https://fedidb.pixelcdn.net/instances/18006/1lsmkcjc_thumbnail.jpg",
+    "location": {
+      "city": null,
+      "country": null
+    },
+    "software": {
+      "id": 1,
+      "name": "Pixelfed",
+      "url": "https://fedidb.org/software/pixelfed",
+      "version": "0.12.6",
+      "slug": "pixelfed"
+    },
+    "stats": {
+      "status_count": 16770303,
+      "user_count": 514274,
+      "monthly_active_users": 76685
+    },
+    "first_seen_at": "2021-03-30T20:10:44.000000Z",
+    "last_seen_at": "2026-01-08T08:21:00.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-30T20:10:44.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 9.6,
+        "s": 84.1,
+        "l": 36.7
+      },
+      "rgb": {
+        "r": 172,
+        "g": 40,
+        "b": 15
+      },
+      "hex": "#ac280f",
+      "debug": {
+        "ageDays": 1745,
+        "ageNorm": 0.92,
+        "hashPerturbation": -9.6,
+        "eraOffset": 0,
+        "userNorm": 0.882,
+        "activityRatio": 0.149
+      }
+    }
+  },
+  {
+    "id": 18033,
+    "domain": "mstdn.jp",
+    "open_registration": true,
+    "description": "Mastodon日本鯖です．\r\nよろしくお願いいたします。\r\n\r\n(Maintained by Sujitech, LLC)",
+    "banner_url": null,
+    "location": {
+      "city": null,
+      "country": null
+    },
+    "software": {
+      "id": 2,
+      "name": "Mastodon",
+      "url": "https://fedidb.org/software/mastodon",
+      "version": "4.1.25",
+      "slug": "mastodon"
+    },
+    "stats": {
+      "status_count": 83402549,
+      "user_count": 412947,
+      "monthly_active_users": 12383
+    },
+    "first_seen_at": "2021-03-30T20:10:41.000000Z",
+    "last_seen_at": "2026-01-08T08:21:01.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-30T20:10:41.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 24.5,
+        "s": 83.4,
+        "l": 31.3
+      },
+      "rgb": {
+        "r": 147,
+        "g": 68,
+        "b": 13
+      },
+      "hex": "#93440d",
+      "debug": {
+        "ageDays": 1745,
+        "ageNorm": 0.92,
+        "hashPerturbation": 5.3,
+        "eraOffset": 0,
+        "userNorm": 0.867,
+        "activityRatio": 0.03
+      }
+    }
+  },
+  {
+    "id": 17921,
+    "domain": "mastodon.cloud",
+    "open_registration": true,
+    "description": "Everyone is welcome as long as you follow our code of conduct! Thank you.\n\nMastodon.cloud is maintained by Sujitech, LLC.\n",
+    "banner_url": "https://fedidbcdn.com/instances/17921/j1ft9vyh_thumbnail.jpg",
+    "location": {
+      "city": null,
+      "country": null
+    },
+    "software": {
+      "id": 2,
+      "name": "Mastodon",
+      "url": "https://fedidb.org/software/mastodon",
+      "version": "4.1.25",
+      "slug": "mastodon"
+    },
+    "stats": {
+      "status_count": 6216099,
+      "user_count": 277961,
+      "monthly_active_users": 1644
+    },
+    "first_seen_at": "2021-03-30T20:10:42.000000Z",
+    "last_seen_at": "2026-01-08T09:00:30.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-30T20:10:42.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 28.3,
+        "s": 82,
+        "l": 30.3
+      },
+      "rgb": {
+        "r": 140,
+        "g": 74,
+        "b": 14
+      },
+      "hex": "#8c4a0e",
+      "debug": {
+        "ageDays": 1745,
+        "ageNorm": 0.92,
+        "hashPerturbation": 9.1,
+        "eraOffset": 0,
+        "userNorm": 0.84,
+        "activityRatio": 0.006
+      }
+    }
+  },
+  {
+    "id": 18048,
+    "domain": "mstdn.social",
+    "open_registration": true,
+    "description": "A general-purpose Mastodon server with a 500 character limit. All languages are welcome.",
+    "banner_url": "https://fedidb.pixelcdn.net/instances/18048/lh1cxcsa_thumbnail.png",
+    "location": {
+      "city": "Falkenstein",
+      "country": "Germany"
+    },
+    "software": {
+      "id": 2,
+      "name": "Mastodon",
+      "url": "https://fedidb.org/software/mastodon",
+      "version": "4.5.1",
+      "slug": "mastodon"
+    },
+    "stats": {
+      "status_count": 21980570,
+      "user_count": 268407,
+      "monthly_active_users": 10642
+    },
+    "first_seen_at": "2021-03-30T20:10:42.000000Z",
+    "last_seen_at": "2026-01-08T08:21:01.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-30T20:10:42.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 47.8,
+        "s": 81.9,
+        "l": 31.8
+      },
+      "rgb": {
+        "r": 147,
+        "g": 120,
+        "b": 15
+      },
+      "hex": "#93780f",
+      "debug": {
+        "ageDays": 1745,
+        "ageNorm": 0.92,
+        "hashPerturbation": 28.6,
+        "eraOffset": 0,
+        "userNorm": 0.838,
+        "activityRatio": 0.04
+      }
+    }
+  },
+  {
+    "id": 16811,
+    "domain": "mastodon.world",
+    "open_registration": true,
+    "description": "Generic Mastodon server for anyone to use.",
+    "banner_url": "https://fedidb.pixelcdn.net/instances/16811/nec8fki3_thumbnail.png",
+    "location": {
+      "city": "Helsinki",
+      "country": "Finland"
+    },
+    "software": {
+      "id": 2,
+      "name": "Mastodon",
+      "url": "https://fedidb.org/software/mastodon",
+      "version": "4.5.3",
+      "slug": "mastodon"
+    },
+    "stats": {
+      "status_count": 8367866,
+      "user_count": 194104,
+      "monthly_active_users": 7521
+    },
+    "first_seen_at": "2021-03-21T07:01:16.000000Z",
+    "last_seen_at": "2026-01-08T06:00:48.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-21T07:01:16.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 46.1,
+        "s": 80.8,
+        "l": 31.7
+      },
+      "rgb": {
+        "r": 146,
+        "g": 116,
+        "b": 16
+      },
+      "hex": "#927410",
+      "debug": {
+        "ageDays": 1755,
+        "ageNorm": 0.921,
+        "hashPerturbation": 27.1,
+        "eraOffset": 0,
+        "userNorm": 0.816,
+        "activityRatio": 0.039
+      }
+    }
+  },
+  {
+    "id": 18053,
+    "domain": "mastodon.online",
+    "open_registration": false,
+    "description": "A newer server operated by the Mastodon gGmbH non-profit",
+    "banner_url": "https://fedidb.pixelcdn.net/instances/18053/fan7ljlg_thumbnail.png",
+    "location": {
+      "city": "San Francisco",
+      "country": "United States"
+    },
+    "software": {
+      "id": 2,
+      "name": "Mastodon",
+      "url": "https://fedidb.org/software/mastodon",
+      "version": "4.6.0-nightly.2026-01-08-security",
+      "slug": "mastodon"
+    },
+    "stats": {
+      "status_count": 11825404,
+      "user_count": 189058,
+      "monthly_active_users": 8307
+    },
+    "first_seen_at": "2021-03-30T20:10:42.000000Z",
+    "last_seen_at": "2026-01-08T06:00:57.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-30T20:10:42.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 6,
+        "s": 80.7,
+        "l": 32
+      },
+      "rgb": {
+        "r": 147,
+        "g": 29,
+        "b": 16
+      },
+      "hex": "#931d10",
+      "debug": {
+        "ageDays": 1745,
+        "ageNorm": 0.92,
+        "hashPerturbation": -13.2,
+        "eraOffset": 0,
+        "userNorm": 0.815,
+        "activityRatio": 0.044
+      }
+    }
+  },
+  {
+    "id": 18040,
+    "domain": "mas.to",
+    "open_registration": false,
+    "description": "Hello! mas.to is a fast, up-to-date and fun Mastodon server.",
+    "banner_url": "https://fedidb.pixelcdn.net/instances/18040/gfv2qlhd_thumbnail.png",
+    "location": {
+      "city": null,
+      "country": null
+    },
+    "software": {
+      "id": 2,
+      "name": "Mastodon",
+      "url": "https://fedidb.org/software/mastodon",
+      "version": "4.5.3",
+      "slug": "mastodon"
+    },
+    "stats": {
+      "status_count": 12828406,
+      "user_count": 188226,
+      "monthly_active_users": 9247
+    },
+    "first_seen_at": "2021-03-21T07:03:05.000000Z",
+    "last_seen_at": "2026-01-08T10:00:37.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-21T07:03:05.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 350.6,
+        "s": 80.7,
+        "l": 32.2
+      },
+      "rgb": {
+        "r": 148,
+        "g": 16,
+        "b": 37
+      },
+      "hex": "#941025",
+      "debug": {
+        "ageDays": 1755,
+        "ageNorm": 0.921,
+        "hashPerturbation": -28.4,
+        "eraOffset": 0,
+        "userNorm": 0.814,
+        "activityRatio": 0.049
+      }
+    }
+  },
+  {
+    "id": 66350,
+    "domain": "lemmy.world",
+    "open_registration": true,
+    "description": null,
+    "banner_url": null,
+    "location": {
+      "city": null,
+      "country": null
+    },
+    "software": {
+      "id": 59,
+      "name": "Lemmy",
+      "url": "https://fedidb.org/software/lemmy",
+      "version": "0.19.15-4-g508853653",
+      "slug": "lemmy"
+    },
+    "stats": {
+      "status_count": 598900,
+      "user_count": 185738,
+      "monthly_active_users": 14207
+    },
+    "first_seen_at": "2023-06-03T00:30:08.000000Z",
+    "last_seen_at": "2026-01-08T20:17:04.000000Z",
+    "creation_time": {
+      "created_at": "2023-06-03T00:30:08.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 49.8,
+        "s": 80.7,
+        "l": 33.4
+      },
+      "rgb": {
+        "r": 154,
+        "g": 131,
+        "b": 16
+      },
+      "hex": "#9a8310",
+      "debug": {
+        "ageDays": 951,
+        "ageNorm": 0.845,
+        "hashPerturbation": 12.7,
+        "eraOffset": 0,
+        "userNorm": 0.813,
+        "activityRatio": 0.076
+      }
+    }
+  },
+  {
+    "id": 18059,
+    "domain": "mastodon.social",
+    "open_registration": true,
+    "description": "The original server operated by the Mastodon gGmbH non-profit",
+    "banner_url": "https://fedidb.pixelcdn.net/instances/18059/9rss8g26_thumbnail.png",
+    "location": {
+      "city": "San Francisco",
+      "country": "United States"
+    },
+    "software": {
+      "id": 2,
+      "name": "Mastodon",
+      "url": "https://fedidb.org/software/mastodon",
+      "version": "4.6.0-alpha.2+pr-37417-5fea98c",
+      "slug": "mastodon"
+    },
+    "stats": {
+      "status_count": 159775433,
+      "user_count": 3054420,
+      "monthly_active_users": 280861
+    },
+    "first_seen_at": "2021-03-30T20:10:40.000000Z",
+    "last_seen_at": "2026-01-08T06:00:57.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-30T20:10:40.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 40,
+        "s": 90.1,
+        "l": 34.1
+      },
+      "rgb": {
+        "r": 165,
+        "g": 113,
+        "b": 9
+      },
+      "hex": "#a57109",
+      "debug": {
+        "ageDays": 1745,
+        "ageNorm": 0.92,
+        "hashPerturbation": 20.9,
+        "eraOffset": 0,
+        "userNorm": 1.001,
+        "activityRatio": 0.092
+      }
+    }
+  },
+  {
+    "id": 17937,
+    "domain": "misskey.io",
+    "open_registration": true,
+    "description": null,
+    "banner_url": null,
+    "location": {
+      "city": null,
+      "country": null
+    },
+    "software": {
+      "id": 12,
+      "name": "Misskey",
+      "url": "https://fedidb.org/software/misskey",
+      "version": "2025.4.1-io.11c-65581ca3cd",
+      "slug": "misskey"
+    },
+    "stats": {
+      "status_count": 148609078,
+      "user_count": 695407,
+      "monthly_active_users": 3070
+    },
+    "first_seen_at": "2021-03-21T07:02:57.000000Z",
+    "last_seen_at": "2026-01-08T07:00:48.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-21T07:02:57.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 42.7,
+        "s": 85.1,
+        "l": 30.2
+      },
+      "rgb": {
+        "r": 143,
+        "g": 105,
+        "b": 11
+      },
+      "hex": "#8f690b",
+      "debug": {
+        "ageDays": 1755,
+        "ageNorm": 0.921,
+        "hashPerturbation": 23.7,
+        "eraOffset": 0,
+        "userNorm": 0.902,
+        "activityRatio": 0.004
+      }
+    }
+  },
+  {
+    "id": 18006,
+    "domain": "pixelfed.social",
+    "open_registration": true,
+    "description": "The original Pixelfed instance, operated by the main developer @dansup",
+    "banner_url": "https://fedidb.pixelcdn.net/instances/18006/1lsmkcjc_thumbnail.jpg",
+    "location": {
+      "city": null,
+      "country": null
+    },
+    "software": {
+      "id": 1,
+      "name": "Pixelfed",
+      "url": "https://fedidb.org/software/pixelfed",
+      "version": "0.12.6",
+      "slug": "pixelfed"
+    },
+    "stats": {
+      "status_count": 16770303,
+      "user_count": 514274,
+      "monthly_active_users": 76685
+    },
+    "first_seen_at": "2021-03-30T20:10:44.000000Z",
+    "last_seen_at": "2026-01-08T08:21:00.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-30T20:10:44.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 9.6,
+        "s": 84.1,
+        "l": 36.7
+      },
+      "rgb": {
+        "r": 172,
+        "g": 40,
+        "b": 15
+      },
+      "hex": "#ac280f",
+      "debug": {
+        "ageDays": 1745,
+        "ageNorm": 0.92,
+        "hashPerturbation": -9.6,
+        "eraOffset": 0,
+        "userNorm": 0.882,
+        "activityRatio": 0.149
+      }
+    }
+  },
+  {
+    "id": 18033,
+    "domain": "mstdn.jp",
+    "open_registration": true,
+    "description": "Mastodon日本鯖です．\r\nよろしくお願いいたします。\r\n\r\n(Maintained by Sujitech, LLC)",
+    "banner_url": null,
+    "location": {
+      "city": null,
+      "country": null
+    },
+    "software": {
+      "id": 2,
+      "name": "Mastodon",
+      "url": "https://fedidb.org/software/mastodon",
+      "version": "4.1.25",
+      "slug": "mastodon"
+    },
+    "stats": {
+      "status_count": 83402549,
+      "user_count": 412947,
+      "monthly_active_users": 12383
+    },
+    "first_seen_at": "2021-03-30T20:10:41.000000Z",
+    "last_seen_at": "2026-01-08T08:21:01.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-30T20:10:41.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 24.5,
+        "s": 83.4,
+        "l": 31.3
+      },
+      "rgb": {
+        "r": 147,
+        "g": 68,
+        "b": 13
+      },
+      "hex": "#93440d",
+      "debug": {
+        "ageDays": 1745,
+        "ageNorm": 0.92,
+        "hashPerturbation": 5.3,
+        "eraOffset": 0,
+        "userNorm": 0.867,
+        "activityRatio": 0.03
+      }
+    }
+  },
+  {
+    "id": 17921,
+    "domain": "mastodon.cloud",
+    "open_registration": true,
+    "description": "Everyone is welcome as long as you follow our code of conduct! Thank you.\n\nMastodon.cloud is maintained by Sujitech, LLC.\n",
+    "banner_url": "https://fedidbcdn.com/instances/17921/j1ft9vyh_thumbnail.jpg",
+    "location": {
+      "city": null,
+      "country": null
+    },
+    "software": {
+      "id": 2,
+      "name": "Mastodon",
+      "url": "https://fedidb.org/software/mastodon",
+      "version": "4.1.25",
+      "slug": "mastodon"
+    },
+    "stats": {
+      "status_count": 6216099,
+      "user_count": 277961,
+      "monthly_active_users": 1644
+    },
+    "first_seen_at": "2021-03-30T20:10:42.000000Z",
+    "last_seen_at": "2026-01-08T09:00:30.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-30T20:10:42.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 28.3,
+        "s": 82,
+        "l": 30.3
+      },
+      "rgb": {
+        "r": 140,
+        "g": 74,
+        "b": 14
+      },
+      "hex": "#8c4a0e",
+      "debug": {
+        "ageDays": 1745,
+        "ageNorm": 0.92,
+        "hashPerturbation": 9.1,
+        "eraOffset": 0,
+        "userNorm": 0.84,
+        "activityRatio": 0.006
+      }
+    }
+  },
+  {
+    "id": 18048,
+    "domain": "mstdn.social",
+    "open_registration": true,
+    "description": "A general-purpose Mastodon server with a 500 character limit. All languages are welcome.",
+    "banner_url": "https://fedidb.pixelcdn.net/instances/18048/lh1cxcsa_thumbnail.png",
+    "location": {
+      "city": "Falkenstein",
+      "country": "Germany"
+    },
+    "software": {
+      "id": 2,
+      "name": "Mastodon",
+      "url": "https://fedidb.org/software/mastodon",
+      "version": "4.5.1",
+      "slug": "mastodon"
+    },
+    "stats": {
+      "status_count": 21980570,
+      "user_count": 268407,
+      "monthly_active_users": 10642
+    },
+    "first_seen_at": "2021-03-30T20:10:42.000000Z",
+    "last_seen_at": "2026-01-08T08:21:01.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-30T20:10:42.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 47.8,
+        "s": 81.9,
+        "l": 31.8
+      },
+      "rgb": {
+        "r": 147,
+        "g": 120,
+        "b": 15
+      },
+      "hex": "#93780f",
+      "debug": {
+        "ageDays": 1745,
+        "ageNorm": 0.92,
+        "hashPerturbation": 28.6,
+        "eraOffset": 0,
+        "userNorm": 0.838,
+        "activityRatio": 0.04
+      }
+    }
+  },
+  {
+    "id": 16811,
+    "domain": "mastodon.world",
+    "open_registration": true,
+    "description": "Generic Mastodon server for anyone to use.",
+    "banner_url": "https://fedidb.pixelcdn.net/instances/16811/nec8fki3_thumbnail.png",
+    "location": {
+      "city": "Helsinki",
+      "country": "Finland"
+    },
+    "software": {
+      "id": 2,
+      "name": "Mastodon",
+      "url": "https://fedidb.org/software/mastodon",
+      "version": "4.5.3",
+      "slug": "mastodon"
+    },
+    "stats": {
+      "status_count": 8367866,
+      "user_count": 194104,
+      "monthly_active_users": 7521
+    },
+    "first_seen_at": "2021-03-21T07:01:16.000000Z",
+    "last_seen_at": "2026-01-08T06:00:48.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-21T07:01:16.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 46.1,
+        "s": 80.8,
+        "l": 31.7
+      },
+      "rgb": {
+        "r": 146,
+        "g": 116,
+        "b": 16
+      },
+      "hex": "#927410",
+      "debug": {
+        "ageDays": 1755,
+        "ageNorm": 0.921,
+        "hashPerturbation": 27.1,
+        "eraOffset": 0,
+        "userNorm": 0.816,
+        "activityRatio": 0.039
+      }
+    }
+  },
+  {
+    "id": 18053,
+    "domain": "mastodon.online",
+    "open_registration": false,
+    "description": "A newer server operated by the Mastodon gGmbH non-profit",
+    "banner_url": "https://fedidb.pixelcdn.net/instances/18053/fan7ljlg_thumbnail.png",
+    "location": {
+      "city": "San Francisco",
+      "country": "United States"
+    },
+    "software": {
+      "id": 2,
+      "name": "Mastodon",
+      "url": "https://fedidb.org/software/mastodon",
+      "version": "4.6.0-nightly.2026-01-08-security",
+      "slug": "mastodon"
+    },
+    "stats": {
+      "status_count": 11825404,
+      "user_count": 189058,
+      "monthly_active_users": 8307
+    },
+    "first_seen_at": "2021-03-30T20:10:42.000000Z",
+    "last_seen_at": "2026-01-08T06:00:57.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-30T20:10:42.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 6,
+        "s": 80.7,
+        "l": 32
+      },
+      "rgb": {
+        "r": 147,
+        "g": 29,
+        "b": 16
+      },
+      "hex": "#931d10",
+      "debug": {
+        "ageDays": 1745,
+        "ageNorm": 0.92,
+        "hashPerturbation": -13.2,
+        "eraOffset": 0,
+        "userNorm": 0.815,
+        "activityRatio": 0.044
+      }
+    }
+  },
+  {
+    "id": 18040,
+    "domain": "mas.to",
+    "open_registration": false,
+    "description": "Hello! mas.to is a fast, up-to-date and fun Mastodon server.",
+    "banner_url": "https://fedidb.pixelcdn.net/instances/18040/gfv2qlhd_thumbnail.png",
+    "location": {
+      "city": null,
+      "country": null
+    },
+    "software": {
+      "id": 2,
+      "name": "Mastodon",
+      "url": "https://fedidb.org/software/mastodon",
+      "version": "4.5.3",
+      "slug": "mastodon"
+    },
+    "stats": {
+      "status_count": 12828406,
+      "user_count": 188226,
+      "monthly_active_users": 9247
+    },
+    "first_seen_at": "2021-03-21T07:03:05.000000Z",
+    "last_seen_at": "2026-01-08T10:00:37.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-21T07:03:05.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 350.6,
+        "s": 80.7,
+        "l": 32.2
+      },
+      "rgb": {
+        "r": 148,
+        "g": 16,
+        "b": 37
+      },
+      "hex": "#941025",
+      "debug": {
+        "ageDays": 1755,
+        "ageNorm": 0.921,
+        "hashPerturbation": -28.4,
+        "eraOffset": 0,
+        "userNorm": 0.814,
+        "activityRatio": 0.049
+      }
+    }
+  },
+  {
+    "id": 66350,
+    "domain": "lemmy.world",
+    "open_registration": true,
+    "description": null,
+    "banner_url": null,
+    "location": {
+      "city": null,
+      "country": null
+    },
+    "software": {
+      "id": 59,
+      "name": "Lemmy",
+      "url": "https://fedidb.org/software/lemmy",
+      "version": "0.19.15-4-g508853653",
+      "slug": "lemmy"
+    },
+    "stats": {
+      "status_count": 598900,
+      "user_count": 185738,
+      "monthly_active_users": 14207
+    },
+    "first_seen_at": "2023-06-03T00:30:08.000000Z",
+    "last_seen_at": "2026-01-08T20:17:04.000000Z",
+    "creation_time": {
+      "created_at": "2023-06-03T00:30:08.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 49.8,
+        "s": 80.7,
+        "l": 33.4
+      },
+      "rgb": {
+        "r": 154,
+        "g": 131,
+        "b": 16
+      },
+      "hex": "#9a8310",
+      "debug": {
+        "ageDays": 951,
+        "ageNorm": 0.845,
+        "hashPerturbation": 12.7,
+        "eraOffset": 0,
+        "userNorm": 0.813,
+        "activityRatio": 0.076
+      }
+    }
+  },
+  {
+    "id": 18059,
+    "domain": "mastodon.social",
+    "open_registration": true,
+    "description": "The original server operated by the Mastodon gGmbH non-profit",
+    "banner_url": "https://fedidb.pixelcdn.net/instances/18059/9rss8g26_thumbnail.png",
+    "location": {
+      "city": "San Francisco",
+      "country": "United States"
+    },
+    "software": {
+      "id": 2,
+      "name": "Mastodon",
+      "url": "https://fedidb.org/software/mastodon",
+      "version": "4.6.0-alpha.2+pr-37417-5fea98c",
+      "slug": "mastodon"
+    },
+    "stats": {
+      "status_count": 159775433,
+      "user_count": 3054420,
+      "monthly_active_users": 280861
+    },
+    "first_seen_at": "2021-03-30T20:10:40.000000Z",
+    "last_seen_at": "2026-01-08T06:00:57.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-30T20:10:40.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 40,
+        "s": 90.1,
+        "l": 34.1
+      },
+      "rgb": {
+        "r": 165,
+        "g": 113,
+        "b": 9
+      },
+      "hex": "#a57109",
+      "debug": {
+        "ageDays": 1745,
+        "ageNorm": 0.92,
+        "hashPerturbation": 20.9,
+        "eraOffset": 0,
+        "userNorm": 1.001,
+        "activityRatio": 0.092
+      }
+    }
+  },
+  {
+    "id": 17937,
+    "domain": "misskey.io",
+    "open_registration": true,
+    "description": null,
+    "banner_url": null,
+    "location": {
+      "city": null,
+      "country": null
+    },
+    "software": {
+      "id": 12,
+      "name": "Misskey",
+      "url": "https://fedidb.org/software/misskey",
+      "version": "2025.4.1-io.11c-65581ca3cd",
+      "slug": "misskey"
+    },
+    "stats": {
+      "status_count": 148609078,
+      "user_count": 695407,
+      "monthly_active_users": 3070
+    },
+    "first_seen_at": "2021-03-21T07:02:57.000000Z",
+    "last_seen_at": "2026-01-08T07:00:48.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-21T07:02:57.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 42.7,
+        "s": 85.1,
+        "l": 30.2
+      },
+      "rgb": {
+        "r": 143,
+        "g": 105,
+        "b": 11
+      },
+      "hex": "#8f690b",
+      "debug": {
+        "ageDays": 1755,
+        "ageNorm": 0.921,
+        "hashPerturbation": 23.7,
+        "eraOffset": 0,
+        "userNorm": 0.902,
+        "activityRatio": 0.004
+      }
+    }
+  },
+  {
+    "id": 18006,
+    "domain": "pixelfed.social",
+    "open_registration": true,
+    "description": "The original Pixelfed instance, operated by the main developer @dansup",
+    "banner_url": "https://fedidb.pixelcdn.net/instances/18006/1lsmkcjc_thumbnail.jpg",
+    "location": {
+      "city": null,
+      "country": null
+    },
+    "software": {
+      "id": 1,
+      "name": "Pixelfed",
+      "url": "https://fedidb.org/software/pixelfed",
+      "version": "0.12.6",
+      "slug": "pixelfed"
+    },
+    "stats": {
+      "status_count": 16770303,
+      "user_count": 514274,
+      "monthly_active_users": 76685
+    },
+    "first_seen_at": "2021-03-30T20:10:44.000000Z",
+    "last_seen_at": "2026-01-08T08:21:00.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-30T20:10:44.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 9.6,
+        "s": 84.1,
+        "l": 36.7
+      },
+      "rgb": {
+        "r": 172,
+        "g": 40,
+        "b": 15
+      },
+      "hex": "#ac280f",
+      "debug": {
+        "ageDays": 1745,
+        "ageNorm": 0.92,
+        "hashPerturbation": -9.6,
+        "eraOffset": 0,
+        "userNorm": 0.882,
+        "activityRatio": 0.149
+      }
+    }
+  },
+  {
+    "id": 18033,
+    "domain": "mstdn.jp",
+    "open_registration": true,
+    "description": "Mastodon日本鯖です．\r\nよろしくお願いいたします。\r\n\r\n(Maintained by Sujitech, LLC)",
+    "banner_url": null,
+    "location": {
+      "city": null,
+      "country": null
+    },
+    "software": {
+      "id": 2,
+      "name": "Mastodon",
+      "url": "https://fedidb.org/software/mastodon",
+      "version": "4.1.25",
+      "slug": "mastodon"
+    },
+    "stats": {
+      "status_count": 83402549,
+      "user_count": 412947,
+      "monthly_active_users": 12383
+    },
+    "first_seen_at": "2021-03-30T20:10:41.000000Z",
+    "last_seen_at": "2026-01-08T08:21:01.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-30T20:10:41.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 24.5,
+        "s": 83.4,
+        "l": 31.3
+      },
+      "rgb": {
+        "r": 147,
+        "g": 68,
+        "b": 13
+      },
+      "hex": "#93440d",
+      "debug": {
+        "ageDays": 1745,
+        "ageNorm": 0.92,
+        "hashPerturbation": 5.3,
+        "eraOffset": 0,
+        "userNorm": 0.867,
+        "activityRatio": 0.03
+      }
+    }
+  },
+  {
+    "id": 17921,
+    "domain": "mastodon.cloud",
+    "open_registration": true,
+    "description": "Everyone is welcome as long as you follow our code of conduct! Thank you.\n\nMastodon.cloud is maintained by Sujitech, LLC.\n",
+    "banner_url": "https://fedidbcdn.com/instances/17921/j1ft9vyh_thumbnail.jpg",
+    "location": {
+      "city": null,
+      "country": null
+    },
+    "software": {
+      "id": 2,
+      "name": "Mastodon",
+      "url": "https://fedidb.org/software/mastodon",
+      "version": "4.1.25",
+      "slug": "mastodon"
+    },
+    "stats": {
+      "status_count": 6216099,
+      "user_count": 277961,
+      "monthly_active_users": 1644
+    },
+    "first_seen_at": "2021-03-30T20:10:42.000000Z",
+    "last_seen_at": "2026-01-08T09:00:30.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-30T20:10:42.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 28.3,
+        "s": 82,
+        "l": 30.3
+      },
+      "rgb": {
+        "r": 140,
+        "g": 74,
+        "b": 14
+      },
+      "hex": "#8c4a0e",
+      "debug": {
+        "ageDays": 1745,
+        "ageNorm": 0.92,
+        "hashPerturbation": 9.1,
+        "eraOffset": 0,
+        "userNorm": 0.84,
+        "activityRatio": 0.006
+      }
+    }
+  },
+  {
+    "id": 18048,
+    "domain": "mstdn.social",
+    "open_registration": true,
+    "description": "A general-purpose Mastodon server with a 500 character limit. All languages are welcome.",
+    "banner_url": "https://fedidb.pixelcdn.net/instances/18048/lh1cxcsa_thumbnail.png",
+    "location": {
+      "city": "Falkenstein",
+      "country": "Germany"
+    },
+    "software": {
+      "id": 2,
+      "name": "Mastodon",
+      "url": "https://fedidb.org/software/mastodon",
+      "version": "4.5.1",
+      "slug": "mastodon"
+    },
+    "stats": {
+      "status_count": 21980570,
+      "user_count": 268407,
+      "monthly_active_users": 10642
+    },
+    "first_seen_at": "2021-03-30T20:10:42.000000Z",
+    "last_seen_at": "2026-01-08T08:21:01.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-30T20:10:42.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 47.8,
+        "s": 81.9,
+        "l": 31.8
+      },
+      "rgb": {
+        "r": 147,
+        "g": 120,
+        "b": 15
+      },
+      "hex": "#93780f",
+      "debug": {
+        "ageDays": 1745,
+        "ageNorm": 0.92,
+        "hashPerturbation": 28.6,
+        "eraOffset": 0,
+        "userNorm": 0.838,
+        "activityRatio": 0.04
+      }
+    }
+  },
+  {
+    "id": 16811,
+    "domain": "mastodon.world",
+    "open_registration": true,
+    "description": "Generic Mastodon server for anyone to use.",
+    "banner_url": "https://fedidb.pixelcdn.net/instances/16811/nec8fki3_thumbnail.png",
+    "location": {
+      "city": "Helsinki",
+      "country": "Finland"
+    },
+    "software": {
+      "id": 2,
+      "name": "Mastodon",
+      "url": "https://fedidb.org/software/mastodon",
+      "version": "4.5.3",
+      "slug": "mastodon"
+    },
+    "stats": {
+      "status_count": 8367866,
+      "user_count": 194104,
+      "monthly_active_users": 7521
+    },
+    "first_seen_at": "2021-03-21T07:01:16.000000Z",
+    "last_seen_at": "2026-01-08T06:00:48.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-21T07:01:16.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 46.1,
+        "s": 80.8,
+        "l": 31.7
+      },
+      "rgb": {
+        "r": 146,
+        "g": 116,
+        "b": 16
+      },
+      "hex": "#927410",
+      "debug": {
+        "ageDays": 1755,
+        "ageNorm": 0.921,
+        "hashPerturbation": 27.1,
+        "eraOffset": 0,
+        "userNorm": 0.816,
+        "activityRatio": 0.039
+      }
+    }
+  },
+  {
+    "id": 18053,
+    "domain": "mastodon.online",
+    "open_registration": false,
+    "description": "A newer server operated by the Mastodon gGmbH non-profit",
+    "banner_url": "https://fedidb.pixelcdn.net/instances/18053/fan7ljlg_thumbnail.png",
+    "location": {
+      "city": "San Francisco",
+      "country": "United States"
+    },
+    "software": {
+      "id": 2,
+      "name": "Mastodon",
+      "url": "https://fedidb.org/software/mastodon",
+      "version": "4.6.0-nightly.2026-01-08-security",
+      "slug": "mastodon"
+    },
+    "stats": {
+      "status_count": 11825404,
+      "user_count": 189058,
+      "monthly_active_users": 8307
+    },
+    "first_seen_at": "2021-03-30T20:10:42.000000Z",
+    "last_seen_at": "2026-01-08T06:00:57.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-30T20:10:42.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 6,
+        "s": 80.7,
+        "l": 32
+      },
+      "rgb": {
+        "r": 147,
+        "g": 29,
+        "b": 16
+      },
+      "hex": "#931d10",
+      "debug": {
+        "ageDays": 1745,
+        "ageNorm": 0.92,
+        "hashPerturbation": -13.2,
+        "eraOffset": 0,
+        "userNorm": 0.815,
+        "activityRatio": 0.044
+      }
+    }
+  },
+  {
+    "id": 18040,
+    "domain": "mas.to",
+    "open_registration": false,
+    "description": "Hello! mas.to is a fast, up-to-date and fun Mastodon server.",
+    "banner_url": "https://fedidb.pixelcdn.net/instances/18040/gfv2qlhd_thumbnail.png",
+    "location": {
+      "city": null,
+      "country": null
+    },
+    "software": {
+      "id": 2,
+      "name": "Mastodon",
+      "url": "https://fedidb.org/software/mastodon",
+      "version": "4.5.3",
+      "slug": "mastodon"
+    },
+    "stats": {
+      "status_count": 12828406,
+      "user_count": 188226,
+      "monthly_active_users": 9247
+    },
+    "first_seen_at": "2021-03-21T07:03:05.000000Z",
+    "last_seen_at": "2026-01-08T10:00:37.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-21T07:03:05.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 350.6,
+        "s": 80.7,
+        "l": 32.2
+      },
+      "rgb": {
+        "r": 148,
+        "g": 16,
+        "b": 37
+      },
+      "hex": "#941025",
+      "debug": {
+        "ageDays": 1755,
+        "ageNorm": 0.921,
+        "hashPerturbation": -28.4,
+        "eraOffset": 0,
+        "userNorm": 0.814,
+        "activityRatio": 0.049
+      }
+    }
+  },
+  {
+    "id": 66350,
+    "domain": "lemmy.world",
+    "open_registration": true,
+    "description": null,
+    "banner_url": null,
+    "location": {
+      "city": null,
+      "country": null
+    },
+    "software": {
+      "id": 59,
+      "name": "Lemmy",
+      "url": "https://fedidb.org/software/lemmy",
+      "version": "0.19.15-4-g508853653",
+      "slug": "lemmy"
+    },
+    "stats": {
+      "status_count": 598900,
+      "user_count": 185738,
+      "monthly_active_users": 14207
+    },
+    "first_seen_at": "2023-06-03T00:30:08.000000Z",
+    "last_seen_at": "2026-01-08T20:17:04.000000Z",
+    "creation_time": {
+      "created_at": "2023-06-03T00:30:08.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 49.8,
+        "s": 80.7,
+        "l": 33.4
+      },
+      "rgb": {
+        "r": 154,
+        "g": 131,
+        "b": 16
+      },
+      "hex": "#9a8310",
+      "debug": {
+        "ageDays": 951,
+        "ageNorm": 0.845,
+        "hashPerturbation": 12.7,
+        "eraOffset": 0,
+        "userNorm": 0.813,
+        "activityRatio": 0.076
+      }
+    }
+  },
+  {
+    "id": 18059,
+    "domain": "mastodon.social",
+    "open_registration": true,
+    "description": "The original server operated by the Mastodon gGmbH non-profit",
+    "banner_url": "https://fedidb.pixelcdn.net/instances/18059/9rss8g26_thumbnail.png",
+    "location": {
+      "city": "San Francisco",
+      "country": "United States"
+    },
+    "software": {
+      "id": 2,
+      "name": "Mastodon",
+      "url": "https://fedidb.org/software/mastodon",
+      "version": "4.6.0-alpha.2+pr-37417-5fea98c",
+      "slug": "mastodon"
+    },
+    "stats": {
+      "status_count": 159775433,
+      "user_count": 3054420,
+      "monthly_active_users": 280861
+    },
+    "first_seen_at": "2021-03-30T20:10:40.000000Z",
+    "last_seen_at": "2026-01-08T06:00:57.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-30T20:10:40.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 40,
+        "s": 90.1,
+        "l": 34.1
+      },
+      "rgb": {
+        "r": 165,
+        "g": 113,
+        "b": 9
+      },
+      "hex": "#a57109",
+      "debug": {
+        "ageDays": 1745,
+        "ageNorm": 0.92,
+        "hashPerturbation": 20.9,
+        "eraOffset": 0,
+        "userNorm": 1.001,
+        "activityRatio": 0.092
+      }
+    }
+  },
+  {
+    "id": 17937,
+    "domain": "misskey.io",
+    "open_registration": true,
+    "description": null,
+    "banner_url": null,
+    "location": {
+      "city": null,
+      "country": null
+    },
+    "software": {
+      "id": 12,
+      "name": "Misskey",
+      "url": "https://fedidb.org/software/misskey",
+      "version": "2025.4.1-io.11c-65581ca3cd",
+      "slug": "misskey"
+    },
+    "stats": {
+      "status_count": 148609078,
+      "user_count": 695407,
+      "monthly_active_users": 3070
+    },
+    "first_seen_at": "2021-03-21T07:02:57.000000Z",
+    "last_seen_at": "2026-01-08T07:00:48.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-21T07:02:57.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 42.7,
+        "s": 85.1,
+        "l": 30.2
+      },
+      "rgb": {
+        "r": 143,
+        "g": 105,
+        "b": 11
+      },
+      "hex": "#8f690b",
+      "debug": {
+        "ageDays": 1755,
+        "ageNorm": 0.921,
+        "hashPerturbation": 23.7,
+        "eraOffset": 0,
+        "userNorm": 0.902,
+        "activityRatio": 0.004
+      }
+    }
+  },
+  {
+    "id": 18006,
+    "domain": "pixelfed.social",
+    "open_registration": true,
+    "description": "The original Pixelfed instance, operated by the main developer @dansup",
+    "banner_url": "https://fedidb.pixelcdn.net/instances/18006/1lsmkcjc_thumbnail.jpg",
+    "location": {
+      "city": null,
+      "country": null
+    },
+    "software": {
+      "id": 1,
+      "name": "Pixelfed",
+      "url": "https://fedidb.org/software/pixelfed",
+      "version": "0.12.6",
+      "slug": "pixelfed"
+    },
+    "stats": {
+      "status_count": 16770303,
+      "user_count": 514274,
+      "monthly_active_users": 76685
+    },
+    "first_seen_at": "2021-03-30T20:10:44.000000Z",
+    "last_seen_at": "2026-01-08T08:21:00.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-30T20:10:44.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 9.6,
+        "s": 84.1,
+        "l": 36.7
+      },
+      "rgb": {
+        "r": 172,
+        "g": 40,
+        "b": 15
+      },
+      "hex": "#ac280f",
+      "debug": {
+        "ageDays": 1745,
+        "ageNorm": 0.92,
+        "hashPerturbation": -9.6,
+        "eraOffset": 0,
+        "userNorm": 0.882,
+        "activityRatio": 0.149
+      }
+    }
+  },
+  {
+    "id": 18033,
+    "domain": "mstdn.jp",
+    "open_registration": true,
+    "description": "Mastodon日本鯖です．\r\nよろしくお願いいたします。\r\n\r\n(Maintained by Sujitech, LLC)",
+    "banner_url": null,
+    "location": {
+      "city": null,
+      "country": null
+    },
+    "software": {
+      "id": 2,
+      "name": "Mastodon",
+      "url": "https://fedidb.org/software/mastodon",
+      "version": "4.1.25",
+      "slug": "mastodon"
+    },
+    "stats": {
+      "status_count": 83402549,
+      "user_count": 412947,
+      "monthly_active_users": 12383
+    },
+    "first_seen_at": "2021-03-30T20:10:41.000000Z",
+    "last_seen_at": "2026-01-08T08:21:01.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-30T20:10:41.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 24.5,
+        "s": 83.4,
+        "l": 31.3
+      },
+      "rgb": {
+        "r": 147,
+        "g": 68,
+        "b": 13
+      },
+      "hex": "#93440d",
+      "debug": {
+        "ageDays": 1745,
+        "ageNorm": 0.92,
+        "hashPerturbation": 5.3,
+        "eraOffset": 0,
+        "userNorm": 0.867,
+        "activityRatio": 0.03
+      }
+    }
+  },
+  {
+    "id": 17921,
+    "domain": "mastodon.cloud",
+    "open_registration": true,
+    "description": "Everyone is welcome as long as you follow our code of conduct! Thank you.\n\nMastodon.cloud is maintained by Sujitech, LLC.\n",
+    "banner_url": "https://fedidbcdn.com/instances/17921/j1ft9vyh_thumbnail.jpg",
+    "location": {
+      "city": null,
+      "country": null
+    },
+    "software": {
+      "id": 2,
+      "name": "Mastodon",
+      "url": "https://fedidb.org/software/mastodon",
+      "version": "4.1.25",
+      "slug": "mastodon"
+    },
+    "stats": {
+      "status_count": 6216099,
+      "user_count": 277961,
+      "monthly_active_users": 1644
+    },
+    "first_seen_at": "2021-03-30T20:10:42.000000Z",
+    "last_seen_at": "2026-01-08T09:00:30.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-30T20:10:42.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 28.3,
+        "s": 82,
+        "l": 30.3
+      },
+      "rgb": {
+        "r": 140,
+        "g": 74,
+        "b": 14
+      },
+      "hex": "#8c4a0e",
+      "debug": {
+        "ageDays": 1745,
+        "ageNorm": 0.92,
+        "hashPerturbation": 9.1,
+        "eraOffset": 0,
+        "userNorm": 0.84,
+        "activityRatio": 0.006
+      }
+    }
+  },
+  {
+    "id": 18048,
+    "domain": "mstdn.social",
+    "open_registration": true,
+    "description": "A general-purpose Mastodon server with a 500 character limit. All languages are welcome.",
+    "banner_url": "https://fedidb.pixelcdn.net/instances/18048/lh1cxcsa_thumbnail.png",
+    "location": {
+      "city": "Falkenstein",
+      "country": "Germany"
+    },
+    "software": {
+      "id": 2,
+      "name": "Mastodon",
+      "url": "https://fedidb.org/software/mastodon",
+      "version": "4.5.1",
+      "slug": "mastodon"
+    },
+    "stats": {
+      "status_count": 21980570,
+      "user_count": 268407,
+      "monthly_active_users": 10642
+    },
+    "first_seen_at": "2021-03-30T20:10:42.000000Z",
+    "last_seen_at": "2026-01-08T08:21:01.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-30T20:10:42.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 47.8,
+        "s": 81.9,
+        "l": 31.8
+      },
+      "rgb": {
+        "r": 147,
+        "g": 120,
+        "b": 15
+      },
+      "hex": "#93780f",
+      "debug": {
+        "ageDays": 1745,
+        "ageNorm": 0.92,
+        "hashPerturbation": 28.6,
+        "eraOffset": 0,
+        "userNorm": 0.838,
+        "activityRatio": 0.04
+      }
+    }
+  },
+  {
+    "id": 16811,
+    "domain": "mastodon.world",
+    "open_registration": true,
+    "description": "Generic Mastodon server for anyone to use.",
+    "banner_url": "https://fedidb.pixelcdn.net/instances/16811/nec8fki3_thumbnail.png",
+    "location": {
+      "city": "Helsinki",
+      "country": "Finland"
+    },
+    "software": {
+      "id": 2,
+      "name": "Mastodon",
+      "url": "https://fedidb.org/software/mastodon",
+      "version": "4.5.3",
+      "slug": "mastodon"
+    },
+    "stats": {
+      "status_count": 8367866,
+      "user_count": 194104,
+      "monthly_active_users": 7521
+    },
+    "first_seen_at": "2021-03-21T07:01:16.000000Z",
+    "last_seen_at": "2026-01-08T06:00:48.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-21T07:01:16.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 46.1,
+        "s": 80.8,
+        "l": 31.7
+      },
+      "rgb": {
+        "r": 146,
+        "g": 116,
+        "b": 16
+      },
+      "hex": "#927410",
+      "debug": {
+        "ageDays": 1755,
+        "ageNorm": 0.921,
+        "hashPerturbation": 27.1,
+        "eraOffset": 0,
+        "userNorm": 0.816,
+        "activityRatio": 0.039
+      }
+    }
+  },
+  {
+    "id": 18053,
+    "domain": "mastodon.online",
+    "open_registration": false,
+    "description": "A newer server operated by the Mastodon gGmbH non-profit",
+    "banner_url": "https://fedidb.pixelcdn.net/instances/18053/fan7ljlg_thumbnail.png",
+    "location": {
+      "city": "San Francisco",
+      "country": "United States"
+    },
+    "software": {
+      "id": 2,
+      "name": "Mastodon",
+      "url": "https://fedidb.org/software/mastodon",
+      "version": "4.6.0-nightly.2026-01-08-security",
+      "slug": "mastodon"
+    },
+    "stats": {
+      "status_count": 11825404,
+      "user_count": 189058,
+      "monthly_active_users": 8307
+    },
+    "first_seen_at": "2021-03-30T20:10:42.000000Z",
+    "last_seen_at": "2026-01-08T06:00:57.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-30T20:10:42.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 6,
+        "s": 80.7,
+        "l": 32
+      },
+      "rgb": {
+        "r": 147,
+        "g": 29,
+        "b": 16
+      },
+      "hex": "#931d10",
+      "debug": {
+        "ageDays": 1745,
+        "ageNorm": 0.92,
+        "hashPerturbation": -13.2,
+        "eraOffset": 0,
+        "userNorm": 0.815,
+        "activityRatio": 0.044
+      }
+    }
+  },
+  {
+    "id": 18040,
+    "domain": "mas.to",
+    "open_registration": false,
+    "description": "Hello! mas.to is a fast, up-to-date and fun Mastodon server.",
+    "banner_url": "https://fedidb.pixelcdn.net/instances/18040/gfv2qlhd_thumbnail.png",
+    "location": {
+      "city": null,
+      "country": null
+    },
+    "software": {
+      "id": 2,
+      "name": "Mastodon",
+      "url": "https://fedidb.org/software/mastodon",
+      "version": "4.5.3",
+      "slug": "mastodon"
+    },
+    "stats": {
+      "status_count": 12828406,
+      "user_count": 188226,
+      "monthly_active_users": 9247
+    },
+    "first_seen_at": "2021-03-21T07:03:05.000000Z",
+    "last_seen_at": "2026-01-08T10:00:37.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-21T07:03:05.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 350.6,
+        "s": 80.7,
+        "l": 32.2
+      },
+      "rgb": {
+        "r": 148,
+        "g": 16,
+        "b": 37
+      },
+      "hex": "#941025",
+      "debug": {
+        "ageDays": 1755,
+        "ageNorm": 0.921,
+        "hashPerturbation": -28.4,
+        "eraOffset": 0,
+        "userNorm": 0.814,
+        "activityRatio": 0.049
+      }
+    }
+  },
+  {
+    "id": 66350,
+    "domain": "lemmy.world",
+    "open_registration": true,
+    "description": null,
+    "banner_url": null,
+    "location": {
+      "city": null,
+      "country": null
+    },
+    "software": {
+      "id": 59,
+      "name": "Lemmy",
+      "url": "https://fedidb.org/software/lemmy",
+      "version": "0.19.15-4-g508853653",
+      "slug": "lemmy"
+    },
+    "stats": {
+      "status_count": 598900,
+      "user_count": 185738,
+      "monthly_active_users": 14207
+    },
+    "first_seen_at": "2023-06-03T00:30:08.000000Z",
+    "last_seen_at": "2026-01-08T20:17:04.000000Z",
+    "creation_time": {
+      "created_at": "2023-06-03T00:30:08.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 49.8,
+        "s": 80.7,
+        "l": 33.4
+      },
+      "rgb": {
+        "r": 154,
+        "g": 131,
+        "b": 16
+      },
+      "hex": "#9a8310",
+      "debug": {
+        "ageDays": 951,
+        "ageNorm": 0.845,
+        "hashPerturbation": 12.7,
+        "eraOffset": 0,
+        "userNorm": 0.813,
+        "activityRatio": 0.076
+      }
+    }
+  },
+  {
+    "id": 18059,
+    "domain": "mastodon.social",
+    "open_registration": true,
+    "description": "The original server operated by the Mastodon gGmbH non-profit",
+    "banner_url": "https://fedidb.pixelcdn.net/instances/18059/9rss8g26_thumbnail.png",
+    "location": {
+      "city": "San Francisco",
+      "country": "United States"
+    },
+    "software": {
+      "id": 2,
+      "name": "Mastodon",
+      "url": "https://fedidb.org/software/mastodon",
+      "version": "4.6.0-alpha.2+pr-37417-5fea98c",
+      "slug": "mastodon"
+    },
+    "stats": {
+      "status_count": 159775433,
+      "user_count": 3054420,
+      "monthly_active_users": 280861
+    },
+    "first_seen_at": "2021-03-30T20:10:40.000000Z",
+    "last_seen_at": "2026-01-08T06:00:57.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-30T20:10:40.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 40,
+        "s": 90.1,
+        "l": 34.1
+      },
+      "rgb": {
+        "r": 165,
+        "g": 113,
+        "b": 9
+      },
+      "hex": "#a57109",
+      "debug": {
+        "ageDays": 1745,
+        "ageNorm": 0.92,
+        "hashPerturbation": 20.9,
+        "eraOffset": 0,
+        "userNorm": 1.001,
+        "activityRatio": 0.092
+      }
+    }
+  },
+  {
+    "id": 17937,
+    "domain": "misskey.io",
+    "open_registration": true,
+    "description": null,
+    "banner_url": null,
+    "location": {
+      "city": null,
+      "country": null
+    },
+    "software": {
+      "id": 12,
+      "name": "Misskey",
+      "url": "https://fedidb.org/software/misskey",
+      "version": "2025.4.1-io.11c-65581ca3cd",
+      "slug": "misskey"
+    },
+    "stats": {
+      "status_count": 148609078,
+      "user_count": 695407,
+      "monthly_active_users": 3070
+    },
+    "first_seen_at": "2021-03-21T07:02:57.000000Z",
+    "last_seen_at": "2026-01-08T07:00:48.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-21T07:02:57.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 42.7,
+        "s": 85.1,
+        "l": 30.2
+      },
+      "rgb": {
+        "r": 143,
+        "g": 105,
+        "b": 11
+      },
+      "hex": "#8f690b",
+      "debug": {
+        "ageDays": 1755,
+        "ageNorm": 0.921,
+        "hashPerturbation": 23.7,
+        "eraOffset": 0,
+        "userNorm": 0.902,
+        "activityRatio": 0.004
+      }
+    }
+  },
+  {
+    "id": 18006,
+    "domain": "pixelfed.social",
+    "open_registration": true,
+    "description": "The original Pixelfed instance, operated by the main developer @dansup",
+    "banner_url": "https://fedidb.pixelcdn.net/instances/18006/1lsmkcjc_thumbnail.jpg",
+    "location": {
+      "city": null,
+      "country": null
+    },
+    "software": {
+      "id": 1,
+      "name": "Pixelfed",
+      "url": "https://fedidb.org/software/pixelfed",
+      "version": "0.12.6",
+      "slug": "pixelfed"
+    },
+    "stats": {
+      "status_count": 16770303,
+      "user_count": 514274,
+      "monthly_active_users": 76685
+    },
+    "first_seen_at": "2021-03-30T20:10:44.000000Z",
+    "last_seen_at": "2026-01-08T08:21:00.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-30T20:10:44.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 9.6,
+        "s": 84.1,
+        "l": 36.7
+      },
+      "rgb": {
+        "r": 172,
+        "g": 40,
+        "b": 15
+      },
+      "hex": "#ac280f",
+      "debug": {
+        "ageDays": 1745,
+        "ageNorm": 0.92,
+        "hashPerturbation": -9.6,
+        "eraOffset": 0,
+        "userNorm": 0.882,
+        "activityRatio": 0.149
+      }
+    }
+  },
+  {
+    "id": 18033,
+    "domain": "mstdn.jp",
+    "open_registration": true,
+    "description": "Mastodon日本鯖です．\r\nよろしくお願いいたします。\r\n\r\n(Maintained by Sujitech, LLC)",
+    "banner_url": null,
+    "location": {
+      "city": null,
+      "country": null
+    },
+    "software": {
+      "id": 2,
+      "name": "Mastodon",
+      "url": "https://fedidb.org/software/mastodon",
+      "version": "4.1.25",
+      "slug": "mastodon"
+    },
+    "stats": {
+      "status_count": 83402549,
+      "user_count": 412947,
+      "monthly_active_users": 12383
+    },
+    "first_seen_at": "2021-03-30T20:10:41.000000Z",
+    "last_seen_at": "2026-01-08T08:21:01.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-30T20:10:41.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 24.5,
+        "s": 83.4,
+        "l": 31.3
+      },
+      "rgb": {
+        "r": 147,
+        "g": 68,
+        "b": 13
+      },
+      "hex": "#93440d",
+      "debug": {
+        "ageDays": 1745,
+        "ageNorm": 0.92,
+        "hashPerturbation": 5.3,
+        "eraOffset": 0,
+        "userNorm": 0.867,
+        "activityRatio": 0.03
+      }
+    }
+  },
+  {
+    "id": 17921,
+    "domain": "mastodon.cloud",
+    "open_registration": true,
+    "description": "Everyone is welcome as long as you follow our code of conduct! Thank you.\n\nMastodon.cloud is maintained by Sujitech, LLC.\n",
+    "banner_url": "https://fedidbcdn.com/instances/17921/j1ft9vyh_thumbnail.jpg",
+    "location": {
+      "city": null,
+      "country": null
+    },
+    "software": {
+      "id": 2,
+      "name": "Mastodon",
+      "url": "https://fedidb.org/software/mastodon",
+      "version": "4.1.25",
+      "slug": "mastodon"
+    },
+    "stats": {
+      "status_count": 6216099,
+      "user_count": 277961,
+      "monthly_active_users": 1644
+    },
+    "first_seen_at": "2021-03-30T20:10:42.000000Z",
+    "last_seen_at": "2026-01-08T09:00:30.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-30T20:10:42.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 28.3,
+        "s": 82,
+        "l": 30.3
+      },
+      "rgb": {
+        "r": 140,
+        "g": 74,
+        "b": 14
+      },
+      "hex": "#8c4a0e",
+      "debug": {
+        "ageDays": 1745,
+        "ageNorm": 0.92,
+        "hashPerturbation": 9.1,
+        "eraOffset": 0,
+        "userNorm": 0.84,
+        "activityRatio": 0.006
+      }
+    }
+  },
+  {
+    "id": 18048,
+    "domain": "mstdn.social",
+    "open_registration": true,
+    "description": "A general-purpose Mastodon server with a 500 character limit. All languages are welcome.",
+    "banner_url": "https://fedidb.pixelcdn.net/instances/18048/lh1cxcsa_thumbnail.png",
+    "location": {
+      "city": "Falkenstein",
+      "country": "Germany"
+    },
+    "software": {
+      "id": 2,
+      "name": "Mastodon",
+      "url": "https://fedidb.org/software/mastodon",
+      "version": "4.5.1",
+      "slug": "mastodon"
+    },
+    "stats": {
+      "status_count": 21980570,
+      "user_count": 268407,
+      "monthly_active_users": 10642
+    },
+    "first_seen_at": "2021-03-30T20:10:42.000000Z",
+    "last_seen_at": "2026-01-08T08:21:01.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-30T20:10:42.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 47.8,
+        "s": 81.9,
+        "l": 31.8
+      },
+      "rgb": {
+        "r": 147,
+        "g": 120,
+        "b": 15
+      },
+      "hex": "#93780f",
+      "debug": {
+        "ageDays": 1745,
+        "ageNorm": 0.92,
+        "hashPerturbation": 28.6,
+        "eraOffset": 0,
+        "userNorm": 0.838,
+        "activityRatio": 0.04
+      }
+    }
+  },
+  {
+    "id": 16811,
+    "domain": "mastodon.world",
+    "open_registration": true,
+    "description": "Generic Mastodon server for anyone to use.",
+    "banner_url": "https://fedidb.pixelcdn.net/instances/16811/nec8fki3_thumbnail.png",
+    "location": {
+      "city": "Helsinki",
+      "country": "Finland"
+    },
+    "software": {
+      "id": 2,
+      "name": "Mastodon",
+      "url": "https://fedidb.org/software/mastodon",
+      "version": "4.5.3",
+      "slug": "mastodon"
+    },
+    "stats": {
+      "status_count": 8367866,
+      "user_count": 194104,
+      "monthly_active_users": 7521
+    },
+    "first_seen_at": "2021-03-21T07:01:16.000000Z",
+    "last_seen_at": "2026-01-08T06:00:48.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-21T07:01:16.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 46.1,
+        "s": 80.8,
+        "l": 31.7
+      },
+      "rgb": {
+        "r": 146,
+        "g": 116,
+        "b": 16
+      },
+      "hex": "#927410",
+      "debug": {
+        "ageDays": 1755,
+        "ageNorm": 0.921,
+        "hashPerturbation": 27.1,
+        "eraOffset": 0,
+        "userNorm": 0.816,
+        "activityRatio": 0.039
+      }
+    }
+  },
+  {
+    "id": 18053,
+    "domain": "mastodon.online",
+    "open_registration": false,
+    "description": "A newer server operated by the Mastodon gGmbH non-profit",
+    "banner_url": "https://fedidb.pixelcdn.net/instances/18053/fan7ljlg_thumbnail.png",
+    "location": {
+      "city": "San Francisco",
+      "country": "United States"
+    },
+    "software": {
+      "id": 2,
+      "name": "Mastodon",
+      "url": "https://fedidb.org/software/mastodon",
+      "version": "4.6.0-nightly.2026-01-08-security",
+      "slug": "mastodon"
+    },
+    "stats": {
+      "status_count": 11825404,
+      "user_count": 189058,
+      "monthly_active_users": 8307
+    },
+    "first_seen_at": "2021-03-30T20:10:42.000000Z",
+    "last_seen_at": "2026-01-08T06:00:57.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-30T20:10:42.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 6,
+        "s": 80.7,
+        "l": 32
+      },
+      "rgb": {
+        "r": 147,
+        "g": 29,
+        "b": 16
+      },
+      "hex": "#931d10",
+      "debug": {
+        "ageDays": 1745,
+        "ageNorm": 0.92,
+        "hashPerturbation": -13.2,
+        "eraOffset": 0,
+        "userNorm": 0.815,
+        "activityRatio": 0.044
+      }
+    }
+  },
+  {
+    "id": 18040,
+    "domain": "mas.to",
+    "open_registration": false,
+    "description": "Hello! mas.to is a fast, up-to-date and fun Mastodon server.",
+    "banner_url": "https://fedidb.pixelcdn.net/instances/18040/gfv2qlhd_thumbnail.png",
+    "location": {
+      "city": null,
+      "country": null
+    },
+    "software": {
+      "id": 2,
+      "name": "Mastodon",
+      "url": "https://fedidb.org/software/mastodon",
+      "version": "4.5.3",
+      "slug": "mastodon"
+    },
+    "stats": {
+      "status_count": 12828406,
+      "user_count": 188226,
+      "monthly_active_users": 9247
+    },
+    "first_seen_at": "2021-03-21T07:03:05.000000Z",
+    "last_seen_at": "2026-01-08T10:00:37.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-21T07:03:05.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 350.6,
+        "s": 80.7,
+        "l": 32.2
+      },
+      "rgb": {
+        "r": 148,
+        "g": 16,
+        "b": 37
+      },
+      "hex": "#941025",
+      "debug": {
+        "ageDays": 1755,
+        "ageNorm": 0.921,
+        "hashPerturbation": -28.4,
+        "eraOffset": 0,
+        "userNorm": 0.814,
+        "activityRatio": 0.049
+      }
+    }
+  },
+  {
+    "id": 66350,
+    "domain": "lemmy.world",
+    "open_registration": true,
+    "description": null,
+    "banner_url": null,
+    "location": {
+      "city": null,
+      "country": null
+    },
+    "software": {
+      "id": 59,
+      "name": "Lemmy",
+      "url": "https://fedidb.org/software/lemmy",
+      "version": "0.19.15-4-g508853653",
+      "slug": "lemmy"
+    },
+    "stats": {
+      "status_count": 598900,
+      "user_count": 185738,
+      "monthly_active_users": 14207
+    },
+    "first_seen_at": "2023-06-03T00:30:08.000000Z",
+    "last_seen_at": "2026-01-08T20:17:04.000000Z",
+    "creation_time": {
+      "created_at": "2023-06-03T00:30:08.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 49.8,
+        "s": 80.7,
+        "l": 33.4
+      },
+      "rgb": {
+        "r": 154,
+        "g": 131,
+        "b": 16
+      },
+      "hex": "#9a8310",
+      "debug": {
+        "ageDays": 951,
+        "ageNorm": 0.845,
+        "hashPerturbation": 12.7,
+        "eraOffset": 0,
+        "userNorm": 0.813,
+        "activityRatio": 0.076
+      }
+    }
+  },
+  {
+    "id": 18059,
+    "domain": "mastodon.social",
+    "open_registration": true,
+    "description": "The original server operated by the Mastodon gGmbH non-profit",
+    "banner_url": "https://fedidb.pixelcdn.net/instances/18059/9rss8g26_thumbnail.png",
+    "location": {
+      "city": "San Francisco",
+      "country": "United States"
+    },
+    "software": {
+      "id": 2,
+      "name": "Mastodon",
+      "url": "https://fedidb.org/software/mastodon",
+      "version": "4.6.0-alpha.2+pr-37417-5fea98c",
+      "slug": "mastodon"
+    },
+    "stats": {
+      "status_count": 159775433,
+      "user_count": 3054420,
+      "monthly_active_users": 280861
+    },
+    "first_seen_at": "2021-03-30T20:10:40.000000Z",
+    "last_seen_at": "2026-01-08T06:00:57.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-30T20:10:40.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 40,
+        "s": 90.1,
+        "l": 34.1
+      },
+      "rgb": {
+        "r": 165,
+        "g": 113,
+        "b": 9
+      },
+      "hex": "#a57109",
+      "debug": {
+        "ageDays": 1745,
+        "ageNorm": 0.92,
+        "hashPerturbation": 20.9,
+        "eraOffset": 0,
+        "userNorm": 1.001,
+        "activityRatio": 0.092
+      }
+    }
+  },
+  {
+    "id": 17937,
+    "domain": "misskey.io",
+    "open_registration": true,
+    "description": null,
+    "banner_url": null,
+    "location": {
+      "city": null,
+      "country": null
+    },
+    "software": {
+      "id": 12,
+      "name": "Misskey",
+      "url": "https://fedidb.org/software/misskey",
+      "version": "2025.4.1-io.11c-65581ca3cd",
+      "slug": "misskey"
+    },
+    "stats": {
+      "status_count": 148609078,
+      "user_count": 695407,
+      "monthly_active_users": 3070
+    },
+    "first_seen_at": "2021-03-21T07:02:57.000000Z",
+    "last_seen_at": "2026-01-08T07:00:48.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-21T07:02:57.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 42.7,
+        "s": 85.1,
+        "l": 30.2
+      },
+      "rgb": {
+        "r": 143,
+        "g": 105,
+        "b": 11
+      },
+      "hex": "#8f690b",
+      "debug": {
+        "ageDays": 1755,
+        "ageNorm": 0.921,
+        "hashPerturbation": 23.7,
+        "eraOffset": 0,
+        "userNorm": 0.902,
+        "activityRatio": 0.004
+      }
+    }
+  },
+  {
+    "id": 18006,
+    "domain": "pixelfed.social",
+    "open_registration": true,
+    "description": "The original Pixelfed instance, operated by the main developer @dansup",
+    "banner_url": "https://fedidb.pixelcdn.net/instances/18006/1lsmkcjc_thumbnail.jpg",
+    "location": {
+      "city": null,
+      "country": null
+    },
+    "software": {
+      "id": 1,
+      "name": "Pixelfed",
+      "url": "https://fedidb.org/software/pixelfed",
+      "version": "0.12.6",
+      "slug": "pixelfed"
+    },
+    "stats": {
+      "status_count": 16770303,
+      "user_count": 514274,
+      "monthly_active_users": 76685
+    },
+    "first_seen_at": "2021-03-30T20:10:44.000000Z",
+    "last_seen_at": "2026-01-08T08:21:00.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-30T20:10:44.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 9.6,
+        "s": 84.1,
+        "l": 36.7
+      },
+      "rgb": {
+        "r": 172,
+        "g": 40,
+        "b": 15
+      },
+      "hex": "#ac280f",
+      "debug": {
+        "ageDays": 1745,
+        "ageNorm": 0.92,
+        "hashPerturbation": -9.6,
+        "eraOffset": 0,
+        "userNorm": 0.882,
+        "activityRatio": 0.149
+      }
+    }
+  },
+  {
+    "id": 18033,
+    "domain": "mstdn.jp",
+    "open_registration": true,
+    "description": "Mastodon日本鯖です．\r\nよろしくお願いいたします。\r\n\r\n(Maintained by Sujitech, LLC)",
+    "banner_url": null,
+    "location": {
+      "city": null,
+      "country": null
+    },
+    "software": {
+      "id": 2,
+      "name": "Mastodon",
+      "url": "https://fedidb.org/software/mastodon",
+      "version": "4.1.25",
+      "slug": "mastodon"
+    },
+    "stats": {
+      "status_count": 83402549,
+      "user_count": 412947,
+      "monthly_active_users": 12383
+    },
+    "first_seen_at": "2021-03-30T20:10:41.000000Z",
+    "last_seen_at": "2026-01-08T08:21:01.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-30T20:10:41.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 24.5,
+        "s": 83.4,
+        "l": 31.3
+      },
+      "rgb": {
+        "r": 147,
+        "g": 68,
+        "b": 13
+      },
+      "hex": "#93440d",
+      "debug": {
+        "ageDays": 1745,
+        "ageNorm": 0.92,
+        "hashPerturbation": 5.3,
+        "eraOffset": 0,
+        "userNorm": 0.867,
+        "activityRatio": 0.03
+      }
+    }
+  },
+  {
+    "id": 17921,
+    "domain": "mastodon.cloud",
+    "open_registration": true,
+    "description": "Everyone is welcome as long as you follow our code of conduct! Thank you.\n\nMastodon.cloud is maintained by Sujitech, LLC.\n",
+    "banner_url": "https://fedidbcdn.com/instances/17921/j1ft9vyh_thumbnail.jpg",
+    "location": {
+      "city": null,
+      "country": null
+    },
+    "software": {
+      "id": 2,
+      "name": "Mastodon",
+      "url": "https://fedidb.org/software/mastodon",
+      "version": "4.1.25",
+      "slug": "mastodon"
+    },
+    "stats": {
+      "status_count": 6216099,
+      "user_count": 277961,
+      "monthly_active_users": 1644
+    },
+    "first_seen_at": "2021-03-30T20:10:42.000000Z",
+    "last_seen_at": "2026-01-08T09:00:30.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-30T20:10:42.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 28.3,
+        "s": 82,
+        "l": 30.3
+      },
+      "rgb": {
+        "r": 140,
+        "g": 74,
+        "b": 14
+      },
+      "hex": "#8c4a0e",
+      "debug": {
+        "ageDays": 1745,
+        "ageNorm": 0.92,
+        "hashPerturbation": 9.1,
+        "eraOffset": 0,
+        "userNorm": 0.84,
+        "activityRatio": 0.006
+      }
+    }
+  },
+  {
+    "id": 18048,
+    "domain": "mstdn.social",
+    "open_registration": true,
+    "description": "A general-purpose Mastodon server with a 500 character limit. All languages are welcome.",
+    "banner_url": "https://fedidb.pixelcdn.net/instances/18048/lh1cxcsa_thumbnail.png",
+    "location": {
+      "city": "Falkenstein",
+      "country": "Germany"
+    },
+    "software": {
+      "id": 2,
+      "name": "Mastodon",
+      "url": "https://fedidb.org/software/mastodon",
+      "version": "4.5.1",
+      "slug": "mastodon"
+    },
+    "stats": {
+      "status_count": 21980570,
+      "user_count": 268407,
+      "monthly_active_users": 10642
+    },
+    "first_seen_at": "2021-03-30T20:10:42.000000Z",
+    "last_seen_at": "2026-01-08T08:21:01.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-30T20:10:42.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 47.8,
+        "s": 81.9,
+        "l": 31.8
+      },
+      "rgb": {
+        "r": 147,
+        "g": 120,
+        "b": 15
+      },
+      "hex": "#93780f",
+      "debug": {
+        "ageDays": 1745,
+        "ageNorm": 0.92,
+        "hashPerturbation": 28.6,
+        "eraOffset": 0,
+        "userNorm": 0.838,
+        "activityRatio": 0.04
+      }
+    }
+  },
+  {
+    "id": 16811,
+    "domain": "mastodon.world",
+    "open_registration": true,
+    "description": "Generic Mastodon server for anyone to use.",
+    "banner_url": "https://fedidb.pixelcdn.net/instances/16811/nec8fki3_thumbnail.png",
+    "location": {
+      "city": "Helsinki",
+      "country": "Finland"
+    },
+    "software": {
+      "id": 2,
+      "name": "Mastodon",
+      "url": "https://fedidb.org/software/mastodon",
+      "version": "4.5.3",
+      "slug": "mastodon"
+    },
+    "stats": {
+      "status_count": 8367866,
+      "user_count": 194104,
+      "monthly_active_users": 7521
+    },
+    "first_seen_at": "2021-03-21T07:01:16.000000Z",
+    "last_seen_at": "2026-01-08T06:00:48.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-21T07:01:16.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 46.1,
+        "s": 80.8,
+        "l": 31.7
+      },
+      "rgb": {
+        "r": 146,
+        "g": 116,
+        "b": 16
+      },
+      "hex": "#927410",
+      "debug": {
+        "ageDays": 1755,
+        "ageNorm": 0.921,
+        "hashPerturbation": 27.1,
+        "eraOffset": 0,
+        "userNorm": 0.816,
+        "activityRatio": 0.039
+      }
+    }
+  },
+  {
+    "id": 18053,
+    "domain": "mastodon.online",
+    "open_registration": false,
+    "description": "A newer server operated by the Mastodon gGmbH non-profit",
+    "banner_url": "https://fedidb.pixelcdn.net/instances/18053/fan7ljlg_thumbnail.png",
+    "location": {
+      "city": "San Francisco",
+      "country": "United States"
+    },
+    "software": {
+      "id": 2,
+      "name": "Mastodon",
+      "url": "https://fedidb.org/software/mastodon",
+      "version": "4.6.0-nightly.2026-01-08-security",
+      "slug": "mastodon"
+    },
+    "stats": {
+      "status_count": 11825404,
+      "user_count": 189058,
+      "monthly_active_users": 8307
+    },
+    "first_seen_at": "2021-03-30T20:10:42.000000Z",
+    "last_seen_at": "2026-01-08T06:00:57.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-30T20:10:42.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 6,
+        "s": 80.7,
+        "l": 32
+      },
+      "rgb": {
+        "r": 147,
+        "g": 29,
+        "b": 16
+      },
+      "hex": "#931d10",
+      "debug": {
+        "ageDays": 1745,
+        "ageNorm": 0.92,
+        "hashPerturbation": -13.2,
+        "eraOffset": 0,
+        "userNorm": 0.815,
+        "activityRatio": 0.044
+      }
+    }
+  },
+  {
+    "id": 18040,
+    "domain": "mas.to",
+    "open_registration": false,
+    "description": "Hello! mas.to is a fast, up-to-date and fun Mastodon server.",
+    "banner_url": "https://fedidb.pixelcdn.net/instances/18040/gfv2qlhd_thumbnail.png",
+    "location": {
+      "city": null,
+      "country": null
+    },
+    "software": {
+      "id": 2,
+      "name": "Mastodon",
+      "url": "https://fedidb.org/software/mastodon",
+      "version": "4.5.3",
+      "slug": "mastodon"
+    },
+    "stats": {
+      "status_count": 12828406,
+      "user_count": 188226,
+      "monthly_active_users": 9247
+    },
+    "first_seen_at": "2021-03-21T07:03:05.000000Z",
+    "last_seen_at": "2026-01-08T10:00:37.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-21T07:03:05.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 350.6,
+        "s": 80.7,
+        "l": 32.2
+      },
+      "rgb": {
+        "r": 148,
+        "g": 16,
+        "b": 37
+      },
+      "hex": "#941025",
+      "debug": {
+        "ageDays": 1755,
+        "ageNorm": 0.921,
+        "hashPerturbation": -28.4,
+        "eraOffset": 0,
+        "userNorm": 0.814,
+        "activityRatio": 0.049
+      }
+    }
+  },
+  {
+    "id": 66350,
+    "domain": "lemmy.world",
+    "open_registration": true,
+    "description": null,
+    "banner_url": null,
+    "location": {
+      "city": null,
+      "country": null
+    },
+    "software": {
+      "id": 59,
+      "name": "Lemmy",
+      "url": "https://fedidb.org/software/lemmy",
+      "version": "0.19.15-4-g508853653",
+      "slug": "lemmy"
+    },
+    "stats": {
+      "status_count": 598900,
+      "user_count": 185738,
+      "monthly_active_users": 14207
+    },
+    "first_seen_at": "2023-06-03T00:30:08.000000Z",
+    "last_seen_at": "2026-01-08T20:17:04.000000Z",
+    "creation_time": {
+      "created_at": "2023-06-03T00:30:08.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 49.8,
+        "s": 80.7,
+        "l": 33.4
+      },
+      "rgb": {
+        "r": 154,
+        "g": 131,
+        "b": 16
+      },
+      "hex": "#9a8310",
+      "debug": {
+        "ageDays": 951,
+        "ageNorm": 0.845,
+        "hashPerturbation": 12.7,
+        "eraOffset": 0,
+        "userNorm": 0.813,
+        "activityRatio": 0.076
+      }
+    }
+  },
+  {
+    "id": 18059,
+    "domain": "mastodon.social",
+    "open_registration": true,
+    "description": "The original server operated by the Mastodon gGmbH non-profit",
+    "banner_url": "https://fedidb.pixelcdn.net/instances/18059/9rss8g26_thumbnail.png",
+    "location": {
+      "city": "San Francisco",
+      "country": "United States"
+    },
+    "software": {
+      "id": 2,
+      "name": "Mastodon",
+      "url": "https://fedidb.org/software/mastodon",
+      "version": "4.6.0-alpha.2+pr-37417-5fea98c",
+      "slug": "mastodon"
+    },
+    "stats": {
+      "status_count": 159775433,
+      "user_count": 3054420,
+      "monthly_active_users": 280861
+    },
+    "first_seen_at": "2021-03-30T20:10:40.000000Z",
+    "last_seen_at": "2026-01-08T06:00:57.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-30T20:10:40.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 40,
+        "s": 90.1,
+        "l": 34.1
+      },
+      "rgb": {
+        "r": 165,
+        "g": 113,
+        "b": 9
+      },
+      "hex": "#a57109",
+      "debug": {
+        "ageDays": 1745,
+        "ageNorm": 0.92,
+        "hashPerturbation": 20.9,
+        "eraOffset": 0,
+        "userNorm": 1.001,
+        "activityRatio": 0.092
+      }
+    }
+  },
+  {
+    "id": 17937,
+    "domain": "misskey.io",
+    "open_registration": true,
+    "description": null,
+    "banner_url": null,
+    "location": {
+      "city": null,
+      "country": null
+    },
+    "software": {
+      "id": 12,
+      "name": "Misskey",
+      "url": "https://fedidb.org/software/misskey",
+      "version": "2025.4.1-io.11c-65581ca3cd",
+      "slug": "misskey"
+    },
+    "stats": {
+      "status_count": 148609078,
+      "user_count": 695407,
+      "monthly_active_users": 3070
+    },
+    "first_seen_at": "2021-03-21T07:02:57.000000Z",
+    "last_seen_at": "2026-01-08T07:00:48.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-21T07:02:57.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 42.7,
+        "s": 85.1,
+        "l": 30.2
+      },
+      "rgb": {
+        "r": 143,
+        "g": 105,
+        "b": 11
+      },
+      "hex": "#8f690b",
+      "debug": {
+        "ageDays": 1755,
+        "ageNorm": 0.921,
+        "hashPerturbation": 23.7,
+        "eraOffset": 0,
+        "userNorm": 0.902,
+        "activityRatio": 0.004
+      }
+    }
+  },
+  {
+    "id": 18006,
+    "domain": "pixelfed.social",
+    "open_registration": true,
+    "description": "The original Pixelfed instance, operated by the main developer @dansup",
+    "banner_url": "https://fedidb.pixelcdn.net/instances/18006/1lsmkcjc_thumbnail.jpg",
+    "location": {
+      "city": null,
+      "country": null
+    },
+    "software": {
+      "id": 1,
+      "name": "Pixelfed",
+      "url": "https://fedidb.org/software/pixelfed",
+      "version": "0.12.6",
+      "slug": "pixelfed"
+    },
+    "stats": {
+      "status_count": 16770303,
+      "user_count": 514274,
+      "monthly_active_users": 76685
+    },
+    "first_seen_at": "2021-03-30T20:10:44.000000Z",
+    "last_seen_at": "2026-01-08T08:21:00.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-30T20:10:44.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 9.6,
+        "s": 84.1,
+        "l": 36.7
+      },
+      "rgb": {
+        "r": 172,
+        "g": 40,
+        "b": 15
+      },
+      "hex": "#ac280f",
+      "debug": {
+        "ageDays": 1745,
+        "ageNorm": 0.92,
+        "hashPerturbation": -9.6,
+        "eraOffset": 0,
+        "userNorm": 0.882,
+        "activityRatio": 0.149
+      }
+    }
+  },
+  {
+    "id": 18033,
+    "domain": "mstdn.jp",
+    "open_registration": true,
+    "description": "Mastodon日本鯖です．\r\nよろしくお願いいたします。\r\n\r\n(Maintained by Sujitech, LLC)",
+    "banner_url": null,
+    "location": {
+      "city": null,
+      "country": null
+    },
+    "software": {
+      "id": 2,
+      "name": "Mastodon",
+      "url": "https://fedidb.org/software/mastodon",
+      "version": "4.1.25",
+      "slug": "mastodon"
+    },
+    "stats": {
+      "status_count": 83402549,
+      "user_count": 412947,
+      "monthly_active_users": 12383
+    },
+    "first_seen_at": "2021-03-30T20:10:41.000000Z",
+    "last_seen_at": "2026-01-08T08:21:01.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-30T20:10:41.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 24.5,
+        "s": 83.4,
+        "l": 31.3
+      },
+      "rgb": {
+        "r": 147,
+        "g": 68,
+        "b": 13
+      },
+      "hex": "#93440d",
+      "debug": {
+        "ageDays": 1745,
+        "ageNorm": 0.92,
+        "hashPerturbation": 5.3,
+        "eraOffset": 0,
+        "userNorm": 0.867,
+        "activityRatio": 0.03
+      }
+    }
+  },
+  {
+    "id": 17921,
+    "domain": "mastodon.cloud",
+    "open_registration": true,
+    "description": "Everyone is welcome as long as you follow our code of conduct! Thank you.\n\nMastodon.cloud is maintained by Sujitech, LLC.\n",
+    "banner_url": "https://fedidbcdn.com/instances/17921/j1ft9vyh_thumbnail.jpg",
+    "location": {
+      "city": null,
+      "country": null
+    },
+    "software": {
+      "id": 2,
+      "name": "Mastodon",
+      "url": "https://fedidb.org/software/mastodon",
+      "version": "4.1.25",
+      "slug": "mastodon"
+    },
+    "stats": {
+      "status_count": 6216099,
+      "user_count": 277961,
+      "monthly_active_users": 1644
+    },
+    "first_seen_at": "2021-03-30T20:10:42.000000Z",
+    "last_seen_at": "2026-01-08T09:00:30.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-30T20:10:42.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 28.3,
+        "s": 82,
+        "l": 30.3
+      },
+      "rgb": {
+        "r": 140,
+        "g": 74,
+        "b": 14
+      },
+      "hex": "#8c4a0e",
+      "debug": {
+        "ageDays": 1745,
+        "ageNorm": 0.92,
+        "hashPerturbation": 9.1,
+        "eraOffset": 0,
+        "userNorm": 0.84,
+        "activityRatio": 0.006
+      }
+    }
+  },
+  {
+    "id": 18048,
+    "domain": "mstdn.social",
+    "open_registration": true,
+    "description": "A general-purpose Mastodon server with a 500 character limit. All languages are welcome.",
+    "banner_url": "https://fedidb.pixelcdn.net/instances/18048/lh1cxcsa_thumbnail.png",
+    "location": {
+      "city": "Falkenstein",
+      "country": "Germany"
+    },
+    "software": {
+      "id": 2,
+      "name": "Mastodon",
+      "url": "https://fedidb.org/software/mastodon",
+      "version": "4.5.1",
+      "slug": "mastodon"
+    },
+    "stats": {
+      "status_count": 21980570,
+      "user_count": 268407,
+      "monthly_active_users": 10642
+    },
+    "first_seen_at": "2021-03-30T20:10:42.000000Z",
+    "last_seen_at": "2026-01-08T08:21:01.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-30T20:10:42.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 47.8,
+        "s": 81.9,
+        "l": 31.8
+      },
+      "rgb": {
+        "r": 147,
+        "g": 120,
+        "b": 15
+      },
+      "hex": "#93780f",
+      "debug": {
+        "ageDays": 1745,
+        "ageNorm": 0.92,
+        "hashPerturbation": 28.6,
+        "eraOffset": 0,
+        "userNorm": 0.838,
+        "activityRatio": 0.04
+      }
+    }
+  },
+  {
+    "id": 16811,
+    "domain": "mastodon.world",
+    "open_registration": true,
+    "description": "Generic Mastodon server for anyone to use.",
+    "banner_url": "https://fedidb.pixelcdn.net/instances/16811/nec8fki3_thumbnail.png",
+    "location": {
+      "city": "Helsinki",
+      "country": "Finland"
+    },
+    "software": {
+      "id": 2,
+      "name": "Mastodon",
+      "url": "https://fedidb.org/software/mastodon",
+      "version": "4.5.3",
+      "slug": "mastodon"
+    },
+    "stats": {
+      "status_count": 8367866,
+      "user_count": 194104,
+      "monthly_active_users": 7521
+    },
+    "first_seen_at": "2021-03-21T07:01:16.000000Z",
+    "last_seen_at": "2026-01-08T06:00:48.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-21T07:01:16.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 46.1,
+        "s": 80.8,
+        "l": 31.7
+      },
+      "rgb": {
+        "r": 146,
+        "g": 116,
+        "b": 16
+      },
+      "hex": "#927410",
+      "debug": {
+        "ageDays": 1755,
+        "ageNorm": 0.921,
+        "hashPerturbation": 27.1,
+        "eraOffset": 0,
+        "userNorm": 0.816,
+        "activityRatio": 0.039
+      }
+    }
+  },
+  {
+    "id": 18053,
+    "domain": "mastodon.online",
+    "open_registration": false,
+    "description": "A newer server operated by the Mastodon gGmbH non-profit",
+    "banner_url": "https://fedidb.pixelcdn.net/instances/18053/fan7ljlg_thumbnail.png",
+    "location": {
+      "city": "San Francisco",
+      "country": "United States"
+    },
+    "software": {
+      "id": 2,
+      "name": "Mastodon",
+      "url": "https://fedidb.org/software/mastodon",
+      "version": "4.6.0-nightly.2026-01-08-security",
+      "slug": "mastodon"
+    },
+    "stats": {
+      "status_count": 11825404,
+      "user_count": 189058,
+      "monthly_active_users": 8307
+    },
+    "first_seen_at": "2021-03-30T20:10:42.000000Z",
+    "last_seen_at": "2026-01-08T06:00:57.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-30T20:10:42.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 6,
+        "s": 80.7,
+        "l": 32
+      },
+      "rgb": {
+        "r": 147,
+        "g": 29,
+        "b": 16
+      },
+      "hex": "#931d10",
+      "debug": {
+        "ageDays": 1745,
+        "ageNorm": 0.92,
+        "hashPerturbation": -13.2,
+        "eraOffset": 0,
+        "userNorm": 0.815,
+        "activityRatio": 0.044
+      }
+    }
+  },
+  {
+    "id": 18040,
+    "domain": "mas.to",
+    "open_registration": false,
+    "description": "Hello! mas.to is a fast, up-to-date and fun Mastodon server.",
+    "banner_url": "https://fedidb.pixelcdn.net/instances/18040/gfv2qlhd_thumbnail.png",
+    "location": {
+      "city": null,
+      "country": null
+    },
+    "software": {
+      "id": 2,
+      "name": "Mastodon",
+      "url": "https://fedidb.org/software/mastodon",
+      "version": "4.5.3",
+      "slug": "mastodon"
+    },
+    "stats": {
+      "status_count": 12828406,
+      "user_count": 188226,
+      "monthly_active_users": 9247
+    },
+    "first_seen_at": "2021-03-21T07:03:05.000000Z",
+    "last_seen_at": "2026-01-08T10:00:37.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-21T07:03:05.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 350.6,
+        "s": 80.7,
+        "l": 32.2
+      },
+      "rgb": {
+        "r": 148,
+        "g": 16,
+        "b": 37
+      },
+      "hex": "#941025",
+      "debug": {
+        "ageDays": 1755,
+        "ageNorm": 0.921,
+        "hashPerturbation": -28.4,
+        "eraOffset": 0,
+        "userNorm": 0.814,
+        "activityRatio": 0.049
+      }
+    }
+  },
+  {
+    "id": 66350,
+    "domain": "lemmy.world",
+    "open_registration": true,
+    "description": null,
+    "banner_url": null,
+    "location": {
+      "city": null,
+      "country": null
+    },
+    "software": {
+      "id": 59,
+      "name": "Lemmy",
+      "url": "https://fedidb.org/software/lemmy",
+      "version": "0.19.15-4-g508853653",
+      "slug": "lemmy"
+    },
+    "stats": {
+      "status_count": 598900,
+      "user_count": 185738,
+      "monthly_active_users": 14207
+    },
+    "first_seen_at": "2023-06-03T00:30:08.000000Z",
+    "last_seen_at": "2026-01-08T20:17:04.000000Z",
+    "creation_time": {
+      "created_at": "2023-06-03T00:30:08.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 49.8,
+        "s": 80.7,
+        "l": 33.4
+      },
+      "rgb": {
+        "r": 154,
+        "g": 131,
+        "b": 16
+      },
+      "hex": "#9a8310",
+      "debug": {
+        "ageDays": 951,
+        "ageNorm": 0.845,
+        "hashPerturbation": 12.7,
+        "eraOffset": 0,
+        "userNorm": 0.813,
+        "activityRatio": 0.076
+      }
+    }
+  }
+]
