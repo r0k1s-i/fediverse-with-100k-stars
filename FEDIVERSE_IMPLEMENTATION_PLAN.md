@@ -113,6 +113,10 @@
 ### Phase 1: 数据获取与准备 (Node.js)
 **目标**: 获得完整Fediverse实例数据集
 **产出**: `data/fediverse_raw.json`
+**特性**:
+- 增量保存：每10页自动保存到磁盘
+- 断点续传：支持 `--resume` 参数从中断处继续
+- 限流保护：3次/分钟，符合 FediDB API 限制
 
 ### Phase 2: 颜色系统 (Golang)
 **目标**: 实现颜色映射算法
@@ -150,7 +154,7 @@
 ```
 100k-Star-Challenge/
 ├── scripts/
-│   ├── fetch-fediverse-data.js      # Phase 1: 数据获取 (Node.js)
+│   ├── fetch-fediverse-data.js      # Phase 1: 数据获取 (Node.js, 支持增量保存和断点续传)
 │   └── fediverse-processor/         # Phase 2-4: 数据处理 (Golang)
 │       ├── main.go                  # 主程序入口
 │       ├── colors.go                # 颜色计算算法
@@ -160,7 +164,9 @@
 │       └── fediverse-processor      # 编译后的二进制文件
 ├── data/
 │   ├── fediverse_raw.json           # Phase 1 输出（原始 API 数据）
-│   └── fediverse_final.json         # Phase 2-4 输出（处理后数据）
+│   ├── fediverse_final.json         # Phase 2-4 输出（处理后数据）
+│   ├── fetch_progress.json          # 抓取进度（断点续传用）
+│   └── fetch_log.json               # 抓取日志
 ├── index_files/
 │   ├── fediverse.js                 # Phase 5: WebGL 核心
 │   ├── fediverse-interaction.js     # Phase 5: 交互系统（待实现）
@@ -183,9 +189,9 @@
 
 ## ⏭️ 当前状态
 
-**更新时间**: 2026-01-09 15:45
+**更新时间**: 2026-01-09 15:58
 
-**当前阶段**: Phase 2-4 已完成，准备开始 Phase 5
+**当前阶段**: Phase 1 进行中 - 完整数据抓取中（后台运行）
 
 ### 已完成
 - [x] Phase 1 脚本 (`scripts/fetch-fediverse-data.js`) - 测试通过
@@ -205,8 +211,14 @@
   - **总耗时**: 147 微秒（0.147 毫秒）
 - **预计 40k 实例耗时**: ~49 毫秒（远超预期！）
 
+### 进行中
+- [⏳] **完整数据抓取** (~40,000实例，后台运行中)
+  - 任务 ID: `becd010`
+  - 预计耗时: 5-6 小时
+  - 进度文件: `data/fetch_progress.json`
+  - 查看进度: `tail -f /tmp/claude/.../tasks/becd010.output`
+
 ### 待执行
-- [ ] 完整数据抓取 (~40,000实例)
 - [ ] 用 Golang 处理完整数据
 - [ ] Phase 5: WebGL 交互系统集成
 - [ ] Phase 6-8: Canvas 标签、性能优化、视觉增强
