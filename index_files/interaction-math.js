@@ -39,6 +39,10 @@
         // Use a loose value to allow some tolerance
         var MIN_COS_ANGLE = 0.5;
 
+        // Min/max size multipliers for threshold scaling based on instance size
+        var MIN_SIZE_MULTIPLIER = 0.15;
+        var MAX_SIZE_MULTIPLIER = 1.0;
+
         for (var i = 0; i < instances.length; i++) {
             var instance = instances[i];
             if (!instance.position) continue;
@@ -66,6 +70,12 @@
             // Dynamic threshold based on distance - farther objects need tighter aim
             var distanceFactor = Math.max(1, directionDistance / 1000);
             var adjustedThresholdSq = thresholdSq / distanceFactor;
+
+            // Scale threshold based on instance size (user count)
+            var userCount = instance.stats ? instance.stats.user_count : 1;
+            var sizeMultiplier = Math.log10(userCount + 1) / 6;
+            sizeMultiplier = Math.max(MIN_SIZE_MULTIPLIER, Math.min(MAX_SIZE_MULTIPLIER, sizeMultiplier));
+            adjustedThresholdSq *= sizeMultiplier * sizeMultiplier;
 
             if (perpendicularDistSq < adjustedThresholdSq) {
                 // Score prioritizes:

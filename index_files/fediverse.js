@@ -319,6 +319,44 @@ function generateFediverseInstances() {
   );
   pSystem.add(lineMesh);
 
+  var glowSpanTexture = THREE.ImageUtils.loadTexture("index_files/glowspan.png");
+  var gridMaterial = new THREE.MeshBasicMaterial({
+    map: glowSpanTexture,
+    blending: THREE.AdditiveBlending,
+    transparent: true,
+    depthTest: false,
+    depthWrite: false,
+    wireframe: true,
+    opacity: 0.6,
+  });
+  var gridPlane = new THREE.Mesh(
+    new THREE.PlaneGeometry(20000, 20000, 60, 60),
+    gridMaterial,
+  );
+  gridPlane.rotation.x = Math.PI / 2;
+  gridPlane.material.map.wrapS = THREE.RepeatWrapping;
+  gridPlane.material.map.wrapT = THREE.RepeatWrapping;
+  gridPlane.material.map.repeat.set(8, 8);
+  gridPlane.material.map.needsUpdate = true;
+  gridPlane.material.map.onUpdate = function () {
+    this.offset.y -= 0.0002;
+    this.needsUpdate = true;
+  };
+  gridPlane.update = function () {
+    if (camera.position.z < 1500) {
+      this.material.opacity = constrain(
+        (camera.position.z - 300.0) * 0.001,
+        0,
+        0.6,
+      );
+    } else {
+      this.material.opacity += (0.0 - this.material.opacity) * 0.05;
+    }
+    if (this.material.opacity <= 0) this.visible = false;
+    else this.visible = true;
+  };
+  pSystem.add(gridPlane);
+
   container.add(pSystem);
 
   container.update = function () {
