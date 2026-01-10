@@ -30,7 +30,7 @@
     }
 
     InteractionMath.findClosestInstance = function(rayOrigin, rayDirection, instances, threshold) {
-        var closestDist = Infinity;
+        var closestScore = Infinity;
         var closestInstance = null;
         var thresholdSq = threshold * threshold;
 
@@ -46,12 +46,19 @@
             if (directionDistance <= 0) continue;
 
             var cross = crossProduct(diff, rayDirection);
-            var distSq = lengthSq(cross);
+            var perpendicularDistSq = lengthSq(cross);
 
-            if (distSq < thresholdSq) {
-                var distToCam = distanceToSquared(point, rayOrigin);
-                if (distToCam < closestDist) {
-                    closestDist = distToCam;
+            // Dynamic threshold based on distance - farther objects need tighter aim
+            var distanceFactor = Math.max(1, directionDistance / 1000);
+            var adjustedThresholdSq = thresholdSq / distanceFactor;
+
+            if (perpendicularDistSq < adjustedThresholdSq) {
+                // Score prioritizes:
+                // 1. Perpendicular distance (how close ray passes to object)
+                // 2. Direction distance with significant weight (prefer closer objects)
+                var score = perpendicularDistSq + directionDistance * 0.1;
+                if (score < closestScore) {
+                    closestScore = score;
                     closestInstance = instance;
                 }
             }

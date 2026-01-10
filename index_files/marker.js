@@ -122,6 +122,7 @@ function attachMarker(obj, size) {
     );
 
     var markerClick = function (e) {
+      if (enableFediverse) return;
       // $iconNav.css({
       // 	display: 'none'
       // });
@@ -188,6 +189,7 @@ function attachMarker(obj, size) {
   };
 
   marker.select = function () {
+    if (enableFediverse) return;
     var vec = marker.absPosition.clone();
 
     if (enableStarModel == false) return;
