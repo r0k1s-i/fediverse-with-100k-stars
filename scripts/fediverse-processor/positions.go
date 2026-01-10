@@ -461,15 +461,15 @@ func calculateOuterRimPosition(instance *Instance, cfg Config) *Position {
 	strategyHash := domainHash(instance.Domain + "_strategy")
 
 	// Distribution strategies (weighted):
-	// 50% - Inner dust (within known software systems range, 2k-10k radius)
-	// 30% - Spiral arm dust (along the 5 main arms, outer regions)
-	// 15% - Clustered nebulae (small dense clusters)
+	// 65% - Inner dust (within known software systems range, 2k-10k radius)
+	// 20% - Spiral arm dust (along the 5 main arms, outer regions)
+	// 10% - Clustered nebulae (small dense clusters)
 	// 5%  - Outer halo (diffuse outer region, 25k-40k radius)
 
-	if strategyHash < 0.50 {
+	if strategyHash < 0.65 {
 		// Strategy 1: Inner Dust (NEW - fills space between known systems)
 		return calculateInnerDust(instance, hash, cfg)
-	} else if strategyHash < 0.80 {
+	} else if strategyHash < 0.85 {
 		// Strategy 2: Spiral Arm Dust
 		return calculateSpiralArmDust(instance, hash, cfg)
 	} else if strategyHash < 0.95 {
@@ -496,11 +496,10 @@ func calculateInnerDust(instance *Instance, hash float64, cfg Config) *Position 
 	distHash := domainHash(instance.Domain + "_dist")
 	distance := 2000.0 + distHash*8000.0 // 2k-10k radius
 
-	// Flatten the distribution slightly (galactic disk shape)
-	// Z-axis is compressed to create a disk-like structure
+	// Spherical distribution (no Z-axis compression)
 	x := distance * math.Sin(phi) * math.Cos(angle)
 	y := distance * math.Sin(phi) * math.Sin(angle)
-	z := distance * math.Cos(phi) * 0.3 // Compress Z by 70%
+	z := distance * math.Cos(phi)
 
 	return &Position{X: x, Y: y, Z: z}
 }
