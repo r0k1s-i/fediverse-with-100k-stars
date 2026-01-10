@@ -93,9 +93,10 @@ var postStarGradientLoaded = function(){
 	gradientCanvas = document.createElement('canvas');
 	gradientCanvas.width = gradientImage.width;
 	gradientCanvas.height = gradientImage.height;
-	gradientCanvas.getContext('2d').drawImage( gradientImage, 0, 0, gradientImage.width, gradientImage.height );
+	var gradientCtx = gradientCanvas.getContext('2d', { willReadFrequently: true });
+	gradientCtx.drawImage( gradientImage, 0, 0, gradientImage.width, gradientImage.height );
 	gradientCanvas.getColor = function( percentage ){
-		return this.getContext('2d').getImageData(0,percentage * gradientImage.height, 1, 1).data;
+		return gradientCtx.getImageData(0,percentage * gradientImage.height, 1, 1).data;
 	}
 
 
@@ -229,12 +230,12 @@ function initScene() {
 	masterContainer.addEventListener( 'mousedown', onDocumentMouseDown, true );
 	window.addEventListener( 'mouseup', onDocumentMouseUp, false );
 	masterContainer.addEventListener( 'click', onClick, true );
-	masterContainer.addEventListener( 'mousewheel', onMouseWheel, false );
+	masterContainer.addEventListener( 'mousewheel', onMouseWheel, { passive: false } );
 	masterContainer.addEventListener( 'keydown', onKeyDown, false);
 	
-	masterContainer.addEventListener( 'touchstart', touchStart, false );
+	masterContainer.addEventListener( 'touchstart', touchStart, { passive: false } );
 	window.addEventListener( 'touchend', touchEnd, false );
-	window.addEventListener( 'touchmove', touchMove, false );
+	window.addEventListener( 'touchmove', touchMove, { passive: false } );
 
 
 	//	-----------------------------------------------------------------------------
