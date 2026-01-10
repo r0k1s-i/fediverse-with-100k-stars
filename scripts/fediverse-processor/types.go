@@ -75,15 +75,41 @@ type Config struct {
 	LightnessMin      float64
 	LightnessMax      float64
 
-	ThreeStarEdge      float64
-	TopMastodonDomains []string
+	MaxUserCount int
 
-	GalaxyRingRadius      float64
-	GalaxyRingCount       int
-	GalaxyMaxRadius       float64
-	DistanceBase          float64
-	DistanceLogMultiplier float64
-	MaxUserCount          int
+	// Galactic Core Configuration
+	SupergiantDomains []string
+	SupergiantRadius  float64
+	SupergiantZHeight float64
+
+	// Planetary System Tiers
+	TierAInstanceCount int
+	TierBInstanceCount int
+
+	// System Center Radii (distance from galactic core)
+	TierASystemRadius    float64
+	TierASystemRadiusVar float64
+	TierBSystemRadius    float64
+	TierBSystemRadiusVar float64
+	TierCSystemRadius    float64
+	TierCSystemRadiusVar float64
+
+	// Within-System Radii
+	TierASystemMaxRadius    float64
+	TierBSystemMaxRadius    float64
+	TierCSystemMaxRadius    float64
+	SystemRadiusScaleFactor float64
+
+	// Z-Axis Variation
+	ZAxisVariationFactor float64
+
+	// Instance Size Thresholds
+	PlanetUserThreshold    int
+	AsteroidUserThreshold  int
+	SatelliteUserThreshold int
+
+	// Staggering and Distribution
+	RadialVariationFactor float64
 }
 
 var DefaultConfig = Config{
@@ -101,13 +127,39 @@ var DefaultConfig = Config{
 	LightnessMin:      30,
 	LightnessMax:      75,
 
-	ThreeStarEdge:      8000,
-	TopMastodonDomains: []string{"mastodon.social", "pawoo.net", "mastodon.cloud"},
+	MaxUserCount: 3000000,
 
-	GalaxyRingRadius:      25000,
-	GalaxyRingCount:       4,
-	GalaxyMaxRadius:       5000,
-	DistanceBase:          500,
-	DistanceLogMultiplier: 300,
-	MaxUserCount:          3000000,
+	// Galactic Core Configuration
+	SupergiantDomains: []string{"mastodon.social", "misskey.io", "pixelfed.social"},
+	SupergiantRadius:  3000,
+	SupergiantZHeight: 1500,
+
+	// Planetary System Tiers
+	TierAInstanceCount: 100,
+	TierBInstanceCount: 20,
+
+	// System Center Radii (distance from galactic core)
+	TierASystemRadius:    15000,
+	TierASystemRadiusVar: 5000,
+	TierBSystemRadius:    8000,
+	TierBSystemRadiusVar: 4000,
+	TierCSystemRadius:    11000,
+	TierCSystemRadiusVar: 6000,
+
+	// Within-System Radii
+	TierASystemMaxRadius:    4000,
+	TierBSystemMaxRadius:    2000,
+	TierCSystemMaxRadius:    1000,
+	SystemRadiusScaleFactor: 0.5,
+
+	// Z-Axis Variation
+	ZAxisVariationFactor: 0.8,
+
+	// Instance Size Thresholds
+	PlanetUserThreshold:    1000,
+	AsteroidUserThreshold:  100,
+	SatelliteUserThreshold: 10,
+
+	// Staggering and Distribution
+	RadialVariationFactor: 0.15,
 }

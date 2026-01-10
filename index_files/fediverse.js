@@ -12,7 +12,7 @@ function loadFediverseData(dataFile, callback) {
     "load",
     function (event) {
       var parsed = JSON.parse(xhr.responseText);
-      var SCALE_FACTOR = 100;
+      var SCALE_FACTOR = 8;
       for (var i = 0; i < parsed.length; i++) {
         if (parsed[i].position) {
           parsed[i].position.x /= SCALE_FACTOR;
@@ -45,8 +45,12 @@ var fediverseColorGraph = THREE.ImageUtils.loadTexture(
   "index_files/star_color_modified.png",
 );
 
-var instanceSunHaloTexture = THREE.ImageUtils.loadTexture("index_files/sun_halo.png");
-var instanceCoronaTexture = THREE.ImageUtils.loadTexture("index_files/corona.png");
+var instanceSunHaloTexture = THREE.ImageUtils.loadTexture(
+  "index_files/sun_halo.png",
+);
+var instanceCoronaTexture = THREE.ImageUtils.loadTexture(
+  "index_files/corona.png",
+);
 
 var MAJOR_INSTANCE_COLORS = {
   "mastodon.social": 0xffffff,
@@ -84,7 +88,10 @@ function createMajorInstancePreview(color) {
     depthWrite: false,
     color: color || 0xffffff,
   });
-  var coronaMesh = new THREE.Mesh(new THREE.PlaneGeometry(120, 120), coronaMaterial);
+  var coronaMesh = new THREE.Mesh(
+    new THREE.PlaneGeometry(120, 120),
+    coronaMaterial,
+  );
   container.add(coronaMesh);
 
   container.update = function () {
@@ -227,7 +234,7 @@ function generateFediverseInstances() {
       g.name = instance.domain;
       g.instanceData = instance;
       g.position.copy(p);
-      g.scale.setLength(0.2);
+      g.scale.setLength(1.0);
       g.visible = true;
 
       // Only attach HTML label for very large instances
