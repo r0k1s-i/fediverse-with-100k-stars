@@ -2,44 +2,88 @@
   {
     "domain": "mastodon.social",
     "software": {
-      "name": "Masto📈 Statistics:
-─────────────────────────────────────
-Software types: 48
-
-Top 5 software by instance count:
-  1. Mastodon              1978 instances
-  2. Misskey                478 instances
-  3. PeerTube               293 instances
-  4. Pixelfed               202 instances
-  5. Lemmy                  147 instances
-
-Position types:
-  planet                      689 instances
-  asteroid                   1254 instances
-  satellite                  1774 instances
-  dust                        400 instances
-  supergiant                    3 instances
-
-Color statistics:
-  Hue range: 83.7° - 288.9°
-  Hue average: 181.9°
-
-📋 Sample Results (first 5):
-─────────────────────────────────────
-mastodon.social                Mastodon     Hue: 135.2° Type:supergiant          
-misskey.io                     Misskey      Hue: 137.4° Type:supergiant          
-pixelfed.social                Pixelfed     Hue: 104.7° Type:supergiant          
-mstdn.jp                       Mastodon     Hue: 119.7° Type:planet              
-mastodon.cloud                 Mastodon     Hue: 123.4° Type:planet              
-
-📊 Processing Summary:
-─────────────────────────────────────
-Total instances: 4120
-Processing time: 9.045403ms
-─────────────────────────────────────
-
-✨ All done! Ready for Phase 5 (WebGL integration)
-ionType": "supergiant"
+      "name": "Mastodon"
+    },
+    "stats": {
+      "user_count": 3056370,
+      "monthly_active_users": 281144
+    },
+    "first_seen_at": "2021-03-30T20:10:40.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-30T20:10:40.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 135.2,
+        "s": 90,
+        "l": 34.1
+      },
+      "rgb": {
+        "r": 9,
+        "g": 165,
+        "b": 48
+      },
+      "hex": "#09a530",
+      "debug": {
+        "ageDays": 1746,
+        "ageNorm": 0.476,
+        "hashPerturbation": 20.9,
+        "eraOffset": 0,
+        "userNorm": 1.001,
+        "activityRatio": 0.092
+      }
+    },
+    "position": {
+      "x": 0,
+      "y": 3000,
+      "z": 0
+    },
+    "positionType": "supergiant"
+  },
+  {
+    "domain": "misskey.io",
+    "software": {
+      "name": "Misskey"
+    },
+    "stats": {
+      "user_count": 695407,
+      "monthly_active_users": 3070
+    },
+    "first_seen_at": "2021-03-21T07:02:57.000000Z",
+    "creation_time": {
+      "created_at": "2021-03-21T07:02:57.000Z",
+      "source": "first_seen_at",
+      "reliable": true
+    },
+    "color": {
+      "hsl": {
+        "h": 137.4,
+        "s": 87.5,
+        "l": 30.2
+      },
+      "rgb": {
+        "r": 10,
+        "g": 144,
+        "b": 49
+      },
+      "hex": "#0a9031",
+      "debug": {
+        "ageDays": 1756,
+        "ageNorm": 0.473,
+        "hashPerturbation": 23.7,
+        "eraOffset": 0,
+        "userNorm": 0.902,
+        "activityRatio": 0.004
+      }
+    },
+    "position": {
+      "x": -2598,
+      "y": -1500,
+      "z": 0
+    },
+    "positionType": "supergiant"
   },
   {
     "domain": "pixelfed.social",
@@ -465,9 +509,9 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": 1234.2,
-      "y": -2153.9,
-      "z": -3489.1
+      "x": 1048.1,
+      "y": 484.3,
+      "z": -4123.5
     },
     "positionType": "planet"
   },
@@ -852,8 +896,8 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": 6878.5,
-      "y": 1819.4,
+      "x": 3856,
+      "y": -5979.6,
       "z": 230.8
     },
     "positionType": "planet"
@@ -1540,9 +1584,9 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": 2997,
-      "y": 2982.4,
-      "z": -1685.8
+      "x": -188.3,
+      "y": -4073.1,
+      "z": -2023
     },
     "positionType": "planet"
   },
@@ -1970,8 +2014,8 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": 6699.3,
-      "y": 1583.8,
+      "x": 3676.8,
+      "y": -6215.2,
       "z": 671.2
     },
     "positionType": "planet"
@@ -2357,8 +2401,8 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": 6802.1,
-      "y": 2056.3,
+      "x": 3779.5,
+      "y": -5742.8,
       "z": 723.8
     },
     "positionType": "planet"
@@ -2615,8 +2659,8 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": 7180.7,
-      "y": 1424.6,
+      "x": 4158.1,
+      "y": -6374.5,
       "z": 824.9
     },
     "positionType": "planet"
@@ -4857,8 +4901,8 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": 6235.8,
-      "y": 1742.5,
+      "x": 3213.3,
+      "y": -6056.6,
       "z": 772.2
     },
     "positionType": "planet"
@@ -6681,8 +6725,8 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": 7150.7,
-      "y": 2063.3,
+      "x": 4128.2,
+      "y": -5735.8,
       "z": 663.4
     },
     "positionType": "planet"
@@ -7631,8 +7675,8 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": 6806.8,
-      "y": 1267.8,
+      "x": 3784.2,
+      "y": -6531.3,
       "z": 538.5
     },
     "positionType": "planet"
@@ -8239,8 +8283,8 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": 6566.7,
-      "y": 2143.8,
+      "x": 3544.1,
+      "y": -5655.3,
       "z": 530.4
     },
     "positionType": "planet"
@@ -10814,7 +10858,7 @@ ionType": "supergiant"
       },
       "hex": "#139724",
       "debug": {
-        "ageDays": 1164,
+        "ageDays": 1165,
         "ageNorm": 0.651,
         "hashPerturbation": -28.7,
         "eraOffset": 0,
@@ -11317,8 +11361,8 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": -4055.9,
-      "y": -2116.3,
+      "x": 759.4,
+      "y": -4511.3,
       "z": 8.5
     },
     "positionType": "planet"
@@ -11773,8 +11817,8 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": 7351.4,
-      "y": 1702.5,
+      "x": 4328.9,
+      "y": -6096.5,
       "z": 535.6
     },
     "positionType": "planet"
@@ -12305,8 +12349,8 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": 6307.7,
-      "y": 1432.3,
+      "x": 3285.2,
+      "y": -6366.7,
       "z": 421.7
     },
     "positionType": "planet"
@@ -15231,9 +15275,9 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": -3822.6,
-      "y": -1577.9,
-      "z": 1282.9
+      "x": 1789.3,
+      "y": 3823.7,
+      "z": 962.2
     },
     "positionType": "planet"
   },
@@ -15421,9 +15465,9 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": 1793.4,
-      "y": 3832.3,
-      "z": 964.4
+      "x": -3831.2,
+      "y": -1581.5,
+      "z": 1285.8
     },
     "positionType": "planet"
   },
@@ -16400,7 +16444,7 @@ ionType": "supergiant"
       },
       "hex": "#149492",
       "debug": {
-        "ageDays": 1164,
+        "ageDays": 1165,
         "ageNorm": 0.651,
         "hashPerturbation": 22.7,
         "eraOffset": 0,
@@ -17321,9 +17365,9 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": 3320.9,
-      "y": -2798.8,
-      "z": -989.9
+      "x": -566.1,
+      "y": 4368.7,
+      "z": -659.9
     },
     "positionType": "planet"
   },
@@ -18680,7 +18724,7 @@ ionType": "supergiant"
       },
       "hex": "#159753",
       "debug": {
-        "ageDays": 1134,
+        "ageDays": 1135,
         "ageNorm": 0.66,
         "hashPerturbation": -9.9,
         "eraOffset": 0,
@@ -21995,9 +22039,9 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": 3660.6,
-      "y": -2672.1,
-      "z": -981.3
+      "x": -226.4,
+      "y": 4495.4,
+      "z": -651.3
     },
     "positionType": "planet"
   },
@@ -23006,11 +23050,11 @@ ionType": "supergiant"
         "l": 34.7
       },
       "rgb": {
-        "r": 48,
+        "r": 47,
         "g": 22,
         "b": 155
       },
-      "hex": "#30169b",
+      "hex": "#2f169b",
       "debug": {
         "ageDays": 360,
         "ageNorm": 0.892,
@@ -25623,7 +25667,7 @@ ionType": "supergiant"
     "first_seen_at": "2024-04-26T18:09:06.000000Z",
     "color": {
       "hsl": {
-        "h": 217.9,
+        "h": 217.8,
         "s": 74.2,
         "l": 34.1
       },
@@ -26897,8 +26941,8 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": 7106.8,
-      "y": 2839.7,
+      "x": 4084.3,
+      "y": -4959.3,
       "z": 790.2
     },
     "positionType": "asteroid"
@@ -27239,8 +27283,8 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": 7486.2,
-      "y": 576.8,
+      "x": 4463.6,
+      "y": -7222.3,
       "z": 542.5
     },
     "positionType": "asteroid"
@@ -30677,7 +30721,7 @@ ionType": "supergiant"
     "first_seen_at": "2022-12-12T08:30:08.000000Z",
     "color": {
       "hsl": {
-        "h": 144.6,
+        "h": 144.5,
         "s": 73.4,
         "l": 30.2
       },
@@ -31305,9 +31349,9 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": 3220.2,
-      "y": -433.3,
-      "z": -2390.4
+      "x": -2468,
+      "y": -1717.2,
+      "z": -2689.2
     },
     "positionType": "asteroid"
   },
@@ -33044,7 +33088,7 @@ ionType": "supergiant"
       },
       "hex": "#152d84",
       "debug": {
-        "ageDays": 612,
+        "ageDays": 613,
         "ageNorm": 0.816,
         "hashPerturbation": 11.1,
         "eraOffset": 20,
@@ -34497,8 +34541,8 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": -4003.5,
-      "y": -3169.7,
+      "x": 811.7,
+      "y": -5564.7,
       "z": -561.5
     },
     "positionType": "asteroid"
@@ -34763,8 +34807,8 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": 5584.5,
-      "y": 2232.4,
+      "x": 2562,
+      "y": -5566.7,
       "z": 459
     },
     "positionType": "asteroid"
@@ -35523,9 +35567,9 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": -1737.2,
-      "y": 554.2,
-      "z": -3538.1
+      "x": 3177.5,
+      "y": -427.5,
+      "z": -2358.7
     },
     "positionType": "asteroid"
   },
@@ -35675,8 +35719,8 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": -4041.8,
-      "y": -3323.2,
+      "x": 773.4,
+      "y": -5718.3,
       "z": 568.6
     },
     "positionType": "asteroid"
@@ -36008,7 +36052,7 @@ ionType": "supergiant"
       },
       "hex": "#156284",
       "debug": {
-        "ageDays": 920,
+        "ageDays": 921,
         "ageNorm": 0.724,
         "hashPerturbation": 24.4,
         "eraOffset": 0,
@@ -38592,7 +38636,7 @@ ionType": "supergiant"
       },
       "hex": "#168679",
       "debug": {
-        "ageDays": 932,
+        "ageDays": 933,
         "ageNorm": 0.72,
         "hashPerturbation": 0.3,
         "eraOffset": 0,
@@ -38981,8 +39025,8 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": -3195.2,
-      "y": -2849.6,
+      "x": 1620,
+      "y": -5244.7,
       "z": -412.2
     },
     "positionType": "asteroid"
@@ -39285,8 +39329,8 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": -4704,
-      "y": -3203.7,
+      "x": 111.2,
+      "y": -5598.7,
       "z": -329.2
     },
     "positionType": "asteroid"
@@ -40235,8 +40279,8 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": 8250.7,
-      "y": 2378.8,
+      "x": 5228.2,
+      "y": -5420.2,
       "z": 678.6
     },
     "positionType": "asteroid"
@@ -43874,7 +43918,7 @@ ionType": "supergiant"
       },
       "hex": "#1ca99d",
       "debug": {
-        "ageDays": 1162,
+        "ageDays": 1163,
         "ageNorm": 0.651,
         "hashPerturbation": 18.8,
         "eraOffset": 0,
@@ -44643,9 +44687,9 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": 2990.2,
-      "y": 2442.8,
-      "z": -1644.3
+      "x": -195.1,
+      "y": -4612.8,
+      "z": -1981.5
     },
     "positionType": "asteroid"
   },
@@ -46078,7 +46122,7 @@ ionType": "supergiant"
       },
       "hex": "#22c792",
       "debug": {
-        "ageDays": 1164,
+        "ageDays": 1165,
         "ageNorm": 0.651,
         "hashPerturbation": 4.5,
         "eraOffset": 0,
@@ -46458,7 +46502,7 @@ ionType": "supergiant"
       },
       "hex": "#188d91",
       "debug": {
-        "ageDays": 1164,
+        "ageDays": 1165,
         "ageNorm": 0.651,
         "hashPerturbation": 25.7,
         "eraOffset": 0,
@@ -47473,7 +47517,7 @@ ionType": "supergiant"
     "first_seen_at": "2023-07-23T17:42:32.000000Z",
     "color": {
       "hsl": {
-        "h": 172.1,
+        "h": 172,
         "s": 70.9,
         "l": 73.8
       },
@@ -47873,9 +47917,9 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": -2404.1,
-      "y": -1672.7,
-      "z": -2619.6
+      "x": 579.4,
+      "y": 2575.3,
+      "z": -2910.6
     },
     "positionType": "asteroid"
   },
@@ -50457,9 +50501,9 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": -544.9,
-      "y": 4204.7,
-      "z": -635.1
+      "x": 3196.2,
+      "y": -2693.7,
+      "z": -952.7
     },
     "positionType": "asteroid"
   },
@@ -52319,8 +52363,8 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": -3364,
-      "y": -2888.4,
+      "x": 1451.3,
+      "y": -5283.5,
       "z": 747.6
     },
     "positionType": "asteroid"
@@ -55511,8 +55555,8 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": 6266.2,
-      "y": 469.3,
+      "x": 3243.7,
+      "y": -7329.8,
       "z": 146.8
     },
     "positionType": "asteroid"
@@ -57031,9 +57075,9 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": -4081.1,
-      "y": -1546.9,
-      "z": 1727.2
+      "x": 1530.9,
+      "y": 3854.7,
+      "z": 1406.5
     },
     "positionType": "asteroid"
   },
@@ -57069,9 +57113,9 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": -3433.6,
-      "y": -1176.9,
-      "z": 1209.1
+      "x": 2178.3,
+      "y": 4224.7,
+      "z": 888.4
     },
     "positionType": "asteroid"
   },
@@ -57663,10 +57707,10 @@ ionType": "supergiant"
       },
       "rgb": {
         "r": 104,
-        "g": 197,
+        "g": 198,
         "b": 228
       },
-      "hex": "#68c5e4",
+      "hex": "#68c6e4",
       "debug": {
         "ageDays": 504,
         "ageNorm": 0.849,
@@ -58475,8 +58519,8 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": -3660.2,
-      "y": -2815.2,
+      "x": 1155,
+      "y": -5210.3,
       "z": -1240.7
     },
     "positionType": "asteroid"
@@ -59796,7 +59840,7 @@ ionType": "supergiant"
       },
       "hex": "#24c6c8",
       "debug": {
-        "ageDays": 1050,
+        "ageDays": 1051,
         "ageNorm": 0.685,
         "hashPerturbation": 16.1,
         "eraOffset": 0,
@@ -59881,9 +59925,9 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": 1300.6,
-      "y": 3487.4,
-      "z": 940.8
+      "x": -4323.9,
+      "y": -1926.4,
+      "z": 1262.2
     },
     "positionType": "asteroid"
   },
@@ -59995,9 +60039,9 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": 2091.6,
-      "y": 3812,
-      "z": 1493.6
+      "x": -3533,
+      "y": -1601.8,
+      "z": 1815
     },
     "positionType": "asteroid"
   },
@@ -60784,7 +60828,7 @@ ionType": "supergiant"
       },
       "hex": "#198c27",
       "debug": {
-        "ageDays": 1164,
+        "ageDays": 1165,
         "ageNorm": 0.651,
         "hashPerturbation": -29.4,
         "eraOffset": 0,
@@ -61354,7 +61398,7 @@ ionType": "supergiant"
       },
       "hex": "#19897b",
       "debug": {
-        "ageDays": 1164,
+        "ageDays": 1165,
         "ageNorm": 0.651,
         "hashPerturbation": 16.5,
         "eraOffset": 0,
@@ -63529,8 +63573,8 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": 6417.8,
-      "y": 3181.4,
+      "x": 3395.3,
+      "y": -4617.7,
       "z": 397.4
     },
     "positionType": "asteroid"
@@ -63965,7 +64009,7 @@ ionType": "supergiant"
     "first_seen_at": "2022-10-28T06:01:35.000000Z",
     "color": {
       "hsl": {
-        "h": 134.4,
+        "h": 134.3,
         "s": 68.9,
         "l": 33.4
       },
@@ -65534,7 +65578,7 @@ ionType": "supergiant"
       },
       "hex": "#22b94c",
       "debug": {
-        "ageDays": 1162,
+        "ageDays": 1163,
         "ageNorm": 0.651,
         "hashPerturbation": -19.7,
         "eraOffset": 0,
@@ -65619,8 +65663,8 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": 7971.4,
-      "y": 1208.4,
+      "x": 4948.9,
+      "y": -6590.6,
       "z": 224
     },
     "positionType": "asteroid"
@@ -67005,7 +67049,7 @@ ionType": "supergiant"
     "first_seen_at": "2022-11-09T02:02:10.000000Z",
     "color": {
       "hsl": {
-        "h": 163.5,
+        "h": 163.4,
         "s": 68.5,
         "l": 38.7
       },
@@ -68384,7 +68428,7 @@ ionType": "supergiant"
       },
       "hex": "#28d43e",
       "debug": {
-        "ageDays": 1163,
+        "ageDays": 1164,
         "ageNorm": 0.651,
         "hashPerturbation": -28.3,
         "eraOffset": 0,
@@ -69077,9 +69121,9 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": -935.4,
-      "y": 4101.1,
-      "z": -218.8
+      "x": 2805.6,
+      "y": -2797.3,
+      "z": -536.3
     },
     "positionType": "asteroid"
   },
@@ -69980,7 +70024,7 @@ ionType": "supergiant"
       },
       "hex": "#26c8b2",
       "debug": {
-        "ageDays": 1162,
+        "ageDays": 1163,
         "ageNorm": 0.651,
         "hashPerturbation": 15.7,
         "eraOffset": 0,
@@ -71661,8 +71705,8 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": -4791,
-      "y": -3096.6,
+      "x": 24.2,
+      "y": -5491.7,
       "z": 630.1
     },
     "positionType": "asteroid"
@@ -71927,8 +71971,8 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": 5383.6,
-      "y": 1494.7,
+      "x": 2361.1,
+      "y": -6304.4,
       "z": -104.3
     },
     "positionType": "asteroid"
@@ -72553,7 +72597,7 @@ ionType": "supergiant"
     "first_seen_at": "2022-11-24T00:30:32.000000Z",
     "color": {
       "hsl": {
-        "h": 145,
+        "h": 144.9,
         "s": 68,
         "l": 31.7
       },
@@ -73219,8 +73263,8 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": 7686,
-      "y": 2996.9,
+      "x": 4663.4,
+      "y": -4802.2,
       "z": 227.9
     },
     "positionType": "asteroid"
@@ -75803,8 +75847,8 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": -2039.5,
-      "y": -2674.1,
+      "x": 2775.7,
+      "y": -5069.2,
       "z": 111.4
     },
     "positionType": "satellite"
@@ -79109,9 +79153,9 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": 1223.7,
-      "y": 565.4,
-      "z": -4814.2
+      "x": -2182,
+      "y": 696.1,
+      "z": -4443.9
     },
     "positionType": "satellite"
   },
@@ -80761,7 +80805,7 @@ ionType": "supergiant"
     "first_seen_at": "2022-05-21T18:01:31.000000Z",
     "color": {
       "hsl": {
-        "h": 156.5,
+        "h": 156.4,
         "s": 67.1,
         "l": 39.1
       },
@@ -81123,9 +81167,9 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": 484.7,
-      "y": 2154.5,
-      "z": -2435
+      "x": 947.5,
+      "y": -1653.4,
+      "z": -2678.4
     },
     "positionType": "satellite"
   },
@@ -82111,8 +82155,8 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": 7199.7,
-      "y": -9.8,
+      "x": 4177.1,
+      "y": -7808.9,
       "z": -394.7
     },
     "positionType": "satellite"
@@ -82301,8 +82345,8 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": -5027.2,
-      "y": -3002.5,
+      "x": -212,
+      "y": -5397.6,
       "z": -1352.2
     },
     "positionType": "satellite"
@@ -82368,7 +82412,7 @@ ionType": "supergiant"
       },
       "hex": "#192380",
       "debug": {
-        "ageDays": 301,
+        "ageDays": 302,
         "ageNorm": 0.909,
         "hashPerturbation": -3.7,
         "eraOffset": 20,
@@ -83649,7 +83693,7 @@ ionType": "supergiant"
     "first_seen_at": "2025-06-24T20:09:05.000000Z",
     "color": {
       "hsl": {
-        "h": 248.7,
+        "h": 248.6,
         "s": 66.6,
         "l": 63.3
       },
@@ -86557,8 +86601,8 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": 5325,
-      "y": 3217.7,
+      "x": 2302.4,
+      "y": -4581.4,
       "z": -370.4
     },
     "positionType": "satellite"
@@ -87127,8 +87171,8 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": -3889.1,
-      "y": -2995.6,
+      "x": 926.1,
+      "y": -5390.6,
       "z": 1891.9
     },
     "positionType": "satellite"
@@ -87849,8 +87893,8 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": 8859.6,
-      "y": 1996.1,
+      "x": 5837,
+      "y": -5803,
       "z": -266.4
     },
     "positionType": "satellite"
@@ -88077,9 +88121,9 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": 1953,
-      "y": 3550.6,
-      "z": 159.7
+      "x": -3671.6,
+      "y": -1863.1,
+      "z": 481.1
     },
     "positionType": "satellite"
   },
@@ -88942,7 +88986,7 @@ ionType": "supergiant"
       },
       "hex": "#22a67c",
       "debug": {
-        "ageDays": 1164,
+        "ageDays": 1165,
         "ageNorm": 0.651,
         "hashPerturbation": 4.8,
         "eraOffset": 0,
@@ -89360,7 +89404,7 @@ ionType": "supergiant"
       },
       "hex": "#1b826c",
       "debug": {
-        "ageDays": 1134,
+        "ageDays": 1135,
         "ageNorm": 0.66,
         "hashPerturbation": 8.5,
         "eraOffset": 0,
@@ -90281,8 +90325,8 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": -2715.6,
-      "y": -2236.9,
+      "x": 2099.6,
+      "y": -4631.9,
       "z": -1383.7
     },
     "positionType": "satellite"
@@ -90319,8 +90363,8 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": 5802.4,
-      "y": 739.8,
+      "x": 2779.9,
+      "y": -7059.3,
       "z": -752.5
     },
     "positionType": "satellite"
@@ -91108,7 +91152,7 @@ ionType": "supergiant"
       },
       "hex": "#31d5b2",
       "debug": {
-        "ageDays": 1050,
+        "ageDays": 1051,
         "ageNorm": 0.685,
         "hashPerturbation": 2.9,
         "eraOffset": 0,
@@ -91801,8 +91845,8 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": -6004.7,
-      "y": -3063.3,
+      "x": -1189.5,
+      "y": -5458.4,
       "z": 111.9
     },
     "positionType": "satellite"
@@ -93777,9 +93821,9 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": -270.7,
-      "y": 3601.8,
-      "z": -1189.4
+      "x": 3470.3,
+      "y": -3296.6,
+      "z": -1506.9
     },
     "positionType": "satellite"
   },
@@ -95434,11 +95478,11 @@ ionType": "supergiant"
         "l": 68.4
       },
       "rgb": {
-        "r": 165,
+        "r": 164,
         "g": 122,
         "b": 227
       },
-      "hex": "#a57ae3",
+      "hex": "#a47ae3",
       "debug": {
         "ageDays": 51,
         "ageNorm": 0.985,
@@ -96323,8 +96367,8 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": 7009.5,
-      "y": 3569.8,
+      "x": 3987,
+      "y": -4229.3,
       "z": -433.3
     },
     "positionType": "satellite"
@@ -97767,9 +97811,9 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": -3803.6,
-      "y": -2358.3,
-      "z": 1414.3
+      "x": 1808.4,
+      "y": 3043.4,
+      "z": 1093.6
     },
     "positionType": "satellite"
   },
@@ -100009,8 +100053,8 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": -2317,
-      "y": -2189.2,
+      "x": 2498.2,
+      "y": -4584.2,
       "z": 1306
     },
     "positionType": "satellite"
@@ -100027,7 +100071,7 @@ ionType": "supergiant"
     "first_seen_at": "2023-02-04T00:30:20.000000Z",
     "color": {
       "hsl": {
-        "h": 161.7,
+        "h": 161.6,
         "s": 65.1,
         "l": 34.2
       },
@@ -102441,8 +102485,8 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": -4336,
-      "y": -2185.8,
+      "x": 479.2,
+      "y": -4580.8,
       "z": -1817.8
     },
     "positionType": "satellite"
@@ -102631,9 +102675,9 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": 1203.3,
-      "y": 4219.2,
-      "z": 1310.5
+      "x": -4421.2,
+      "y": -1194.6,
+      "z": 1632
     },
     "positionType": "satellite"
   },
@@ -102991,7 +103035,7 @@ ionType": "supergiant"
     "first_seen_at": "2023-02-24T09:30:09.000000Z",
     "color": {
       "hsl": {
-        "h": 160.1,
+        "h": 160,
         "s": 64.9,
         "l": 49.1
       },
@@ -103002,7 +103046,7 @@ ionType": "supergiant"
       },
       "hex": "#2ccf98",
       "debug": {
-        "ageDays": 1050,
+        "ageDays": 1051,
         "ageNorm": 0.685,
         "hashPerturbation": -4.3,
         "eraOffset": 0,
@@ -103155,7 +103199,7 @@ ionType": "supergiant"
       "hex": "#1d8868",
       "debug": {
         "ageDays": 1142,
-        "ageNorm": 0.658,
+        "ageNorm": 0.657,
         "hashPerturbation": 4.7,
         "eraOffset": 0,
         "userNorm": 0.247,
@@ -104721,8 +104765,8 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": -5018,
-      "y": -2545.4,
+      "x": -202.8,
+      "y": -4940.4,
       "z": 1560
     },
     "positionType": "satellite"
@@ -105481,8 +105525,8 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": -2116.1,
-      "y": -1556.1,
+      "x": 2699.1,
+      "y": -3951.1,
       "z": -487.3
     },
     "positionType": "satellite"
@@ -106612,7 +106656,7 @@ ionType": "supergiant"
       },
       "hex": "#26b29c",
       "debug": {
-        "ageDays": 1164,
+        "ageDays": 1165,
         "ageNorm": 0.651,
         "hashPerturbation": 14.2,
         "eraOffset": 0,
@@ -106887,8 +106931,8 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": -5855.7,
-      "y": -2243.7,
+      "x": -1040.5,
+      "y": -4638.8,
       "z": -935.9
     },
     "positionType": "satellite"
@@ -108293,9 +108337,9 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": 2476.9,
-      "y": 4258.1,
-      "z": 888.4
+      "x": -3147.7,
+      "y": -1155.6,
+      "z": 1209.8
     },
     "positionType": "satellite"
   },
@@ -109775,9 +109819,9 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": 3135.2,
-      "y": -3568.4,
-      "z": -1178.5
+      "x": -751.8,
+      "y": 3599.1,
+      "z": -848.5
     },
     "positionType": "satellite"
   },
@@ -110754,7 +110798,7 @@ ionType": "supergiant"
       },
       "hex": "#2cca84",
       "debug": {
-        "ageDays": 1163,
+        "ageDays": 1164,
         "ageNorm": 0.651,
         "hashPerturbation": -2.9,
         "eraOffset": 0,
@@ -111865,8 +111909,8 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": -3500,
-      "y": -1855.7,
+      "x": 1315.2,
+      "y": -4250.8,
       "z": 1766
     },
     "positionType": "satellite"
@@ -115352,7 +115396,7 @@ ionType": "supergiant"
       },
       "hex": "#1f8b69",
       "debug": {
-        "ageDays": 1124,
+        "ageDays": 1125,
         "ageNorm": 0.663,
         "hashPerturbation": 2.1,
         "eraOffset": 0,
@@ -115835,7 +115879,7 @@ ionType": "supergiant"
     "first_seen_at": "2022-11-12T13:30:34.000000Z",
     "color": {
       "hsl": {
-        "h": 145.6,
+        "h": 145.5,
         "s": 63.5,
         "l": 33.3
       },
@@ -116387,8 +116431,8 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": 8091.4,
-      "y": 658.1,
+      "x": 5068.8,
+      "y": -7141,
       "z": -872
     },
     "positionType": "satellite"
@@ -116425,8 +116469,8 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": 5287.4,
-      "y": 2192,
+      "x": 2264.8,
+      "y": -5607.1,
       "z": -1176
     },
     "positionType": "satellite"
@@ -117793,8 +117837,8 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": -3415.5,
-      "y": -1334.3,
+      "x": 1399.7,
+      "y": -3729.3,
       "z": -1785.6
     },
     "positionType": "satellite"
@@ -118305,7 +118349,7 @@ ionType": "supergiant"
     "first_seen_at": "2023-09-25T18:47:16.000000Z",
     "color": {
       "hsl": {
-        "h": 170.3,
+        "h": 170.2,
         "s": 63.2,
         "l": 30
       },
@@ -119579,9 +119623,9 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": -4370.9,
-      "y": -1062,
-      "z": 1204.5
+      "x": 1241.1,
+      "y": 4339.7,
+      "z": 883.8
     },
     "positionType": "satellite"
   },
@@ -119912,7 +119956,7 @@ ionType": "supergiant"
       },
       "hex": "#787ae0",
       "debug": {
-        "ageDays": 709,
+        "ageDays": 710,
         "ageNorm": 0.787,
         "hashPerturbation": 29.7,
         "eraOffset": 20,
@@ -122619,9 +122663,9 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": -3381.7,
-      "y": -1753.9,
-      "z": 551
+      "x": 2230.3,
+      "y": 3647.8,
+      "z": 230.3
     },
     "positionType": "satellite"
   },
@@ -125183,7 +125227,7 @@ ionType": "supergiant"
     "first_seen_at": "2025-07-04T10:09:06.000000Z",
     "color": {
       "hsl": {
-        "h": 229.3,
+        "h": 229.2,
         "s": 62.4,
         "l": 30
       },
@@ -127103,8 +127147,8 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": 8311.3,
-      "y": 2908.8,
+      "x": 5288.7,
+      "y": -4890.3,
       "z": -911.7
     },
     "positionType": "satellite"
@@ -127577,7 +127621,7 @@ ionType": "supergiant"
     "first_seen_at": "2024-06-05T15:27:21.000000Z",
     "color": {
       "hsl": {
-        "h": 227.3,
+        "h": 227.2,
         "s": 62.2,
         "l": 51.3
       },
@@ -128357,8 +128401,8 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": -5969.7,
-      "y": -2029.2,
+      "x": -1154.5,
+      "y": -4424.2,
       "z": 883.9
     },
     "positionType": "satellite"
@@ -129421,8 +129465,8 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": -2326.9,
-      "y": -1018.2,
+      "x": 2488.4,
+      "y": -3413.2,
       "z": 717.9
     },
     "positionType": "satellite"
@@ -129649,9 +129693,9 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": 1567,
-      "y": 4364.6,
-      "z": 477.8
+      "x": -4057.6,
+      "y": -1049.1,
+      "z": 799.3
     },
     "positionType": "satellite"
   },
@@ -130333,8 +130377,8 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": 6725.8,
-      "y": 529.7,
+      "x": 3703.3,
+      "y": -7269.4,
       "z": -1538
     },
     "positionType": "satellite"
@@ -130561,8 +130605,8 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": -5202.8,
-      "y": -1337.9,
+      "x": -387.6,
+      "y": -3733,
       "z": -1600.8
     },
     "positionType": "satellite"
@@ -131473,8 +131517,8 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": -4618.1,
-      "y": -1465.4,
+      "x": 197.2,
+      "y": -3860.4,
       "z": 1772.1
     },
     "positionType": "satellite"
@@ -131549,8 +131593,8 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": 6338.7,
-      "y": 3218.2,
+      "x": 3316.2,
+      "y": -4580.8,
       "z": -1408.2
     },
     "positionType": "satellite"
@@ -133145,9 +133189,9 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": -4416.6,
-      "y": -1929.4,
-      "z": 834.9
+      "x": 1195.4,
+      "y": 3472.2,
+      "z": 514.2
     },
     "positionType": "satellite"
   },
@@ -135215,7 +135259,7 @@ ionType": "supergiant"
     "first_seen_at": "2024-11-20T15:30:48.000000Z",
     "color": {
       "hsl": {
-        "h": 237.3,
+        "h": 237.2,
         "s": 61,
         "l": 42.9
       },
@@ -135653,8 +135697,8 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": -3008.3,
-      "y": -766.6,
+      "x": 1806.9,
+      "y": -3161.7,
       "z": -791.1
     },
     "positionType": "satellite"
@@ -135709,7 +135753,7 @@ ionType": "supergiant"
     "first_seen_at": "2024-02-03T12:09:14.000000Z",
     "color": {
       "hsl": {
-        "h": 186.8,
+        "h": 186.7,
         "s": 61,
         "l": 33.2
       },
@@ -135957,8 +136001,8 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": -5756.4,
-      "y": -1353.9,
+      "x": -941.1,
+      "y": -3748.9,
       "z": -107.6
     },
     "positionType": "satellite"
@@ -136603,8 +136647,8 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": -3396.5,
-      "y": -733.7,
+      "x": 1418.8,
+      "y": -3128.8,
       "z": 1296.2
     },
     "positionType": "satellite"
@@ -136793,8 +136837,8 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": 8133.6,
-      "y": 1699.2,
+      "x": 5111.1,
+      "y": -6099.8,
       "z": -1466
     },
     "positionType": "satellite"
@@ -138009,8 +138053,8 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": -4330.8,
-      "y": -547.8,
+      "x": 484.4,
+      "y": -2942.9,
       "z": -1265.7
     },
     "positionType": "satellite"
@@ -139947,8 +139991,8 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": -5344.7,
-      "y": -792,
+      "x": -529.4,
+      "y": -3187,
       "z": 1089.2
     },
     "positionType": "satellite"
@@ -141049,8 +141093,8 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": -3377.9,
-      "y": -208.7,
+      "x": 1437.3,
+      "y": -2603.8,
       "z": 135.4
     },
     "positionType": "satellite"
@@ -143861,8 +143905,8 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": -5248.8,
-      "y": -204.7,
+      "x": -433.6,
+      "y": -2599.7,
       "z": -431.8
     },
     "positionType": "dust"
@@ -146369,8 +146413,8 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": 6140.5,
-      "y": 1643.4,
+      "x": 3118,
+      "y": -6155.7,
       "z": -2192.1
     },
     "positionType": "dust"
@@ -147433,8 +147477,8 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": -4506.1,
-      "y": 156.2,
+      "x": 309.2,
+      "y": -2238.9,
       "z": 831.3
     },
     "positionType": "dust"
@@ -147641,7 +147685,7 @@ ionType": "supergiant"
     "first_seen_at": "2025-11-13T20:09:15.000000Z",
     "color": {
       "hsl": {
-        "h": 261.3,
+        "h": 261.2,
         "s": 57.3,
         "l": 67.5
       },
@@ -151423,9 +151467,9 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": -189.3,
-      "y": -4093.9,
-      "z": -2033.3
+      "x": 3012.2,
+      "y": 2997.6,
+      "z": -1694.4
     },
     "positionType": "dust"
   },
@@ -152125,7 +152169,7 @@ ionType": "supergiant"
     "first_seen_at": "2025-12-21T10:09:17.000000Z",
     "color": {
       "hsl": {
-        "h": 245.7,
+        "h": 245.6,
         "s": 53.6,
         "l": 75
       },
@@ -153171,8 +153215,8 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": 7334,
-      "y": 2667.4,
+      "x": 4311.5,
+      "y": -5131.7,
       "z": -2034.4
     },
     "positionType": "dust"
@@ -153361,9 +153405,9 @@ ionType": "supergiant"
       }
     },
     "position": {
-      "x": -988.2,
-      "y": -4590.5,
-      "z": -2410
+      "x": 2213.4,
+      "y": 2501,
+      "z": -2071.1
     },
     "positionType": "dust"
   },
@@ -154341,7 +154385,7 @@ ionType": "supergiant"
       "hex": "#c8a6d9",
       "debug": {
         "ageDays": 1,
-        "ageNorm": 1,
+        "ageNorm": 0.999,
         "hashPerturbation": 20,
         "eraOffset": 20,
         "userNorm": 0,
@@ -156039,7 +156083,7 @@ ionType": "supergiant"
     "first_seen_at": "2025-07-21T20:09:08.000000Z",
     "color": {
       "hsl": {
-        "h": 276.6,
+        "h": 276.5,
         "s": 40,
         "l": 30
       },
