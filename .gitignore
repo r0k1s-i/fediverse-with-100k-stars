@@ -4,3 +4,7 @@ node_modules/
 data/fetch_log.json
 data/fetch_output.log
 data/fetch_progress.json
+data/nodes.json
+
+# Temp data processing directory
+scripts/temp/
