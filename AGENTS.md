@@ -360,6 +360,11 @@ Modify `GALAXY_TOUR` constant (defined elsewhere, used by `Tour` class).
    - Update "当前阶段" description
    - Update "下一步行动" list
 
+### Data Script Language Preference
+1. **Use Golang** for all data processing scripts
+2. Scripts should be placed in `scripts/` directory
+3. Follow CLI Interface Mandate (Article II) - accept stdin/args, output JSON
+
 ### Git Commit Rules
 1. **Auto-commit** code changes after completing each task
 2. **Commit message format**: Follow [gitmoji](https://gitmoji.dev/) convention
