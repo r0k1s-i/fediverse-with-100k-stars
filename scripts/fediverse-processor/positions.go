@@ -7,12 +7,13 @@ import (
 
 func getThreeStarPositions(cfg Config) map[string]Position {
 	edge := cfg.ThreeStarEdge
-	height := edge * math.Sqrt(3) / 2
 
+	// Distribute three stars across different octants for better spatial spread
+	// Form an equilateral triangle in 3D space, spread across different quadrants
 	return map[string]Position{
-		"mastodon.social": {X: 0, Y: 0, Z: 0},
-		"pawoo.net":       {X: edge, Y: 0, Z: 0},
-		"mastodon.cloud":  {X: edge / 2, Y: height, Z: 0},
+		"mastodon.social": {X: 0, Y: 0, Z: 0},                      // Origin (center)
+		"pawoo.net":       {X: -edge, Y: edge * 0.5, Z: edge * 0.7},   // Upper-left-front
+		"mastodon.cloud":  {X: edge * 0.8, Y: -edge * 0.6, Z: -edge * 0.5}, // Lower-right-back
 	}
 }
 
@@ -22,12 +23,21 @@ func calculateOrbitalPosition(instance *Instance, centerX, centerY, centerZ, max
 		userCount = instance.Stats.UserCount
 	}
 
-	hash := domainHash(instance.Domain)
 	userNorm := logNormalize(float64(userCount), float64(cfg.MaxUserCount))
-	distance := cfg.DistanceBase + (1-userNorm)*maxRadius
 
-	theta := hash * 2 * math.Pi
-	phi := (domainHash(instance.Domain+"_z") - 0.5) * math.Pi * 0.5
+	// Add more randomness to distance to break up clustering
+	distanceHash := domainHash(instance.Domain + "_dist")
+	distanceVariation := (distanceHash - 0.5) * maxRadius * 0.3
+	distance := cfg.DistanceBase + (1-userNorm)*maxRadius + distanceVariation
+
+	// Use multiple hash sources for better distribution
+	thetaHash := domainHash(instance.Domain + "_theta")
+	theta := thetaHash * 2 * math.Pi
+
+	// Increase z-axis variation with better randomness
+	phiHash := domainHash(instance.Domain + "_phi")
+	// Use full sphere range with non-uniform distribution for more variety
+	phi := (phiHash - 0.5) * math.Pi * 1.8 // ±162° for very substantial z variation
 
 	return Position{
 		X: centerX + distance*math.Cos(theta)*math.Cos(phi),
@@ -45,26 +55,30 @@ func findNearestThreeStar(instance *Instance, threeStarPositions map[string]Posi
 
 func calculateGalaxyCenters(softwareList []string, cfg Config) map[string]Position {
 	centers := make(map[string]Position)
-	ringRadius := cfg.GalaxyRingRadius
-	rings := cfg.GalaxyRingCount
+	baseRadius := cfg.GalaxyRingRadius
 
-	for index, software := range softwareList {
-		ring := (index / 12) % rings
-		posInRing := index % 12
-		angleOffset := float64(ring) * 0.2
+	for _, software := range softwareList {
+		// Use pure hash-based spherical distribution
+		// Each galaxy gets a unique position based on its name hash
 
-		radius := ringRadius + float64(ring)*ringRadius*0.7
-		angle := (float64(posInRing)/12)*2*math.Pi + angleOffset
+		// theta: azimuthal angle (0 to 2π) - full rotation around Y axis
+		thetaHash := domainHash(software + "_theta")
+		theta := thetaHash * 2 * math.Pi
 
-		zOffset := float64(ring) * 2000
-		if ring%2 != 0 {
-			zOffset = -zOffset
-		}
+		// phi: polar angle - use hash for full sphere coverage
+		// Use arccos distribution for uniform sphere sampling
+		phiHash := domainHash(software + "_phi")
+		cosPhi := 2*phiHash - 1 // Maps [0,1] to [-1,1] uniformly
+		sinPhi := math.Sqrt(1 - cosPhi*cosPhi)
+
+		// Radius varies by hash for organic feel
+		radiusHash := domainHash(software + "_radius")
+		radius := baseRadius * (0.8 + radiusHash*1.4) // 0.8x to 2.2x base radius
 
 		centers[software] = Position{
-			X: radius * math.Cos(angle),
-			Y: radius * math.Sin(angle),
-			Z: zOffset,
+			X: radius * sinPhi * math.Cos(theta),
+			Y: radius * sinPhi * math.Sin(theta),
+			Z: radius * cosPhi,
 		}
 	}
 
@@ -137,7 +151,16 @@ func ProcessPositions(instances []Instance, cfg Config) []Instance {
 			positionType = "three_star_center"
 		} else if sw == "Mastodon" {
 			nearestStar := findNearestThreeStar(instance, threeStarPositions, cfg)
-			position = calculateOrbitalPosition(instance, nearestStar.X, nearestStar.Y, nearestStar.Z, cfg.ThreeStarEdge*0.4, cfg)
+			// Calculate dynamic radius based on Mastodon instance count
+			mastodonCount := len(bySoftware["Mastodon"])
+			// More instances = larger radius to avoid overcrowding
+			// Use log scale: 100 instances → 1x, 1000 → 1.5x, 10000 → 2x
+			scaleFactor := 1.0 + math.Log10(float64(mastodonCount)/100.0)*0.5
+			if scaleFactor < 1.0 {
+				scaleFactor = 1.0
+			}
+			dynamicRadius := cfg.ThreeStarEdge * 0.4 * scaleFactor
+			position = calculateOrbitalPosition(instance, nearestStar.X, nearestStar.Y, nearestStar.Z, dynamicRadius, cfg)
 			positionType = "mastodon_orbital"
 		} else if center, ok := galaxyCenters[sw]; ok {
 			swIndices := bySoftware[sw]
@@ -156,17 +179,40 @@ func ProcessPositions(instances []Instance, cfg Config) []Instance {
 				position = center
 				positionType = "galaxy_center"
 			} else {
-				position = calculateOrbitalPosition(instance, center.X, center.Y, center.Z, cfg.GalaxyMaxRadius, cfg)
+				// Calculate dynamic radius based on this software's instance count
+				instanceCount := len(swIndices)
+				// More instances = larger radius, log scale
+				scaleFactor := 1.0 + math.Log10(float64(instanceCount)/10.0)*0.4
+				if scaleFactor < 1.0 {
+					scaleFactor = 1.0
+				}
+				dynamicRadius := cfg.GalaxyMaxRadius * scaleFactor
+				position = calculateOrbitalPosition(instance, center.X, center.Y, center.Z, dynamicRadius, cfg)
 				positionType = "galaxy_orbital"
 			}
 		} else {
 			hash := domainHash(instance.Domain)
+
+			// Outer rim gets its own distinct z-layer range
+			// Use hash to determine which "shelf" in z-space
+			zShelfHash := domainHash(instance.Domain + "_shelf")
+			zShelf := math.Floor(zShelfHash * 5) // 5 distinct shelves
+
+			// Base z-height for this shelf
+			shelfHeight := (zShelf - 2) * 20000 // -40k, -20k, 0, 20k, 40k
+
+			// XY position
 			angle := hash * 2 * math.Pi
 			distance := 50000 + hash*10000
+
+			// Local z variation within shelf
+			zHash := domainHash(instance.Domain + "_z")
+			localZVariation := (zHash - 0.5) * 8000
+
 			position = Position{
 				X: distance * math.Cos(angle),
 				Y: distance * math.Sin(angle),
-				Z: (domainHash(instance.Domain+"_z") - 0.5) * 5000,
+				Z: shelfHeight + localZVariation,
 			}
 			positionType = "outer_rim"
 		}
