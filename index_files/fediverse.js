@@ -12,7 +12,7 @@ function loadFediverseData(dataFile, callback) {
     "load",
     function (event) {
       var parsed = JSON.parse(xhr.responseText);
-      var SCALE_FACTOR = 6;
+      var SCALE_FACTOR = 5;
       for (var i = 0; i < parsed.length; i++) {
         if (parsed[i].position) {
           parsed[i].position.x /= SCALE_FACTOR;
@@ -183,9 +183,7 @@ function generateFediverseInstances() {
 
     // 根据色相映射 spectralLookup (色相 0-360 → spectralLookup 0-1)
     p.spectralLookup =
-      instance.color && instance.color.hsl
-        ? instance.color.hsl.h / 360
-        : 0.5;
+      instance.color && instance.color.hsl ? instance.color.hsl.h / 360 : 0.5;
 
     pGeo.vertices.push(p);
     pGeo.colors.push(threeColor);
@@ -322,7 +320,9 @@ function generateFediverseInstances() {
   );
   pSystem.add(lineMesh);
 
-  var glowSpanTexture = THREE.ImageUtils.loadTexture("index_files/glowspan.png");
+  var glowSpanTexture = THREE.ImageUtils.loadTexture(
+    "index_files/glowspan.png",
+  );
   var gridMaterial = new THREE.MeshBasicMaterial({
     map: glowSpanTexture,
     blending: THREE.AdditiveBlending,
