@@ -77,19 +77,19 @@ function onFediverseMouseMove(event) {
     // Transform ray from world space to local space (accounting for rotating + translating)
     // The scene hierarchy is: rotating -> translating -> instances
     // We need the inverse of this transform to convert ray to local coordinates
-    
+
     rotating.updateMatrixWorld(true);
     translating.updateMatrixWorld(true);
-    
+
     // Get the combined world matrix of translating (includes rotating's transform)
     var worldMatrix = translating.matrixWorld.clone();
     var inverseMatrix = new THREE.Matrix4();
     inverseMatrix.getInverse(worldMatrix);
-    
+
     // Transform ray origin to local space
     var rayOrigin = fediverseInteraction.raycaster.ray.origin.clone();
     rayOrigin.applyMatrix4(inverseMatrix);
-    
+
     // Transform ray direction to local space (rotation only, no translation)
     var rayDirection = fediverseInteraction.raycaster.ray.direction.clone();
     var rotationMatrix = new THREE.Matrix4();
@@ -107,7 +107,7 @@ function onFediverseMouseMove(event) {
 
   if (closestInstance) {
     handleHover({
-      name: closestInstance.domain,
+      name: closestInstance.name || closestInstance.domain,
       instanceData: closestInstance,
     });
   } else {
@@ -118,8 +118,9 @@ function onFediverseMouseMove(event) {
 function handleHover(object) {
   // When zoomed in very close (like original star view), don't show hover tooltip
   // The star name is shown in the fixed bottom-left position by main.js
-  var isZoomedInClose = typeof camera !== "undefined" && 
-    typeof markerThreshold !== "undefined" && 
+  var isZoomedInClose =
+    typeof camera !== "undefined" &&
+    typeof markerThreshold !== "undefined" &&
     camera.position.z < markerThreshold.min;
 
   if (isZoomedInClose) {
@@ -138,12 +139,14 @@ function handleHover(object) {
     if (object) {
       $starName.html("<span>" + object.name + "</span>");
       // Use inline styles for tooltip mode (following mouse)
-      $starName.css({
-        opacity: 1.0,
-        position: "fixed",
-        bottom: "auto",
-        margin: 0,
-      }).show();
+      $starName
+        .css({
+          opacity: 1.0,
+          position: "fixed",
+          bottom: "auto",
+          margin: 0,
+        })
+        .show();
       document.body.style.cursor = "pointer";
     } else {
       $starName.hide();
@@ -207,8 +210,9 @@ function onFediverseClick(event) {
   fediverseInteraction.lastClickTime = now;
 
   // Check if we're zoomed in close
-  var isZoomedInClose = typeof camera !== "undefined" && 
-    typeof markerThreshold !== "undefined" && 
+  var isZoomedInClose =
+    typeof camera !== "undefined" &&
+    typeof markerThreshold !== "undefined" &&
     camera.position.z < markerThreshold.min;
 
   var clickTarget = null;
@@ -220,19 +224,19 @@ function onFediverseClick(event) {
       // Use targetPosition if available (more accurate than animated position)
       var transPos = translating.targetPosition || translating.position;
       var currentPos = transPos.clone().negate();
-      
+
       // Find the closest instance to current position
       var closestDist = Infinity;
       var closestInst = null;
-      
+
       if (typeof fediverseInstances !== "undefined") {
         for (var i = 0; i < fediverseInstances.length; i++) {
           var inst = fediverseInstances[i];
           if (inst.position) {
             var dist = Math.sqrt(
               Math.pow(inst.position.x - currentPos.x, 2) +
-              Math.pow(inst.position.y - currentPos.y, 2) +
-              Math.pow(inst.position.z - currentPos.z, 2)
+                Math.pow(inst.position.y - currentPos.y, 2) +
+                Math.pow(inst.position.z - currentPos.z, 2),
             );
             if (dist < closestDist) {
               closestDist = dist;
@@ -241,10 +245,13 @@ function onFediverseClick(event) {
           }
         }
       }
-      
+
       // Only accept if very close (threshold 10)
       if (closestInst && closestDist < 10) {
-        clickTarget = { name: closestInst.domain, instanceData: closestInst };
+        clickTarget = {
+          name: closestInst.name || closestInst.domain,
+          instanceData: closestInst,
+        };
       }
     }
   } else {
@@ -328,7 +335,7 @@ function onFediverseClick(event) {
     bottom: "",
     margin: "",
   });
-  $starName.find("span").html(data.domain);
+  $starName.find("span").html(data.name || data.domain);
 
   showInstanceDetails(data);
 }
@@ -337,7 +344,7 @@ function showInstanceDetails(data) {
   var $title = $("#detailTitle span");
   var $body = $("#detailBody");
 
-  $title.text(data.domain);
+  $title.text(data.name || data.domain);
 
   var html = '<div style="margin-top: 20px;">';
   html +=
