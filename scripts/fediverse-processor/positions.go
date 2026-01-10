@@ -5,88 +5,13 @@ import (
 	"sort"
 )
 
-func getThreeStarPositions(cfg Config) map[string]Position {
-	edge := cfg.ThreeStarEdge
+// ============================================================================
+// Helper Functions
+// ============================================================================
 
-	// Distribute three stars across different octants for better spatial spread
-	// Form an equilateral triangle in 3D space, spread across different quadrants
-	return map[string]Position{
-		"mastodon.social": {X: 0, Y: 0, Z: 0},                      // Origin (center)
-		"pawoo.net":       {X: -edge, Y: edge * 0.5, Z: edge * 0.7},   // Upper-left-front
-		"mastodon.cloud":  {X: edge * 0.8, Y: -edge * 0.6, Z: -edge * 0.5}, // Lower-right-back
-	}
-}
-
-func calculateOrbitalPosition(instance *Instance, centerX, centerY, centerZ, maxRadius float64, cfg Config) Position {
-	userCount := 1
-	if instance.Stats != nil && instance.Stats.UserCount > 0 {
-		userCount = instance.Stats.UserCount
-	}
-
-	userNorm := logNormalize(float64(userCount), float64(cfg.MaxUserCount))
-
-	// Add more randomness to distance to break up clustering
-	distanceHash := domainHash(instance.Domain + "_dist")
-	distanceVariation := (distanceHash - 0.5) * maxRadius * 0.3
-	distance := cfg.DistanceBase + (1-userNorm)*maxRadius + distanceVariation
-
-	// Use multiple hash sources for better distribution
-	thetaHash := domainHash(instance.Domain + "_theta")
-	theta := thetaHash * 2 * math.Pi
-
-	// Increase z-axis variation with better randomness
-	phiHash := domainHash(instance.Domain + "_phi")
-	// Use full sphere range with non-uniform distribution for more variety
-	phi := (phiHash - 0.5) * math.Pi * 1.8 // ±162° for very substantial z variation
-
-	return Position{
-		X: centerX + distance*math.Cos(theta)*math.Cos(phi),
-		Y: centerY + distance*math.Sin(theta)*math.Cos(phi),
-		Z: centerZ + distance*math.Sin(phi),
-	}
-}
-
-func findNearestThreeStar(instance *Instance, threeStarPositions map[string]Position, cfg Config) Position {
-	hash := domainHash(instance.Domain)
-	starIndex := int(hash*3) % 3
-	nearestDomain := cfg.TopMastodonDomains[starIndex]
-	return threeStarPositions[nearestDomain]
-}
-
-func calculateGalaxyCenters(softwareList []string, cfg Config) map[string]Position {
-	centers := make(map[string]Position)
-	baseRadius := cfg.GalaxyRingRadius
-
-	for _, software := range softwareList {
-		// Use pure hash-based spherical distribution
-		// Each galaxy gets a unique position based on its name hash
-
-		// theta: azimuthal angle (0 to 2π) - full rotation around Y axis
-		thetaHash := domainHash(software + "_theta")
-		theta := thetaHash * 2 * math.Pi
-
-		// phi: polar angle - use hash for full sphere coverage
-		// Use arccos distribution for uniform sphere sampling
-		phiHash := domainHash(software + "_phi")
-		cosPhi := 2*phiHash - 1 // Maps [0,1] to [-1,1] uniformly
-		sinPhi := math.Sqrt(1 - cosPhi*cosPhi)
-
-		// Radius varies by hash for organic feel
-		radiusHash := domainHash(software + "_radius")
-		radius := baseRadius * (0.8 + radiusHash*1.4) // 0.8x to 2.2x base radius
-
-		centers[software] = Position{
-			X: radius * sinPhi * math.Cos(theta),
-			Y: radius * sinPhi * math.Sin(theta),
-			Z: radius * cosPhi,
-		}
-	}
-
-	return centers
-}
-
-func isTopMastodon(domain string, cfg Config) bool {
-	for _, d := range cfg.TopMastodonDomains {
+// isSuperGiant checks if a domain is one of the three galactic core supergiants
+func isSuperGiant(domain string, cfg Config) bool {
+	for _, d := range cfg.SupergiantDomains {
 		if d == domain {
 			return true
 		}
@@ -94,6 +19,7 @@ func isTopMastodon(domain string, cfg Config) bool {
 	return false
 }
 
+// getSoftwareName safely extracts software name from instance
 func getSoftwareName(instance *Instance) string {
 	if instance.Software != nil && instance.Software.Name != "" {
 		return instance.Software.Name
@@ -101,128 +27,483 @@ func getSoftwareName(instance *Instance) string {
 	return "Unknown"
 }
 
-func ProcessPositions(instances []Instance, cfg Config) []Instance {
-	threeStarPositions := getThreeStarPositions(cfg)
+// getInstanceUserCount safely extracts user count from instance
+func getInstanceUserCount(instance *Instance) int {
+	if instance.Stats != nil && instance.Stats.UserCount > 0 {
+		return instance.Stats.UserCount
+	}
+	return 1 // Default to 1 to avoid log(0)
+}
 
+// classifyInstanceSize determines position type based on user count
+func classifyInstanceSize(userCount int, cfg Config) string {
+	if userCount >= cfg.PlanetUserThreshold {
+		return "planet"
+	}
+	if userCount >= cfg.AsteroidUserThreshold {
+		return "asteroid"
+	}
+	if userCount >= cfg.SatelliteUserThreshold {
+		return "satellite"
+	}
+	return "dust"
+}
+
+// getInstanceRadiusRange returns min and max radius fractions for a size class
+func getInstanceRadiusRange(sizeType string) (float64, float64) {
+	switch sizeType {
+	case "planet":
+		return 0.2, 0.4 // 20-40% of system radius (close to center)
+	case "asteroid":
+		return 0.4, 0.65 // 40-65% of system radius (middle belt)
+	case "satellite":
+		return 0.65, 0.85 // 65-85% of system radius (outer region)
+	case "dust":
+		return 0.85, 1.0 // 85-100% of system radius (edge)
+	default:
+		return 0.5, 1.0
+	}
+}
+
+// calculateSystemTier determines tier (A/B/C) based on instance count
+func calculateSystemTier(instanceCount int, cfg Config) string {
+	if instanceCount >= cfg.TierAInstanceCount {
+		return "A"
+	}
+	if instanceCount >= cfg.TierBInstanceCount {
+		return "B"
+	}
+	return "C"
+}
+
+// calculateSystemMaxRadius calculates the maximum radius for a planetary system
+func calculateSystemMaxRadius(instanceCount int, tier string, cfg Config) float64 {
+	var baseRadius float64
+	switch tier {
+	case "A":
+		baseRadius = cfg.TierASystemMaxRadius
+	case "B":
+		baseRadius = cfg.TierBSystemMaxRadius
+	case "C":
+		baseRadius = cfg.TierCSystemMaxRadius
+	default:
+		baseRadius = cfg.TierCSystemMaxRadius
+	}
+
+	// Logarithmic scaling with instance count
+	if instanceCount < 10 {
+		instanceCount = 10 // Prevent log issues
+	}
+	scaleFactor := 1.0 + math.Log10(float64(instanceCount)/10.0)*cfg.SystemRadiusScaleFactor
+	if scaleFactor < 1.0 {
+		scaleFactor = 1.0
+	}
+
+	return baseRadius * scaleFactor
+}
+
+// fibonacciSpherePoint generates a point on a sphere using Fibonacci lattice
+func fibonacciSpherePoint(index, total int) (theta, phi float64) {
+	goldenRatio := (1.0 + math.Sqrt(5.0)) / 2.0
+	theta = 2.0 * math.Pi * float64(index) / goldenRatio
+	phi = math.Acos(1.0 - 2.0*(float64(index)+0.5)/float64(total))
+	return theta, phi
+}
+
+// ============================================================================
+// Supergiant Positions
+// ============================================================================
+
+func getSuperGiantPosition(domain string, cfg Config) *Position {
+	// Form an equilateral triangle in 3D space
+	r := cfg.SupergiantRadius
+	z := cfg.SupergiantZHeight
+
+	switch domain {
+	case "mastodon.social":
+		return &Position{X: 0, Y: 0, Z: 0} // Origin
+
+	case "misskey.io":
+		return &Position{X: r, Y: 0, Z: z}
+
+	case "pixelfed.social":
+		// 120° rotation: cos(120°) = -0.5, sin(120°) = 0.866
+		return &Position{
+			X: r * (-0.5),
+			Y: r * 0.866,
+			Z: -z,
+		}
+
+	default:
+		return &Position{X: 0, Y: 0, Z: 0}
+	}
+}
+
+// ============================================================================
+// Software System Centers - Spiral Arm Structure
+// ============================================================================
+
+type TierInfo struct {
+	Tier          string
+	InstanceCount int
+	Software      string
+	ArmIndex      int // Which spiral arm (0-4 for Tier A)
+}
+
+// Main spiral arms: 5 major arms for Tier A software
+const NUM_MAIN_ARMS = 5
+
+func calculateSystemCenters(softwareTiers map[string]TierInfo, cfg Config) map[string]Position {
+	centers := make(map[string]Position)
+
+	// Separate software types by tier
+	tierA := []TierInfo{}
+	tierB := []TierInfo{}
+	tierC := []TierInfo{}
+
+	for _, tier := range softwareTiers {
+		switch tier.Tier {
+		case "A":
+			tierA = append(tierA, tier)
+		case "B":
+			tierB = append(tierB, tier)
+		case "C":
+			tierC = append(tierC, tier)
+		}
+	}
+
+	// Sort each tier by instance count (largest first) for consistent ordering
+	sort.Slice(tierA, func(i, j int) bool {
+		return tierA[i].InstanceCount > tierA[j].InstanceCount
+	})
+	sort.Slice(tierB, func(i, j int) bool {
+		return tierB[i].InstanceCount > tierB[j].InstanceCount
+	})
+	sort.Slice(tierC, func(i, j int) bool {
+		return tierC[i].InstanceCount > tierC[j].InstanceCount
+	})
+
+	// Assign arm indices to Tier A
+	for i := range tierA {
+		tierA[i].ArmIndex = i % NUM_MAIN_ARMS
+	}
+
+	// Tier A: Main spiral arms (logarithmic spiral)
+	distributeSpiralArms(tierA, centers, cfg)
+
+	// Tier B: Branch arms (short spirals branching from main arms)
+	distributeBranchArms(tierB, centers, cfg)
+
+	// Tier C: Central bulge (spherical distribution around core)
+	distributeCentralBulge(tierC, centers, cfg)
+
+	return centers
+}
+
+// Tier A: Main spiral arms using logarithmic spiral
+func distributeSpiralArms(tiers []TierInfo, centers map[string]Position, cfg Config) {
+	for _, tierInfo := range tiers {
+		armIndex := tierInfo.ArmIndex
+		baseAngle := 2.0 * math.Pi * float64(armIndex) / NUM_MAIN_ARMS
+
+		// Each arm gets a position along its spiral
+		// Multiple tier A software on same arm -> stagger them radially
+		armPosition := getArmMemberIndex(tierInfo.Software, tiers, armIndex)
+		totalInArm := countSoftwareInArm(tiers, armIndex)
+
+		// Logarithmic spiral: r = a * exp(b * theta)
+		// theta increases as we go outward along the arm
+		progress := float64(armPosition) / math.Max(float64(totalInArm), 1.0)
+		theta := progress * 2.5 * math.Pi // 1.25 rotations along arm
+
+		a := 5000.0 // Starting radius
+		b := 0.25   // Spiral tightness
+		radius := a * math.Exp(b*theta)
+
+		angle := baseAngle + theta
+
+		// Add vertical wave to spiral arms (makes them 3D)
+		// Each arm has a sinusoidal Z variation as it spirals out
+		zHash := domainHash(tierInfo.Software + "_z")
+		// Base wave: sin(theta) gives natural up-down as spiral progresses
+		waveAmplitude := radius * 0.15 // ±15% of radius for substantial 3D effect
+		zWave := math.Sin(theta*2.0) * waveAmplitude
+		// Add hash variation on top
+		zVariation := (zHash - 0.5) * radius * 0.05
+		z := zWave + zVariation
+
+		centers[tierInfo.Software] = Position{
+			X: radius * math.Cos(angle),
+			Y: radius * math.Sin(angle),
+			Z: z,
+		}
+	}
+}
+
+// Tier B: Branch arms (short spirals)
+func distributeBranchArms(tiers []TierInfo, centers map[string]Position, cfg Config) {
+	for i, tierInfo := range tiers {
+		// Each B-tier branches from a main arm
+		parentArm := i % NUM_MAIN_ARMS
+		baseAngle := 2.0 * math.Pi * float64(parentArm) / NUM_MAIN_ARMS
+
+		// Branch offset angle
+		branchHash := domainHash(tierInfo.Software + "_branch")
+		branchOffset := (branchHash - 0.5) * math.Pi / 3 // ±30°
+
+		// Short spiral
+		progress := branchHash
+		theta := progress * math.Pi // Half rotation
+		radius := 4000.0 + 4000.0*progress
+
+		angle := baseAngle + branchOffset + theta*0.5
+
+		// Slightly thicker than main arms (±4%)
+		zHash := domainHash(tierInfo.Software + "_z")
+		z := (zHash - 0.5) * radius * 0.08
+
+		centers[tierInfo.Software] = Position{
+			X: radius * math.Cos(angle),
+			Y: radius * math.Sin(angle),
+			Z: z,
+		}
+	}
+}
+
+// Tier C: Central bulge (spherical)
+func distributeCentralBulge(tiers []TierInfo, centers map[string]Position, cfg Config) {
+	total := len(tiers)
+	if total == 0 {
+		return
+	}
+
+	for i, tierInfo := range tiers {
+		// Fibonacci lattice for sphere
+		theta, phi := fibonacciSpherePoint(i, total)
+
+		// Smaller radius for central bulge
+		radiusHash := domainHash(tierInfo.Software + "_radius")
+		radius := 3000.0 + radiusHash*2000.0 // 3k-5k
+
+		centers[tierInfo.Software] = Position{
+			X: radius * math.Sin(phi) * math.Cos(theta),
+			Y: radius * math.Sin(phi) * math.Sin(theta),
+			Z: radius * math.Cos(phi),
+		}
+	}
+}
+
+// Helper: find position index within an arm
+func getArmMemberIndex(software string, tiers []TierInfo, armIndex int) int {
+	count := 0
+	for _, t := range tiers {
+		if t.ArmIndex == armIndex {
+			if t.Software == software {
+				return count
+			}
+			count++
+		}
+	}
+	return 0
+}
+
+// Helper: count software types in an arm
+func countSoftwareInArm(tiers []TierInfo, armIndex int) int {
+	count := 0
+	for _, t := range tiers {
+		if t.ArmIndex == armIndex {
+			count++
+		}
+	}
+	return count
+}
+
+// ============================================================================
+// Instance Positioning Within Systems
+// ============================================================================
+
+func calculateInstancePosition(instance *Instance, systemCenter Position, systemMaxRadius float64, cfg Config) *Position {
+	userCount := getInstanceUserCount(instance)
+	sizeType := classifyInstanceSize(userCount, cfg)
+
+	// Get radial range for this size class
+	minR, maxR := getInstanceRadiusRange(sizeType)
+
+	// Position within range based on exact user count (larger = closer to center)
+	userNorm := logNormalize(float64(userCount), float64(cfg.MaxUserCount))
+	radiusFraction := maxR - (userNorm * (maxR - minR))
+
+	// Add hash-based variation for staggering
+	distHash := domainHash(instance.Domain + "_dist")
+	radiusVariation := (distHash - 0.5) * cfg.RadialVariationFactor * systemMaxRadius
+	distance := radiusFraction*systemMaxRadius + radiusVariation
+
+	// Ensure distance is positive
+	if distance < 0 {
+		distance = minR * systemMaxRadius
+	}
+
+	// SPHERICAL distribution within system (like a star cluster)
+	// Each software type forms a spherical "globular cluster" along the spiral arm
+
+	// Azimuthal angle (around Z axis)
+	thetaHash := domainHash(instance.Domain + "_theta")
+	theta := thetaHash * 2 * math.Pi
+
+	// Polar angle (from Z axis) - use proper spherical distribution
+	phiHash := domainHash(instance.Domain + "_phi")
+	// Use arccos for uniform sphere sampling
+	cosPhi := 2*phiHash - 1 // Uniform in [-1, 1]
+	phi := math.Acos(constrain(cosPhi, -1.0, 1.0))
+
+	return &Position{
+		X: systemCenter.X + distance*math.Sin(phi)*math.Cos(theta),
+		Y: systemCenter.Y + distance*math.Sin(phi)*math.Sin(theta),
+		Z: systemCenter.Z + distance*math.Cos(phi),
+	}
+}
+
+func constrain(value, min, max float64) float64 {
+	if value < min {
+		return min
+	}
+	if value > max {
+		return max
+	}
+	return value
+}
+
+// ============================================================================
+// Outer Rim (Unknown Software)
+// ============================================================================
+
+func calculateOuterRimPosition(instance *Instance, cfg Config) *Position {
+	hash := domainHash(instance.Domain)
+
+	// Use hash to determine which "shelf" in z-space
+	zShelfHash := domainHash(instance.Domain + "_shelf")
+	zShelf := math.Floor(zShelfHash * 5) // 5 distinct shelves
+
+	// Base z-height for this shelf
+	shelfHeight := (zShelf - 2) * 20000 // -40k, -20k, 0, 20k, 40k
+
+	// XY position
+	angle := hash * 2 * math.Pi
+	distance := 50000 + hash*10000
+
+	// Local z variation within shelf
+	zHash := domainHash(instance.Domain + "_z")
+	localZVariation := (zHash - 0.5) * 8000
+
+	return &Position{
+		X: distance * math.Cos(angle),
+		Y: distance * math.Sin(angle),
+		Z: shelfHeight + localZVariation,
+	}
+}
+
+// ============================================================================
+// Main Processing Function
+// ============================================================================
+
+func ProcessPositions(instances []Instance, cfg Config) []Instance {
+	// Step 1: Group instances by software type
 	bySoftware := make(map[string][]int)
 	for i := range instances {
 		sw := getSoftwareName(&instances[i])
 		bySoftware[sw] = append(bySoftware[sw], i)
 	}
 
-	type softwareStats struct {
-		name       string
-		totalUsers int
-	}
-	var softwareList []softwareStats
-	for sw, indices := range bySoftware {
-		if sw == "Mastodon" {
-			continue
+	// Step 2: Calculate tier for each software type and prepare metadata
+	softwareTiers := make(map[string]TierInfo)
+	for software, indices := range bySoftware {
+		instanceCount := len(indices)
+		tier := calculateSystemTier(instanceCount, cfg)
+		softwareTiers[software] = TierInfo{
+			Tier:          tier,
+			InstanceCount: instanceCount,
+			Software:      software,
 		}
-		total := 0
-		for _, idx := range indices {
-			if instances[idx].Stats != nil {
-				total += instances[idx].Stats.UserCount
-			}
-		}
-		softwareList = append(softwareList, softwareStats{sw, total})
 	}
-	sort.Slice(softwareList, func(i, j int) bool {
-		return softwareList[i].totalUsers > softwareList[j].totalUsers
-	})
 
-	softwareNames := make([]string, len(softwareList))
-	for i, s := range softwareList {
-		softwareNames[i] = s.name
+	// Step 3: Calculate planetary system centers using Fibonacci lattice
+	systemCenters := calculateSystemCenters(softwareTiers, cfg)
+
+	// Step 4: Calculate system max radii
+	systemRadii := make(map[string]float64)
+	for software, tierInfo := range softwareTiers {
+		systemRadii[software] = calculateSystemMaxRadius(
+			tierInfo.InstanceCount,
+			tierInfo.Tier,
+			cfg,
+		)
 	}
-	galaxyCenters := calculateGalaxyCenters(softwareNames, cfg)
 
+	// Step 5: Sort instances within each software type by user count
+	for software, indices := range bySoftware {
+		sort.Slice(indices, func(a, b int) bool {
+			ucA := getInstanceUserCount(&instances[indices[a]])
+			ucB := getInstanceUserCount(&instances[indices[b]])
+			return ucA > ucB
+		})
+		bySoftware[software] = indices
+	}
+
+	// Step 6: Process each instance
 	result := make([]Instance, len(instances))
 	for i := range instances {
 		result[i] = instances[i]
 		instance := &result[i]
-		sw := getSoftwareName(instance)
+		software := getSoftwareName(instance)
 
-		var position Position
-		var positionType string
+		// Check if supergiant
+		if isSuperGiant(instance.Domain, cfg) {
+			instance.Position = getSuperGiantPosition(instance.Domain, cfg)
+			instance.PositionType = "supergiant"
+			continue
+		}
 
-		if isTopMastodon(instance.Domain, cfg) {
-			position = threeStarPositions[instance.Domain]
-			positionType = "three_star_center"
-		} else if sw == "Mastodon" {
-			nearestStar := findNearestThreeStar(instance, threeStarPositions, cfg)
-			// Calculate dynamic radius based on Mastodon instance count
-			mastodonCount := len(bySoftware["Mastodon"])
-			// More instances = larger radius to avoid overcrowding
-			// Use log scale: 100 instances → 1x, 1000 → 1.5x, 10000 → 2x
-			scaleFactor := 1.0 + math.Log10(float64(mastodonCount)/100.0)*0.5
-			if scaleFactor < 1.0 {
-				scaleFactor = 1.0
+		// Check if has valid software type with system center
+		systemCenter, ok := systemCenters[software]
+		if !ok {
+			// Unknown software - place in outer rim
+			instance.Position = calculateOuterRimPosition(instance, cfg)
+			instance.PositionType = "unknown"
+			continue
+		}
+
+		// Calculate position within software system
+		systemMaxRadius := systemRadii[software]
+		userCount := getInstanceUserCount(instance)
+
+		// Check if this is the largest instance in its software type (system center)
+		// But exclude supergiants which already have their position
+		isLargest := false
+		if len(bySoftware[software]) > 0 {
+			largestIdx := bySoftware[software][0]
+			if instances[largestIdx].Domain == instance.Domain {
+				isLargest = true
 			}
-			dynamicRadius := cfg.ThreeStarEdge * 0.4 * scaleFactor
-			position = calculateOrbitalPosition(instance, nearestStar.X, nearestStar.Y, nearestStar.Z, dynamicRadius, cfg)
-			positionType = "mastodon_orbital"
-		} else if center, ok := galaxyCenters[sw]; ok {
-			swIndices := bySoftware[sw]
-			sort.Slice(swIndices, func(a, b int) bool {
-				ucA, ucB := 0, 0
-				if instances[swIndices[a]].Stats != nil {
-					ucA = instances[swIndices[a]].Stats.UserCount
-				}
-				if instances[swIndices[b]].Stats != nil {
-					ucB = instances[swIndices[b]].Stats.UserCount
-				}
-				return ucA > ucB
-			})
+		}
 
-			if len(swIndices) > 0 && instances[swIndices[0]].Domain == instance.Domain {
-				position = center
-				positionType = "galaxy_center"
-			} else {
-				// Calculate dynamic radius based on this software's instance count
-				instanceCount := len(swIndices)
-				// More instances = larger radius, log scale
-				scaleFactor := 1.0 + math.Log10(float64(instanceCount)/10.0)*0.4
-				if scaleFactor < 1.0 {
-					scaleFactor = 1.0
-				}
-				dynamicRadius := cfg.GalaxyMaxRadius * scaleFactor
-				position = calculateOrbitalPosition(instance, center.X, center.Y, center.Z, dynamicRadius, cfg)
-				positionType = "galaxy_orbital"
+		if isLargest && !isSuperGiant(instance.Domain, cfg) {
+			// Place at system center
+			instance.Position = &Position{
+				X: systemCenter.X,
+				Y: systemCenter.Y,
+				Z: systemCenter.Z,
 			}
+			instance.PositionType = classifyInstanceSize(userCount, cfg)
 		} else {
-			hash := domainHash(instance.Domain)
-
-			// Outer rim gets its own distinct z-layer range
-			// Use hash to determine which "shelf" in z-space
-			zShelfHash := domainHash(instance.Domain + "_shelf")
-			zShelf := math.Floor(zShelfHash * 5) // 5 distinct shelves
-
-			// Base z-height for this shelf
-			shelfHeight := (zShelf - 2) * 20000 // -40k, -20k, 0, 20k, 40k
-
-			// XY position
-			angle := hash * 2 * math.Pi
-			distance := 50000 + hash*10000
-
-			// Local z variation within shelf
-			zHash := domainHash(instance.Domain + "_z")
-			localZVariation := (zHash - 0.5) * 8000
-
-			position = Position{
-				X: distance * math.Cos(angle),
-				Y: distance * math.Sin(angle),
-				Z: shelfHeight + localZVariation,
-			}
-			positionType = "outer_rim"
+			// Calculate orbital position within system
+			instance.Position = calculateInstancePosition(instance, systemCenter, systemMaxRadius, cfg)
+			instance.PositionType = classifyInstanceSize(userCount, cfg)
 		}
 
-		instance.Position = &Position{
-			X: math.Round(position.X*10) / 10,
-			Y: math.Round(position.Y*10) / 10,
-			Z: math.Round(position.Z*10) / 10,
-		}
-		instance.PositionType = positionType
+		// Round positions
+		instance.Position.X = math.Round(instance.Position.X*10) / 10
+		instance.Position.Y = math.Round(instance.Position.Y*10) / 10
+		instance.Position.Z = math.Round(instance.Position.Z*10) / 10
 	}
 
 	return result
