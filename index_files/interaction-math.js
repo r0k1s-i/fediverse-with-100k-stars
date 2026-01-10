@@ -34,6 +34,11 @@
         var closestInstance = null;
         var thresholdSq = threshold * threshold;
 
+        // Minimum cosine of angle between ray and instance direction
+        // cos(30°) ≈ 0.866, cos(45°) ≈ 0.707, cos(60°) ≈ 0.5
+        // Use a loose value to allow some tolerance
+        var MIN_COS_ANGLE = 0.5;
+
         for (var i = 0; i < instances.length; i++) {
             var instance = instances[i];
             if (!instance.position) continue;
@@ -44,6 +49,16 @@
             
             var directionDistance = dotProduct(diff, rayDirection);
             if (directionDistance <= 0) continue;
+
+            // View frustum filter: only consider instances roughly in the direction we're looking
+            var diffLenSq = lengthSq(diff);
+            if (diffLenSq > 0) {
+                var cosAngle = directionDistance / Math.sqrt(diffLenSq);
+                if (cosAngle < MIN_COS_ANGLE) {
+                    // Instance is too far off from the ray direction, skip it
+                    continue;
+                }
+            }
 
             var cross = crossProduct(diff, rayDirection);
             var perpendicularDistSq = lengthSq(cross);

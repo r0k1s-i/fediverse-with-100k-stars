@@ -8,11 +8,20 @@ var fediverseInteraction = {
 };
 
 function getInteractionThreshold() {
-  if (typeof camera === "undefined") return fediverseInteraction.baseThreshold;
-  var z = camera.position.z;
-  // Reduced from 0.15 to 0.025 to prevent "black hole" effect at origin when zoomed out
-  // 0.025 corresponds to roughly 3% of screen height (approx 30px on 1080p)
-  return Math.max(fediverseInteraction.baseThreshold, z * 0.025);
+  if (typeof camera === "undefined") {
+    return fediverseInteraction.baseThreshold;
+  }
+
+  var z = Math.abs(camera.position.z);
+
+  // Linear dynamic threshold: ~3% of screen height
+  var dynamicThreshold = z * 0.025;
+
+  // Small minimum to ensure usability, but NOT the large baseThreshold
+  // which caused the "black hole" effect at origin when zoomed in
+  var MIN_THRESHOLD = 5.0;
+
+  return Math.max(MIN_THRESHOLD, dynamicThreshold);
 }
 
 function initFediverseInteraction() {
@@ -64,8 +73,17 @@ function onFediverseMouseMove(event) {
     typeof fediverseInstances !== "undefined" &&
     typeof InteractionMath !== "undefined"
   ) {
+    // The scene uses 'translating' object to pan the view, not camera movement.
+    // We need to adjust the ray origin to account for this translation.
+    var rayOrigin = fediverseInteraction.raycaster.ray.origin.clone();
+    if (typeof translating !== "undefined" && translating.position) {
+      // translating.position is the negated target position, so we subtract it
+      // to get the effective camera position in world space
+      rayOrigin.sub(translating.position);
+    }
+
     closestInstance = InteractionMath.findClosestInstance(
-      fediverseInteraction.raycaster.ray.origin,
+      rayOrigin,
       fediverseInteraction.raycaster.ray.direction,
       fediverseInstances,
       getInteractionThreshold(),
