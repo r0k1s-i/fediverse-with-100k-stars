@@ -41,12 +41,16 @@ var instancePreviewTexture = THREE.ImageUtils.loadTexture(
   undefined,
   setLoadMessage("Focusing optics"),
 );
+var fediverseColorGraph = THREE.ImageUtils.loadTexture(
+  "index_files/star_color_modified.png",
+);
 
 var fediverseUniforms = {
   color: { type: "c", value: new THREE.Color(0xffffff) },
   texture0: { type: "t", value: fediverseTexture0 },
   texture1: { type: "t", value: fediverseTexture1 },
   heatVisionTexture: { type: "t", value: fediverseHeatVisionTexture },
+  spectralLookup: { type: "t", value: fediverseColorGraph },
   idealDepth: { type: "f", value: 1.0 },
   blurPower: { type: "f", value: 1.0 },
   blurDivisor: { type: "f", value: 2.0 },
