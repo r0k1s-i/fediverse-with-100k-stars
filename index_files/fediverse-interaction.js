@@ -71,20 +71,35 @@ function onFediverseMouseMove(event) {
 
   if (
     typeof fediverseInstances !== "undefined" &&
-    typeof InteractionMath !== "undefined"
+    typeof InteractionMath !== "undefined" &&
+    typeof rotating !== "undefined"
   ) {
-    // The scene uses 'translating' object to pan the view, not camera movement.
-    // We need to adjust the ray origin to account for this translation.
+    // Transform ray from world space to local space (accounting for rotating + translating)
+    // The scene hierarchy is: rotating -> translating -> instances
+    // We need the inverse of this transform to convert ray to local coordinates
+    
+    rotating.updateMatrixWorld(true);
+    translating.updateMatrixWorld(true);
+    
+    // Get the combined world matrix of translating (includes rotating's transform)
+    var worldMatrix = translating.matrixWorld.clone();
+    var inverseMatrix = new THREE.Matrix4();
+    inverseMatrix.getInverse(worldMatrix);
+    
+    // Transform ray origin to local space
     var rayOrigin = fediverseInteraction.raycaster.ray.origin.clone();
-    if (typeof translating !== "undefined" && translating.position) {
-      // translating.position is the negated target position, so we subtract it
-      // to get the effective camera position in world space
-      rayOrigin.sub(translating.position);
-    }
+    inverseMatrix.multiplyVector3(rayOrigin);
+    
+    // Transform ray direction to local space (rotation only, no translation)
+    var rayDirection = fediverseInteraction.raycaster.ray.direction.clone();
+    var rotationMatrix = new THREE.Matrix4();
+    rotationMatrix.extractRotation(inverseMatrix);
+    rotationMatrix.multiplyVector3(rayDirection);
+    rayDirection.normalize();
 
     closestInstance = InteractionMath.findClosestInstance(
       rayOrigin,
-      fediverseInteraction.raycaster.ray.direction,
+      rayDirection,
       fediverseInstances,
       getInteractionThreshold(),
     );
