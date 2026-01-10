@@ -237,6 +237,20 @@ func calculateSystemCenters(softwareTiers map[string]TierInfo, cfg Config) map[s
 // Tier A: Main spiral arms using logarithmic spiral
 func distributeSpiralArms(tiers []TierInfo, centers map[string]Position, cfg Config) {
 	for _, tierInfo := range tiers {
+		// Check if this software has a corresponding supergiant instance
+		// (Mastodon -> mastodon.social, Misskey -> misskey.io, Pixelfed -> pixelfed.social)
+		var superGiantOrigin *Position
+		superGiantMap := map[string]string{
+			"Mastodon": "mastodon.social",
+			"Misskey":  "misskey.io",
+			"Pixelfed": "pixelfed.social",
+		}
+
+		if superGiantDomain, exists := superGiantMap[tierInfo.Software]; exists {
+			origin := getSuperGiantPosition(superGiantDomain, cfg)
+			superGiantOrigin = origin
+		}
+
 		armIndex := tierInfo.ArmIndex
 		baseAngle := 2.0 * math.Pi * float64(armIndex) / NUM_MAIN_ARMS
 
@@ -250,27 +264,63 @@ func distributeSpiralArms(tiers []TierInfo, centers map[string]Position, cfg Con
 		progress := float64(armPosition) / math.Max(float64(totalInArm), 1.0)
 		theta := progress * 2.5 * math.Pi // 1.25 rotations along arm
 
-		a := 5000.0 // Starting radius
-		b := 0.25   // Spiral tightness
-		radius := a * math.Exp(b*theta)
+		var finalPosition Position
 
-		angle := baseAngle + theta
+		if superGiantOrigin != nil {
+			// For Mastodon/Misskey/Pixelfed, the spiral arm starts from the supergiant position
+			// and extends outward in a logarithmic spiral centered on the supergiant
 
-		// Add vertical wave to spiral arms (makes them 3D)
-		// Each arm has a sinusoidal Z variation as it spirals out
-		zHash := domainHash(tierInfo.Software + "_z")
-		// Base wave: sin(theta) gives natural up-down as spiral progresses
-		waveAmplitude := radius * 0.15 // ±15% of radius for substantial 3D effect
-		zWave := math.Sin(theta*2.0) * waveAmplitude
-		// Add hash variation on top
-		zVariation := (zHash - 0.5) * radius * 0.05
-		z := zWave + zVariation
+			// Logarithmic spiral parameters (similar to non-supergiant case but starting from supergiant)
+			a := 2000.0 // Starting radius from supergiant
+			b := 0.25   // Spiral tightness
+			radius := a * math.Exp(b*theta)
 
-		centers[tierInfo.Software] = Position{
-			X: radius * math.Cos(angle),
-			Y: radius * math.Sin(angle),
-			Z: z,
+			// Base angle determined by the supergiant's position angle
+			// This ensures the spiral extends in a natural direction from the supergiant
+			superGiantAngle := math.Atan2(superGiantOrigin.Y, superGiantOrigin.X)
+
+			// Add rotation based on the arm progression
+			angle := superGiantAngle + theta
+
+			// Calculate position relative to supergiant
+			relativeX := radius * math.Cos(angle)
+			relativeY := radius * math.Sin(angle)
+
+			// Add vertical wave
+			zHash := domainHash(tierInfo.Software + "_z")
+			waveAmplitude := radius * 0.15
+			zWave := math.Sin(theta*2.0) * waveAmplitude
+			zVariation := (zHash - 0.5) * radius * 0.05
+			z := superGiantOrigin.Z + zWave + zVariation
+
+			finalPosition = Position{
+				X: superGiantOrigin.X + relativeX,
+				Y: superGiantOrigin.Y + relativeY,
+				Z: z,
+			}
+		} else {
+			// Original logic for software without a supergiant
+			a := 5000.0 // Starting radius
+			b := 0.25   // Spiral tightness
+			radius := a * math.Exp(b*theta)
+
+			angle := baseAngle + theta
+
+			// Add vertical wave to spiral arms (makes them 3D)
+			zHash := domainHash(tierInfo.Software + "_z")
+			waveAmplitude := radius * 0.15
+			zWave := math.Sin(theta*2.0) * waveAmplitude
+			zVariation := (zHash - 0.5) * radius * 0.05
+			z := zWave + zVariation
+
+			finalPosition = Position{
+				X: radius * math.Cos(angle),
+				Y: radius * math.Sin(angle),
+				Z: z,
+			}
 		}
+
+		centers[tierInfo.Software] = finalPosition
 	}
 }
 
