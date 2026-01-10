@@ -2,6 +2,8 @@ package main
 
 type Instance struct {
 	Domain       string        `json:"domain"`
+	Name         string        `json:"name,omitempty"`
+	Description  string        `json:"description,omitempty"`
 	Software     *Software     `json:"software,omitempty"`
 	Stats        *Stats        `json:"stats,omitempty"`
 	FirstSeenAt  string        `json:"first_seen_at,omitempty"`
