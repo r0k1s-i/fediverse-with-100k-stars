@@ -162,6 +162,7 @@ function generateFediverseInstances() {
     instancePreviewMaterial,
   );
   var pLineGeo = new THREE.Geometry();
+  var MIN_USERS_FOR_LINE = 50000;
 
   for (var i = 0; i < count; i++) {
     var instance = fediverseInstances[i];
@@ -189,6 +190,13 @@ function generateFediverseInstances() {
     pGeo.vertices.push(p);
     pGeo.colors.push(threeColor);
 
+    if (userCount >= MIN_USERS_FOR_LINE) {
+      pLineGeo.vertices.push(p.clone());
+      var base = p.clone();
+      base.y = 0;
+      pLineGeo.vertices.push(base);
+    }
+
     // Create mesh objects for ALL instances to make them clickable via raycasting
     // But only show HTML text labels for very large instances
     var MIN_USERS_FOR_HTML_LABEL = 999999999; // Effectively disable all HTML labels
@@ -201,11 +209,6 @@ function generateFediverseInstances() {
       userCount > 1000
     ) {
       // Only create meshes for instances with 1000+ users to reduce overhead
-
-      pLineGeo.vertices.push(p.clone());
-      var base = p.clone();
-      base.y = 0;
-      pLineGeo.vertices.push(base);
 
       var gyroInstance = new THREE.Gyroscope();
       gyroInstance.position.copy(p);
