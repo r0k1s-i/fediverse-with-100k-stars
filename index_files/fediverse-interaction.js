@@ -208,7 +208,13 @@ function onFediverseClick(event) {
     // When zoomed in close, ONLY allow clicking on the current instance
     // Don't allow jumping to other instances - bad UX
     if (typeof translating !== "undefined") {
-      var currentPos = translating.position.clone().negate();
+      // Use targetPosition if available (more accurate than animated position)
+      var transPos = translating.targetPosition || translating.position;
+      var currentPos = transPos.clone().negate();
+      
+      // Find the closest instance to current position
+      var closestDist = Infinity;
+      var closestInst = null;
       
       if (typeof fediverseInstances !== "undefined") {
         for (var i = 0; i < fediverseInstances.length; i++) {
@@ -219,12 +225,17 @@ function onFediverseClick(event) {
               Math.pow(inst.position.y - currentPos.y, 2) +
               Math.pow(inst.position.z - currentPos.z, 2)
             );
-            if (dist < 50) {
-              clickTarget = { name: inst.domain, instanceData: inst };
-              break;
+            if (dist < closestDist) {
+              closestDist = dist;
+              closestInst = inst;
             }
           }
         }
+      }
+      
+      // Only accept if very close (threshold 10)
+      if (closestInst && closestDist < 10) {
+        clickTarget = { name: closestInst.domain, instanceData: closestInst };
       }
     }
   } else {
