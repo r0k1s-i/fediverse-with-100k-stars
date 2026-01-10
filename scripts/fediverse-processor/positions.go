@@ -402,31 +402,124 @@ func constrain(value, min, max float64) float64 {
 }
 
 // ============================================================================
-// Outer Rim (Unknown Software)
+// Unknown Software - Interstellar Dust Cloud Distribution
 // ============================================================================
 
 func calculateOuterRimPosition(instance *Instance, cfg Config) *Position {
+	// Use domain hash to determine distribution strategy
 	hash := domainHash(instance.Domain)
+	strategyHash := domainHash(instance.Domain + "_strategy")
 
-	// Use hash to determine which "shelf" in z-space
-	zShelfHash := domainHash(instance.Domain + "_shelf")
-	zShelf := math.Floor(zShelfHash * 5) // 5 distinct shelves
+	// Distribution strategies (weighted):
+	// 70% - Spiral arm dust (along the 5 main arms)
+	// 20% - Clustered nebulae (small dense clusters)
+	// 10% - Outer halo (diffuse outer region)
 
-	// Base z-height for this shelf
-	shelfHeight := (zShelf - 2) * 20000 // -40k, -20k, 0, 20k, 40k
+	if strategyHash < 0.70 {
+		// Strategy 1: Spiral Arm Dust
+		return calculateSpiralArmDust(instance, hash, cfg)
+	} else if strategyHash < 0.90 {
+		// Strategy 2: Clustered Nebulae
+		return calculateClusteredNebula(instance, hash, cfg)
+	} else {
+		// Strategy 3: Outer Halo
+		return calculateOuterHalo(instance, hash, cfg)
+	}
+}
 
-	// XY position
-	angle := hash * 2 * math.Pi
-	distance := 50000 + hash*10000
+// Strategy 1: Distribute along spiral arms with natural scatter
+func calculateSpiralArmDust(instance *Instance, hash float64, cfg Config) *Position {
+	// Choose which spiral arm (0-4)
+	armHash := domainHash(instance.Domain + "_arm")
+	armIndex := int(math.Floor(armHash * NUM_MAIN_ARMS))
+	baseAngle := 2.0 * math.Pi * float64(armIndex) / NUM_MAIN_ARMS
 
-	// Local z variation within shelf
-	zHash := domainHash(instance.Domain + "_z")
-	localZVariation := (zHash - 0.5) * 8000
+	// Position along the arm (logarithmic spiral)
+	progressHash := domainHash(instance.Domain + "_progress")
+	theta := progressHash * 2.5 * math.Pi // Follow arm rotation
+
+	// Distance: slightly beyond the main systems
+	a := 8000.0 // Start further out than main systems
+	b := 0.30   // Slightly looser spiral
+	baseRadius := a * math.Exp(b*theta)
+
+	// Add perpendicular scatter (drift away from arm center)
+	scatterHash := domainHash(instance.Domain + "_scatter")
+	perpendicularOffset := (scatterHash - 0.5) * 3000.0 // ±1500 units
+
+	angle := baseAngle + theta
+
+	// Z variation: waves along the arm
+	zWaveHash := domainHash(instance.Domain + "_zwave")
+	zWave := math.Sin(theta*3.0) * baseRadius * 0.12
+	zScatter := (zWaveHash - 0.5) * 2500.0
+	z := zWave + zScatter
+
+	// Apply perpendicular offset in XY plane
+	perpAngle := angle + math.Pi/2.0
+	x := baseRadius*math.Cos(angle) + perpendicularOffset*math.Cos(perpAngle)
+	y := baseRadius*math.Sin(angle) + perpendicularOffset*math.Sin(perpAngle)
+
+	return &Position{X: x, Y: y, Z: z}
+}
+
+// Strategy 2: Form small dense clusters (nebulae)
+func calculateClusteredNebula(instance *Instance, hash float64, cfg Config) *Position {
+	// Determine cluster center (use first 6 chars of domain as cluster ID)
+	clusterSeed := instance.Domain
+	if len(clusterSeed) > 6 {
+		clusterSeed = clusterSeed[:6]
+	}
+
+	// Cluster center in cylindrical coordinates
+	clusterHash := domainHash(clusterSeed + "_cluster")
+	clusterAngle := clusterHash * 2.0 * math.Pi
+	clusterDist := 10000.0 + clusterHash*12000.0 // 10k-22k from center
+
+	clusterZHash := domainHash(clusterSeed + "_clusterZ")
+	clusterZ := (clusterZHash - 0.5) * 8000.0 // ±4000 units
+
+	clusterCenterX := clusterDist * math.Cos(clusterAngle)
+	clusterCenterY := clusterDist * math.Sin(clusterAngle)
+
+	// Position within cluster (small tight sphere)
+	localHash := domainHash(instance.Domain + "_local")
+	localAngle := localHash * 2.0 * math.Pi
+
+	localPhiHash := domainHash(instance.Domain + "_phi")
+	localPhi := math.Acos(2.0*localPhiHash - 1.0)
+
+	// Cluster radius (tight grouping)
+	radiusHash := domainHash(instance.Domain + "_radius")
+	localRadius := radiusHash * 800.0 // 0-800 units (very tight)
+
+	localX := localRadius * math.Sin(localPhi) * math.Cos(localAngle)
+	localY := localRadius * math.Sin(localPhi) * math.Sin(localAngle)
+	localZ := localRadius * math.Cos(localPhi)
 
 	return &Position{
-		X: distance * math.Cos(angle),
-		Y: distance * math.Sin(angle),
-		Z: shelfHeight + localZVariation,
+		X: clusterCenterX + localX,
+		Y: clusterCenterY + localY,
+		Z: clusterZ + localZ,
+	}
+}
+
+// Strategy 3: Diffuse outer halo
+func calculateOuterHalo(instance *Instance, hash float64, cfg Config) *Position {
+	// Spherical shell at large radius
+	angle := hash * 2.0 * math.Pi
+
+	phiHash := domainHash(instance.Domain + "_phi")
+	phi := math.Acos(2.0*phiHash - 1.0)
+
+	// Distance: far outer region
+	distHash := domainHash(instance.Domain + "_dist")
+	distance := 25000.0 + distHash*15000.0 // 25k-40k
+
+	return &Position{
+		X: distance * math.Sin(phi) * math.Cos(angle),
+		Y: distance * math.Sin(phi) * math.Sin(angle),
+		Z: distance * math.Cos(phi),
 	}
 }
 
@@ -443,8 +536,14 @@ func ProcessPositions(instances []Instance, cfg Config) []Instance {
 	}
 
 	// Step 2: Calculate tier for each software type and prepare metadata
+	// IMPORTANT: Exclude "Unknown" software - it uses special dust cloud distribution
 	softwareTiers := make(map[string]TierInfo)
 	for software, indices := range bySoftware {
+		// Skip "Unknown" - it will be handled by calculateOuterRimPosition
+		if software == "Unknown" {
+			continue
+		}
+
 		instanceCount := len(indices)
 		tier := calculateSystemTier(instanceCount, cfg)
 		softwareTiers[software] = TierInfo{
