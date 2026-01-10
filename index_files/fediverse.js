@@ -175,7 +175,7 @@ function generateFediverseInstances() {
 
     var userCount = instance.stats ? instance.stats.user_count : 1;
     p.size = Math.max(15.0, Math.log(userCount + 1) * 8);
-    p.name = instance.domain;
+    p.name = instance.name || instance.domain;
     p.instanceData = instance;
 
     var hexColor = instance.color ? instance.color.hex : "#ffffff";
@@ -236,7 +236,7 @@ function generateFediverseInstances() {
 
       var g = new THREE.Gyroscope();
       container.add(g);
-      g.name = instance.domain;
+      g.name = instance.name || instance.domain;
       g.instanceData = instance;
       g.position.copy(p);
       g.scale.setLength(1.0);
