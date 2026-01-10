@@ -461,23 +461,51 @@ func calculateOuterRimPosition(instance *Instance, cfg Config) *Position {
 	strategyHash := domainHash(instance.Domain + "_strategy")
 
 	// Distribution strategies (weighted):
-	// 70% - Spiral arm dust (along the 5 main arms)
-	// 20% - Clustered nebulae (small dense clusters)
-	// 10% - Outer halo (diffuse outer region)
+	// 50% - Inner dust (within known software systems range, 2k-10k radius)
+	// 30% - Spiral arm dust (along the 5 main arms, outer regions)
+	// 15% - Clustered nebulae (small dense clusters)
+	// 5%  - Outer halo (diffuse outer region, 25k-40k radius)
 
-	if strategyHash < 0.70 {
-		// Strategy 1: Spiral Arm Dust
+	if strategyHash < 0.50 {
+		// Strategy 1: Inner Dust (NEW - fills space between known systems)
+		return calculateInnerDust(instance, hash, cfg)
+	} else if strategyHash < 0.80 {
+		// Strategy 2: Spiral Arm Dust
 		return calculateSpiralArmDust(instance, hash, cfg)
-	} else if strategyHash < 0.90 {
-		// Strategy 2: Clustered Nebulae
+	} else if strategyHash < 0.95 {
+		// Strategy 3: Clustered Nebulae
 		return calculateClusteredNebula(instance, hash, cfg)
 	} else {
-		// Strategy 3: Outer Halo
+		// Strategy 4: Outer Halo
 		return calculateOuterHalo(instance, hash, cfg)
 	}
 }
 
-// Strategy 1: Distribute along spiral arms with natural scatter
+// Strategy 1: Inner dust - fills space between known software systems
+func calculateInnerDust(instance *Instance, hash float64, cfg Config) *Position {
+	// Distribute within the range where known systems exist (2k-10k radius)
+	// This creates a diffuse dust cloud filling the space between planetary systems
+
+	// Random spherical distribution
+	angle := hash * 2.0 * math.Pi
+
+	phiHash := domainHash(instance.Domain + "_phi")
+	phi := math.Acos(2.0*phiHash - 1.0)
+
+	// Distance: within the main galaxy disk (2k-10k from center)
+	distHash := domainHash(instance.Domain + "_dist")
+	distance := 2000.0 + distHash*8000.0 // 2k-10k radius
+
+	// Flatten the distribution slightly (galactic disk shape)
+	// Z-axis is compressed to create a disk-like structure
+	x := distance * math.Sin(phi) * math.Cos(angle)
+	y := distance * math.Sin(phi) * math.Sin(angle)
+	z := distance * math.Cos(phi) * 0.3 // Compress Z by 70%
+
+	return &Position{X: x, Y: y, Z: z}
+}
+
+// Strategy 2: Distribute along spiral arms with natural scatter
 func calculateSpiralArmDust(instance *Instance, hash float64, cfg Config) *Position {
 	// Choose which spiral arm (0-4)
 	armHash := domainHash(instance.Domain + "_arm")
@@ -513,7 +541,7 @@ func calculateSpiralArmDust(instance *Instance, hash float64, cfg Config) *Posit
 	return &Position{X: x, Y: y, Z: z}
 }
 
-// Strategy 2: Form small dense clusters (nebulae)
+// Strategy 3: Form small dense clusters (nebulae)
 func calculateClusteredNebula(instance *Instance, hash float64, cfg Config) *Position {
 	// Determine cluster center (use first 6 chars of domain as cluster ID)
 	clusterSeed := instance.Domain
@@ -554,7 +582,7 @@ func calculateClusteredNebula(instance *Instance, hash float64, cfg Config) *Pos
 	}
 }
 
-// Strategy 3: Diffuse outer halo
+// Strategy 4: Diffuse outer halo
 func calculateOuterHalo(instance *Instance, hash float64, cfg Config) *Position {
 	// Spherical shell at large radius
 	angle := hash * 2.0 * math.Pi
