@@ -101,15 +101,45 @@ function onFediverseMouseMove(event) {
 }
 
 function handleHover(object) {
+  // When zoomed in very close (like original star view), don't show hover tooltip
+  // The star name is shown in the fixed bottom-left position by main.js
+  var isZoomedInClose = typeof camera !== "undefined" && 
+    typeof markerThreshold !== "undefined" && 
+    camera.position.z < markerThreshold.min;
+
+  if (isZoomedInClose) {
+    // When zoomed in close, don't interfere with the standard star name display
+    // Clear any hover state
+    if (fediverseInteraction.intersected) {
+      fediverseInteraction.intersected = null;
+      document.body.style.cursor = "default";
+    }
+    return;
+  }
+
   if (fediverseInteraction.intersected !== object) {
     fediverseInteraction.intersected = object;
 
     if (object) {
       $starName.html("<span>" + object.name + "</span>");
-      $starName.css("opacity", 1.0).show();
+      // Use inline styles for tooltip mode (following mouse)
+      $starName.css({
+        opacity: 1.0,
+        position: "fixed",
+        bottom: "auto",
+        margin: 0,
+      }).show();
       document.body.style.cursor = "pointer";
     } else {
       $starName.hide();
+      // Reset to default CSS positioning when not hovering
+      $starName.css({
+        position: "",
+        left: "",
+        top: "",
+        bottom: "",
+        margin: "",
+      });
       document.body.style.cursor = "default";
     }
   }
@@ -167,19 +197,52 @@ function onFediverseClick(event) {
   if (now - fediverseInteraction.lastClickTime < 300) return;
   fediverseInteraction.lastClickTime = now;
 
-  if (!fediverseInteraction.intersected) {
+  // Check if we're zoomed in close
+  var isZoomedInClose = typeof camera !== "undefined" && 
+    typeof markerThreshold !== "undefined" && 
+    camera.position.z < markerThreshold.min;
+
+  var clickTarget = null;
+
+  if (isZoomedInClose) {
+    // When zoomed in close, ONLY allow clicking on the current instance
+    // Don't allow jumping to other instances - bad UX
+    if (typeof translating !== "undefined") {
+      var currentPos = translating.position.clone().negate();
+      
+      if (typeof fediverseInstances !== "undefined") {
+        for (var i = 0; i < fediverseInstances.length; i++) {
+          var inst = fediverseInstances[i];
+          if (inst.position) {
+            var dist = Math.sqrt(
+              Math.pow(inst.position.x - currentPos.x, 2) +
+              Math.pow(inst.position.y - currentPos.y, 2) +
+              Math.pow(inst.position.z - currentPos.z, 2)
+            );
+            if (dist < 50) {
+              clickTarget = { name: inst.domain, instanceData: inst };
+              break;
+            }
+          }
+        }
+      }
+    }
+  } else {
+    // When zoomed out, use the hover-selected instance
+    clickTarget = fediverseInteraction.intersected;
+  }
+
+  if (!clickTarget) {
     console.log("No instance selected");
     return;
   }
 
-  console.log("Clicking on instance:", fediverseInteraction.intersected);
+  console.log("Clicking on instance:", clickTarget);
 
   event.stopPropagation();
   event.preventDefault();
 
-  var data =
-    fediverseInteraction.intersected.instanceData ||
-    fediverseInteraction.intersected;
+  var data = clickTarget.instanceData || clickTarget;
   if (!data || !data.position) return;
 
   var position = new THREE.Vector3(
@@ -239,6 +302,15 @@ function onFediverseClick(event) {
     zoomIn(zoomLevel);
   }
 
+  // Reset $starName to default CSS positioning (bottom-left fixed)
+  // This allows main.js to control its visibility based on zoom level
+  $starName.css({
+    position: "",
+    left: "",
+    top: "",
+    bottom: "",
+    margin: "",
+  });
   $starName.find("span").html(data.domain);
 
   showInstanceDetails(data);
