@@ -37,7 +37,7 @@
     },
     "position": {
       "x": 0,
-      "y": 0,
+      "y": 3000,
       "z": 0
     },
     "positionType": "supergiant"
@@ -71,7 +71,7 @@
       "hex": "#0a9031",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 23.7,
         "eraOffset": 0,
         "userNorm": 0.902,
@@ -79,9 +79,9 @@
       }
     },
     "position": {
-      "x": 3000,
-      "y": 0,
-      "z": 1500
+      "x": -2598,
+      "y": -1500,
+      "z": 0
     },
     "positionType": "supergiant"
   },
@@ -122,9 +122,9 @@
       }
     },
     "position": {
-      "x": -1500,
-      "y": 2598,
-      "z": -1500
+      "x": 2598,
+      "y": -1500,
+      "z": 0
     },
     "positionType": "supergiant"
   },
@@ -286,7 +286,7 @@
       "hex": "#0c963c",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 27.1,
         "eraOffset": 0,
         "userNorm": 0.816,
@@ -372,7 +372,7 @@
       "hex": "#5d980c",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -28.4,
         "eraOffset": 0,
         "userNorm": 0.814,
@@ -509,9 +509,9 @@
       }
     },
     "position": {
-      "x": 1234.2,
-      "y": -2153.9,
-      "z": -3489.1
+      "x": 1048.1,
+      "y": 484.3,
+      "z": -4123.5
     },
     "positionType": "planet"
   },
@@ -587,7 +587,7 @@
       "hex": "#3a990e",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -12.7,
         "eraOffset": 0,
         "userNorm": 0.758,
@@ -630,7 +630,7 @@
       "hex": "#37aa0f",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -9,
         "eraOffset": 0,
         "userNorm": 0.756,
@@ -673,7 +673,7 @@
       "hex": "#589a0e",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -25.5,
         "eraOffset": 0,
         "userNorm": 0.756,
@@ -833,7 +833,7 @@
     },
     "color": {
       "hsl": {
-        "h": 168.3,
+        "h": 168.2,
         "s": 83.3,
         "l": 30.9
       },
@@ -896,8 +896,8 @@
       }
     },
     "position": {
-      "x": 3856,
-      "y": -5979.6,
+      "x": 6878.5,
+      "y": 1819.4,
       "z": 230.8
     },
     "positionType": "planet"
@@ -931,7 +931,7 @@
       "hex": "#0d922a",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 19.2,
         "eraOffset": 0,
         "userNorm": 0.746,
@@ -974,7 +974,7 @@
       "hex": "#27a710",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -2.9,
         "eraOffset": 0,
         "userNorm": 0.74,
@@ -1103,7 +1103,7 @@
       "hex": "#10a610",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 6.2,
         "eraOffset": 0,
         "userNorm": 0.733,
@@ -1189,7 +1189,7 @@
       "hex": "#28900e",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -5.9,
         "eraOffset": 0,
         "userNorm": 0.727,
@@ -1275,7 +1275,7 @@
       "hex": "#63a610",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -26.7,
         "eraOffset": 0,
         "userNorm": 0.723,
@@ -1318,7 +1318,7 @@
       "hex": "#18a810",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 3.2,
         "eraOffset": 0,
         "userNorm": 0.723,
@@ -1361,7 +1361,7 @@
       "hex": "#629c0f",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -28.7,
         "eraOffset": 0,
         "userNorm": 0.718,
@@ -1447,7 +1447,7 @@
       "hex": "#1b9a0f",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 1.1,
         "eraOffset": 0,
         "userNorm": 0.712,
@@ -1490,7 +1490,7 @@
       "hex": "#0f9e30",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 20.1,
         "eraOffset": 0,
         "userNorm": 0.712,
@@ -1576,7 +1576,7 @@
       "hex": "#12b435",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 19.3,
         "eraOffset": 0,
         "userNorm": 0.711,
@@ -1584,9 +1584,9 @@
       }
     },
     "position": {
-      "x": -2493.7,
-      "y": 2988.3,
-      "z": -2360.2
+      "x": 2997,
+      "y": 2982.4,
+      "z": -1685.8
     },
     "positionType": "planet"
   },
@@ -1705,7 +1705,7 @@
       "hex": "#54950f",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -24.7,
         "eraOffset": 0,
         "userNorm": 0.709,
@@ -1791,7 +1791,7 @@
       "hex": "#13c414",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 6.6,
         "eraOffset": 0,
         "userNorm": 0.706,
@@ -1962,7 +1962,7 @@
       },
       "hex": "#0f982a",
       "debug": {
-        "ageDays": 1353,
+        "ageDays": 1354,
         "ageNorm": 0.594,
         "hashPerturbation": -10.7,
         "eraOffset": 0,
@@ -2014,8 +2014,8 @@
       }
     },
     "position": {
-      "x": 3546,
-      "y": -6398.6,
+      "x": 6568.6,
+      "y": 1400.5,
       "z": 130.4
     },
     "positionType": "planet"
@@ -2049,7 +2049,7 @@
       "hex": "#578b0e",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -28.8,
         "eraOffset": 0,
         "userNorm": 0.702,
@@ -2092,7 +2092,7 @@
       "hex": "#65a611",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -27.3,
         "eraOffset": 0,
         "userNorm": 0.7,
@@ -2135,7 +2135,7 @@
       "hex": "#569e10",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -23,
         "eraOffset": 0,
         "userNorm": 0.698,
@@ -2177,7 +2177,7 @@
       },
       "hex": "#0f8f95",
       "debug": {
-        "ageDays": 1163,
+        "ageDays": 1164,
         "ageNorm": 0.651,
         "hashPerturbation": 26.6,
         "eraOffset": 0,
@@ -2306,7 +2306,7 @@
       },
       "hex": "#105e9a",
       "debug": {
-        "ageDays": 429,
+        "ageDays": 430,
         "ageNorm": 0.871,
         "hashPerturbation": -22.8,
         "eraOffset": 20,
@@ -2401,8 +2401,8 @@
       }
     },
     "position": {
-      "x": 4317.6,
-      "y": -5676.5,
+      "x": 7340.1,
+      "y": 2122.6,
       "z": 220.6
     },
     "positionType": "planet"
@@ -2522,7 +2522,7 @@
       "hex": "#0f9324",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 15.9,
         "eraOffset": 0,
         "userNorm": 0.686,
@@ -2565,7 +2565,7 @@
       "hex": "#3d8b0e",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -16.2,
         "eraOffset": 0,
         "userNorm": 0.686,
@@ -2659,8 +2659,8 @@
       }
     },
     "position": {
-      "x": 3320.1,
-      "y": -6539.1,
+      "x": 6342.7,
+      "y": 1260,
       "z": 235
     },
     "positionType": "planet"
@@ -2823,7 +2823,7 @@
       "hex": "#629a10",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -29.2,
         "eraOffset": 0,
         "userNorm": 0.682,
@@ -2952,7 +2952,7 @@
       "hex": "#60a611",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -25.4,
         "eraOffset": 0,
         "userNorm": 0.677,
@@ -3081,7 +3081,7 @@
       "hex": "#32ab12",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -6.3,
         "eraOffset": 0,
         "userNorm": 0.674,
@@ -3124,7 +3124,7 @@
       "hex": "#4ea511",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -18.3,
         "eraOffset": 0,
         "userNorm": 0.674,
@@ -3210,7 +3210,7 @@
       "hex": "#3e9810",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -14.2,
         "eraOffset": 0,
         "userNorm": 0.67,
@@ -3296,7 +3296,7 @@
       "hex": "#36910f",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -11.5,
         "eraOffset": 0,
         "userNorm": 0.669,
@@ -3339,7 +3339,7 @@
       "hex": "#10992e",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 19.3,
         "eraOffset": 0,
         "userNorm": 0.668,
@@ -3511,7 +3511,7 @@
       "hex": "#0f8f14",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 8.6,
         "eraOffset": 0,
         "userNorm": 0.666,
@@ -3554,7 +3554,7 @@
       "hex": "#109316",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 9.5,
         "eraOffset": 0,
         "userNorm": 0.663,
@@ -3640,7 +3640,7 @@
       "hex": "#12a62a",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 16.3,
         "eraOffset": 0,
         "userNorm": 0.66,
@@ -3812,7 +3812,7 @@
       "hex": "#22a612",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -0.3,
         "eraOffset": 0,
         "userNorm": 0.657,
@@ -3898,7 +3898,7 @@
       "hex": "#258a0f",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -4.2,
         "eraOffset": 0,
         "userNorm": 0.656,
@@ -3984,7 +3984,7 @@
       "hex": "#3b8e0f",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -14.2,
         "eraOffset": 0,
         "userNorm": 0.655,
@@ -4070,7 +4070,7 @@
       "hex": "#2f9b11",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -6.7,
         "eraOffset": 0,
         "userNorm": 0.651,
@@ -4242,7 +4242,7 @@
       "hex": "#309811",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -7.6,
         "eraOffset": 0,
         "userNorm": 0.649,
@@ -4285,7 +4285,7 @@
       "hex": "#10933f",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 28.1,
         "eraOffset": 0,
         "userNorm": 0.648,
@@ -4323,7 +4323,7 @@
       "hex": "#38ab13",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -8.4,
         "eraOffset": 0,
         "userNorm": 0.647,
@@ -4475,7 +4475,7 @@
       "hex": "#448e10",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -18.7,
         "eraOffset": 0,
         "userNorm": 0.645,
@@ -4551,7 +4551,7 @@
       "hex": "#15ba52",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 28.6,
         "eraOffset": 0,
         "userNorm": 0.641,
@@ -4627,7 +4627,7 @@
       "hex": "#0f8a23",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 15.9,
         "eraOffset": 0,
         "userNorm": 0.64,
@@ -4665,7 +4665,7 @@
       "hex": "#37e623",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 0,
         "eraOffset": 0,
         "userNorm": 0.639,
@@ -4703,7 +4703,7 @@
       "hex": "#1d9210",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 0.3,
         "eraOffset": 0,
         "userNorm": 0.638,
@@ -4779,7 +4779,7 @@
       "hex": "#4ca312",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -17.7,
         "eraOffset": 0,
         "userNorm": 0.636,
@@ -4817,7 +4817,7 @@
       "hex": "#119840",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 27.4,
         "eraOffset": 0,
         "userNorm": 0.635,
@@ -4901,8 +4901,8 @@
       }
     },
     "position": {
-      "x": 4548.5,
-      "y": -6181.9,
+      "x": 7571,
+      "y": 1617.1,
       "z": 668.6
     },
     "positionType": "planet"
@@ -4931,7 +4931,7 @@
       "hex": "#109117",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 9.4,
         "eraOffset": 0,
         "userNorm": 0.633,
@@ -5007,7 +5007,7 @@
       "hex": "#449c12",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -15.5,
         "eraOffset": 0,
         "userNorm": 0.631,
@@ -5045,7 +5045,7 @@
       "hex": "#129b19",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 9.5,
         "eraOffset": 0,
         "userNorm": 0.63,
@@ -5083,7 +5083,7 @@
       "hex": "#309c12",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -6.7,
         "eraOffset": 0,
         "userNorm": 0.63,
@@ -5121,7 +5121,7 @@
       "hex": "#149a11",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 5.4,
         "eraOffset": 0,
         "userNorm": 0.63,
@@ -5197,7 +5197,7 @@
       "hex": "#189211",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 2.8,
         "eraOffset": 0,
         "userNorm": 0.629,
@@ -5387,7 +5387,7 @@
       "hex": "#519411",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -23.3,
         "eraOffset": 0,
         "userNorm": 0.626,
@@ -5500,7 +5500,7 @@
       },
       "hex": "#119425",
       "debug": {
-        "ageDays": 1163,
+        "ageDays": 1164,
         "ageNorm": 0.651,
         "hashPerturbation": -27,
         "eraOffset": 0,
@@ -5539,7 +5539,7 @@
       "hex": "#129e20",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 12.2,
         "eraOffset": 0,
         "userNorm": 0.625,
@@ -5615,7 +5615,7 @@
       "hex": "#13a23f",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 25.1,
         "eraOffset": 0,
         "userNorm": 0.623,
@@ -5767,7 +5767,7 @@
       "hex": "#108e26",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 16.7,
         "eraOffset": 0,
         "userNorm": 0.622,
@@ -5881,7 +5881,7 @@
       "hex": "#1c9e12",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 2.2,
         "eraOffset": 0,
         "userNorm": 0.62,
@@ -5995,7 +5995,7 @@
       "hex": "#46a012",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -15.7,
         "eraOffset": 0,
         "userNorm": 0.618,
@@ -6147,7 +6147,7 @@
       "hex": "#229611",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -1.1,
         "eraOffset": 0,
         "userNorm": 0.616,
@@ -6337,7 +6337,7 @@
       "hex": "#129b15",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 7.7,
         "eraOffset": 0,
         "userNorm": 0.612,
@@ -6451,7 +6451,7 @@
       "hex": "#3e9f13",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -12.2,
         "eraOffset": 0,
         "userNorm": 0.61,
@@ -6489,7 +6489,7 @@
       "hex": "#579011",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -26.9,
         "eraOffset": 0,
         "userNorm": 0.609,
@@ -6603,7 +6603,7 @@
       "hex": "#239512",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -1.6,
         "eraOffset": 0,
         "userNorm": 0.608,
@@ -6641,7 +6641,7 @@
       "hex": "#119419",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 10,
         "eraOffset": 0,
         "userNorm": 0.607,
@@ -6679,7 +6679,7 @@
       "hex": "#108a3e",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 28.9,
         "eraOffset": 0,
         "userNorm": 0.607,
@@ -6725,8 +6725,8 @@
       }
     },
     "position": {
-      "x": 4172.5,
-      "y": -5846.9,
+      "x": 7195,
+      "y": 1952.2,
       "z": 681.3
     },
     "positionType": "planet"
@@ -6755,7 +6755,7 @@
       "hex": "#18a313",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 4.3,
         "eraOffset": 0,
         "userNorm": 0.605,
@@ -6831,7 +6831,7 @@
       "hex": "#119430",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 20.2,
         "eraOffset": 0,
         "userNorm": 0.605,
@@ -6945,7 +6945,7 @@
       "hex": "#119022",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 14.3,
         "eraOffset": 0,
         "userNorm": 0.603,
@@ -6983,7 +6983,7 @@
       "hex": "#439011",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -17.4,
         "eraOffset": 0,
         "userNorm": 0.603,
@@ -7097,7 +7097,7 @@
       "hex": "#269412",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -3,
         "eraOffset": 0,
         "userNorm": 0.603,
@@ -7143,9 +7143,9 @@
       }
     },
     "position": {
-      "x": 2388.9,
-      "y": -2013.3,
-      "z": -712.1
+      "x": -1837.8,
+      "y": -2614.1,
+      "z": -237.4
     },
     "positionType": "planet"
   },
@@ -7172,7 +7172,7 @@
       },
       "hex": "#1ca514",
       "debug": {
-        "ageDays": 1381,
+        "ageDays": 1382,
         "ageNorm": 0.586,
         "hashPerturbation": -24.2,
         "eraOffset": 0,
@@ -7362,7 +7362,7 @@
       },
       "hex": "#118d60",
       "debug": {
-        "ageDays": 1260,
+        "ageDays": 1261,
         "ageNorm": 0.622,
         "hashPerturbation": 8.9,
         "eraOffset": 0,
@@ -7401,7 +7401,7 @@
       "hex": "#248d11",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -3,
         "eraOffset": 0,
         "userNorm": 0.599,
@@ -7591,7 +7591,7 @@
       "hex": "#29a213",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -2.6,
         "eraOffset": 0,
         "userNorm": 0.595,
@@ -7675,8 +7675,8 @@
       }
     },
     "position": {
-      "x": 3895.8,
-      "y": -5717.6,
+      "x": 6918.3,
+      "y": 2081.5,
       "z": 808.6
     },
     "positionType": "planet"
@@ -7781,7 +7781,7 @@
       "hex": "#108924",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 16.1,
         "eraOffset": 0,
         "userNorm": 0.593,
@@ -8085,7 +8085,7 @@
       "hex": "#3ba414",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -9.8,
         "eraOffset": 0,
         "userNorm": 0.589,
@@ -8199,7 +8199,7 @@
       "hex": "#12913d",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 27,
         "eraOffset": 0,
         "userNorm": 0.586,
@@ -8236,7 +8236,7 @@
       },
       "hex": "#139c31",
       "debug": {
-        "ageDays": 1162,
+        "ageDays": 1163,
         "ageNorm": 0.651,
         "hashPerturbation": -23.3,
         "eraOffset": 0,
@@ -8283,8 +8283,8 @@
       }
     },
     "position": {
-      "x": 3456.8,
-      "y": -5678.4,
+      "x": 6479.4,
+      "y": 2120.7,
       "z": 436
     },
     "positionType": "planet"
@@ -8389,7 +8389,7 @@
       "hex": "#118938",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 26.2,
         "eraOffset": 0,
         "userNorm": 0.583,
@@ -8465,7 +8465,7 @@
       "hex": "#54a114",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -20.8,
         "eraOffset": 0,
         "userNorm": 0.583,
@@ -8503,7 +8503,7 @@
       "hex": "#6ca614",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -29.5,
         "eraOffset": 0,
         "userNorm": 0.582,
@@ -8549,9 +8549,9 @@
       }
     },
     "position": {
-      "x": 1319.4,
-      "y": -1720.9,
-      "z": 2391.1
+      "x": -2369.2,
+      "y": 419.1,
+      "z": 2152
     },
     "positionType": "planet"
   },
@@ -8617,7 +8617,7 @@
       "hex": "#128f2f",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 20.4,
         "eraOffset": 0,
         "userNorm": 0.581,
@@ -8655,7 +8655,7 @@
       "hex": "#129033",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 22.2,
         "eraOffset": 0,
         "userNorm": 0.581,
@@ -9149,7 +9149,7 @@
       "hex": "#4e8b11",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -23.3,
         "eraOffset": 0,
         "userNorm": 0.578,
@@ -9187,7 +9187,7 @@
       "hex": "#488d11",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -20.2,
         "eraOffset": 0,
         "userNorm": 0.577,
@@ -9224,7 +9224,7 @@
       },
       "hex": "#139984",
       "debug": {
-        "ageDays": 1163,
+        "ageDays": 1164,
         "ageNorm": 0.651,
         "hashPerturbation": 14.3,
         "eraOffset": 0,
@@ -9339,7 +9339,7 @@
       "hex": "#319212",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -8.3,
         "eraOffset": 0,
         "userNorm": 0.576,
@@ -9415,7 +9415,7 @@
       "hex": "#13961b",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 10.1,
         "eraOffset": 0,
         "userNorm": 0.576,
@@ -9757,7 +9757,7 @@
       "hex": "#15a114",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 6.2,
         "eraOffset": 0,
         "userNorm": 0.567,
@@ -9795,7 +9795,7 @@
       "hex": "#11883e",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 29,
         "eraOffset": 0,
         "userNorm": 0.567,
@@ -9833,7 +9833,7 @@
       "hex": "#469b13",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -16.2,
         "eraOffset": 0,
         "userNorm": 0.567,
@@ -9947,7 +9947,7 @@
       "hex": "#1b9513",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 2.8,
         "eraOffset": 0,
         "userNorm": 0.566,
@@ -10023,7 +10023,7 @@
       "hex": "#2d8e12",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -6.9,
         "eraOffset": 0,
         "userNorm": 0.565,
@@ -10099,7 +10099,7 @@
       "hex": "#4b9e14",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -17.5,
         "eraOffset": 0,
         "userNorm": 0.565,
@@ -10251,7 +10251,7 @@
       "hex": "#12913d",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 26.4,
         "eraOffset": 0,
         "userNorm": 0.564,
@@ -10365,7 +10365,7 @@
       "hex": "#149e19",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 8.6,
         "eraOffset": 0,
         "userNorm": 0.563,
@@ -10403,7 +10403,7 @@
       "hex": "#13952a",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 17.1,
         "eraOffset": 0,
         "userNorm": 0.562,
@@ -10441,7 +10441,7 @@
       "hex": "#5d9212",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -29,
         "eraOffset": 0,
         "userNorm": 0.562,
@@ -10479,7 +10479,7 @@
       "hex": "#3b8911",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -14.5,
         "eraOffset": 0,
         "userNorm": 0.561,
@@ -10555,7 +10555,7 @@
       "hex": "#128c18",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 9.6,
         "eraOffset": 0,
         "userNorm": 0.559,
@@ -10669,7 +10669,7 @@
       "hex": "#139625",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 14.7,
         "eraOffset": 0,
         "userNorm": 0.558,
@@ -10707,7 +10707,7 @@
       "hex": "#128b33",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 22.9,
         "eraOffset": 0,
         "userNorm": 0.558,
@@ -10783,7 +10783,7 @@
       "hex": "#16aa4c",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 28.3,
         "eraOffset": 0,
         "userNorm": 0.556,
@@ -10935,7 +10935,7 @@
       "hex": "#4d9613",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -20.1,
         "eraOffset": 0,
         "userNorm": 0.555,
@@ -11004,14 +11004,14 @@
         "l": 38.2
       },
       "rgb": {
-        "r": 42,
+        "r": 43,
         "g": 172,
         "b": 22
       },
-      "hex": "#2aac16",
+      "hex": "#2bac16",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -1.8,
         "eraOffset": 0,
         "userNorm": 0.555,
@@ -11125,7 +11125,7 @@
       "hex": "#5cb017",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -20.9,
         "eraOffset": 0,
         "userNorm": 0.555,
@@ -11303,7 +11303,7 @@
     "first_seen_at": "2021-03-21T07:02:33.000000Z",
     "color": {
       "hsl": {
-        "h": 122.8,
+        "h": 122.7,
         "s": 77.2,
         "l": 39.1
       },
@@ -11315,7 +11315,7 @@
       "hex": "#17b01e",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 9.1,
         "eraOffset": 0,
         "userNorm": 0.554,
@@ -11361,8 +11361,8 @@
       }
     },
     "position": {
-      "x": 759.4,
-      "y": -4511.3,
+      "x": -4055.9,
+      "y": -2116.3,
       "z": 8.5
     },
     "positionType": "planet"
@@ -11467,7 +11467,7 @@
       "hex": "#368912",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -12.1,
         "eraOffset": 0,
         "userNorm": 0.552,
@@ -11505,7 +11505,7 @@
       "hex": "#128a35",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 23.8,
         "eraOffset": 0,
         "userNorm": 0.552,
@@ -11581,7 +11581,7 @@
       "hex": "#52a015",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -20.3,
         "eraOffset": 0,
         "userNorm": 0.552,
@@ -11657,7 +11657,7 @@
       "hex": "#139637",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 22.8,
         "eraOffset": 0,
         "userNorm": 0.552,
@@ -11695,7 +11695,7 @@
       "hex": "#139032",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 21.5,
         "eraOffset": 0,
         "userNorm": 0.551,
@@ -11817,8 +11817,8 @@
       }
     },
     "position": {
-      "x": 3374.8,
-      "y": -5666.9,
+      "x": 6397.4,
+      "y": 2132.2,
       "z": 261.6
     },
     "positionType": "planet"
@@ -11885,7 +11885,7 @@
       "hex": "#398912",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -13.2,
         "eraOffset": 0,
         "userNorm": 0.55,
@@ -12113,7 +12113,7 @@
       "hex": "#12881a",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 10.8,
         "eraOffset": 0,
         "userNorm": 0.547,
@@ -12151,7 +12151,7 @@
       "hex": "#209413",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 0.6,
         "eraOffset": 0,
         "userNorm": 0.547,
@@ -12227,7 +12227,7 @@
       "hex": "#208b12",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -0.4,
         "eraOffset": 0,
         "userNorm": 0.547,
@@ -12265,7 +12265,7 @@
       "hex": "#138e23",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 14.5,
         "eraOffset": 0,
         "userNorm": 0.546,
@@ -12349,8 +12349,8 @@
       }
     },
     "position": {
-      "x": 4052.2,
-      "y": -6545.5,
+      "x": 7074.7,
+      "y": 1253.6,
       "z": -160.9
     },
     "positionType": "planet"
@@ -12455,7 +12455,7 @@
       "hex": "#4d8812",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -23.7,
         "eraOffset": 0,
         "userNorm": 0.545,
@@ -12530,7 +12530,7 @@
       },
       "hex": "#15a09e",
       "debug": {
-        "ageDays": 1163,
+        "ageDays": 1164,
         "ageNorm": 0.651,
         "hashPerturbation": 22.6,
         "eraOffset": 0,
@@ -12721,7 +12721,7 @@
       "hex": "#1a9614",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 3.3,
         "eraOffset": 0,
         "userNorm": 0.543,
@@ -12759,7 +12759,7 @@
       "hex": "#19bd3c",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 19.4,
         "eraOffset": 0,
         "userNorm": 0.543,
@@ -12797,7 +12797,7 @@
       "hex": "#358812",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -11.2,
         "eraOffset": 0,
         "userNorm": 0.543,
@@ -12911,7 +12911,7 @@
       "hex": "#18b72a",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 13.1,
         "eraOffset": 0,
         "userNorm": 0.542,
@@ -12949,7 +12949,7 @@
       "hex": "#2c8f13",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -5.9,
         "eraOffset": 0,
         "userNorm": 0.541,
@@ -12987,7 +12987,7 @@
       "hex": "#409614",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -14.3,
         "eraOffset": 0,
         "userNorm": 0.541,
@@ -13025,7 +13025,7 @@
       "hex": "#1a9b14",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 3.9,
         "eraOffset": 0,
         "userNorm": 0.541,
@@ -13139,7 +13139,7 @@
       "hex": "#3b9013",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -13.1,
         "eraOffset": 0,
         "userNorm": 0.54,
@@ -13215,7 +13215,7 @@
       "hex": "#6ba516",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -29.2,
         "eraOffset": 0,
         "userNorm": 0.54,
@@ -13253,7 +13253,7 @@
       "hex": "#4c9514",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -19.9,
         "eraOffset": 0,
         "userNorm": 0.54,
@@ -13329,7 +13329,7 @@
       "hex": "#2ba416",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -2.7,
         "eraOffset": 0,
         "userNorm": 0.539,
@@ -13443,7 +13443,7 @@
       "hex": "#418c13",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -16.4,
         "eraOffset": 0,
         "userNorm": 0.539,
@@ -13480,7 +13480,7 @@
       },
       "hex": "#17af66",
       "debug": {
-        "ageDays": 1619,
+        "ageDays": 1620,
         "ageNorm": 0.514,
         "hashPerturbation": 27.5,
         "eraOffset": 0,
@@ -13557,7 +13557,7 @@
       "hex": "#59b217",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -19,
         "eraOffset": 0,
         "userNorm": 0.538,
@@ -13595,7 +13595,7 @@
       "hex": "#568e13",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -26.4,
         "eraOffset": 0,
         "userNorm": 0.537,
@@ -13849,7 +13849,7 @@
     "first_seen_at": "2021-03-21T07:02:00.000000Z",
     "color": {
       "hsl": {
-        "h": 105,
+        "h": 104.9,
         "s": 76.6,
         "l": 35.1
       },
@@ -13861,7 +13861,7 @@
       "hex": "#379e15",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -8.7,
         "eraOffset": 0,
         "userNorm": 0.536,
@@ -13975,7 +13975,7 @@
       "hex": "#149b2e",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 17.6,
         "eraOffset": 0,
         "userNorm": 0.536,
@@ -14013,7 +14013,7 @@
       "hex": "#138c2c",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 19.1,
         "eraOffset": 0,
         "userNorm": 0.534,
@@ -14089,7 +14089,7 @@
       "hex": "#55a215",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -20.8,
         "eraOffset": 0,
         "userNorm": 0.534,
@@ -14127,7 +14127,7 @@
       "hex": "#169f15",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 6.2,
         "eraOffset": 0,
         "userNorm": 0.534,
@@ -14203,7 +14203,7 @@
       "hex": "#138f2e",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 19.4,
         "eraOffset": 0,
         "userNorm": 0.533,
@@ -14267,7 +14267,7 @@
     "first_seen_at": "2021-05-02T21:56:07.000000Z",
     "color": {
       "hsl": {
-        "h": 120.1,
+        "h": 120,
         "s": 76.5,
         "l": 30
       },
@@ -14355,7 +14355,7 @@
       "hex": "#50a917",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -17.3,
         "eraOffset": 0,
         "userNorm": 0.531,
@@ -14507,7 +14507,7 @@
       "hex": "#25aa17",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 0.4,
         "eraOffset": 0,
         "userNorm": 0.531,
@@ -14621,7 +14621,7 @@
       "hex": "#138b19",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 9.5,
         "eraOffset": 0,
         "userNorm": 0.531,
@@ -14811,7 +14811,7 @@
       "hex": "#539414",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -23.2,
         "eraOffset": 0,
         "userNorm": 0.529,
@@ -14849,7 +14849,7 @@
       "hex": "#128a3b",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 26.9,
         "eraOffset": 0,
         "userNorm": 0.528,
@@ -15065,7 +15065,7 @@
     "first_seen_at": "2022-11-04T09:01:43.000000Z",
     "color": {
       "hsl": {
-        "h": 169.6,
+        "h": 169.5,
         "s": 76.3,
         "l": 36.4
       },
@@ -15076,7 +15076,7 @@
       },
       "hex": "#16a38b",
       "debug": {
-        "ageDays": 1162,
+        "ageDays": 1163,
         "ageNorm": 0.651,
         "hashPerturbation": 13.2,
         "eraOffset": 0,
@@ -15115,7 +15115,7 @@
       "hex": "#40a716",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -10.9,
         "eraOffset": 0,
         "userNorm": 0.526,
@@ -15153,7 +15153,7 @@
       "hex": "#548a13",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -26.4,
         "eraOffset": 0,
         "userNorm": 0.526,
@@ -15186,12 +15186,12 @@
       "rgb": {
         "r": 21,
         "g": 157,
-        "b": 30
+        "b": 29
       },
-      "hex": "#159d1e",
+      "hex": "#159d1d",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 10,
         "eraOffset": 0,
         "userNorm": 0.525,
@@ -15305,7 +15305,7 @@
       "hex": "#138b35",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 23.3,
         "eraOffset": 0,
         "userNorm": 0.525,
@@ -15343,7 +15343,7 @@
       "hex": "#138f44",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 29.9,
         "eraOffset": 0,
         "userNorm": 0.525,
@@ -15381,7 +15381,7 @@
       "hex": "#4b9114",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -20,
         "eraOffset": 0,
         "userNorm": 0.524,
@@ -15609,7 +15609,7 @@
       "hex": "#14963e",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 25.6,
         "eraOffset": 0,
         "userNorm": 0.523,
@@ -15646,7 +15646,7 @@
       },
       "hex": "#16a296",
       "debug": {
-        "ageDays": 1163,
+        "ageDays": 1164,
         "ageNorm": 0.651,
         "hashPerturbation": 18.6,
         "eraOffset": 0,
@@ -16140,7 +16140,7 @@
       },
       "hex": "#19b65a",
       "debug": {
-        "ageDays": 1163,
+        "ageDays": 1164,
         "ageNorm": 0.651,
         "hashPerturbation": -11.4,
         "eraOffset": 0,
@@ -16217,7 +16217,7 @@
       "hex": "#5a9314",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -27,
         "eraOffset": 0,
         "userNorm": 0.521,
@@ -16255,7 +16255,7 @@
       "hex": "#4f8d13",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -23.1,
         "eraOffset": 0,
         "userNorm": 0.521,
@@ -16293,7 +16293,7 @@
       "hex": "#138c27",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 16.1,
         "eraOffset": 0,
         "userNorm": 0.521,
@@ -16369,7 +16369,7 @@
       "hex": "#149342",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 27.9,
         "eraOffset": 0,
         "userNorm": 0.52,
@@ -16483,7 +16483,7 @@
       "hex": "#3d8913",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -15.3,
         "eraOffset": 0,
         "userNorm": 0.52,
@@ -16559,7 +16559,7 @@
       "hex": "#388b13",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -12.2,
         "eraOffset": 0,
         "userNorm": 0.519,
@@ -16673,7 +16673,7 @@
       "hex": "#4c9214",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -20.5,
         "eraOffset": 0,
         "userNorm": 0.519,
@@ -16711,7 +16711,7 @@
       "hex": "#378913",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -12.1,
         "eraOffset": 0,
         "userNorm": 0.519,
@@ -16863,7 +16863,7 @@
       "hex": "#548712",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -27.1,
         "eraOffset": 0,
         "userNorm": 0.518,
@@ -16901,7 +16901,7 @@
       "hex": "#2da416",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -3,
         "eraOffset": 0,
         "userNorm": 0.517,
@@ -17023,9 +17023,9 @@
       }
     },
     "position": {
-      "x": 2603.6,
-      "y": -1905.9,
-      "z": -494.4
+      "x": -1623.1,
+      "y": -2506.7,
+      "z": -19.7
     },
     "positionType": "planet"
   },
@@ -17053,7 +17053,7 @@
       "hex": "#17a64a",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 27.9,
         "eraOffset": 0,
         "userNorm": 0.516,
@@ -17129,7 +17129,7 @@
       "hex": "#268913",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -3.5,
         "eraOffset": 0,
         "userNorm": 0.515,
@@ -17243,7 +17243,7 @@
       "hex": "#159732",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 19.8,
         "eraOffset": 0,
         "userNorm": 0.513,
@@ -17357,7 +17357,7 @@
       "hex": "#1b9214",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 3.1,
         "eraOffset": 0,
         "userNorm": 0.511,
@@ -17365,9 +17365,9 @@
       }
     },
     "position": {
-      "x": -566.1,
-      "y": 4368.7,
-      "z": -659.9
+      "x": 3320.9,
+      "y": -2798.8,
+      "z": -989.9
     },
     "positionType": "planet"
   },
@@ -17471,7 +17471,7 @@
       "hex": "#588f14",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -27.1,
         "eraOffset": 0,
         "userNorm": 0.511,
@@ -17509,7 +17509,7 @@
       "hex": "#1e8713",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 0.7,
         "eraOffset": 0,
         "userNorm": 0.511,
@@ -17623,7 +17623,7 @@
       "hex": "#288813",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -4.6,
         "eraOffset": 0,
         "userNorm": 0.511,
@@ -17737,7 +17737,7 @@
       "hex": "#64b319",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -22.9,
         "eraOffset": 0,
         "userNorm": 0.51,
@@ -17775,7 +17775,7 @@
       "hex": "#2a8c13",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -5,
         "eraOffset": 0,
         "userNorm": 0.51,
@@ -17813,7 +17813,7 @@
       "hex": "#438613",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -18.7,
         "eraOffset": 0,
         "userNorm": 0.51,
@@ -17851,7 +17851,7 @@
       "hex": "#13872f",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 21.2,
         "eraOffset": 0,
         "userNorm": 0.51,
@@ -17965,7 +17965,7 @@
       "hex": "#2a9014",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -4.2,
         "eraOffset": 0,
         "userNorm": 0.509,
@@ -18003,7 +18003,7 @@
       "hex": "#159543",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 28.2,
         "eraOffset": 0,
         "userNorm": 0.509,
@@ -18079,7 +18079,7 @@
       "hex": "#22a317",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 1.6,
         "eraOffset": 0,
         "userNorm": 0.509,
@@ -18117,7 +18117,7 @@
       "hex": "#148f26",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 15.3,
         "eraOffset": 0,
         "userNorm": 0.508,
@@ -18193,7 +18193,7 @@
       "hex": "#5f9014",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -29.9,
         "eraOffset": 0,
         "userNorm": 0.508,
@@ -18231,7 +18231,7 @@
       "hex": "#138c35",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 23,
         "eraOffset": 0,
         "userNorm": 0.508,
@@ -18269,7 +18269,7 @@
       "hex": "#358d14",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -9.9,
         "eraOffset": 0,
         "userNorm": 0.508,
@@ -18505,9 +18505,9 @@
       }
     },
     "position": {
-      "x": -3257.8,
-      "y": 576.3,
-      "z": 2959.1
+      "x": 225,
+      "y": 2563.3,
+      "z": 3616.7
     },
     "positionType": "planet"
   },
@@ -18535,7 +18535,7 @@
       "hex": "#2d8f14",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -6,
         "eraOffset": 0,
         "userNorm": 0.506,
@@ -18839,7 +18839,7 @@
       "hex": "#2f9e16",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -4.7,
         "eraOffset": 0,
         "userNorm": 0.504,
@@ -19067,7 +19067,7 @@
       "hex": "#558613",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -28.3,
         "eraOffset": 0,
         "userNorm": 0.503,
@@ -19295,7 +19295,7 @@
       "hex": "#159322",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 13,
         "eraOffset": 0,
         "userNorm": 0.501,
@@ -19561,7 +19561,7 @@
       "hex": "#148b30",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 20.8,
         "eraOffset": 0,
         "userNorm": 0.5,
@@ -19599,7 +19599,7 @@
       "hex": "#148c20",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 12.3,
         "eraOffset": 0,
         "userNorm": 0.5,
@@ -19637,7 +19637,7 @@
       "hex": "#408c14",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -15.6,
         "eraOffset": 0,
         "userNorm": 0.499,
@@ -19789,7 +19789,7 @@
       "hex": "#188f14",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 4.7,
         "eraOffset": 0,
         "userNorm": 0.499,
@@ -19865,7 +19865,7 @@
       "hex": "#169c36",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 20.6,
         "eraOffset": 0,
         "userNorm": 0.499,
@@ -19941,7 +19941,7 @@
       "hex": "#699f16",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -29.8,
         "eraOffset": 0,
         "userNorm": 0.498,
@@ -19979,7 +19979,7 @@
       "hex": "#238c14",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -1.1,
         "eraOffset": 0,
         "userNorm": 0.498,
@@ -20169,7 +20169,7 @@
       "hex": "#69a818",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -27.6,
         "eraOffset": 0,
         "userNorm": 0.498,
@@ -20245,7 +20245,7 @@
       "hex": "#19b44f",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 27.2,
         "eraOffset": 0,
         "userNorm": 0.498,
@@ -20283,7 +20283,7 @@
       "hex": "#138a23",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 14.4,
         "eraOffset": 0,
         "userNorm": 0.498,
@@ -20321,7 +20321,7 @@
       "hex": "#4fa317",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -17.5,
         "eraOffset": 0,
         "userNorm": 0.497,
@@ -20739,7 +20739,7 @@
       "hex": "#1bbe2c",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 12.6,
         "eraOffset": 0,
         "userNorm": 0.494,
@@ -20777,7 +20777,7 @@
       "hex": "#148c2c",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 18.2,
         "eraOffset": 0,
         "userNorm": 0.494,
@@ -20891,7 +20891,7 @@
       "hex": "#2d9a16",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -4.4,
         "eraOffset": 0,
         "userNorm": 0.494,
@@ -20929,7 +20929,7 @@
       "hex": "#5d9e16",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -24.9,
         "eraOffset": 0,
         "userNorm": 0.494,
@@ -21233,7 +21233,7 @@
       "hex": "#1cac18",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 4.9,
         "eraOffset": 0,
         "userNorm": 0.492,
@@ -21347,7 +21347,7 @@
       "hex": "#19ad19",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 6.2,
         "eraOffset": 0,
         "userNorm": 0.492,
@@ -21385,7 +21385,7 @@
       "hex": "#448a14",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -18.1,
         "eraOffset": 0,
         "userNorm": 0.491,
@@ -21423,7 +21423,7 @@
       "hex": "#4aa317",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -15.3,
         "eraOffset": 0,
         "userNorm": 0.491,
@@ -21499,7 +21499,7 @@
       "hex": "#5a8813",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -29.9,
         "eraOffset": 0,
         "userNorm": 0.491,
@@ -21537,7 +21537,7 @@
       "hex": "#549115",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -24.2,
         "eraOffset": 0,
         "userNorm": 0.491,
@@ -21613,7 +21613,7 @@
       "hex": "#18a618",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 6.1,
         "eraOffset": 0,
         "userNorm": 0.491,
@@ -21803,7 +21803,7 @@
       "hex": "#148b21",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 13.1,
         "eraOffset": 0,
         "userNorm": 0.49,
@@ -21841,7 +21841,7 @@
       "hex": "#148d19",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 9,
         "eraOffset": 0,
         "userNorm": 0.49,
@@ -21849,9 +21849,9 @@
       }
     },
     "position": {
-      "x": 1173.9,
-      "y": 0,
-      "z": 4192.4
+      "x": -1470.7,
+      "y": -1347.3,
+      "z": 3869.9
     },
     "positionType": "planet"
   },
@@ -21879,7 +21879,7 @@
       "hex": "#57a117",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -21.6,
         "eraOffset": 0,
         "userNorm": 0.49,
@@ -22031,7 +22031,7 @@
       "hex": "#489015",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -18.6,
         "eraOffset": 0,
         "userNorm": 0.488,
@@ -22039,9 +22039,9 @@
       }
     },
     "position": {
-      "x": -599.6,
-      "y": 4715.8,
-      "z": -560.2
+      "x": 3287.4,
+      "y": -2451.7,
+      "z": -890.1
     },
     "positionType": "planet"
   },
@@ -22145,7 +22145,7 @@
       "hex": "#459916",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -15.1,
         "eraOffset": 0,
         "userNorm": 0.488,
@@ -22411,7 +22411,7 @@
       "hex": "#228613",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -1.4,
         "eraOffset": 0,
         "userNorm": 0.487,
@@ -22449,7 +22449,7 @@
       "hex": "#568a14",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -27,
         "eraOffset": 0,
         "userNorm": 0.486,
@@ -22457,9 +22457,9 @@
       }
     },
     "position": {
-      "x": -3223.3,
-      "y": 637.1,
-      "z": 2583.8
+      "x": 259.4,
+      "y": 2624.2,
+      "z": 3241.4
     },
     "positionType": "planet"
   },
@@ -22525,7 +22525,7 @@
       "hex": "#58ad19",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -19.2,
         "eraOffset": 0,
         "userNorm": 0.486,
@@ -22639,7 +22639,7 @@
       "hex": "#6ea918",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -29,
         "eraOffset": 0,
         "userNorm": 0.485,
@@ -22715,7 +22715,7 @@
       "hex": "#3cb11a",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -7.4,
         "eraOffset": 0,
         "userNorm": 0.485,
@@ -22753,7 +22753,7 @@
       "hex": "#169947",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 28.6,
         "eraOffset": 0,
         "userNorm": 0.484,
@@ -23247,7 +23247,7 @@
       "hex": "#2b9315",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -4.1,
         "eraOffset": 0,
         "userNorm": 0.482,
@@ -23437,7 +23437,7 @@
       "hex": "#478b14",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -19.1,
         "eraOffset": 0,
         "userNorm": 0.481,
@@ -23741,7 +23741,7 @@
       "hex": "#1a9215",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 4.2,
         "eraOffset": 0,
         "userNorm": 0.48,
@@ -23817,7 +23817,7 @@
       "hex": "#148b21",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 12.7,
         "eraOffset": 0,
         "userNorm": 0.48,
@@ -23855,7 +23855,7 @@
       "hex": "#159220",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 11.4,
         "eraOffset": 0,
         "userNorm": 0.48,
@@ -24083,7 +24083,7 @@
       "hex": "#4ebb1b",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -12.9,
         "eraOffset": 0,
         "userNorm": 0.479,
@@ -24121,7 +24121,7 @@
       "hex": "#1e8a14",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 1.4,
         "eraOffset": 0,
         "userNorm": 0.479,
@@ -24197,7 +24197,7 @@
       "hex": "#4c9115",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -20.3,
         "eraOffset": 0,
         "userNorm": 0.479,
@@ -24235,7 +24235,7 @@
       "hex": "#4e9616",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -20,
         "eraOffset": 0,
         "userNorm": 0.478,
@@ -24311,7 +24311,7 @@
       "hex": "#4f8613",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -25,
         "eraOffset": 0,
         "userNorm": 0.477,
@@ -24501,7 +24501,7 @@
       "hex": "#34a418",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -5.7,
         "eraOffset": 0,
         "userNorm": 0.477,
@@ -24653,7 +24653,7 @@
       "hex": "#4ba118",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -16.2,
         "eraOffset": 0,
         "userNorm": 0.475,
@@ -24691,7 +24691,7 @@
       "hex": "#3e8514",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -15.8,
         "eraOffset": 0,
         "userNorm": 0.474,
@@ -24767,7 +24767,7 @@
       "hex": "#169333",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 20.6,
         "eraOffset": 0,
         "userNorm": 0.473,
@@ -24843,7 +24843,7 @@
       "hex": "#14852d",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 20,
         "eraOffset": 0,
         "userNorm": 0.473,
@@ -24995,7 +24995,7 @@
       "hex": "#6db61b",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -25.6,
         "eraOffset": 0,
         "userNorm": 0.472,
@@ -25071,7 +25071,7 @@
       "hex": "#338614",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -10,
         "eraOffset": 0,
         "userNorm": 0.471,
@@ -25261,7 +25261,7 @@
       "hex": "#489f17",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -15.1,
         "eraOffset": 0,
         "userNorm": 0.47,
@@ -25375,7 +25375,7 @@
       "hex": "#639e17",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -27.5,
         "eraOffset": 0,
         "userNorm": 0.47,
@@ -25413,7 +25413,7 @@
       "hex": "#358c15",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -9.9,
         "eraOffset": 0,
         "userNorm": 0.47,
@@ -25489,7 +25489,7 @@
       "hex": "#179824",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 12.5,
         "eraOffset": 0,
         "userNorm": 0.469,
@@ -25755,7 +25755,7 @@
       "hex": "#65bf1c",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -20.7,
         "eraOffset": 0,
         "userNorm": 0.468,
@@ -25868,7 +25868,7 @@
       },
       "hex": "#18a184",
       "debug": {
-        "ageDays": 1163,
+        "ageDays": 1164,
         "ageNorm": 0.651,
         "hashPerturbation": 11.1,
         "eraOffset": 0,
@@ -26085,7 +26085,7 @@
     "first_seen_at": "2023-07-19T15:42:13.000000Z",
     "color": {
       "hsl": {
-        "h": 157.8,
+        "h": 157.7,
         "s": 74.1,
         "l": 30
       },
@@ -26363,7 +26363,7 @@
       "hex": "#158c20",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 11.8,
         "eraOffset": 0,
         "userNorm": 0.465,
@@ -26629,7 +26629,7 @@
       "hex": "#19a94b",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 27.2,
         "eraOffset": 0,
         "userNorm": 0.464,
@@ -26857,7 +26857,7 @@
       "hex": "#189f40",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 24.3,
         "eraOffset": 0,
         "userNorm": 0.463,
@@ -26941,8 +26941,8 @@
       }
     },
     "position": {
-      "x": 2687.1,
-      "y": -5781,
+      "x": 5709.7,
+      "y": 2018.1,
       "z": 252.2
     },
     "positionType": "asteroid"
@@ -27237,7 +27237,7 @@
       "hex": "#579c17",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -22.3,
         "eraOffset": 0,
         "userNorm": 0.461,
@@ -27283,8 +27283,8 @@
       }
     },
     "position": {
-      "x": 4493.8,
-      "y": -5345.7,
+      "x": 7516.4,
+      "y": 2453.4,
       "z": 1327
     },
     "positionType": "asteroid"
@@ -27313,7 +27313,7 @@
       "hex": "#19a940",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 22.4,
         "eraOffset": 0,
         "userNorm": 0.461,
@@ -27351,7 +27351,7 @@
       "hex": "#158c33",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 21.6,
         "eraOffset": 0,
         "userNorm": 0.461,
@@ -27388,7 +27388,7 @@
       },
       "hex": "#1dc373",
       "debug": {
-        "ageDays": 1156,
+        "ageDays": 1157,
         "ageNorm": 0.653,
         "hashPerturbation": -5.8,
         "eraOffset": 0,
@@ -27541,7 +27541,7 @@
       "hex": "#348b15",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -9.4,
         "eraOffset": 0,
         "userNorm": 0.46,
@@ -27701,9 +27701,9 @@
       }
     },
     "position": {
-      "x": 1453.7,
-      "y": 496.4,
-      "z": 3902.1
+      "x": -1190.9,
+      "y": -850.8,
+      "z": 3579.6
     },
     "positionType": "asteroid"
   },
@@ -27769,7 +27769,7 @@
       "hex": "#158e2b",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 17.2,
         "eraOffset": 0,
         "userNorm": 0.459,
@@ -27795,7 +27795,7 @@
     "first_seen_at": "2021-03-21T06:57:42.000000Z",
     "color": {
       "hsl": {
-        "h": 120.9,
+        "h": 120.8,
         "s": 73.9,
         "l": 30.5
       },
@@ -27807,7 +27807,7 @@
       "hex": "#148716",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 7.2,
         "eraOffset": 0,
         "userNorm": 0.459,
@@ -27959,7 +27959,7 @@
       "hex": "#479d18",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -14.9,
         "eraOffset": 0,
         "userNorm": 0.458,
@@ -27985,7 +27985,7 @@
     "first_seen_at": "2021-03-21T07:00:14.000000Z",
     "color": {
       "hsl": {
-        "h": 125.2,
+        "h": 125.1,
         "s": 73.8,
         "l": 40.4
       },
@@ -27997,7 +27997,7 @@
       "hex": "#1bb328",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 11.5,
         "eraOffset": 0,
         "userNorm": 0.458,
@@ -28111,7 +28111,7 @@
       "hex": "#158c2a",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 16.7,
         "eraOffset": 0,
         "userNorm": 0.458,
@@ -28187,7 +28187,7 @@
       "hex": "#1cbb5a",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 29.9,
         "eraOffset": 0,
         "userNorm": 0.457,
@@ -28301,7 +28301,7 @@
       "hex": "#578b15",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -27.5,
         "eraOffset": 0,
         "userNorm": 0.457,
@@ -28339,7 +28339,7 @@
       "hex": "#1b8514",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 2.5,
         "eraOffset": 0,
         "userNorm": 0.457,
@@ -28377,7 +28377,7 @@
       "hex": "#388514",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -12.7,
         "eraOffset": 0,
         "userNorm": 0.457,
@@ -28529,7 +28529,7 @@
       "hex": "#148537",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 25,
         "eraOffset": 0,
         "userNorm": 0.456,
@@ -28567,7 +28567,7 @@
       "hex": "#559216",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -24.2,
         "eraOffset": 0,
         "userNorm": 0.456,
@@ -28643,7 +28643,7 @@
       "hex": "#1e8815",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 1.7,
         "eraOffset": 0,
         "userNorm": 0.456,
@@ -28757,7 +28757,7 @@
       "hex": "#1a9316",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 4.7,
         "eraOffset": 0,
         "userNorm": 0.456,
@@ -29049,7 +29049,7 @@
     "first_seen_at": "2023-01-24T03:03:30.000000Z",
     "color": {
       "hsl": {
-        "h": 143.1,
+        "h": 143,
         "s": 73.7,
         "l": 43.1
       },
@@ -29137,7 +29137,7 @@
       "hex": "#219216",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 1.1,
         "eraOffset": 0,
         "userNorm": 0.454,
@@ -29251,7 +29251,7 @@
       "hex": "#77c01d",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -27,
         "eraOffset": 0,
         "userNorm": 0.454,
@@ -29479,7 +29479,7 @@
       "hex": "#168e2c",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 17.8,
         "eraOffset": 0,
         "userNorm": 0.452,
@@ -29639,9 +29639,9 @@
       }
     },
     "position": {
-      "x": 239.3,
-      "y": 2726.5,
-      "z": 3846.9
+      "x": 1929.8,
+      "y": -2517,
+      "z": 3497.2
     },
     "positionType": "asteroid"
   },
@@ -29706,7 +29706,7 @@
       },
       "hex": "#19a335",
       "debug": {
-        "ageDays": 1619,
+        "ageDays": 1620,
         "ageNorm": 0.514,
         "hashPerturbation": 8.7,
         "eraOffset": 0,
@@ -29745,7 +29745,7 @@
       "hex": "#3e8815",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -14.9,
         "eraOffset": 0,
         "userNorm": 0.45,
@@ -29791,9 +29791,9 @@
       }
     },
     "position": {
-      "x": 1537,
-      "y": -1467.6,
-      "z": 1887.3
+      "x": -2151.6,
+      "y": 672.4,
+      "z": 1648.2
     },
     "positionType": "asteroid"
   },
@@ -29829,9 +29829,9 @@
       }
     },
     "position": {
-      "x": 1548.3,
-      "y": -1174.8,
-      "z": 2594.9
+      "x": -2140.3,
+      "y": 965.3,
+      "z": 2355.8
     },
     "positionType": "asteroid"
   },
@@ -29923,7 +29923,7 @@
     "first_seen_at": "2021-03-21T06:58:34.000000Z",
     "color": {
       "hsl": {
-        "h": 130.3,
+        "h": 130.2,
         "s": 73.5,
         "l": 33
       },
@@ -29935,7 +29935,7 @@
       "hex": "#16922b",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 16.6,
         "eraOffset": 0,
         "userNorm": 0.45,
@@ -30011,7 +30011,7 @@
       "hex": "#3fd521",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -3.6,
         "eraOffset": 0,
         "userNorm": 0.449,
@@ -30037,7 +30037,7 @@
     "first_seen_at": "2022-12-19T00:02:40.000000Z",
     "color": {
       "hsl": {
-        "h": 134.2,
+        "h": 134.1,
         "s": 73.5,
         "l": 33.8
       },
@@ -30163,7 +30163,7 @@
       "hex": "#1c8815",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 2.6,
         "eraOffset": 0,
         "userNorm": 0.448,
@@ -30201,7 +30201,7 @@
       "hex": "#1dbd2a",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 11.4,
         "eraOffset": 0,
         "userNorm": 0.448,
@@ -30276,7 +30276,7 @@
       },
       "hex": "#179299",
       "debug": {
-        "ageDays": 1163,
+        "ageDays": 1164,
         "ageNorm": 0.651,
         "hashPerturbation": 27.2,
         "eraOffset": 0,
@@ -30315,7 +30315,7 @@
       "hex": "#169219",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 7.8,
         "eraOffset": 0,
         "userNorm": 0.447,
@@ -30390,7 +30390,7 @@
       },
       "hex": "#19a37b",
       "debug": {
-        "ageDays": 1163,
+        "ageDays": 1164,
         "ageNorm": 0.651,
         "hashPerturbation": 6.3,
         "eraOffset": 0,
@@ -30429,7 +30429,7 @@
       "hex": "#478514",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -20.7,
         "eraOffset": 0,
         "userNorm": 0.447,
@@ -30437,9 +30437,9 @@
       }
     },
     "position": {
-      "x": 956.5,
-      "y": 46.4,
-      "z": 4720.8
+      "x": -1688.1,
+      "y": -1300.8,
+      "z": 4398.3
     },
     "positionType": "asteroid"
   },
@@ -30657,7 +30657,7 @@
       "hex": "#28a119",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -0.5,
         "eraOffset": 0,
         "userNorm": 0.446,
@@ -30732,7 +30732,7 @@
       },
       "hex": "#148543",
       "debug": {
-        "ageDays": 1124,
+        "ageDays": 1125,
         "ageNorm": 0.663,
         "hashPerturbation": -14.5,
         "eraOffset": 0,
@@ -30987,7 +30987,7 @@
     "first_seen_at": "2023-12-25T12:39:46.000000Z",
     "color": {
       "hsl": {
-        "h": 192.4,
+        "h": 192.3,
         "s": 73.3,
         "l": 47
       },
@@ -31045,9 +31045,9 @@
       }
     },
     "position": {
-      "x": -106.8,
-      "y": 2392,
-      "z": 3945.3
+      "x": 1583.7,
+      "y": -2851.6,
+      "z": 3595.6
     },
     "positionType": "asteroid"
   },
@@ -31349,9 +31349,9 @@
       }
     },
     "position": {
-      "x": 987.4,
-      "y": 456.2,
-      "z": -3884.4
+      "x": 594.8,
+      "y": 2643.8,
+      "z": -2988
     },
     "positionType": "asteroid"
   },
@@ -31378,7 +31378,7 @@
       },
       "hex": "#1aa673",
       "debug": {
-        "ageDays": 1290,
+        "ageDays": 1291,
         "ageNorm": 0.613,
         "hashPerturbation": 11.1,
         "eraOffset": 0,
@@ -31417,7 +31417,7 @@
       "hex": "#168d37",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 23.4,
         "eraOffset": 0,
         "userNorm": 0.443,
@@ -31531,7 +31531,7 @@
       "hex": "#189c42",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 25.6,
         "eraOffset": 0,
         "userNorm": 0.442,
@@ -31683,7 +31683,7 @@
       "hex": "#20d028",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 9,
         "eraOffset": 0,
         "userNorm": 0.441,
@@ -31767,9 +31767,9 @@
       }
     },
     "position": {
-      "x": 1778.4,
-      "y": -1425.3,
-      "z": 2217.4
+      "x": -1910.2,
+      "y": 714.7,
+      "z": 1978.3
     },
     "positionType": "asteroid"
   },
@@ -31911,7 +31911,7 @@
       "hex": "#189c29",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 14.3,
         "eraOffset": 0,
         "userNorm": 0.441,
@@ -31949,7 +31949,7 @@
       "hex": "#168815",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 5.7,
         "eraOffset": 0,
         "userNorm": 0.44,
@@ -31987,7 +31987,7 @@
       "hex": "#1fc551",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 24.6,
         "eraOffset": 0,
         "userNorm": 0.44,
@@ -32024,7 +32024,7 @@
       },
       "hex": "#1cb2a2",
       "debug": {
-        "ageDays": 1162,
+        "ageDays": 1163,
         "ageNorm": 0.651,
         "hashPerturbation": 17.5,
         "eraOffset": 0,
@@ -32109,9 +32109,9 @@
       }
     },
     "position": {
-      "x": -3657.7,
-      "y": 791,
-      "z": 2665
+      "x": -174.9,
+      "y": 2778.1,
+      "z": 3322.5
     },
     "positionType": "asteroid"
   },
@@ -32177,7 +32177,7 @@
       "hex": "#57b41c",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -17.1,
         "eraOffset": 0,
         "userNorm": 0.44,
@@ -32329,7 +32329,7 @@
       "hex": "#82dd24",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -24.1,
         "eraOffset": 0,
         "userNorm": 0.439,
@@ -32405,7 +32405,7 @@
       "hex": "#1b8f16",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 4.2,
         "eraOffset": 0,
         "userNorm": 0.439,
@@ -32443,7 +32443,7 @@
       "hex": "#15882f",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 20.2,
         "eraOffset": 0,
         "userNorm": 0.439,
@@ -32595,7 +32595,7 @@
       "hex": "#4daf1b",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -14,
         "eraOffset": 0,
         "userNorm": 0.438,
@@ -32747,7 +32747,7 @@
       "hex": "#57bc1d",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -15.4,
         "eraOffset": 0,
         "userNorm": 0.437,
@@ -32899,7 +32899,7 @@
       "hex": "#61b41c",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -21,
         "eraOffset": 0,
         "userNorm": 0.437,
@@ -33127,7 +33127,7 @@
       "hex": "#19a13b",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 21.4,
         "eraOffset": 0,
         "userNorm": 0.435,
@@ -33659,7 +33659,7 @@
       "hex": "#18972d",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 16.5,
         "eraOffset": 0,
         "userNorm": 0.433,
@@ -33849,7 +33849,7 @@
       "hex": "#209417",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 2.3,
         "eraOffset": 0,
         "userNorm": 0.433,
@@ -34038,7 +34038,7 @@
       },
       "hex": "#199d3a",
       "debug": {
-        "ageDays": 1163,
+        "ageDays": 1164,
         "ageNorm": 0.651,
         "hashPerturbation": -21.3,
         "eraOffset": 0,
@@ -34191,7 +34191,7 @@
       "hex": "#65e65f",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 3.7,
         "eraOffset": 0,
         "userNorm": 0.432,
@@ -34457,7 +34457,7 @@
       "hex": "#189a49",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 28.9,
         "eraOffset": 0,
         "userNorm": 0.431,
@@ -34541,8 +34541,8 @@
       }
     },
     "position": {
-      "x": -56.2,
-      "y": -3999.2,
+      "x": -4871.4,
+      "y": -1604.1,
       "z": -705.5
     },
     "positionType": "asteroid"
@@ -34761,7 +34761,7 @@
       "hex": "#378e16",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -9.9,
         "eraOffset": 0,
         "userNorm": 0.431,
@@ -34807,8 +34807,8 @@
       }
     },
     "position": {
-      "x": 4598.8,
-      "y": -5871.8,
+      "x": 7621.4,
+      "y": 1927.3,
       "z": 1385.6
     },
     "positionType": "asteroid"
@@ -35167,7 +35167,7 @@
     "first_seen_at": "2022-11-15T15:02:24.000000Z",
     "color": {
       "hsl": {
-        "h": 183,
+        "h": 182.9,
         "s": 72.8,
         "l": 35.4
       },
@@ -35445,7 +35445,7 @@
       "hex": "#5a8816",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -29.6,
         "eraOffset": 0,
         "userNorm": 0.429,
@@ -35567,9 +35567,9 @@
       }
     },
     "position": {
-      "x": -2435.3,
-      "y": -1694.4,
-      "z": -2653.6
+      "x": 1147.2,
+      "y": -2002.1,
+      "z": -3243.2
     },
     "positionType": "asteroid"
   },
@@ -35711,7 +35711,7 @@
       "hex": "#199e23",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 11,
         "eraOffset": 0,
         "userNorm": 0.428,
@@ -35719,8 +35719,8 @@
       }
     },
     "position": {
-      "x": -303.5,
-      "y": -5272.4,
+      "x": -5118.7,
+      "y": -2877.3,
       "z": 257
     },
     "positionType": "asteroid"
@@ -35862,7 +35862,7 @@
       },
       "hex": "#199f99",
       "debug": {
-        "ageDays": 1164,
+        "ageDays": 1165,
         "ageNorm": 0.651,
         "hashPerturbation": 21.1,
         "eraOffset": 0,
@@ -35901,7 +35901,7 @@
       "hex": "#199e2b",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 14.6,
         "eraOffset": 0,
         "userNorm": 0.428,
@@ -35977,7 +35977,7 @@
       "hex": "#1aa41d",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 7.6,
         "eraOffset": 0,
         "userNorm": 0.427,
@@ -36167,7 +36167,7 @@
       "hex": "#168c1d",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 10.1,
         "eraOffset": 0,
         "userNorm": 0.427,
@@ -36269,7 +36269,7 @@
     "first_seen_at": "2021-03-21T06:53:47.000000Z",
     "color": {
       "hsl": {
-        "h": 117.8,
+        "h": 117.7,
         "s": 72.6,
         "l": 42.3
       },
@@ -36319,7 +36319,7 @@
       "hex": "#579518",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -24,
         "eraOffset": 0,
         "userNorm": 0.426,
@@ -36623,7 +36623,7 @@
       "hex": "#289f19",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -0.4,
         "eraOffset": 0,
         "userNorm": 0.425,
@@ -36813,7 +36813,7 @@
       "hex": "#1aa542",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 23.5,
         "eraOffset": 0,
         "userNorm": 0.424,
@@ -36889,7 +36889,7 @@
       "hex": "#158427",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 16.3,
         "eraOffset": 0,
         "userNorm": 0.424,
@@ -36965,7 +36965,7 @@
       "hex": "#168c3b",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 25,
         "eraOffset": 0,
         "userNorm": 0.423,
@@ -37155,7 +37155,7 @@
       "hex": "#3c8d16",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -12.6,
         "eraOffset": 0,
         "userNorm": 0.423,
@@ -37307,7 +37307,7 @@
       "hex": "#50b01c",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -14.7,
         "eraOffset": 0,
         "userNorm": 0.422,
@@ -37421,7 +37421,7 @@
       "hex": "#168927",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 15.3,
         "eraOffset": 0,
         "userNorm": 0.421,
@@ -37610,7 +37610,7 @@
       },
       "hex": "#18996f",
       "debug": {
-        "ageDays": 1126,
+        "ageDays": 1127,
         "ageNorm": 0.662,
         "hashPerturbation": 1.7,
         "eraOffset": 0,
@@ -37839,7 +37839,7 @@
       "hex": "#288716",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -3.4,
         "eraOffset": 0,
         "userNorm": 0.419,
@@ -38409,7 +38409,7 @@
       "hex": "#1cab31",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 15.1,
         "eraOffset": 0,
         "userNorm": 0.416,
@@ -38447,7 +38447,7 @@
       "hex": "#4ea51b",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -15.9,
         "eraOffset": 0,
         "userNorm": 0.416,
@@ -38713,7 +38713,7 @@
       "hex": "#629718",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -28.6,
         "eraOffset": 0,
         "userNorm": 0.415,
@@ -38751,7 +38751,7 @@
       "hex": "#5ba71b",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -21,
         "eraOffset": 0,
         "userNorm": 0.415,
@@ -38789,7 +38789,7 @@
       "hex": "#2da51b",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -1.6,
         "eraOffset": 0,
         "userNorm": 0.415,
@@ -38827,7 +38827,7 @@
       "hex": "#329518",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -6.4,
         "eraOffset": 0,
         "userNorm": 0.415,
@@ -38873,9 +38873,9 @@
       }
     },
     "position": {
-      "x": 1620.8,
-      "y": -1596.5,
-      "z": 2849
+      "x": -2067.8,
+      "y": 543.5,
+      "z": 2609.9
     },
     "positionType": "asteroid"
   },
@@ -39025,8 +39025,8 @@
       }
     },
     "position": {
-      "x": 1268.5,
-      "y": -3432.6,
+      "x": -3546.7,
+      "y": -1037.6,
       "z": -172.4
     },
     "positionType": "asteroid"
@@ -39092,7 +39092,7 @@
       },
       "hex": "#158450",
       "debug": {
-        "ageDays": 1331,
+        "ageDays": 1332,
         "ageNorm": 0.601,
         "hashPerturbation": 7.6,
         "eraOffset": 0,
@@ -39169,7 +39169,7 @@
       "hex": "#199b3c",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 22.5,
         "eraOffset": 0,
         "userNorm": 0.414,
@@ -39207,7 +39207,7 @@
       "hex": "#2ca71b",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -0.9,
         "eraOffset": 0,
         "userNorm": 0.414,
@@ -39245,7 +39245,7 @@
       "hex": "#329218",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -6.5,
         "eraOffset": 0,
         "userNorm": 0.414,
@@ -39329,8 +39329,8 @@
       }
     },
     "position": {
-      "x": 623.5,
-      "y": -5812.6,
+      "x": -4191.8,
+      "y": -3417.5,
       "z": 78.5
     },
     "positionType": "asteroid"
@@ -39511,7 +39511,7 @@
       "hex": "#16872c",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 18.4,
         "eraOffset": 0,
         "userNorm": 0.412,
@@ -39625,7 +39625,7 @@
       "hex": "#66dd2b",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -13.5,
         "eraOffset": 0,
         "userNorm": 0.412,
@@ -39739,7 +39739,7 @@
       "hex": "#1ba523",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 9.8,
         "eraOffset": 0,
         "userNorm": 0.411,
@@ -39777,7 +39777,7 @@
       "hex": "#4da41b",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -15.8,
         "eraOffset": 0,
         "userNorm": 0.411,
@@ -39929,7 +39929,7 @@
       "hex": "#3aae1c",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -5.8,
         "eraOffset": 0,
         "userNorm": 0.41,
@@ -40279,8 +40279,8 @@
       }
     },
     "position": {
-      "x": 3522.8,
-      "y": -6177.4,
+      "x": 6545.4,
+      "y": 1621.6,
       "z": 1729.5
     },
     "positionType": "asteroid"
@@ -40449,7 +40449,7 @@
     "first_seen_at": "2022-10-30T06:02:12.000000Z",
     "color": {
       "hsl": {
-        "h": 131.7,
+        "h": 131.6,
         "s": 71.9,
         "l": 56.5
       },
@@ -40499,7 +40499,7 @@
       "hex": "#1cae3d",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 19.7,
         "eraOffset": 0,
         "userNorm": 0.408,
@@ -40651,7 +40651,7 @@
       "hex": "#368d17",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -9.7,
         "eraOffset": 0,
         "userNorm": 0.408,
@@ -40689,7 +40689,7 @@
       "hex": "#4f9719",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -19.3,
         "eraOffset": 0,
         "userNorm": 0.408,
@@ -40726,7 +40726,7 @@
       },
       "hex": "#168778",
       "debug": {
-        "ageDays": 1331,
+        "ageDays": 1332,
         "ageNorm": 0.601,
         "hashPerturbation": 28.2,
         "eraOffset": 0,
@@ -41334,7 +41334,7 @@
       },
       "hex": "#178c75",
       "debug": {
-        "ageDays": 1165,
+        "ageDays": 1166,
         "ageNorm": 0.65,
         "hashPerturbation": 12.1,
         "eraOffset": 0,
@@ -41373,7 +41373,7 @@
       "hex": "#318816",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -7.6,
         "eraOffset": 0,
         "userNorm": 0.404,
@@ -41411,7 +41411,7 @@
       "hex": "#aeec8d",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -14.8,
         "eraOffset": 0,
         "userNorm": 0.404,
@@ -41563,7 +41563,7 @@
       "hex": "#178416",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 5.4,
         "eraOffset": 0,
         "userNorm": 0.403,
@@ -41677,7 +41677,7 @@
       "hex": "#4f9318",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -20.6,
         "eraOffset": 0,
         "userNorm": 0.403,
@@ -41942,7 +41942,7 @@
       },
       "hex": "#188a90",
       "debug": {
-        "ageDays": 1162,
+        "ageDays": 1163,
         "ageNorm": 0.651,
         "hashPerturbation": 26.6,
         "eraOffset": 0,
@@ -42209,7 +42209,7 @@
       "hex": "#85dc2a",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -24.5,
         "eraOffset": 0,
         "userNorm": 0.401,
@@ -42483,9 +42483,9 @@
       }
     },
     "position": {
-      "x": -3340.2,
-      "y": -138.1,
-      "z": -1037.1
+      "x": -144.8,
+      "y": -3132.2,
+      "z": -1555.7
     },
     "positionType": "asteroid"
   },
@@ -42589,7 +42589,7 @@
       "hex": "#409d1a",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -11.2,
         "eraOffset": 0,
         "userNorm": 0.4,
@@ -42627,7 +42627,7 @@
       "hex": "#21c534",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 13.3,
         "eraOffset": 0,
         "userNorm": 0.4,
@@ -42817,7 +42817,7 @@
       "hex": "#3a9218",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -10.1,
         "eraOffset": 0,
         "userNorm": 0.399,
@@ -43007,7 +43007,7 @@
       "hex": "#1ba335",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 17.9,
         "eraOffset": 0,
         "userNorm": 0.398,
@@ -43083,7 +43083,7 @@
       "hex": "#20c342",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 18.7,
         "eraOffset": 0,
         "userNorm": 0.398,
@@ -43167,9 +43167,9 @@
       }
     },
     "position": {
-      "x": 1363.2,
-      "y": -25.3,
-      "z": 4736.5
+      "x": -1281.3,
+      "y": -1372.6,
+      "z": 4414.1
     },
     "positionType": "asteroid"
   },
@@ -43387,7 +43387,7 @@
       "hex": "#2e8416",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -6.7,
         "eraOffset": 0,
         "userNorm": 0.396,
@@ -43419,10 +43419,10 @@
       },
       "rgb": {
         "r": 25,
-        "g": 126,
+        "g": 127,
         "b": 150
       },
-      "hex": "#197e96",
+      "hex": "#197f96",
       "debug": {
         "ageDays": 1067,
         "ageNorm": 0.68,
@@ -43615,7 +43615,7 @@
       "hex": "#1a9d2a",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 13.5,
         "eraOffset": 0,
         "userNorm": 0.395,
@@ -43653,7 +43653,7 @@
       "hex": "#3a9018",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -10.6,
         "eraOffset": 0,
         "userNorm": 0.395,
@@ -43729,7 +43729,7 @@
       "hex": "#5ece22",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -14.5,
         "eraOffset": 0,
         "userNorm": 0.394,
@@ -43767,7 +43767,7 @@
       "hex": "#24d769",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 29.6,
         "eraOffset": 0,
         "userNorm": 0.394,
@@ -43843,7 +43843,7 @@
       "hex": "#2ba31b",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -0.7,
         "eraOffset": 0,
         "userNorm": 0.394,
@@ -44299,7 +44299,7 @@
       "hex": "#518616",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -25.4,
         "eraOffset": 0,
         "userNorm": 0.392,
@@ -44459,9 +44459,9 @@
       }
     },
     "position": {
-      "x": 1241.8,
-      "y": 218.7,
-      "z": 3541
+      "x": -1402.7,
+      "y": -1128.6,
+      "z": 3218.5
     },
     "positionType": "asteroid"
   },
@@ -44527,7 +44527,7 @@
       "hex": "#2ba71c",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -0.2,
         "eraOffset": 0,
         "userNorm": 0.391,
@@ -44641,7 +44641,7 @@
       "hex": "#699f1b",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -29.4,
         "eraOffset": 0,
         "userNorm": 0.391,
@@ -44679,7 +44679,7 @@
       "hex": "#3db11e",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -6.3,
         "eraOffset": 0,
         "userNorm": 0.391,
@@ -44687,9 +44687,9 @@
       }
     },
     "position": {
-      "x": -2695.3,
-      "y": 2716.4,
-      "z": -2782.5
+      "x": 2795.4,
+      "y": 2710.5,
+      "z": -2108.2
     },
     "positionType": "asteroid"
   },
@@ -45021,7 +45021,7 @@
       "hex": "#1dae2e",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 13.1,
         "eraOffset": 0,
         "userNorm": 0.39,
@@ -45135,7 +45135,7 @@
       "hex": "#3b8717",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -13,
         "eraOffset": 0,
         "userNorm": 0.389,
@@ -45173,7 +45173,7 @@
       "hex": "#60ac1d",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -21.9,
         "eraOffset": 0,
         "userNorm": 0.389,
@@ -45287,7 +45287,7 @@
       "hex": "#188f3c",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 24.3,
         "eraOffset": 0,
         "userNorm": 0.388,
@@ -45477,7 +45477,7 @@
       "hex": "#1b8d18",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 4.4,
         "eraOffset": 0,
         "userNorm": 0.388,
@@ -45667,7 +45667,7 @@
       "hex": "#5aa01b",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -22.2,
         "eraOffset": 0,
         "userNorm": 0.387,
@@ -45819,7 +45819,7 @@
       "hex": "#1ba347",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 25.9,
         "eraOffset": 0,
         "userNorm": 0.387,
@@ -46009,7 +46009,7 @@
       "hex": "#5f8e18",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -29.8,
         "eraOffset": 0,
         "userNorm": 0.387,
@@ -46275,7 +46275,7 @@
       "hex": "#178517",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 6.1,
         "eraOffset": 0,
         "userNorm": 0.386,
@@ -46427,7 +46427,7 @@
       "hex": "#39b31e",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -4.3,
         "eraOffset": 0,
         "userNorm": 0.386,
@@ -47035,7 +47035,7 @@
       "hex": "#1ba14d",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 28.6,
         "eraOffset": 0,
         "userNorm": 0.384,
@@ -47225,7 +47225,7 @@
       "hex": "#51991a",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -19.7,
         "eraOffset": 0,
         "userNorm": 0.384,
@@ -47491,7 +47491,7 @@
       "hex": "#238d18",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 0.8,
         "eraOffset": 0,
         "userNorm": 0.383,
@@ -47605,7 +47605,7 @@
       "hex": "#1fb434",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 14.7,
         "eraOffset": 0,
         "userNorm": 0.382,
@@ -47681,7 +47681,7 @@
       "hex": "#43b11e",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -8.5,
         "eraOffset": 0,
         "userNorm": 0.382,
@@ -47727,9 +47727,9 @@
       }
     },
     "position": {
-      "x": -149.3,
-      "y": -3229.5,
-      "z": -1604
+      "x": -1977.2,
+      "y": 2369.3,
+      "z": -1871.3
     },
     "positionType": "asteroid"
   },
@@ -47909,7 +47909,7 @@
       "hex": "#1a994c",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 29.9,
         "eraOffset": 0,
         "userNorm": 0.382,
@@ -47917,9 +47917,9 @@
       }
     },
     "position": {
-      "x": 579.4,
-      "y": 2575.3,
-      "z": -2910.6
+      "x": -1715,
+      "y": 547.1,
+      "z": -3492.8
     },
     "positionType": "asteroid"
   },
@@ -48023,7 +48023,7 @@
       "hex": "#598b18",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -27.4,
         "eraOffset": 0,
         "userNorm": 0.381,
@@ -48136,7 +48136,7 @@
       },
       "hex": "#166383",
       "debug": {
-        "ageDays": 912,
+        "ageDays": 913,
         "ageNorm": 0.726,
         "hashPerturbation": 23,
         "eraOffset": 0,
@@ -48213,7 +48213,7 @@
       "hex": "#23a31c",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 3.1,
         "eraOffset": 0,
         "userNorm": 0.381,
@@ -48289,7 +48289,7 @@
       "hex": "#5a8f18",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -26.7,
         "eraOffset": 0,
         "userNorm": 0.381,
@@ -48505,7 +48505,7 @@
     "first_seen_at": "2022-10-30T06:02:11.000000Z",
     "color": {
       "hsl": {
-        "h": 169.6,
+        "h": 169.5,
         "s": 70.8,
         "l": 38.4
       },
@@ -48858,7 +48858,7 @@
       },
       "hex": "#166e83",
       "debug": {
-        "ageDays": 1050,
+        "ageDays": 1051,
         "ageNorm": 0.685,
         "hashPerturbation": 26.8,
         "eraOffset": 0,
@@ -48897,7 +48897,7 @@
       "hex": "#599a1a",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -22.9,
         "eraOffset": 0,
         "userNorm": 0.379,
@@ -48935,7 +48935,7 @@
       "hex": "#1fb523",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 7.8,
         "eraOffset": 0,
         "userNorm": 0.379,
@@ -49011,7 +49011,7 @@
       "hex": "#58ae1e",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -17.9,
         "eraOffset": 0,
         "userNorm": 0.379,
@@ -49209,9 +49209,9 @@
       }
     },
     "position": {
-      "x": 1213.1,
-      "y": 71.9,
-      "z": 3502.5
+      "x": -1431.5,
+      "y": -1275.4,
+      "z": 3180
     },
     "positionType": "asteroid"
   },
@@ -49361,9 +49361,9 @@
       }
     },
     "position": {
-      "x": 1640.5,
-      "y": -1680.2,
-      "z": 2849.4
+      "x": -2048.1,
+      "y": 459.8,
+      "z": 2610.3
     },
     "positionType": "asteroid"
   },
@@ -49429,7 +49429,7 @@
       "hex": "#6bc922",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -19.9,
         "eraOffset": 0,
         "userNorm": 0.378,
@@ -49505,7 +49505,7 @@
       "hex": "#1a8a18",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 5.4,
         "eraOffset": 0,
         "userNorm": 0.377,
@@ -49543,7 +49543,7 @@
       "hex": "#1fb634",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 14.7,
         "eraOffset": 0,
         "userNorm": 0.377,
@@ -49619,7 +49619,7 @@
       "hex": "#1ca32f",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 15,
         "eraOffset": 0,
         "userNorm": 0.377,
@@ -49683,7 +49683,7 @@
     "first_seen_at": "2025-04-16T20:09:23.000000Z",
     "color": {
       "hsl": {
-        "h": 244.1,
+        "h": 244,
         "s": 70.7,
         "l": 30
       },
@@ -49733,7 +49733,7 @@
       "hex": "#178347",
       "debug": {
         "ageDays": 938,
-        "ageNorm": 0.719,
+        "ageNorm": 0.718,
         "hashPerturbation": -25.5,
         "eraOffset": 0,
         "userNorm": 0.376,
@@ -49771,7 +49771,7 @@
       "hex": "#22c424",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 7.2,
         "eraOffset": 0,
         "userNorm": 0.376,
@@ -49809,7 +49809,7 @@
       "hex": "#1d9d1b",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 5.5,
         "eraOffset": 0,
         "userNorm": 0.376,
@@ -49923,7 +49923,7 @@
       "hex": "#19921b",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 7.2,
         "eraOffset": 0,
         "userNorm": 0.375,
@@ -49987,7 +49987,7 @@
     "first_seen_at": "2022-11-15T15:02:17.000000Z",
     "color": {
       "hsl": {
-        "h": 170.9,
+        "h": 170.8,
         "s": 70.6,
         "l": 39.6
       },
@@ -50037,7 +50037,7 @@
       "hex": "#75b11f",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -29.2,
         "eraOffset": 0,
         "userNorm": 0.375,
@@ -50075,7 +50075,7 @@
       "hex": "#45a11c",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -12.3,
         "eraOffset": 0,
         "userNorm": 0.375,
@@ -50341,7 +50341,7 @@
       "hex": "#59ac1e",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -18.8,
         "eraOffset": 0,
         "userNorm": 0.375,
@@ -50501,9 +50501,9 @@
       }
     },
     "position": {
-      "x": -2458.9,
-      "y": -3497.5,
-      "z": -317.6
+      "x": -544.9,
+      "y": 4204.7,
+      "z": -635.1
     },
     "positionType": "asteroid"
   },
@@ -50531,7 +50531,7 @@
       "hex": "#35991a",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -6.4,
         "eraOffset": 0,
         "userNorm": 0.374,
@@ -50644,7 +50644,7 @@
       },
       "hex": "#199068",
       "debug": {
-        "ageDays": 1163,
+        "ageDays": 1164,
         "ageNorm": 0.651,
         "hashPerturbation": 3.8,
         "eraOffset": 0,
@@ -50721,7 +50721,7 @@
       "hex": "#1b941a",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 5.9,
         "eraOffset": 0,
         "userNorm": 0.373,
@@ -50759,7 +50759,7 @@
       "hex": "#3e9219",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -11.6,
         "eraOffset": 0,
         "userNorm": 0.373,
@@ -51063,7 +51063,7 @@
       "hex": "#178535",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 22.8,
         "eraOffset": 0,
         "userNorm": 0.372,
@@ -51367,7 +51367,7 @@
       "hex": "#5ec021",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -16.5,
         "eraOffset": 0,
         "userNorm": 0.371,
@@ -51557,7 +51557,7 @@
       "hex": "#5fab1e",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -21.6,
         "eraOffset": 0,
         "userNorm": 0.371,
@@ -51747,7 +51747,7 @@
       "hex": "#61981a",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -27.2,
         "eraOffset": 0,
         "userNorm": 0.37,
@@ -51823,7 +51823,7 @@
       "hex": "#498617",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -20.2,
         "eraOffset": 0,
         "userNorm": 0.37,
@@ -51861,7 +51861,7 @@
       "hex": "#27af1e",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 2.8,
         "eraOffset": 0,
         "userNorm": 0.37,
@@ -51975,7 +51975,7 @@
       "hex": "#1a9727",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 12.4,
         "eraOffset": 0,
         "userNorm": 0.369,
@@ -52013,7 +52013,7 @@
       "hex": "#188a41",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 28.1,
         "eraOffset": 0,
         "userNorm": 0.369,
@@ -52135,9 +52135,9 @@
       }
     },
     "position": {
-      "x": 1718.3,
-      "y": 177.8,
-      "z": 3846.4
+      "x": -926.2,
+      "y": -1169.4,
+      "z": 3523.9
     },
     "positionType": "asteroid"
   },
@@ -52363,8 +52363,8 @@
       }
     },
     "position": {
-      "x": 1143.7,
-      "y": -5390.4,
+      "x": -3671.6,
+      "y": -2995.4,
       "z": 845.5
     },
     "positionType": "asteroid"
@@ -52507,7 +52507,7 @@
       "hex": "#28da34",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 10.5,
         "eraOffset": 0,
         "userNorm": 0.367,
@@ -52621,7 +52621,7 @@
       "hex": "#5e9d1b",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -24.3,
         "eraOffset": 0,
         "userNorm": 0.367,
@@ -52811,7 +52811,7 @@
       "hex": "#299019",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -1.6,
         "eraOffset": 0,
         "userNorm": 0.367,
@@ -53381,7 +53381,7 @@
       "hex": "#1a9726",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 11.9,
         "eraOffset": 0,
         "userNorm": 0.366,
@@ -53647,7 +53647,7 @@
       "hex": "#1da84d",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 27.1,
         "eraOffset": 0,
         "userNorm": 0.365,
@@ -53731,9 +53731,9 @@
       }
     },
     "position": {
-      "x": 1496,
-      "y": -1276.1,
-      "z": 2210.7
+      "x": -2192.6,
+      "y": 864,
+      "z": 1971.6
     },
     "positionType": "asteroid"
   },
@@ -53799,7 +53799,7 @@
       "hex": "#53b11f",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -15,
         "eraOffset": 0,
         "userNorm": 0.365,
@@ -54377,9 +54377,9 @@
       }
     },
     "position": {
-      "x": 1333.7,
-      "y": -1195.5,
-      "z": 2353
+      "x": -2354.9,
+      "y": 944.5,
+      "z": 2113.9
     },
     "positionType": "asteroid"
   },
@@ -54521,7 +54521,7 @@
       "hex": "#178232",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 21.7,
         "eraOffset": 0,
         "userNorm": 0.362,
@@ -54635,7 +54635,7 @@
       "hex": "#228217",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 0.4,
         "eraOffset": 0,
         "userNorm": 0.362,
@@ -54673,7 +54673,7 @@
       "hex": "#299c1b",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -0,
         "eraOffset": 0,
         "userNorm": 0.362,
@@ -55091,7 +55091,7 @@
       "hex": "#3c8d19",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -11.6,
         "eraOffset": 0,
         "userNorm": 0.36,
@@ -55357,7 +55357,7 @@
       "hex": "#2c911a",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -2.9,
         "eraOffset": 0,
         "userNorm": 0.36,
@@ -55555,8 +55555,8 @@
       }
     },
     "position": {
-      "x": 3021,
-      "y": -6620.8,
+      "x": 6043.5,
+      "y": 1178.3,
       "z": -816.4
     },
     "positionType": "asteroid"
@@ -55737,7 +55737,7 @@
       "hex": "#1a943a",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 22,
         "eraOffset": 0,
         "userNorm": 0.359,
@@ -55775,7 +55775,7 @@
       "hex": "#178340",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 28.9,
         "eraOffset": 0,
         "userNorm": 0.359,
@@ -55813,7 +55813,7 @@
       "hex": "#65bc21",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -20,
         "eraOffset": 0,
         "userNorm": 0.359,
@@ -55965,7 +55965,7 @@
       "hex": "#178233",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 22.1,
         "eraOffset": 0,
         "userNorm": 0.358,
@@ -56345,7 +56345,7 @@
       "hex": "#1a9237",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 20.6,
         "eraOffset": 0,
         "userNorm": 0.357,
@@ -57029,7 +57029,7 @@
       "hex": "#7ecc24",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -25.6,
         "eraOffset": 0,
         "userNorm": 0.354,
@@ -57295,7 +57295,7 @@
       "hex": "#6aa11d",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -28.7,
         "eraOffset": 0,
         "userNorm": 0.354,
@@ -57409,7 +57409,7 @@
       "hex": "#4adf5b",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 13.4,
         "eraOffset": 0,
         "userNorm": 0.353,
@@ -57625,7 +57625,7 @@
     "first_seen_at": "2022-11-07T10:02:27.000000Z",
     "color": {
       "hsl": {
-        "h": 154.6,
+        "h": 154.5,
         "s": 69.7,
         "l": 37.3
       },
@@ -57751,7 +57751,7 @@
       "hex": "#66ad1f",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -23.6,
         "eraOffset": 0,
         "userNorm": 0.352,
@@ -58017,7 +58017,7 @@
       "hex": "#1ea625",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 9.5,
         "eraOffset": 0,
         "userNorm": 0.351,
@@ -58397,7 +58397,7 @@
       "hex": "#188438",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 24.3,
         "eraOffset": 0,
         "userNorm": 0.35,
@@ -58519,8 +58519,8 @@
       }
     },
     "position": {
-      "x": -699.2,
-      "y": -4282.6,
+      "x": -5514.5,
+      "y": -1887.5,
       "z": 169.1
     },
     "positionType": "asteroid"
@@ -58861,9 +58861,9 @@
       }
     },
     "position": {
-      "x": -2771.7,
-      "y": 438.3,
-      "z": 3099.4
+      "x": 711.1,
+      "y": 2425.4,
+      "z": 3757
     },
     "positionType": "asteroid"
   },
@@ -58929,7 +58929,7 @@
       "hex": "#2ca61e",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 0.3,
         "eraOffset": 0,
         "userNorm": 0.348,
@@ -58967,7 +58967,7 @@
       "hex": "#29931a",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -0.7,
         "eraOffset": 0,
         "userNorm": 0.348,
@@ -59347,7 +59347,7 @@
       "hex": "#1c9943",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 25.2,
         "eraOffset": 0,
         "userNorm": 0.347,
@@ -59753,7 +59753,7 @@
     "first_seen_at": "2023-05-06T22:01:56.000000Z",
     "color": {
       "hsl": {
-        "h": 188.5,
+        "h": 188.4,
         "s": 69.4,
         "l": 36
       },
@@ -59879,7 +59879,7 @@
       "hex": "#2a8318",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -4.1,
         "eraOffset": 0,
         "userNorm": 0.345,
@@ -60057,7 +60057,7 @@
     "first_seen_at": "2026-01-07T10:10:42.000000Z",
     "color": {
       "hsl": {
-        "h": 267.7,
+        "h": 267.6,
         "s": 69.3,
         "l": 75
       },
@@ -60133,7 +60133,7 @@
     "first_seen_at": "2024-11-14T15:28:02.000000Z",
     "color": {
       "hsl": {
-        "h": 244.5,
+        "h": 244.4,
         "s": 69.3,
         "l": 34.8
       },
@@ -60487,7 +60487,7 @@
       "hex": "#27981c",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 0.9,
         "eraOffset": 0,
         "userNorm": 0.343,
@@ -60563,7 +60563,7 @@
       "hex": "#649b1c",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -27.7,
         "eraOffset": 0,
         "userNorm": 0.343,
@@ -60715,7 +60715,7 @@
       "hex": "#2a901a",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -2,
         "eraOffset": 0,
         "userNorm": 0.342,
@@ -60753,7 +60753,7 @@
       "hex": "#478118",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -20.6,
         "eraOffset": 0,
         "userNorm": 0.342,
@@ -60943,7 +60943,7 @@
       "hex": "#198c39",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 22.9,
         "eraOffset": 0,
         "userNorm": 0.342,
@@ -60981,7 +60981,7 @@
       "hex": "#219d1c",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 4.1,
         "eraOffset": 0,
         "userNorm": 0.342,
@@ -61475,7 +61475,7 @@
       "hex": "#188519",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 6.6,
         "eraOffset": 0,
         "userNorm": 0.34,
@@ -61627,7 +61627,7 @@
       "hex": "#1da143",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 23.6,
         "eraOffset": 0,
         "userNorm": 0.34,
@@ -61930,7 +61930,7 @@
       },
       "hex": "#1d899f",
       "debug": {
-        "ageDays": 1073,
+        "ageDays": 1074,
         "ageNorm": 0.678,
         "hashPerturbation": 27.8,
         "eraOffset": 0,
@@ -62007,7 +62007,7 @@
       "hex": "#49de4d",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 7.9,
         "eraOffset": 0,
         "userNorm": 0.338,
@@ -62071,7 +62071,7 @@
     "first_seen_at": "2023-02-28T13:03:35.000000Z",
     "color": {
       "hsl": {
-        "h": 184.2,
+        "h": 184.1,
         "s": 69.1,
         "l": 32.9
       },
@@ -62109,7 +62109,7 @@
     "first_seen_at": "2023-01-24T03:03:28.000000Z",
     "color": {
       "hsl": {
-        "h": 176.3,
+        "h": 176.2,
         "s": 69.1,
         "l": 53.1
       },
@@ -62159,7 +62159,7 @@
       "hex": "#30971c",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -3.5,
         "eraOffset": 0,
         "userNorm": 0.338,
@@ -62615,7 +62615,7 @@
       "hex": "#538819",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -25.3,
         "eraOffset": 0,
         "userNorm": 0.337,
@@ -63033,7 +63033,7 @@
       "hex": "#2f8118",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -6.7,
         "eraOffset": 0,
         "userNorm": 0.336,
@@ -63108,7 +63108,7 @@
       },
       "hex": "#23c048",
       "debug": {
-        "ageDays": 1163,
+        "ageDays": 1164,
         "ageNorm": 0.651,
         "hashPerturbation": -22.3,
         "eraOffset": 0,
@@ -63147,7 +63147,7 @@
       "hex": "#1d9b3e",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 22.4,
         "eraOffset": 0,
         "userNorm": 0.336,
@@ -63527,7 +63527,7 @@
       "hex": "#639a1c",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -27.5,
         "eraOffset": 0,
         "userNorm": 0.335,
@@ -63573,8 +63573,8 @@
       }
     },
     "position": {
-      "x": 3570.6,
-      "y": -7360.3,
+      "x": 6593.2,
+      "y": 438.8,
       "z": 558.2
     },
     "positionType": "asteroid"
@@ -63755,7 +63755,7 @@
       "hex": "#56901a",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -24.2,
         "eraOffset": 0,
         "userNorm": 0.334,
@@ -63793,7 +63793,7 @@
       "hex": "#61c825",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -15.8,
         "eraOffset": 0,
         "userNorm": 0.334,
@@ -64237,7 +64237,7 @@
     "first_seen_at": "2023-01-21T02:30:08.000000Z",
     "color": {
       "hsl": {
-        "h": 143.2,
+        "h": 143.1,
         "s": 68.9,
         "l": 31.6
       },
@@ -64257,9 +64257,9 @@
       }
     },
     "position": {
-      "x": -3115,
-      "y": 1140.9,
-      "z": 2739.7
+      "x": 367.8,
+      "y": 3128,
+      "z": 3397.2
     },
     "positionType": "asteroid"
   },
@@ -64324,7 +64324,7 @@
       },
       "hex": "#23c0b5",
       "debug": {
-        "ageDays": 1162,
+        "ageDays": 1163,
         "ageNorm": 0.651,
         "hashPerturbation": 19.5,
         "eraOffset": 0,
@@ -64477,7 +64477,7 @@
       "hex": "#3b8d1a",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -10.9,
         "eraOffset": 0,
         "userNorm": 0.333,
@@ -64629,7 +64629,7 @@
       "hex": "#1d9b31",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 15.9,
         "eraOffset": 0,
         "userNorm": 0.332,
@@ -64667,7 +64667,7 @@
       "hex": "#369e1d",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -5.3,
         "eraOffset": 0,
         "userNorm": 0.332,
@@ -64705,7 +64705,7 @@
       "hex": "#198829",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 15.2,
         "eraOffset": 0,
         "userNorm": 0.332,
@@ -64894,7 +64894,7 @@
       },
       "hex": "#1b9088",
       "debug": {
-        "ageDays": 1163,
+        "ageDays": 1164,
         "ageNorm": 0.651,
         "hashPerturbation": 19.6,
         "eraOffset": 0,
@@ -64941,9 +64941,9 @@
       }
     },
     "position": {
-      "x": 1173.4,
-      "y": 367.4,
-      "z": 4642.5
+      "x": -1471.2,
+      "y": -979.8,
+      "z": 4320
     },
     "positionType": "asteroid"
   },
@@ -65237,7 +65237,7 @@
       "hex": "#86db3e",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -21.2,
         "eraOffset": 0,
         "userNorm": 0.331,
@@ -65663,8 +65663,8 @@
       }
     },
     "position": {
-      "x": 4271.4,
-      "y": -5752.7,
+      "x": 7293.9,
+      "y": 2046.4,
       "z": 1389.9
     },
     "positionType": "asteroid"
@@ -65795,7 +65795,7 @@
     "first_seen_at": "2026-01-07T10:10:42.000000Z",
     "color": {
       "hsl": {
-        "h": 241,
+        "h": 240.9,
         "s": 68.7,
         "l": 75
       },
@@ -65929,9 +65929,9 @@
       }
     },
     "position": {
-      "x": 1015.8,
-      "y": -113.4,
-      "z": 3598.2
+      "x": -1628.8,
+      "y": -1460.7,
+      "z": 3275.7
     },
     "positionType": "asteroid"
   },
@@ -66301,7 +66301,7 @@
       "hex": "#20ae3c",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 18.2,
         "eraOffset": 0,
         "userNorm": 0.328,
@@ -66415,7 +66415,7 @@
       "hex": "#5eab20",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -20.5,
         "eraOffset": 0,
         "userNorm": 0.328,
@@ -66605,7 +66605,7 @@
       "hex": "#188131",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 20.5,
         "eraOffset": 0,
         "userNorm": 0.327,
@@ -66871,7 +66871,7 @@
       "hex": "#2a911b",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -1.1,
         "eraOffset": 0,
         "userNorm": 0.326,
@@ -66909,7 +66909,7 @@
       "hex": "#43941c",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -13,
         "eraOffset": 0,
         "userNorm": 0.326,
@@ -66947,7 +66947,7 @@
       "hex": "#4a941c",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -16.5,
         "eraOffset": 0,
         "userNorm": 0.326,
@@ -67011,7 +67011,7 @@
     "first_seen_at": "2023-06-20T01:30:05.000000Z",
     "color": {
       "hsl": {
-        "h": 152.8,
+        "h": 152.7,
         "s": 68.5,
         "l": 39.1
       },
@@ -67593,7 +67593,7 @@
       "hex": "#4a8719",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -20.1,
         "eraOffset": 0,
         "userNorm": 0.325,
@@ -68011,7 +68011,7 @@
       "hex": "#5a8c1a",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -27.6,
         "eraOffset": 0,
         "userNorm": 0.324,
@@ -68239,7 +68239,7 @@
       "hex": "#1a8d39",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 22.2,
         "eraOffset": 0,
         "userNorm": 0.323,
@@ -68247,9 +68247,9 @@
       }
     },
     "position": {
-      "x": 1162,
-      "y": 472.3,
-      "z": 3892.1
+      "x": -1482.5,
+      "y": -875,
+      "z": 3569.6
     },
     "positionType": "asteroid"
   },
@@ -68467,7 +68467,7 @@
       "hex": "#229f1e",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 4.4,
         "eraOffset": 0,
         "userNorm": 0.323,
@@ -68505,7 +68505,7 @@
       "hex": "#26cb3f",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 15.4,
         "eraOffset": 0,
         "userNorm": 0.323,
@@ -68543,7 +68543,7 @@
       "hex": "#19863b",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 25.3,
         "eraOffset": 0,
         "userNorm": 0.323,
@@ -68733,7 +68733,7 @@
       "hex": "#20a84b",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 25.3,
         "eraOffset": 0,
         "userNorm": 0.322,
@@ -69113,7 +69113,7 @@
       "hex": "#18812c",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 17.6,
         "eraOffset": 0,
         "userNorm": 0.321,
@@ -69121,9 +69121,9 @@
       }
     },
     "position": {
-      "x": -2717.1,
-      "y": -3256.9,
-      "z": -778.1
+      "x": -803.1,
+      "y": 4445.2,
+      "z": -1095.6
     },
     "positionType": "asteroid"
   },
@@ -69151,7 +69151,7 @@
       "hex": "#1a8c3b",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 23.6,
         "eraOffset": 0,
         "userNorm": 0.321,
@@ -69379,7 +69379,7 @@
       "hex": "#1d995f",
       "debug": {
         "ageDays": 1352,
-        "ageNorm": 0.595,
+        "ageNorm": 0.594,
         "hashPerturbation": 9.3,
         "eraOffset": 0,
         "userNorm": 0.32,
@@ -69615,9 +69615,9 @@
       }
     },
     "position": {
-      "x": -3259.4,
-      "y": 536.2,
-      "z": 3549.5
+      "x": 223.4,
+      "y": 2523.3,
+      "z": 4207.1
     },
     "positionType": "asteroid"
   },
@@ -69682,7 +69682,7 @@
       },
       "hex": "#1ea090",
       "debug": {
-        "ageDays": 1119,
+        "ageDays": 1120,
         "ageNorm": 0.664,
         "hashPerturbation": 13.1,
         "eraOffset": 0,
@@ -69873,7 +69873,7 @@
       "hex": "#7bb722",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -29.4,
         "eraOffset": 0,
         "userNorm": 0.32,
@@ -70671,7 +70671,7 @@
       "hex": "#19823a",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 25.4,
         "eraOffset": 0,
         "userNorm": 0.318,
@@ -70709,7 +70709,7 @@
       "hex": "#3a871a",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -11.5,
         "eraOffset": 0,
         "userNorm": 0.318,
@@ -71355,7 +71355,7 @@
       "hex": "#1a8b2c",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 15.9,
         "eraOffset": 0,
         "userNorm": 0.316,
@@ -71393,7 +71393,7 @@
       "hex": "#1fa33b",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 18.8,
         "eraOffset": 0,
         "userNorm": 0.316,
@@ -71705,8 +71705,8 @@
       }
     },
     "position": {
-      "x": -324,
-      "y": -4767.8,
+      "x": -5139.3,
+      "y": -2372.7,
       "z": 813.8
     },
     "positionType": "asteroid"
@@ -71971,8 +71971,8 @@
       }
     },
     "position": {
-      "x": 3817,
-      "y": -6821.2,
+      "x": 6839.5,
+      "y": 977.9,
       "z": -1089.4
     },
     "positionType": "asteroid"
@@ -72229,7 +72229,7 @@
       "hex": "#21ad46",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 22,
         "eraOffset": 0,
         "userNorm": 0.314,
@@ -72298,14 +72298,14 @@
         "l": 38
       },
       "rgb": {
-        "r": 72,
+        "r": 73,
         "g": 163,
         "b": 31
       },
-      "hex": "#48a31f",
+      "hex": "#49a31f",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -12.5,
         "eraOffset": 0,
         "userNorm": 0.313,
@@ -72655,9 +72655,9 @@
       }
     },
     "position": {
-      "x": -3512.2,
-      "y": 739.7,
-      "z": 2538.4
+      "x": -29.4,
+      "y": 2726.8,
+      "z": 3195.9
     },
     "positionType": "asteroid"
   },
@@ -73141,7 +73141,7 @@
       "hex": "#1b8c2f",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 17,
         "eraOffset": 0,
         "userNorm": 0.311,
@@ -73263,8 +73263,8 @@
       }
     },
     "position": {
-      "x": 3458.2,
-      "y": -7248.1,
+      "x": 6480.8,
+      "y": 550.9,
       "z": 751.4
     },
     "positionType": "asteroid"
@@ -73567,9 +73567,9 @@
       }
     },
     "position": {
-      "x": 1052.7,
-      "y": -2057,
-      "z": 2096.3
+      "x": -2635.9,
+      "y": 83,
+      "z": 1857.2
     },
     "positionType": "asteroid"
   },
@@ -74053,7 +74053,7 @@
       "hex": "#57951d",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -22.8,
         "eraOffset": 0,
         "userNorm": 0.309,
@@ -74395,7 +74395,7 @@
       "hex": "#4c901c",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -18.7,
         "eraOffset": 0,
         "userNorm": 0.309,
@@ -74623,7 +74623,7 @@
       "hex": "#73c626",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -22.5,
         "eraOffset": 0,
         "userNorm": 0.308,
@@ -74812,7 +74812,7 @@
       },
       "hex": "#1a8861",
       "debug": {
-        "ageDays": 1124,
+        "ageDays": 1125,
         "ageNorm": 0.663,
         "hashPerturbation": -0.4,
         "eraOffset": 0,
@@ -75345,7 +75345,7 @@
       "hex": "#30b222",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 0.4,
         "eraOffset": 0,
         "userNorm": 0.307,
@@ -75573,7 +75573,7 @@
       "hex": "#4da420",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -14.1,
         "eraOffset": 0,
         "userNorm": 0.306,
@@ -75611,7 +75611,7 @@
       "hex": "#49861a",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -19.6,
         "eraOffset": 0,
         "userNorm": 0.306,
@@ -75762,7 +75762,7 @@
       },
       "hex": "#192182",
       "debug": {
-        "ageDays": 302,
+        "ageDays": 303,
         "ageNorm": 0.909,
         "hashPerturbation": -2.7,
         "eraOffset": 20,
@@ -75847,8 +75847,8 @@
       }
     },
     "position": {
-      "x": 1785,
-      "y": -3594.9,
+      "x": -3030.3,
+      "y": -1199.8,
       "z": -1571.2
     },
     "positionType": "satellite"
@@ -75915,7 +75915,7 @@
       "hex": "#3a8a1b",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -10.4,
         "eraOffset": 0,
         "userNorm": 0.305,
@@ -76029,7 +76029,7 @@
       "hex": "#25c02b",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 8.7,
         "eraOffset": 0,
         "userNorm": 0.305,
@@ -76713,7 +76713,7 @@
       "hex": "#3d971d",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -9.2,
         "eraOffset": 0,
         "userNorm": 0.302,
@@ -76751,7 +76751,7 @@
       "hex": "#24b753",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 25.8,
         "eraOffset": 0,
         "userNorm": 0.302,
@@ -77283,7 +77283,7 @@
       "hex": "#50b223",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -12.8,
         "eraOffset": 0,
         "userNorm": 0.301,
@@ -77595,9 +77595,9 @@
       }
     },
     "position": {
-      "x": -3124.1,
-      "y": 1247.4,
-      "z": 2439.4
+      "x": 358.6,
+      "y": 3234.5,
+      "z": 3097
     },
     "positionType": "satellite"
   },
@@ -77853,7 +77853,7 @@
       "hex": "#3bd995",
       "debug": {
         "ageDays": 1352,
-        "ageNorm": 0.595,
+        "ageNorm": 0.594,
         "hashPerturbation": 11.4,
         "eraOffset": 0,
         "userNorm": 0.3,
@@ -77891,7 +77891,7 @@
       "hex": "#4db022",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -11.7,
         "eraOffset": 0,
         "userNorm": 0.3,
@@ -78233,7 +78233,7 @@
       "hex": "#2aba24",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 4.2,
         "eraOffset": 0,
         "userNorm": 0.299,
@@ -78346,7 +78346,7 @@
       },
       "hex": "#2153a6",
       "debug": {
-        "ageDays": 312,
+        "ageDays": 313,
         "ageNorm": 0.906,
         "hashPerturbation": -20.1,
         "eraOffset": 20,
@@ -78423,7 +78423,7 @@
       "hex": "#24b3b8",
       "debug": {
         "ageDays": 668,
-        "ageNorm": 0.8,
+        "ageNorm": 0.799,
         "hashPerturbation": -29.7,
         "eraOffset": 20,
         "userNorm": 0.298,
@@ -78726,7 +78726,7 @@
       },
       "hex": "#1b8968",
       "debug": {
-        "ageDays": 1145,
+        "ageDays": 1146,
         "ageNorm": 0.656,
         "hashPerturbation": 4.5,
         "eraOffset": 0,
@@ -78841,7 +78841,7 @@
       "hex": "#23b437",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 14.4,
         "eraOffset": 0,
         "userNorm": 0.297,
@@ -79183,7 +79183,7 @@
       "hex": "#50891b",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -22.4,
         "eraOffset": 0,
         "userNorm": 0.296,
@@ -79221,7 +79221,7 @@
       "hex": "#3dd96b",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 24,
         "eraOffset": 0,
         "userNorm": 0.296,
@@ -79343,9 +79343,9 @@
       }
     },
     "position": {
-      "x": 553.6,
-      "y": -1696.9,
-      "z": 2835.2
+      "x": -3135,
+      "y": 443.1,
+      "z": 2596
     },
     "positionType": "satellite"
   },
@@ -79525,7 +79525,7 @@
       "hex": "#29d23d",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 13.4,
         "eraOffset": 0,
         "userNorm": 0.295,
@@ -80057,7 +80057,7 @@
       "hex": "#1b851a",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 6.1,
         "eraOffset": 0,
         "userNorm": 0.295,
@@ -80322,7 +80322,7 @@
       },
       "hex": "#19806b",
       "debug": {
-        "ageDays": 1162,
+        "ageDays": 1163,
         "ageNorm": 0.651,
         "hashPerturbation": 11.4,
         "eraOffset": 0,
@@ -80855,7 +80855,7 @@
       "hex": "#3a821a",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -12,
         "eraOffset": 0,
         "userNorm": 0.293,
@@ -80893,7 +80893,7 @@
       "hex": "#3d8e1c",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -11,
         "eraOffset": 0,
         "userNorm": 0.293,
@@ -80931,7 +80931,7 @@
       "hex": "#2bc427",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 4.5,
         "eraOffset": 0,
         "userNorm": 0.293,
@@ -80969,7 +80969,7 @@
       "hex": "#3bb323",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -3.5,
         "eraOffset": 0,
         "userNorm": 0.293,
@@ -81071,7 +81071,7 @@
     "first_seen_at": "2025-09-29T20:09:15.000000Z",
     "color": {
       "hsl": {
-        "h": 234.7,
+        "h": 234.6,
         "s": 67,
         "l": 68.6
       },
@@ -81167,9 +81167,9 @@
       }
     },
     "position": {
-      "x": -1434.7,
-      "y": 457.7,
-      "z": -2921.9
+      "x": -2011.2,
+      "y": -1399.3,
+      "z": -2191.5
     },
     "positionType": "satellite"
   },
@@ -81273,7 +81273,7 @@
       "hex": "#29cd41",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 15.2,
         "eraOffset": 0,
         "userNorm": 0.291,
@@ -81691,7 +81691,7 @@
       "hex": "#6dad22",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -25.9,
         "eraOffset": 0,
         "userNorm": 0.29,
@@ -82109,7 +82109,7 @@
       "hex": "#4eb023",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -12.1,
         "eraOffset": 0,
         "userNorm": 0.289,
@@ -82155,8 +82155,8 @@
       }
     },
     "position": {
-      "x": 3691.4,
-      "y": -7927.7,
+      "x": 6714,
+      "y": -128.6,
       "z": 366.9
     },
     "positionType": "satellite"
@@ -82345,8 +82345,8 @@
       }
     },
     "position": {
-      "x": 1841.4,
-      "y": -3159.8,
+      "x": -2973.8,
+      "y": -764.7,
       "z": -755
     },
     "positionType": "satellite"
@@ -83105,9 +83105,9 @@
       }
     },
     "position": {
-      "x": 2019.4,
-      "y": -1578.6,
-      "z": 2721.2
+      "x": -1669.2,
+      "y": 561.4,
+      "z": 2482
     },
     "positionType": "satellite"
   },
@@ -83363,7 +83363,7 @@
       "hex": "#23b026",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 7.4,
         "eraOffset": 0,
         "userNorm": 0.286,
@@ -83401,7 +83401,7 @@
       "hex": "#308019",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -6.9,
         "eraOffset": 0,
         "userNorm": 0.286,
@@ -83629,7 +83629,7 @@
       "hex": "#33cc29",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 2.5,
         "eraOffset": 0,
         "userNorm": 0.285,
@@ -84464,7 +84464,7 @@
       },
       "hex": "#1e9669",
       "debug": {
-        "ageDays": 1162,
+        "ageDays": 1163,
         "ageNorm": 0.651,
         "hashPerturbation": 1.4,
         "eraOffset": 0,
@@ -84655,7 +84655,7 @@
       "hex": "#3a8e1c",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -9.3,
         "eraOffset": 0,
         "userNorm": 0.283,
@@ -84693,7 +84693,7 @@
       "hex": "#5eaa22",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -20,
         "eraOffset": 0,
         "userNorm": 0.283,
@@ -84731,7 +84731,7 @@
       "hex": "#1e9638",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 19.5,
         "eraOffset": 0,
         "userNorm": 0.283,
@@ -85149,7 +85149,7 @@
       "hex": "#227f1a",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 1.2,
         "eraOffset": 0,
         "userNorm": 0.282,
@@ -85187,7 +85187,7 @@
       "hex": "#1e9324",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 9.5,
         "eraOffset": 0,
         "userNorm": 0.282,
@@ -85859,7 +85859,7 @@
     "first_seen_at": "2022-11-17T18:30:32.000000Z",
     "color": {
       "hsl": {
-        "h": 148.7,
+        "h": 148.6,
         "s": 66.5,
         "l": 47.3
       },
@@ -85897,7 +85897,7 @@
     "first_seen_at": "2022-11-17T18:02:17.000000Z",
     "color": {
       "hsl": {
-        "h": 157.4,
+        "h": 157.3,
         "s": 66.5,
         "l": 35.5
       },
@@ -86061,7 +86061,7 @@
       "hex": "#61a020",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -24,
         "eraOffset": 0,
         "userNorm": 0.28,
@@ -86099,7 +86099,7 @@
       "hex": "#1b8533",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 19.8,
         "eraOffset": 0,
         "userNorm": 0.28,
@@ -86137,7 +86137,7 @@
       "hex": "#23ab47",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 22.3,
         "eraOffset": 0,
         "userNorm": 0.28,
@@ -86327,7 +86327,7 @@
       "hex": "#1b8552",
       "debug": {
         "ageDays": 878,
-        "ageNorm": 0.737,
+        "ageNorm": 0.736,
         "hashPerturbation": -25.6,
         "eraOffset": 0,
         "userNorm": 0.279,
@@ -86601,8 +86601,8 @@
       }
     },
     "position": {
-      "x": 1967.2,
-      "y": -6941.3,
+      "x": 4989.8,
+      "y": 857.7,
       "z": -256.9
     },
     "positionType": "satellite"
@@ -86744,7 +86744,7 @@
       },
       "hex": "#1c8b56",
       "debug": {
-        "ageDays": 1622,
+        "ageDays": 1623,
         "ageNorm": 0.513,
         "hashPerturbation": 28.3,
         "eraOffset": 0,
@@ -86783,7 +86783,7 @@
       "hex": "#429d20",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -10.2,
         "eraOffset": 0,
         "userNorm": 0.279,
@@ -86821,7 +86821,7 @@
       "hex": "#41971f",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -10.8,
         "eraOffset": 0,
         "userNorm": 0.279,
@@ -87171,8 +87171,8 @@
       }
     },
     "position": {
-      "x": 799.5,
-      "y": -6266,
+      "x": -4015.7,
+      "y": -3870.9,
       "z": 1134.4
     },
     "positionType": "satellite"
@@ -87475,9 +87475,9 @@
       }
     },
     "position": {
-      "x": 1417,
-      "y": -508.9,
-      "z": 4803.3
+      "x": -1227.6,
+      "y": -1856.2,
+      "z": 4480.8
     },
     "positionType": "satellite"
   },
@@ -87771,7 +87771,7 @@
       "hex": "#54dc60",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 11.4,
         "eraOffset": 0,
         "userNorm": 0.277,
@@ -87893,8 +87893,8 @@
       }
     },
     "position": {
-      "x": 3828.5,
-      "y": -5117.1,
+      "x": 6851,
+      "y": 2682,
       "z": 2090.4
     },
     "positionType": "satellite"
@@ -88379,7 +88379,7 @@
       "hex": "#29ca52",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 21.6,
         "eraOffset": 0,
         "userNorm": 0.276,
@@ -88417,7 +88417,7 @@
       "hex": "#1a8232",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 20,
         "eraOffset": 0,
         "userNorm": 0.276,
@@ -88747,7 +88747,7 @@
     "first_seen_at": "2025-01-13T15:28:05.000000Z",
     "color": {
       "hsl": {
-        "h": 218.8,
+        "h": 218.7,
         "s": 66.1,
         "l": 41.4
       },
@@ -88767,9 +88767,9 @@
       }
     },
     "position": {
-      "x": -3424,
-      "y": 418.8,
-      "z": -1562.9
+      "x": -228.6,
+      "y": -2575.3,
+      "z": -2081.4
     },
     "positionType": "satellite"
   },
@@ -88919,9 +88919,9 @@
       }
     },
     "position": {
-      "x": 2021.4,
-      "y": -334,
-      "z": 4065.9
+      "x": -623.2,
+      "y": -1681.3,
+      "z": 3743.4
     },
     "positionType": "satellite"
   },
@@ -89025,7 +89025,7 @@
       "hex": "#1b861f",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 8.6,
         "eraOffset": 0,
         "userNorm": 0.273,
@@ -89063,7 +89063,7 @@
       "hex": "#24b042",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 19.4,
         "eraOffset": 0,
         "userNorm": 0.273,
@@ -89556,7 +89556,7 @@
       },
       "hex": "#1a7f6c",
       "debug": {
-        "ageDays": 1224,
+        "ageDays": 1225,
         "ageNorm": 0.633,
         "hashPerturbation": 17.1,
         "eraOffset": 0,
@@ -89709,7 +89709,7 @@
       "hex": "#1b823e",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 26.6,
         "eraOffset": 0,
         "userNorm": 0.272,
@@ -89747,7 +89747,7 @@
       "hex": "#2bd12c",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 6.7,
         "eraOffset": 0,
         "userNorm": 0.272,
@@ -89869,9 +89869,9 @@
       }
     },
     "position": {
-      "x": -145.2,
-      "y": 3195.6,
-      "z": 3362.2
+      "x": 1545.3,
+      "y": -2047.9,
+      "z": 3012.5
     },
     "positionType": "satellite"
   },
@@ -89925,7 +89925,7 @@
     "first_seen_at": "2024-08-06T15:34:09.000000Z",
     "color": {
       "hsl": {
-        "h": 231.2,
+        "h": 231.1,
         "s": 66,
         "l": 54.5
       },
@@ -90164,7 +90164,7 @@
       },
       "hex": "#1d8c4c",
       "debug": {
-        "ageDays": 1162,
+        "ageDays": 1163,
         "ageNorm": 0.651,
         "hashPerturbation": -11,
         "eraOffset": 0,
@@ -90325,8 +90325,8 @@
       }
     },
     "position": {
-      "x": 199,
-      "y": -4961.9,
+      "x": -4616.2,
+      "y": -2566.9,
       "z": 1806.3
     },
     "positionType": "satellite"
@@ -90363,8 +90363,8 @@
       }
     },
     "position": {
-      "x": 2849.6,
-      "y": -4471.5,
+      "x": 5872.2,
+      "y": 3327.6,
       "z": 173.1
     },
     "positionType": "satellite"
@@ -90735,7 +90735,7 @@
       "hex": "#26b948",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 20.1,
         "eraOffset": 0,
         "userNorm": 0.27,
@@ -91381,7 +91381,7 @@
       "hex": "#2acf57",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 22.6,
         "eraOffset": 0,
         "userNorm": 0.269,
@@ -91419,7 +91419,7 @@
       "hex": "#6fe173",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 8.2,
         "eraOffset": 0,
         "userNorm": 0.269,
@@ -91457,7 +91457,7 @@
       "hex": "#4c8d1d",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -18.8,
         "eraOffset": 0,
         "userNorm": 0.269,
@@ -91845,8 +91845,8 @@
       }
     },
     "position": {
-      "x": -997.8,
-      "y": -4446.8,
+      "x": -5813,
+      "y": -2051.8,
       "z": -1261.8
     },
     "positionType": "satellite"
@@ -92319,7 +92319,7 @@
     "first_seen_at": "2023-04-30T02:00:40.000000Z",
     "color": {
       "hsl": {
-        "h": 146.5,
+        "h": 146.4,
         "s": 65.8,
         "l": 37.6
       },
@@ -92635,7 +92635,7 @@
       "hex": "#1c862a",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 14.6,
         "eraOffset": 0,
         "userNorm": 0.266,
@@ -93479,9 +93479,9 @@
       }
     },
     "position": {
-      "x": 859.7,
-      "y": -1531.2,
-      "z": 3039
+      "x": -2828.9,
+      "y": 608.8,
+      "z": 2799.9
     },
     "positionType": "satellite"
   },
@@ -93813,7 +93813,7 @@
       "hex": "#537f1a",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -27.4,
         "eraOffset": 0,
         "userNorm": 0.264,
@@ -93821,9 +93821,9 @@
       }
     },
     "position": {
-      "x": -2237.4,
-      "y": -2668.2,
-      "z": -412.3
+      "x": -323.4,
+      "y": 5034,
+      "z": -729.9
     },
     "positionType": "satellite"
   },
@@ -93851,7 +93851,7 @@
       "hex": "#6aba27",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -21.2,
         "eraOffset": 0,
         "userNorm": 0.264,
@@ -93889,7 +93889,7 @@
       "hex": "#309920",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -1.6,
         "eraOffset": 0,
         "userNorm": 0.264,
@@ -93927,7 +93927,7 @@
       "hex": "#25b355",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 26.4,
         "eraOffset": 0,
         "userNorm": 0.264,
@@ -95295,7 +95295,7 @@
       "hex": "#1a7f3b",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 25.8,
         "eraOffset": 0,
         "userNorm": 0.261,
@@ -95333,7 +95333,7 @@
       "hex": "#24ad3f",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 18,
         "eraOffset": 0,
         "userNorm": 0.261,
@@ -96367,8 +96367,8 @@
       }
     },
     "position": {
-      "x": 3288.8,
-      "y": -7497.4,
+      "x": 6311.3,
+      "y": 301.7,
       "z": -716
     },
     "positionType": "satellite"
@@ -96928,7 +96928,7 @@
       },
       "hex": "#2bcb84",
       "debug": {
-        "ageDays": 1163,
+        "ageDays": 1164,
         "ageNorm": 0.651,
         "hashPerturbation": -3,
         "eraOffset": 0,
@@ -97157,7 +97157,7 @@
       "hex": "#55d63d",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -3,
         "eraOffset": 0,
         "userNorm": 0.258,
@@ -97195,7 +97195,7 @@
       "hex": "#219f2a",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 10.6,
         "eraOffset": 0,
         "userNorm": 0.258,
@@ -97233,7 +97233,7 @@
       "hex": "#508b1d",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -21.7,
         "eraOffset": 0,
         "userNorm": 0.258,
@@ -98904,7 +98904,7 @@
       },
       "hex": "#209858",
       "debug": {
-        "ageDays": 884,
+        "ageDays": 885,
         "ageNorm": 0.735,
         "hashPerturbation": -28.4,
         "eraOffset": 0,
@@ -100053,8 +100053,8 @@
       }
     },
     "position": {
-      "x": -1047.9,
-      "y": -5686.5,
+      "x": -5863.1,
+      "y": -3291.4,
       "z": -247.5
     },
     "positionType": "satellite"
@@ -100462,7 +100462,7 @@
       },
       "hex": "#1f9445",
       "debug": {
-        "ageDays": 1163,
+        "ageDays": 1164,
         "ageNorm": 0.651,
         "hashPerturbation": -17,
         "eraOffset": 0,
@@ -100717,7 +100717,7 @@
     "first_seen_at": "2021-03-21T07:02:51.000000Z",
     "color": {
       "hsl": {
-        "h": 106.5,
+        "h": 106.4,
         "s": 65.1,
         "l": 46.7
       },
@@ -100729,7 +100729,7 @@
       "hex": "#4dc52a",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -7.2,
         "eraOffset": 0,
         "userNorm": 0.252,
@@ -100767,7 +100767,7 @@
       "hex": "#28bc59",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 26.2,
         "eraOffset": 0,
         "userNorm": 0.252,
@@ -101027,10 +101027,10 @@
       },
       "rgb": {
         "r": 40,
-        "g": 122,
+        "g": 123,
         "b": 189
       },
-      "hex": "#287abd",
+      "hex": "#287bbd",
       "debug": {
         "ageDays": 388,
         "ageNorm": 0.883,
@@ -101451,7 +101451,7 @@
       "hex": "#1d8740",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 26,
         "eraOffset": 0,
         "userNorm": 0.251,
@@ -101489,7 +101489,7 @@
       "hex": "#22a243",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 21.6,
         "eraOffset": 0,
         "userNorm": 0.251,
@@ -101527,7 +101527,7 @@
       "hex": "#5ca723",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -19.6,
         "eraOffset": 0,
         "userNorm": 0.251,
@@ -101565,7 +101565,7 @@
       "hex": "#1e8c24",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 9.7,
         "eraOffset": 0,
         "userNorm": 0.251,
@@ -101603,7 +101603,7 @@
       "hex": "#519520",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -18.8,
         "eraOffset": 0,
         "userNorm": 0.251,
@@ -102485,8 +102485,8 @@
       }
     },
     "position": {
-      "x": 29.4,
-      "y": -5307.7,
+      "x": -4785.8,
+      "y": -2912.7,
       "z": 1509.1
     },
     "positionType": "satellite"
@@ -103389,7 +103389,7 @@
       "hex": "#1b7e38",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 24,
         "eraOffset": 0,
         "userNorm": 0.247,
@@ -103427,7 +103427,7 @@
       "hex": "#479620",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -13.3,
         "eraOffset": 0,
         "userNorm": 0.247,
@@ -103681,7 +103681,7 @@
     "first_seen_at": "2025-01-29T15:38:40.000000Z",
     "color": {
       "hsl": {
-        "h": 209.2,
+        "h": 209.1,
         "s": 64.8,
         "l": 30
       },
@@ -103985,7 +103985,7 @@
     "first_seen_at": "2025-04-15T23:03:43.000000Z",
     "color": {
       "hsl": {
-        "h": 249.9,
+        "h": 249.8,
         "s": 64.7,
         "l": 32.4
       },
@@ -104718,7 +104718,7 @@
       },
       "hex": "#1c833a",
       "debug": {
-        "ageDays": 1164,
+        "ageDays": 1165,
         "ageNorm": 0.651,
         "hashPerturbation": -18.4,
         "eraOffset": 0,
@@ -104765,8 +104765,8 @@
       }
     },
     "position": {
-      "x": 531.3,
-      "y": -4153.3,
+      "x": -4283.9,
+      "y": -1758.3,
       "z": -1818.1
     },
     "positionType": "satellite"
@@ -104833,7 +104833,7 @@
       "hex": "#73d438",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -16.3,
         "eraOffset": 0,
         "userNorm": 0.244,
@@ -105239,7 +105239,7 @@
     "first_seen_at": "2024-07-21T15:36:55.000000Z",
     "color": {
       "hsl": {
-        "h": 220.9,
+        "h": 220.8,
         "s": 64.6,
         "l": 30
       },
@@ -105525,8 +105525,8 @@
       }
     },
     "position": {
-      "x": -467.9,
-      "y": -5050.7,
+      "x": -5283.2,
+      "y": -2655.6,
       "z": 1597.6
     },
     "positionType": "satellite"
@@ -106057,9 +106057,9 @@
       }
     },
     "position": {
-      "x": -3471.9,
-      "y": 1316.5,
-      "z": 2533.7
+      "x": 10.9,
+      "y": 3303.6,
+      "z": 3191.3
     },
     "positionType": "satellite"
   },
@@ -106770,7 +106770,7 @@
       },
       "hex": "#29bd5c",
       "debug": {
-        "ageDays": 1619,
+        "ageDays": 1620,
         "ageNorm": 0.514,
         "hashPerturbation": 17.2,
         "eraOffset": 0,
@@ -106809,7 +106809,7 @@
       "hex": "#25ad33",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 12.5,
         "eraOffset": 0,
         "userNorm": 0.24,
@@ -106931,8 +106931,8 @@
       }
     },
     "position": {
-      "x": 136.8,
-      "y": -3050.9,
+      "x": -4678.4,
+      "y": -655.8,
       "z": -1267.1
     },
     "positionType": "satellite"
@@ -107873,7 +107873,7 @@
       "hex": "#25a932",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 12.4,
         "eraOffset": 0,
         "userNorm": 0.238,
@@ -107911,7 +107911,7 @@
       "hex": "#35831c",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -8.2,
         "eraOffset": 0,
         "userNorm": 0.238,
@@ -108735,7 +108735,7 @@
     "first_seen_at": "2024-10-20T15:28:00.000000Z",
     "color": {
       "hsl": {
-        "h": 206.1,
+        "h": 206,
         "s": 64.2,
         "l": 39.5
       },
@@ -109761,7 +109761,7 @@
     "first_seen_at": "2022-02-06T09:12:29.000000Z",
     "color": {
       "hsl": {
-        "h": 159.3,
+        "h": 159.2,
         "s": 64.2,
         "l": 36.8
       },
@@ -109819,9 +109819,9 @@
       }
     },
     "position": {
-      "x": 217.9,
-      "y": 4150.7,
-      "z": -673.4
+      "x": 4104.9,
+      "y": -3016.8,
+      "z": -1003.4
     },
     "positionType": "satellite"
   },
@@ -109925,7 +109925,7 @@
       "hex": "#1b7e40",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 28.6,
         "eraOffset": 0,
         "userNorm": 0.234,
@@ -110275,9 +110275,9 @@
       }
     },
     "position": {
-      "x": -3220.4,
-      "y": -189.2,
-      "z": 2492.9
+      "x": 262.4,
+      "y": 1797.8,
+      "z": 3150.5
     },
     "positionType": "satellite"
   },
@@ -110494,7 +110494,7 @@
       },
       "hex": "#229b8c",
       "debug": {
-        "ageDays": 1134,
+        "ageDays": 1135,
         "ageNorm": 0.66,
         "hashPerturbation": 14.2,
         "eraOffset": 0,
@@ -110951,7 +110951,7 @@
       "hex": "#4ad78d",
       "debug": {
         "ageDays": 1352,
-        "ageNorm": 0.595,
+        "ageNorm": 0.594,
         "hashPerturbation": 5.8,
         "eraOffset": 0,
         "userNorm": 0.232,
@@ -110997,9 +110997,9 @@
       }
     },
     "position": {
-      "x": 835.2,
-      "y": 387.6,
-      "z": 3440.2
+      "x": -1809.4,
+      "y": -959.7,
+      "z": 3117.7
     },
     "positionType": "satellite"
   },
@@ -111027,7 +111027,7 @@
       "hex": "#1b7e30",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 18.8,
         "eraOffset": 0,
         "userNorm": 0.232,
@@ -111065,7 +111065,7 @@
       "hex": "#219537",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 17.7,
         "eraOffset": 0,
         "userNorm": 0.232,
@@ -111103,7 +111103,7 @@
       "hex": "#57891e",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -25.5,
         "eraOffset": 0,
         "userNorm": 0.232,
@@ -111795,9 +111795,9 @@
       }
     },
     "position": {
-      "x": 1526.4,
-      "y": -108.3,
-      "z": 3413.1
+      "x": -1118.2,
+      "y": -1455.6,
+      "z": 3090.6
     },
     "positionType": "satellite"
   },
@@ -111909,8 +111909,8 @@
       }
     },
     "position": {
-      "x": 167.4,
-      "y": -2923.9,
+      "x": -4647.9,
+      "y": -528.8,
       "z": 779.9
     },
     "positionType": "satellite"
@@ -111947,9 +111947,9 @@
       }
     },
     "position": {
-      "x": -3622.5,
-      "y": 203.4,
-      "z": 3664.3
+      "x": -139.8,
+      "y": 2190.5,
+      "z": 4321.9
     },
     "positionType": "satellite"
   },
@@ -112497,7 +112497,7 @@
     "first_seen_at": "2022-04-28T21:01:36.000000Z",
     "color": {
       "hsl": {
-        "h": 116.8,
+        "h": 116.7,
         "s": 63.9,
         "l": 75
       },
@@ -112509,7 +112509,7 @@
       "hex": "#9be897",
       "debug": {
         "ageDays": 1352,
-        "ageNorm": 0.595,
+        "ageNorm": 0.594,
         "hashPerturbation": -25.9,
         "eraOffset": 0,
         "userNorm": 0.228,
@@ -112661,7 +112661,7 @@
       "hex": "#58841d",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": -28.2,
         "eraOffset": 0,
         "userNorm": 0.228,
@@ -114435,7 +114435,7 @@
     "first_seen_at": "2021-03-21T06:59:16.000000Z",
     "color": {
       "hsl": {
-        "h": 133.1,
+        "h": 133,
         "s": 63.6,
         "l": 36.4
       },
@@ -114447,7 +114447,7 @@
       "hex": "#22983b",
       "debug": {
         "ageDays": 1756,
-        "ageNorm": 0.474,
+        "ageNorm": 0.473,
         "hashPerturbation": 19.4,
         "eraOffset": 0,
         "userNorm": 0.223,
@@ -114674,7 +114674,7 @@
       },
       "hex": "#24a07b",
       "debug": {
-        "ageDays": 812,
+        "ageDays": 813,
         "ageNorm": 0.756,
         "hashPerturbation": -19.3,
         "eraOffset": 0,
@@ -116431,8 +116431,8 @@
       }
     },
     "position": {
-      "x": 4819,
-      "y": -4233.4,
+      "x": 7841.6,
+      "y": 3565.7,
       "z": -12.2
     },
     "positionType": "satellite"
@@ -116469,8 +116469,8 @@
       }
     },
     "position": {
-      "x": 5377.3,
-      "y": -6938.2,
+      "x": 8399.9,
+      "y": 860.9,
       "z": 1420.8
     },
     "positionType": "satellite"
@@ -117001,9 +117001,9 @@
       }
     },
     "position": {
-      "x": 1738.5,
-      "y": -1841,
-      "z": -216
+      "x": -2488.1,
+      "y": -2441.7,
+      "z": 258.7
     },
     "positionType": "satellite"
   },
@@ -117437,7 +117437,7 @@
     "first_seen_at": "2022-11-16T15:30:24.000000Z",
     "color": {
       "hsl": {
-        "h": 170.9,
+        "h": 170.8,
         "s": 63.4,
         "l": 57.7
       },
@@ -117837,8 +117837,8 @@
       }
     },
     "position": {
-      "x": 110.2,
-      "y": -5258.3,
+      "x": -4705.1,
+      "y": -2863.3,
       "z": -1797.3
     },
     "positionType": "satellite"
@@ -120374,7 +120374,7 @@
       },
       "hex": "#1c7d43",
       "debug": {
-        "ageDays": 1050,
+        "ageDays": 1051,
         "ageNorm": 0.685,
         "hashPerturbation": -20.1,
         "eraOffset": 0,
@@ -120971,7 +120971,7 @@
     "first_seen_at": "2024-11-11T20:48:18.000000Z",
     "color": {
       "hsl": {
-        "h": 254.1,
+        "h": 254,
         "s": 62.9,
         "l": 41.7
       },
@@ -121287,7 +121287,7 @@
       "hex": "#20618d",
       "debug": {
         "ageDays": 648,
-        "ageNorm": 0.806,
+        "ageNorm": 0.805,
         "hashPerturbation": -8.9,
         "eraOffset": 20,
         "userNorm": 0.21,
@@ -122084,7 +122084,7 @@
       },
       "hex": "#229583",
       "debug": {
-        "ageDays": 1126,
+        "ageDays": 1127,
         "ageNorm": 0.662,
         "hashPerturbation": 11.9,
         "eraOffset": 0,
@@ -123224,7 +123224,7 @@
       },
       "hex": "#1c7d72",
       "debug": {
-        "ageDays": 908,
+        "ageDays": 909,
         "ageNorm": 0.727,
         "hashPerturbation": -1.1,
         "eraOffset": 0,
@@ -123707,7 +123707,7 @@
     "first_seen_at": "2025-12-12T10:09:05.000000Z",
     "color": {
       "hsl": {
-        "h": 258.8,
+        "h": 258.7,
         "s": 62.6,
         "l": 30
       },
@@ -124847,7 +124847,7 @@
     "first_seen_at": "2024-01-20T12:09:08.000000Z",
     "color": {
       "hsl": {
-        "h": 191.3,
+        "h": 191.2,
         "s": 62.6,
         "l": 49.3
       },
@@ -124972,7 +124972,7 @@
       },
       "hex": "#2dc3b6",
       "debug": {
-        "ageDays": 899,
+        "ageDays": 900,
         "ageNorm": 0.73,
         "hashPerturbation": -0.6,
         "eraOffset": 0,
@@ -125569,7 +125569,7 @@
     "first_seen_at": "2024-12-31T15:27:51.000000Z",
     "color": {
       "hsl": {
-        "h": 262.8,
+        "h": 262.7,
         "s": 62.4,
         "l": 30
       },
@@ -125835,7 +125835,7 @@
     "first_seen_at": "2024-09-28T15:34:45.000000Z",
     "color": {
       "hsl": {
-        "h": 245.7,
+        "h": 245.6,
         "s": 62.4,
         "l": 30
       },
@@ -126463,9 +126463,9 @@
       }
     },
     "position": {
-      "x": 1250.1,
-      "y": 536.5,
-      "z": 4808.7
+      "x": -1394.4,
+      "y": -810.7,
+      "z": 4486.2
     },
     "positionType": "satellite"
   },
@@ -126492,7 +126492,7 @@
       },
       "hex": "#1d767c",
       "debug": {
-        "ageDays": 912,
+        "ageDays": 913,
         "ageNorm": 0.726,
         "hashPerturbation": 9.4,
         "eraOffset": 0,
@@ -126519,7 +126519,7 @@
     "first_seen_at": "2023-06-15T18:21:12.000000Z",
     "color": {
       "hsl": {
-        "h": 159.5,
+        "h": 159.4,
         "s": 62.4,
         "l": 43.5
       },
@@ -126568,7 +126568,7 @@
       },
       "hex": "#2ab49f",
       "debug": {
-        "ageDays": 978,
+        "ageDays": 979,
         "ageNorm": 0.706,
         "hashPerturbation": 1.3,
         "eraOffset": 0,
@@ -126644,7 +126644,7 @@
       },
       "hex": "#56c6d8",
       "debug": {
-        "ageDays": 984,
+        "ageDays": 985,
         "ageNorm": 0.705,
         "hashPerturbation": 19.4,
         "eraOffset": 0,
@@ -126729,9 +126729,9 @@
       }
     },
     "position": {
-      "x": 936.1,
-      "y": 2444.3,
-      "z": 4048.5
+      "x": 2626.6,
+      "y": -2799.3,
+      "z": 3698.8
     },
     "positionType": "satellite"
   },
@@ -126881,9 +126881,9 @@
       }
     },
     "position": {
-      "x": 1040.3,
-      "y": 3027.6,
-      "z": 3874.5
+      "x": 2730.8,
+      "y": -2215.9,
+      "z": 3524.7
     },
     "positionType": "satellite"
   },
@@ -127147,8 +127147,8 @@
       }
     },
     "position": {
-      "x": 5359.6,
-      "y": -4482.1,
+      "x": 8382.1,
+      "y": 3317,
       "z": 433.6
     },
     "positionType": "satellite"
@@ -127565,9 +127565,9 @@
       }
     },
     "position": {
-      "x": 1001.9,
-      "y": 2630.2,
-      "z": 3403.8
+      "x": 2692.4,
+      "y": -2613.4,
+      "z": 3054
     },
     "positionType": "satellite"
   },
@@ -128401,8 +128401,8 @@
       }
     },
     "position": {
-      "x": 2291.7,
-      "y": -3143,
+      "x": -2523.5,
+      "y": -747.9,
       "z": -456.6
     },
     "positionType": "satellite"
@@ -129065,7 +129065,7 @@
     "first_seen_at": "2024-10-15T15:27:33.000000Z",
     "color": {
       "hsl": {
-        "h": 246.2,
+        "h": 246.1,
         "s": 62,
         "l": 30
       },
@@ -129465,8 +129465,8 @@
       }
     },
     "position": {
-      "x": -181.2,
-      "y": -6412.3,
+      "x": -4996.4,
+      "y": -4017.2,
       "z": -438.9
     },
     "positionType": "satellite"
@@ -129635,7 +129635,7 @@
     "first_seen_at": "2023-11-08T15:55:28.000000Z",
     "color": {
       "hsl": {
-        "h": 165.4,
+        "h": 165.3,
         "s": 62,
         "l": 32.5
       },
@@ -129845,9 +129845,9 @@
       }
     },
     "position": {
-      "x": 1001.7,
-      "y": 2403.5,
-      "z": 3484.8
+      "x": 2692.2,
+      "y": -2840.1,
+      "z": 3135.1
     },
     "positionType": "satellite"
   },
@@ -129939,7 +129939,7 @@
     "first_seen_at": "2025-08-25T10:09:19.000000Z",
     "color": {
       "hsl": {
-        "h": 273.6,
+        "h": 273.5,
         "s": 61.8,
         "l": 56.5
       },
@@ -130377,8 +130377,8 @@
       }
     },
     "position": {
-      "x": 1817.4,
-      "y": -5398.2,
+      "x": 4839.9,
+      "y": 2400.8,
       "z": -336
     },
     "positionType": "satellite"
@@ -130585,7 +130585,7 @@
     "first_seen_at": "2024-11-26T15:29:34.000000Z",
     "color": {
       "hsl": {
-        "h": 232.2,
+        "h": 232.1,
         "s": 61.8,
         "l": 30
       },
@@ -130605,8 +130605,8 @@
       }
     },
     "position": {
-      "x": 1917.4,
-      "y": -5770.5,
+      "x": -2897.8,
+      "y": -3375.4,
       "z": -1250.3
     },
     "positionType": "satellite"
@@ -131517,8 +131517,8 @@
       }
     },
     "position": {
-      "x": -637.3,
-      "y": -5659.1,
+      "x": -5452.6,
+      "y": -3264,
       "z": -754.3
     },
     "positionType": "satellite"
@@ -131593,8 +131593,8 @@
       }
     },
     "position": {
-      "x": 4111.2,
-      "y": -3794.8,
+      "x": 7133.8,
+      "y": 4004.3,
       "z": 539.5
     },
     "positionType": "satellite"
@@ -131997,10 +131997,10 @@
       },
       "rgb": {
         "r": 59,
-        "g": 76,
+        "g": 77,
         "b": 208
       },
-      "hex": "#3b4cd0",
+      "hex": "#3b4dd0",
       "debug": {
         "ageDays": 488,
         "ageNorm": 0.853,
@@ -132497,7 +132497,7 @@
       "hex": "#3b59d0",
       "debug": {
         "ageDays": 648,
-        "ageNorm": 0.806,
+        "ageNorm": 0.805,
         "hashPerturbation": 14.9,
         "eraOffset": 20,
         "userNorm": 0.186,
@@ -132619,9 +132619,9 @@
       }
     },
     "position": {
-      "x": -3999.5,
-      "y": 546.8,
-      "z": 3219
+      "x": -516.7,
+      "y": 2533.8,
+      "z": 3876.6
     },
     "positionType": "satellite"
   },
@@ -132789,7 +132789,7 @@
     "first_seen_at": "2025-11-15T20:09:20.000000Z",
     "color": {
       "hsl": {
-        "h": 251.9,
+        "h": 251.8,
         "s": 61.3,
         "l": 30
       },
@@ -133075,9 +133075,9 @@
       }
     },
     "position": {
-      "x": -429.8,
-      "y": 3168.7,
-      "z": 3835.3
+      "x": 1260.7,
+      "y": -2074.9,
+      "z": 3485.6
     },
     "positionType": "satellite"
   },
@@ -133113,9 +133113,9 @@
       }
     },
     "position": {
-      "x": 605.9,
-      "y": 3424.6,
-      "z": 3476.3
+      "x": 2296.4,
+      "y": -1818.9,
+      "z": 3126.6
     },
     "positionType": "satellite"
   },
@@ -133549,7 +133549,7 @@
     "first_seen_at": "2024-12-15T15:26:43.000000Z",
     "color": {
       "hsl": {
-        "h": 234.3,
+        "h": 234.2,
         "s": 61.3,
         "l": 30
       },
@@ -134651,7 +134651,7 @@
     "first_seen_at": "2025-06-02T20:09:11.000000Z",
     "color": {
       "hsl": {
-        "h": 233.2,
+        "h": 233.1,
         "s": 61,
         "l": 42.9
       },
@@ -134765,7 +134765,7 @@
     "first_seen_at": "2025-04-15T23:03:40.000000Z",
     "color": {
       "hsl": {
-        "h": 241,
+        "h": 240.9,
         "s": 61,
         "l": 33.2
       },
@@ -135697,8 +135697,8 @@
       }
     },
     "position": {
-      "x": 1367.7,
-      "y": -4859.8,
+      "x": -3447.5,
+      "y": -2464.7,
       "z": -1742.7
     },
     "positionType": "satellite"
@@ -136001,8 +136001,8 @@
       }
     },
     "position": {
-      "x": -72.9,
-      "y": -3742.5,
+      "x": -4888.2,
+      "y": -1347.4,
       "z": 1492.6
     },
     "positionType": "satellite"
@@ -136647,8 +136647,8 @@
       }
     },
     "position": {
-      "x": 1433.5,
-      "y": -5447,
+      "x": -3381.8,
+      "y": -3052,
       "z": 1643.9
     },
     "positionType": "satellite"
@@ -136837,8 +136837,8 @@
       }
     },
     "position": {
-      "x": 2906.6,
-      "y": -4432.3,
+      "x": 5929.2,
+      "y": 3366.8,
       "z": 1313.9
     },
     "positionType": "satellite"
@@ -137445,9 +137445,9 @@
       }
     },
     "position": {
-      "x": 410.1,
-      "y": 3081,
-      "z": 4525.2
+      "x": 2100.6,
+      "y": -2162.5,
+      "z": 4175.5
     },
     "positionType": "satellite"
   },
@@ -137843,7 +137843,7 @@
     "first_seen_at": "2025-07-08T10:09:04.000000Z",
     "color": {
       "hsl": {
-        "h": 253.3,
+        "h": 253.2,
         "s": 60.4,
         "l": 30
       },
@@ -138053,8 +138053,8 @@
       }
     },
     "position": {
-      "x": 1296.9,
-      "y": -4799.4,
+      "x": -3518.3,
+      "y": -2404.4,
       "z": 1954.7
     },
     "positionType": "satellite"
@@ -138907,7 +138907,7 @@
     "first_seen_at": "2025-11-28T20:09:20.000000Z",
     "color": {
       "hsl": {
-        "h": 255.4,
+        "h": 255.3,
         "s": 60,
         "l": 50.5
       },
@@ -139991,8 +139991,8 @@
       }
     },
     "position": {
-      "x": 417.1,
-      "y": -2794.7,
+      "x": -4398.1,
+      "y": -399.7,
       "z": -1223.9
     },
     "positionType": "satellite"
@@ -141093,8 +141093,8 @@
       }
     },
     "position": {
-      "x": 1677.6,
-      "y": -3245.8,
+      "x": -3137.6,
+      "y": -850.8,
       "z": -1283.7
     },
     "positionType": "satellite"
@@ -142555,7 +142555,7 @@
     "first_seen_at": "2025-10-15T11:09:06.000000Z",
     "color": {
       "hsl": {
-        "h": 248,
+        "h": 247.9,
         "s": 59.2,
         "l": 30
       },
@@ -142879,9 +142879,9 @@
       }
     },
     "position": {
-      "x": 744.6,
-      "y": -745.7,
-      "z": 3470.2
+      "x": -1900,
+      "y": -2092.9,
+      "z": 3147.7
     },
     "positionType": "dust"
   },
@@ -143715,9 +143715,9 @@
       }
     },
     "position": {
-      "x": 149.5,
-      "y": 3644.2,
-      "z": 4120.4
+      "x": 1840,
+      "y": -1599.4,
+      "z": 3770.7
     },
     "positionType": "dust"
   },
@@ -143905,8 +143905,8 @@
       }
     },
     "position": {
-      "x": -891.2,
-      "y": -4032.2,
+      "x": -5706.5,
+      "y": -1637.2,
       "z": -1513.7
     },
     "positionType": "dust"
@@ -145063,7 +145063,7 @@
     "first_seen_at": "2026-01-02T10:39:27.000000Z",
     "color": {
       "hsl": {
-        "h": 231.4,
+        "h": 231.3,
         "s": 58.1,
         "l": 75
       },
@@ -146056,11 +146056,11 @@
         "l": 49.3
       },
       "rgb": {
-        "r": 68,
+        "r": 67,
         "g": 53,
         "b": 199
       },
-      "hex": "#4435c7",
+      "hex": "#4335c7",
       "debug": {
         "ageDays": 147,
         "ageNorm": 0.956,
@@ -146165,7 +146165,7 @@
     "first_seen_at": "2025-08-02T20:09:15.000000Z",
     "color": {
       "hsl": {
-        "h": 272.1,
+        "h": 272,
         "s": 58.1,
         "l": 36.4
       },
@@ -146413,8 +146413,8 @@
       }
     },
     "position": {
-      "x": 2152.5,
-      "y": -4660.9,
+      "x": 5175,
+      "y": 3138.2,
       "z": -1112.8
     },
     "positionType": "dust"
@@ -147267,7 +147267,7 @@
     "first_seen_at": "2025-11-28T12:09:05.000000Z",
     "color": {
       "hsl": {
-        "h": 257.1,
+        "h": 257,
         "s": 57.3,
         "l": 30
       },
@@ -147477,8 +147477,8 @@
       }
     },
     "position": {
-      "x": -235.6,
-      "y": -4543.6,
+      "x": -5050.8,
+      "y": -2148.5,
       "z": 2256.3
     },
     "positionType": "dust"
@@ -147553,9 +147553,9 @@
       }
     },
     "position": {
-      "x": -777.7,
-      "y": 2714.8,
-      "z": 4017.7
+      "x": 912.8,
+      "y": -2528.8,
+      "z": 3668
     },
     "positionType": "dust"
   },
@@ -148863,7 +148863,7 @@
     "first_seen_at": "2025-12-10T20:09:07.000000Z",
     "color": {
       "hsl": {
-        "h": 239.6,
+        "h": 239.5,
         "s": 56.4,
         "l": 30
       },
@@ -149395,7 +149395,7 @@
     "first_seen_at": "2025-11-10T10:09:07.000000Z",
     "color": {
       "hsl": {
-        "h": 281,
+        "h": 280.9,
         "s": 56.4,
         "l": 30
       },
@@ -150117,7 +150117,7 @@
     "first_seen_at": "2025-12-28T10:11:13.000000Z",
     "color": {
       "hsl": {
-        "h": 241.7,
+        "h": 241.6,
         "s": 55.2,
         "l": 75
       },
@@ -151467,9 +151467,9 @@
       }
     },
     "position": {
-      "x": 3012.2,
-      "y": 2997.6,
-      "z": -1694.4
+      "x": -4365.8,
+      "y": -180.5,
+      "z": -1355.5
     },
     "positionType": "dust"
   },
@@ -153215,8 +153215,8 @@
       }
     },
     "position": {
-      "x": 1523.5,
-      "y": -5771.2,
+      "x": 4546.1,
+      "y": 2027.9,
       "z": 988
     },
     "positionType": "dust"
@@ -153405,9 +153405,9 @@
       }
     },
     "position": {
-      "x": 3797.4,
-      "y": 3198,
-      "z": -1086.2
+      "x": -3580.5,
+      "y": 19.9,
+      "z": -747.3
     },
     "positionType": "dust"
   },
@@ -153955,7 +153955,7 @@
     "first_seen_at": "2026-01-01T10:09:07.000000Z",
     "color": {
       "hsl": {
-        "h": 238,
+        "h": 237.9,
         "s": 50.8,
         "l": 75
       },
@@ -154042,7 +154042,7 @@
       },
       "hex": "#c7a6d9",
       "debug": {
-        "ageDays": 0,
+        "ageDays": 1,
         "ageNorm": 1,
         "hashPerturbation": 18.8,
         "eraOffset": 20,
@@ -154563,7 +154563,7 @@
     "first_seen_at": "2026-01-08T11:32:55.000000Z",
     "color": {
       "hsl": {
-        "h": 288.7,
+        "h": 288.6,
         "s": 40,
         "l": 75
       },
@@ -154621,9 +154621,9 @@
       }
     },
     "position": {
-      "x": -1177.4,
-      "y": -1078.6,
-      "z": 3098.1
+      "x": 939.8,
+      "y": 0,
+      "z": 3356.3
     },
     "positionType": "dust"
   },
@@ -154688,7 +154688,7 @@
       },
       "hex": "#a6aed9",
       "debug": {
-        "ageDays": 1,
+        "ageDays": 2,
         "ageNorm": 0.999,
         "hashPerturbation": -29.1,
         "eraOffset": 20,
@@ -155001,9 +155001,9 @@
       }
     },
     "position": {
-      "x": -1622.7,
-      "y": -2124.3,
-      "z": 2909.7
+      "x": 494.4,
+      "y": -1045.7,
+      "z": 3167.8
     },
     "positionType": "dust"
   },
@@ -155039,9 +155039,9 @@
       }
     },
     "position": {
-      "x": -924.7,
-      "y": -2003.1,
-      "z": 2437.1
+      "x": 1192.5,
+      "y": -924.5,
+      "z": 2695.3
     },
     "positionType": "dust"
   },
@@ -155077,9 +155077,9 @@
       }
     },
     "position": {
-      "x": -667.7,
-      "y": -1616.2,
-      "z": 2366.5
+      "x": 1449.4,
+      "y": -537.6,
+      "z": 2624.6
     },
     "positionType": "dust"
   },
@@ -155115,9 +155115,9 @@
       }
     },
     "position": {
-      "x": -1507.5,
-      "y": -2058.8,
-      "z": 2913
+      "x": 609.7,
+      "y": -980.2,
+      "z": 3171.2
     },
     "positionType": "dust"
   },
@@ -155153,9 +155153,9 @@
       }
     },
     "position": {
-      "x": -1291.9,
-      "y": -1234.5,
-      "z": 2099.6
+      "x": 825.3,
+      "y": -155.9,
+      "z": 2357.8
     },
     "positionType": "dust"
   },
@@ -155191,9 +155191,9 @@
       }
     },
     "position": {
-      "x": -1617.9,
-      "y": -1241.5,
-      "z": 4050.1
+      "x": 499.3,
+      "y": -162.9,
+      "z": 4308.3
     },
     "positionType": "dust"
   },
@@ -155229,9 +155229,9 @@
       }
     },
     "position": {
-      "x": -884.2,
-      "y": -209.5,
-      "z": 3637.6
+      "x": 1233,
+      "y": 869.1,
+      "z": 3895.8
     },
     "positionType": "dust"
   },
@@ -155267,9 +155267,9 @@
       }
     },
     "position": {
-      "x": -1531.4,
-      "y": -318.4,
-      "z": 2367.8
+      "x": 585.8,
+      "y": 760.2,
+      "z": 2625.9
     },
     "positionType": "dust"
   },
@@ -155305,9 +155305,9 @@
       }
     },
     "position": {
-      "x": -1823.3,
-      "y": -1424.6,
-      "z": 3905.3
+      "x": 293.9,
+      "y": -346.1,
+      "z": 4163.5
     },
     "positionType": "dust"
   },
@@ -155343,9 +155343,9 @@
       }
     },
     "position": {
-      "x": -1613.8,
-      "y": -899.2,
-      "z": 2153.3
+      "x": 503.3,
+      "y": 179.4,
+      "z": 2411.5
     },
     "positionType": "dust"
   },
@@ -155381,9 +155381,9 @@
       }
     },
     "position": {
-      "x": -979.4,
-      "y": -208.9,
-      "z": 3575.9
+      "x": 1137.8,
+      "y": 869.6,
+      "z": 3834.1
     },
     "positionType": "dust"
   },
@@ -155419,9 +155419,9 @@
       }
     },
     "position": {
-      "x": -1616.3,
-      "y": -134.8,
-      "z": 3574.1
+      "x": 500.8,
+      "y": 943.8,
+      "z": 3832.3
     },
     "positionType": "dust"
   },
@@ -155457,9 +155457,9 @@
       }
     },
     "position": {
-      "x": -1385.2,
-      "y": -2213.8,
-      "z": 3012.2
+      "x": 732,
+      "y": -1135.2,
+      "z": 3270.4
     },
     "positionType": "dust"
   },
@@ -155495,9 +155495,9 @@
       }
     },
     "position": {
-      "x": -1546.2,
-      "y": -114,
-      "z": 3606.5
+      "x": 571,
+      "y": 964.6,
+      "z": 3864.6
     },
     "positionType": "dust"
   },
@@ -155533,9 +155533,9 @@
       }
     },
     "position": {
-      "x": -1998.5,
-      "y": -590.7,
-      "z": 3664.6
+      "x": 118.6,
+      "y": 487.9,
+      "z": 3922.8
     },
     "positionType": "dust"
   },
@@ -155817,7 +155817,7 @@
     "first_seen_at": "2025-09-21T20:09:15.000000Z",
     "color": {
       "hsl": {
-        "h": 227.1,
+        "h": 227,
         "s": 40,
         "l": 30
       },
@@ -155875,9 +155875,9 @@
       }
     },
     "position": {
-      "x": -978.8,
-      "y": -3278.1,
-      "z": -2052.8
+      "x": -2806.7,
+      "y": 2320.8,
+      "z": -2320.1
     },
     "positionType": "dust"
   },
@@ -156963,10 +156963,10 @@
       },
       "rgb": {
         "r": 46,
-        "g": 51,
+        "g": 52,
         "b": 107
       },
-      "hex": "#2e336b",
+      "hex": "#2e346b",
       "debug": {
         "ageDays": 571,
         "ageNorm": 0.829,

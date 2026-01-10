@@ -115,24 +115,27 @@ func fibonacciSpherePoint(index, total int) (theta, phi float64) {
 // ============================================================================
 
 func getSuperGiantPosition(domain string, cfg Config) *Position {
-	// Form an equilateral triangle in 3D space
+	// Form an equilateral triangle in the XY plane, centered at origin
+	// All three points are at distance r from the origin, separated by 120°
 	r := cfg.SupergiantRadius
-	z := cfg.SupergiantZHeight
+
+	// 120° = 2π/3 radians apart
+	// Point 0: angle 90° (top)
+	// Point 1: angle 210° (bottom-left)
+	// Point 2: angle 330° (bottom-right)
 
 	switch domain {
 	case "mastodon.social":
-		return &Position{X: 0, Y: 0, Z: 0} // Origin
+		// 90° (π/2): cos=0, sin=1
+		return &Position{X: 0, Y: r, Z: 0}
 
 	case "misskey.io":
-		return &Position{X: r, Y: 0, Z: z}
+		// 210° (7π/6): cos=-√3/2≈-0.866, sin=-0.5
+		return &Position{X: r * (-0.866), Y: r * (-0.5), Z: 0}
 
 	case "pixelfed.social":
-		// 120° rotation: cos(120°) = -0.5, sin(120°) = 0.866
-		return &Position{
-			X: r * (-0.5),
-			Y: r * 0.866,
-			Z: -z,
-		}
+		// 330° (11π/6): cos=√3/2≈0.866, sin=-0.5
+		return &Position{X: r * 0.866, Y: r * (-0.5), Z: 0}
 
 	default:
 		return &Position{X: 0, Y: 0, Z: 0}
