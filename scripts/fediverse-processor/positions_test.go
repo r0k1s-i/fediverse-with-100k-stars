@@ -30,12 +30,15 @@ func TestGetSuperGiantPosition_ThreeStars(t *testing.T) {
 	}
 }
 
-func TestGetSuperGiantPosition_MastodonSocialAtOrigin(t *testing.T) {
+func TestGetSuperGiantPosition_MastodonSocialPosition(t *testing.T) {
 	cfg := DefaultConfig
 	pos := getSuperGiantPosition("mastodon.social", cfg)
 
-	if pos.X != 0 || pos.Y != 0 || pos.Z != 0 {
-		t.Errorf("mastodon.social should be at origin (0,0,0), got (%f,%f,%f)", pos.X, pos.Y, pos.Z)
+	// mastodon.social should be at (0, r, 0) - top of the triangle
+	expectedY := cfg.SupergiantRadius
+	if pos.X != 0 || pos.Y != expectedY || pos.Z != 0 {
+		t.Errorf("mastodon.social should be at (0,%.0f,0), got (%.1f,%.1f,%.1f)",
+			expectedY, pos.X, pos.Y, pos.Z)
 	}
 }
 
@@ -46,20 +49,20 @@ func TestGetSuperGiantPosition_ProperSpacing(t *testing.T) {
 	p2 := getSuperGiantPosition("misskey.io", cfg)
 	p3 := getSuperGiantPosition("pixelfed.social", cfg)
 
-	// Calculate distances
 	dist12 := math.Sqrt(math.Pow(p1.X-p2.X, 2) + math.Pow(p1.Y-p2.Y, 2) + math.Pow(p1.Z-p2.Z, 2))
 	dist13 := math.Sqrt(math.Pow(p1.X-p3.X, 2) + math.Pow(p1.Y-p3.Y, 2) + math.Pow(p1.Z-p3.Z, 2))
 	dist23 := math.Sqrt(math.Pow(p2.X-p3.X, 2) + math.Pow(p2.Y-p3.Y, 2) + math.Pow(p2.Z-p3.Z, 2))
 
-	// All distances should be reasonable (within 2x of each other)
 	minDist := math.Min(dist12, math.Min(dist13, dist23))
 	maxDist := math.Max(dist12, math.Max(dist13, dist23))
 
-	if maxDist > minDist*2.5 {
-		t.Errorf("Supergiant distances too uneven: %.1f, %.1f, %.1f", dist12, dist13, dist23)
+	// Equilateral triangle: all sides should be within 5% of each other
+	tolerance := 1.05
+	if maxDist > minDist*tolerance {
+		t.Errorf("Supergiant triangle not equilateral: sides %.1f, %.1f, %.1f (max/min ratio: %.2f)",
+			dist12, dist13, dist23, maxDist/minDist)
 	}
 
-	// Should be roughly at SupergiantRadius
 	avgDist := (dist12 + dist13 + dist23) / 3
 	if avgDist < cfg.SupergiantRadius*0.5 || avgDist > cfg.SupergiantRadius*2.0 {
 		t.Errorf("Average distance %.1f not proportional to SupergiantRadius %.1f", avgDist, cfg.SupergiantRadius)
