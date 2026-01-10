@@ -45,6 +45,69 @@ var fediverseColorGraph = THREE.ImageUtils.loadTexture(
   "index_files/star_color_modified.png",
 );
 
+var instanceSunHaloTexture = THREE.ImageUtils.loadTexture("index_files/sun_halo.png");
+var instanceCoronaTexture = THREE.ImageUtils.loadTexture("index_files/corona.png");
+
+var MAJOR_INSTANCE_COLORS = {
+  "mastodon.social": 0xffffff,
+  "misskey.io": 0xffffff,
+  "pixelfed.social": 0xffffff,
+};
+
+function isMajorInstance(domain) {
+  return MAJOR_INSTANCE_COLORS.hasOwnProperty(domain);
+}
+
+function getMajorInstanceColor(domain) {
+  return MAJOR_INSTANCE_COLORS[domain];
+}
+
+function createMajorInstancePreview(color) {
+  var container = new THREE.Object3D();
+
+  var haloMaterial = new THREE.MeshBasicMaterial({
+    map: instanceSunHaloTexture,
+    blending: THREE.AdditiveBlending,
+    transparent: true,
+    depthTest: false,
+    depthWrite: false,
+    color: color || 0xffffff,
+  });
+  var haloMesh = new THREE.Mesh(new THREE.PlaneGeometry(60, 60), haloMaterial);
+  container.add(haloMesh);
+
+  var coronaMaterial = new THREE.MeshBasicMaterial({
+    map: instanceCoronaTexture,
+    blending: THREE.AdditiveBlending,
+    transparent: true,
+    depthTest: false,
+    depthWrite: false,
+    color: color || 0xffffff,
+  });
+  var coronaMesh = new THREE.Mesh(new THREE.PlaneGeometry(120, 120), coronaMaterial);
+  container.add(coronaMesh);
+
+  container.update = function () {
+    var zoomFactor = camera.position.z;
+    var opacity = constrain(Math.pow(zoomFactor * 0.002, 2), 0, 1);
+    if (opacity < 0.1) opacity = 0.0;
+
+    haloMaterial.opacity = opacity;
+    coronaMaterial.opacity = opacity * 0.6;
+
+    if (opacity <= 0.0) {
+      this.visible = false;
+    } else {
+      this.visible = true;
+    }
+
+    var scale = constrain(Math.pow(zoomFactor * 0.001, 2), 0.1, 1.5);
+    this.scale.setLength(scale);
+  };
+
+  return container;
+}
+
 var fediverseUniforms = {
   color: { type: "c", value: new THREE.Color(0xffffff) },
   texture0: { type: "t", value: fediverseTexture0 },
@@ -133,24 +196,31 @@ function generateFediverseInstances() {
       base.y = 0;
       pLineGeo.vertices.push(base);
 
-      var preview = instancePreview.clone();
       var gyroInstance = new THREE.Gyroscope();
       gyroInstance.position.copy(p);
-      gyroInstance.add(preview);
 
-      preview.update = function () {
-        this.material.opacity = constrain(
-          Math.pow(camera.position.z * 0.002, 2),
-          0,
-          1,
-        );
-        if (this.material.opacity < 0.1) this.material.opacity = 0.0;
-        if (this.material.opacity <= 0.0) this.visible = false;
-        else this.visible = true;
-        this.scale.setLength(
-          constrain(Math.pow(camera.position.z * 0.001, 2), 0, 1),
-        );
-      };
+      if (isMajorInstance(instance.domain)) {
+        var majorColor = getMajorInstanceColor(instance.domain);
+        var majorPreview = createMajorInstancePreview(majorColor);
+        gyroInstance.add(majorPreview);
+      } else {
+        var preview = instancePreview.clone();
+        gyroInstance.add(preview);
+
+        preview.update = function () {
+          this.material.opacity = constrain(
+            Math.pow(camera.position.z * 0.002, 2),
+            0,
+            1,
+          );
+          if (this.material.opacity < 0.1) this.material.opacity = 0.0;
+          if (this.material.opacity <= 0.0) this.visible = false;
+          else this.visible = true;
+          this.scale.setLength(
+            constrain(Math.pow(camera.position.z * 0.001, 2), 0, 1),
+          );
+        };
+      }
 
       var g = new THREE.Gyroscope();
       container.add(g);
