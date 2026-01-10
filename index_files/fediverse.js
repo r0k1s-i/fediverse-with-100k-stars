@@ -193,7 +193,7 @@ function generateFediverseInstances() {
     if (userCount >= MIN_USERS_FOR_LINE) {
       pLineGeo.vertices.push(p.clone());
       var base = p.clone();
-      base.y = 0;
+      base.z = 0;
       pLineGeo.vertices.push(base);
     }
 
@@ -336,7 +336,6 @@ function generateFediverseInstances() {
     new THREE.PlaneGeometry(20000, 20000, 60, 60),
     gridMaterial,
   );
-  gridPlane.rotation.x = Math.PI / 2;
   gridPlane.material.map.wrapS = THREE.RepeatWrapping;
   gridPlane.material.map.wrapT = THREE.RepeatWrapping;
   gridPlane.material.map.repeat.set(8, 8);
