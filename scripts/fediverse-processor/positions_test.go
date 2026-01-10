@@ -269,21 +269,18 @@ func TestCalculateInstancePosition_DifferentSizes(t *testing.T) {
 	systemCenter := Position{X: 10000, Y: 5000, Z: 2000}
 	systemMaxRadius := 5000.0
 
-	// Planet (large instance)
 	planetInstance := &Instance{
 		Domain: "planet.test",
 		Stats:  &Stats{UserCount: 5000, MonthlyActiveUsers: 2500},
 	}
-	planetPos := calculateInstancePosition(planetInstance, systemCenter, systemMaxRadius, cfg)
+	planetPos := calculateInstancePosition(planetInstance, systemCenter, systemMaxRadius, 0, 100, "TestSoftware", cfg)
 
-	// Dust (small instance)
 	dustInstance := &Instance{
 		Domain: "dust.test",
 		Stats:  &Stats{UserCount: 5, MonthlyActiveUsers: 2},
 	}
-	dustPos := calculateInstancePosition(dustInstance, systemCenter, systemMaxRadius, cfg)
+	dustPos := calculateInstancePosition(dustInstance, systemCenter, systemMaxRadius, 99, 100, "TestSoftware", cfg)
 
-	// Calculate distances from system center
 	planetDist := math.Sqrt(math.Pow(planetPos.X-systemCenter.X, 2) +
 		math.Pow(planetPos.Y-systemCenter.Y, 2) +
 		math.Pow(planetPos.Z-systemCenter.Z, 2))
@@ -292,16 +289,14 @@ func TestCalculateInstancePosition_DifferentSizes(t *testing.T) {
 		math.Pow(dustPos.Y-systemCenter.Y, 2) +
 		math.Pow(dustPos.Z-systemCenter.Z, 2))
 
-	// Planet should be closer to center than dust
 	if planetDist >= dustDist {
 		t.Errorf("Planet (dist %.1f) should be closer to center than dust (dist %.1f)", planetDist, dustDist)
 	}
 
-	// Planet should be in inner 40%, dust should be in outer 85-100%
-	if planetDist > systemMaxRadius*0.4*1.2 { // Allow 20% margin for variation
+	if planetDist > systemMaxRadius*0.4*1.2 {
 		t.Errorf("Planet distance %.1f exceeds expected max %.1f", planetDist, systemMaxRadius*0.4)
 	}
-	if dustDist < systemMaxRadius*0.85*0.8 { // Allow 20% margin for variation
+	if dustDist < systemMaxRadius*0.85*0.8 {
 		t.Errorf("Dust distance %.1f below expected min %.1f", dustDist, systemMaxRadius*0.85)
 	}
 }
@@ -311,18 +306,16 @@ func TestCalculateInstancePosition_ZAxisVariation(t *testing.T) {
 	systemCenter := Position{X: 0, Y: 0, Z: 0}
 	systemMaxRadius := 5000.0
 
-	// Test multiple instances
 	var zValues []float64
 	for i := 0; i < 10; i++ {
 		instance := &Instance{
 			Domain: "test" + string(rune(i)) + ".instance",
 			Stats:  &Stats{UserCount: 100, MonthlyActiveUsers: 50},
 		}
-		pos := calculateInstancePosition(instance, systemCenter, systemMaxRadius, cfg)
+		pos := calculateInstancePosition(instance, systemCenter, systemMaxRadius, i, 10, "TestSoftware", cfg)
 		zValues = append(zValues, pos.Z)
 	}
 
-	// Z values should vary significantly for spherical distribution
 	minZ := zValues[0]
 	maxZ := zValues[0]
 	for _, z := range zValues[1:] {
@@ -335,7 +328,6 @@ func TestCalculateInstancePosition_ZAxisVariation(t *testing.T) {
 	}
 
 	zRange := maxZ - minZ
-	// For spherical distribution, expect substantial Z variation (at least 30% of max radius)
 	if zRange < systemMaxRadius*0.3 {
 		t.Errorf("Z-axis variation too small for sphere: %.1f (expected > %.1f)", zRange, systemMaxRadius*0.3)
 	}
@@ -351,9 +343,8 @@ func TestCalculateInstancePosition_Deterministic(t *testing.T) {
 		Stats:  &Stats{UserCount: 500, MonthlyActiveUsers: 250},
 	}
 
-	// Calculate same position twice
-	pos1 := calculateInstancePosition(instance, systemCenter, systemMaxRadius, cfg)
-	pos2 := calculateInstancePosition(instance, systemCenter, systemMaxRadius, cfg)
+	pos1 := calculateInstancePosition(instance, systemCenter, systemMaxRadius, 5, 50, "TestSoftware", cfg)
+	pos2 := calculateInstancePosition(instance, systemCenter, systemMaxRadius, 5, 50, "TestSoftware", cfg)
 
 	if pos1.X != pos2.X || pos1.Y != pos2.Y || pos1.Z != pos2.Z {
 		t.Error("Same instance should produce same position")

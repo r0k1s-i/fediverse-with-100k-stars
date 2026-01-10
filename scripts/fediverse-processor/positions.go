@@ -110,6 +110,37 @@ func fibonacciSpherePoint(index, total int) (theta, phi float64) {
 	return theta, phi
 }
 
+// rotatePoint applies a deterministic rotation based on seed string
+// Uses Rodrigues' rotation formula for rotation around an arbitrary axis
+func rotatePoint(p Position, seed string) Position {
+	// Generate rotation axis from hash (unit vector on sphere)
+	axisTheta := domainHash(seed+"_axisTheta") * 2 * math.Pi
+	axisPhi := math.Acos(2*domainHash(seed+"_axisPhi") - 1)
+
+	kx := math.Sin(axisPhi) * math.Cos(axisTheta)
+	ky := math.Sin(axisPhi) * math.Sin(axisTheta)
+	kz := math.Cos(axisPhi)
+
+	// Rotation angle (0 to 2π)
+	angle := domainHash(seed+"_angle") * 2 * math.Pi
+
+	cosA := math.Cos(angle)
+	sinA := math.Sin(angle)
+
+	// Rodrigues' formula: v' = v*cos(θ) + (k×v)*sin(θ) + k*(k·v)*(1-cos(θ))
+	crossX := ky*p.Z - kz*p.Y
+	crossY := kz*p.X - kx*p.Z
+	crossZ := kx*p.Y - ky*p.X
+
+	dot := kx*p.X + ky*p.Y + kz*p.Z
+
+	return Position{
+		X: p.X*cosA + crossX*sinA + kx*dot*(1-cosA),
+		Y: p.Y*cosA + crossY*sinA + ky*dot*(1-cosA),
+		Z: p.Z*cosA + crossZ*sinA + kz*dot*(1-cosA),
+	}
+}
+
 // ============================================================================
 // Supergiant Positions
 // ============================================================================
@@ -325,44 +356,38 @@ func countSoftwareInArm(tiers []TierInfo, armIndex int) int {
 // Instance Positioning Within Systems
 // ============================================================================
 
-func calculateInstancePosition(instance *Instance, systemCenter Position, systemMaxRadius float64, cfg Config) *Position {
+func calculateInstancePosition(instance *Instance, systemCenter Position, systemMaxRadius float64, rank int, total int, softwareSeed string, cfg Config) *Position {
 	userCount := getInstanceUserCount(instance)
 	sizeType := classifyInstanceSize(userCount, cfg)
 
-	// Get radial range for this size class
 	minR, maxR := getInstanceRadiusRange(sizeType)
-
-	// Position within range based on exact user count (larger = closer to center)
 	userNorm := logNormalize(float64(userCount), float64(cfg.MaxUserCount))
 	radiusFraction := maxR - (userNorm * (maxR - minR))
 
-	// Add hash-based variation for staggering
 	distHash := domainHash(instance.Domain + "_dist")
 	radiusVariation := (distHash - 0.5) * cfg.RadialVariationFactor * systemMaxRadius
 	distance := radiusFraction*systemMaxRadius + radiusVariation
 
-	// Ensure distance is positive
 	if distance < 0 {
 		distance = minR * systemMaxRadius
 	}
 
-	// SPHERICAL distribution within system (like a star cluster)
-	// Each software type forms a spherical "globular cluster" along the spiral arm
+	// Use Fibonacci Sphere for uniform distribution based on rank
+	theta, phi := fibonacciSpherePoint(rank, total)
 
-	// Azimuthal angle (around Z axis)
-	thetaHash := domainHash(instance.Domain + "_theta")
-	theta := thetaHash * 2 * math.Pi
+	localPos := Position{
+		X: distance * math.Sin(phi) * math.Cos(theta),
+		Y: distance * math.Sin(phi) * math.Sin(theta),
+		Z: distance * math.Cos(phi),
+	}
 
-	// Polar angle (from Z axis) - use proper spherical distribution
-	phiHash := domainHash(instance.Domain + "_phi")
-	// Use arccos for uniform sphere sampling
-	cosPhi := 2*phiHash - 1 // Uniform in [-1, 1]
-	phi := math.Acos(constrain(cosPhi, -1.0, 1.0))
+	// Apply system-specific rotation for visual variety
+	rotated := rotatePoint(localPos, softwareSeed)
 
 	return &Position{
-		X: systemCenter.X + distance*math.Sin(phi)*math.Cos(theta),
-		Y: systemCenter.Y + distance*math.Sin(phi)*math.Sin(theta),
-		Z: systemCenter.Z + distance*math.Cos(phi),
+		X: systemCenter.X + rotated.X,
+		Y: systemCenter.Y + rotated.Y,
+		Z: systemCenter.Z + rotated.Z,
 	}
 }
 
@@ -459,38 +484,36 @@ func ProcessPositions(instances []Instance, cfg Config) []Instance {
 		instance := &result[i]
 		software := getSoftwareName(instance)
 
-		// Check if supergiant
 		if isSuperGiant(instance.Domain, cfg) {
 			instance.Position = getSuperGiantPosition(instance.Domain, cfg)
 			instance.PositionType = "supergiant"
 			continue
 		}
 
-		// Check if has valid software type with system center
 		systemCenter, ok := systemCenters[software]
 		if !ok {
-			// Unknown software - place in outer rim
 			instance.Position = calculateOuterRimPosition(instance, cfg)
 			instance.PositionType = "unknown"
 			continue
 		}
 
-		// Calculate position within software system
 		systemMaxRadius := systemRadii[software]
 		userCount := getInstanceUserCount(instance)
 
-		// Check if this is the largest instance in its software type (system center)
-		// But exclude supergiants which already have their position
-		isLargest := false
-		if len(bySoftware[software]) > 0 {
-			largestIdx := bySoftware[software][0]
-			if instances[largestIdx].Domain == instance.Domain {
-				isLargest = true
+		indices := bySoftware[software]
+		total := len(indices)
+
+		rank := -1
+		for r, idx := range indices {
+			if instances[idx].Domain == instance.Domain {
+				rank = r
+				break
 			}
 		}
 
+		isLargest := rank == 0
+
 		if isLargest && !isSuperGiant(instance.Domain, cfg) {
-			// Place at system center
 			instance.Position = &Position{
 				X: systemCenter.X,
 				Y: systemCenter.Y,
@@ -498,12 +521,10 @@ func ProcessPositions(instances []Instance, cfg Config) []Instance {
 			}
 			instance.PositionType = classifyInstanceSize(userCount, cfg)
 		} else {
-			// Calculate orbital position within system
-			instance.Position = calculateInstancePosition(instance, systemCenter, systemMaxRadius, cfg)
+			instance.Position = calculateInstancePosition(instance, systemCenter, systemMaxRadius, rank, total, software, cfg)
 			instance.PositionType = classifyInstanceSize(userCount, cfg)
 		}
 
-		// Round positions
 		instance.Position.X = math.Round(instance.Position.X*10) / 10
 		instance.Position.Y = math.Round(instance.Position.Y*10) / 10
 		instance.Position.Z = math.Round(instance.Position.Z*10) / 10
