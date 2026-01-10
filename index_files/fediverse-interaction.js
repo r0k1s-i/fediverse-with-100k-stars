@@ -88,13 +88,13 @@ function onFediverseMouseMove(event) {
     
     // Transform ray origin to local space
     var rayOrigin = fediverseInteraction.raycaster.ray.origin.clone();
-    inverseMatrix.multiplyVector3(rayOrigin);
+    rayOrigin.applyMatrix4(inverseMatrix);
     
     // Transform ray direction to local space (rotation only, no translation)
     var rayDirection = fediverseInteraction.raycaster.ray.direction.clone();
     var rotationMatrix = new THREE.Matrix4();
     rotationMatrix.extractRotation(inverseMatrix);
-    rotationMatrix.multiplyVector3(rayDirection);
+    rayDirection.applyMatrix4(rotationMatrix);
     rayDirection.normalize();
 
     closestInstance = InteractionMath.findClosestInstance(
@@ -196,15 +196,9 @@ function isClickOnUI(event) {
 }
 
 function onFediverseClick(event) {
-  console.log("onFediverseClick called", {
-    enableFediverse: enableFediverse,
-    target: event.target,
-  });
-
   if (!enableFediverse) return;
 
   if (isClickOnUI(event)) {
-    console.log("Click on UI, ignoring");
     return;
   }
 
@@ -259,11 +253,8 @@ function onFediverseClick(event) {
   }
 
   if (!clickTarget) {
-    console.log("No instance selected");
     return;
   }
-
-  console.log("Clicking on instance:", clickTarget);
 
   event.stopPropagation();
   event.preventDefault();
