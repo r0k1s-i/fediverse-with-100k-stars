@@ -19,6 +19,7 @@
 | 5 | WebGL交互 | ✅ 完成 | 4k+ 点击可交互 |
 | 6 | Canvas标签 | ✅ 完成 | 智能避让算法 |
 | 7 | 目录重构 | ✅ 完成 | 现代前端最佳实践 |
+| 8 | 现代化升级 | ✅ 完成 | 升级至 Three.js r158, ES Modules |
 
 ---
 
@@ -149,6 +150,15 @@ go test -v
 
 ## 📝 更新日志
 
+### 2026-01-12
+- ♻️ **现代化升级**: 完成 Three.js r158 迁移
+  - 移除 `three-compat.js` 兼容层
+  - 实现本地 `Gyroscope` 类
+  - 迁移 `LensFlare` 到现代 Addon
+  - 替换 `LinePieces` 为 `LineSegments`
+  - 修复 `tween.js` 模块导出问题
+  - 修复核心模块的 ES Module 导入
+
 ### 2026-01-11
 - ♻️ **目录重构**: 按现代前端最佳实践重组
   - 删除28个无用文件 (-6,041行代码)
@@ -171,6 +181,6 @@ go test -v
 
 - [ ] Phase 8: 视觉增强（搜索、过滤、统计面板）
 - [ ] Phase 9: 实时更新支持
-- [ ] Three.js 升级到现代版本
+- [x] Three.js 升级到现代版本
 - [ ] 添加构建工具 (Vite/Rollup)
 - [ ] TypeScript 迁移
