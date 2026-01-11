@@ -1,3 +1,4 @@
+
 function loadStarData(dataFile, callback) {
   var xhr = new XMLHttpRequest();
   setLoadMessage("Fetching stellar data");
@@ -5,7 +6,6 @@ function loadStarData(dataFile, callback) {
     "load",
     function (event) {
       var parsed = JSON.parse(xhr.responseText);
-      // console.log(parsed);
       if (callback) {
         setLoadMessage("Parsing stellar data");
         callback(parsed);
@@ -17,51 +17,50 @@ function loadStarData(dataFile, callback) {
   xhr.send(null);
 }
 
-//	points in the sky in HIPPARCOS star cluster
-var datastarTexture0 = THREE.ImageUtils.loadTexture("src/assets/textures/p_0.png");
-var datastarTexture1 = THREE.ImageUtils.loadTexture("src/assets/textures/p_2.png");
-var datastarHeatVisionTexture = THREE.ImageUtils.loadTexture(
+var textureLoader = new THREE.TextureLoader();
+
+var datastarTexture0 = textureLoader.load("src/assets/textures/p_0.png");
+var datastarTexture1 = textureLoader.load("src/assets/textures/p_2.png");
+var datastarHeatVisionTexture = textureLoader.load(
   "src/assets/textures/sharppoint.png",
 );
 
-//	bright flashy named stars graphic
-var starPreviewTexture = THREE.ImageUtils.loadTexture(
+var starPreviewTexture = textureLoader.load(
   "src/assets/textures/star_preview.png",
   undefined,
   setLoadMessage("Focusing optics"),
 );
-var starColorGraph = THREE.ImageUtils.loadTexture(
+var starColorGraph = textureLoader.load(
   "src/assets/textures/star_color_hsl.png",
 );
 
 var datastarUniforms = {
-  color: { type: "c", value: new THREE.Color(0xffffff) },
-  texture0: { type: "t", value: datastarTexture0 },
-  texture1: { type: "t", value: datastarTexture1 },
-  heatVisionTexture: { type: "t", value: datastarHeatVisionTexture },
-  spectralLookup: { type: "t", value: starColorGraph },
-  idealDepth: { type: "f", value: 1.0 },
-  blurPower: { type: "f", value: 1.0 },
-  blurDivisor: { type: "f", value: 2.0 },
-  sceneSize: { type: "f", value: 120.0 },
-  cameraDistance: { type: "f", value: 800.0 },
-  zoomSize: { type: "f", value: 1.0 },
-  scale: { type: "f", value: 1.0 },
-  brightnessScale: { type: "f", value: 1.0 },
-  heatVision: { type: "f", value: 0.0 },
-};
-
-var datastarAttributes = {
-  size: { type: "f", value: [] },
-  customColor: { type: "c", value: [] },
-  colorIndex: { type: "f", value: [] },
+  color: { value: new THREE.Color(0xffffff) },
+  texture0: { value: datastarTexture0 },
+  texture1: { value: datastarTexture1 },
+  heatVisionTexture: { value: datastarHeatVisionTexture },
+  spectralLookup: { value: starColorGraph },
+  idealDepth: { value: 1.0 },
+  blurPower: { value: 1.0 },
+  blurDivisor: { value: 2.0 },
+  sceneSize: { value: 120.0 },
+  cameraDistance: { value: 800.0 },
+  zoomSize: { value: 1.0 },
+  scale: { value: 1.0 },
+  brightnessScale: { value: 1.0 },
+  heatVision: { value: 0.0 },
 };
 
 function generateHipparcosStars() {
   var container = new THREE.Object3D();
 
-  var pGeo = new THREE.Geometry();
   var count = starData.length;
+  var geometry = new THREE.BufferGeometry();
+  
+  var positions = new Float32Array(count * 3);
+  var colors = new Float32Array(count * 3);
+  var sizes = new Float32Array(count);
+  var colorIndexes = new Float32Array(count);
 
   var starPreviews = new THREE.Object3D();
   container.add(starPreviews);
@@ -79,40 +78,26 @@ function generateHipparcosStars() {
     starPreviewMaterial,
   );
 
-  var pLineGeo = new THREE.Geometry();
+  var linePositions = [];
+  var namedStars = [];
 
   for (var i = 0; i < count; i++) {
     var star = starData[i];
 
-    //	original data is in parsecs
-    //	we need to convert these into light years
-    //	in this case 1.0 GL unit is a light year...
-
-    //	data comes in parsecs
-    //	need to convert this to LY
     var distance = star.d * 3.26156;
 
-    //	stars with error data?
     if (distance >= 10000000) {
-      // console.log( star );
       star.position = new THREE.Vector3();
       continue;
     }
 
-    //	this sucks but we have to make a special case for the sun
     if (i == 0) {
-      lat = 0;
-      lon = 0;
       distance = 0;
     }
-
-    var p = new THREE.Vector3(0, 0, 0);
 
     var ra = star.ra;
     var dec = star.dec;
 
-    //	using this method
-    //	http://math.stackexchange.com/questions/52936/plotting-a-stars-position-on-a-2d-map
     var phi = ((ra + 90) * 15 * Math.PI) / 180;
     var theta = (dec * Math.PI) / 180;
     var rho = distance;
@@ -121,138 +106,86 @@ function generateHipparcosStars() {
     var y = rvect * Math.sin(phi);
     var z = rho * Math.sin(theta);
 
-    p.set(x, y, z);
+    var p = new THREE.Vector3(x, y, z);
 
-    /*
-		//	using galactic coordinates
-		var latlon = EquatorialToGalactic( ra, dec );
-		var lat = latlon.lat;
-		var lon = latlon.lon;
+    p.applyEuler(new THREE.Euler(Math.PI / 2, Math.PI, -Math.PI / 2));
 
-		star.lat = lat;
-		star.lon = lon;
+    x = p.x;
+    y = p.y;
+    z = p.z;
 
-        var phi = Math.PI/2 - lat;
-        var theta = 2 * Math.PI - lon;
+    positions[i * 3] = x;
+    positions[i * 3 + 1] = y;
+    positions[i * 3 + 2] = z;
 
-        p.x = Math.sin(phi) * Math.cos(theta) * distance;
-        p.y = -Math.cos(phi) * distance;
-        p.z = Math.sin(phi) * Math.sin(theta) * distance;
+    var size = 20.0;
+    var name = star.name;
+    var spectralIndex = star.c;
 
-        star.position = p;
-        */
-
-    //	using astronexus coordinates
-    /*
-		var x = star.x * 3.26156;
-		var y = star.y * 3.26156;
-		var z = star.z * 3.26156;
-		*/
-
-    // console.log( star.position );
-
-    // p.size = 0.16;
-    p.size = 20.0;
-    p.name = star.name;
-    p.spectralIndex = star.c;
-
-    //	what to do with stars that have bad spectral data?
     if (star.c <= -1) star.c = 0;
 
-    p.spectralLookup = map(star.c, -0.3, 1.52, 0, 1);
-    // console.log( star.c + " --> " + p.spectralLookup );
+    var spectralLookup = map(star.c, -0.3, 1.52, 0, 1);
 
-    if (i == 0) p.size = 0;
+    if (i == 0) size = 0;
+    
+    sizes[i] = size;
+    colorIndexes[i] = spectralLookup;
+    
+    colors[i * 3] = 1.0;
+    colors[i * 3 + 1] = 1.0;
+    colors[i * 3 + 2] = 1.0;
 
-    pGeo.vertices.push(p);
+    if (name && name.length > 0) {
+        linePositions.push(x, y, z);
+        linePositions.push(x, 0, z);
 
-    var r = 1,
-      g = 1,
-      b = 1;
-    var c = new THREE.Color();
-    c.r = r;
-    c.g = g;
-    c.b = b;
-    pGeo.colors.push(c);
-  }
+        var preview = starPreview.clone();
+        var gyroStar = new THREE.Gyroscope();
+        gyroStar.position.set(x, y, z);
+        gyroStar.add(preview);
 
-  var matrix = new THREE.Matrix4();
-  var angle = new THREE.Euler(Math.PI / 2, Math.PI, -Math.PI / 2);
-  var quat = new THREE.Quaternion();
-  quat.setFromEuler(angle);
-  matrix.makeRotationFromQuaternion(quat);
+        preview.update = function () {
+            this.material.opacity = constrain(
+              Math.pow(camera.position.z * 0.002, 2),
+              0,
+              1,
+            );
+            if (this.material.opacity < 0.1) this.material.opacity = 0.0;
+            if (this.material <= 0.0) this.visibile = false;
+            else this.visible = true;
+            this.scale.setLength(
+              constrain(Math.pow(camera.position.z * 0.001, 2), 0, 1),
+            );
+        };
 
-  // matrix.scale( new THREE.Vector3(1,-1,1) );
-  pGeo.applyMatrix(matrix);
+        var g = new THREE.Gyroscope();
+        container.add(g);
 
-  for (var i in pGeo.vertices) {
-    var p = pGeo.vertices[i];
-    if (p.name === undefined) continue;
-    if (p.name.length > 0) {
-      //	make a line from base plane to star
-      pLineGeo.vertices.push(p.clone());
-      var base = p.clone();
-      base.y = 0;
-      pLineGeo.vertices.push(base);
+        g.name = name;
+        g.spectralIndex = spectralIndex;
+        g.position.set(x, y, z);
+        g.scale.setLength(0.2);
+        attachMarker(g);
 
-      //	create a star sprite highlighting it
-      var preview = starPreview.clone();
-      var gyroStar = new THREE.Gyroscope();
-      gyroStar.position.copy(p);
-      gyroStar.add(preview);
-
-      //	give it an update based on camera...
-      preview.update = function () {
-        this.material.opacity = constrain(
-          Math.pow(camera.position.z * 0.002, 2),
-          0,
-          1,
-        );
-        if (this.material.opacity < 0.1) this.material.opacity = 0.0;
-        if (this.material <= 0.0) this.visibile = false;
-        else this.visible = true;
-        this.scale.setLength(
-          constrain(Math.pow(camera.position.z * 0.001, 2), 0, 1),
-        );
-      };
-
-      //	create a self contained gyroscope for the star marker
-      var g = new THREE.Gyroscope();
-      container.add(g);
-
-      // starPreview.name = star.name;
-      g.name = p.name;
-      g.spectralIndex = p.spectralIndex;
-      // console.log(g.name);
-      g.position.copy(p);
-      g.scale.setLength(0.2);
-      attachMarker(g);
-
-      starPreviews.add(gyroStar);
+        starPreviews.add(gyroStar);
+        
+        namedStars.push({ x: x, y: y, z: z });
     }
   }
 
+  geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  geometry.setAttribute('customColor', new THREE.BufferAttribute(colors, 3));
+  geometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+  geometry.setAttribute('colorIndex', new THREE.BufferAttribute(colorIndexes, 1));
+
   var shaderMaterial = new THREE.ShaderMaterial({
     uniforms: datastarUniforms,
-    attributes: datastarAttributes,
     vertexShader: shaderList.datastars.vertex,
     fragmentShader: shaderList.datastars.fragment,
-
     blending: THREE.AdditiveBlending,
     depthTest: false,
     depthWrite: false,
     transparent: true,
-
-    // blending: 		THREE.NormalBlending,
-    // depthTest: 		true,
-    // depthWrite: 	true,
-    // transparent:	false,
-    // sizeAttenuation: false,
-
-    // blending: 		THREE.NormalBlending,
-    // depthTest: 		true,
-    // depthWrite: 	true,
-    // transparent:	false,
   });
 
   container.heatVision = false;
@@ -276,11 +209,9 @@ function generateHipparcosStars() {
     container.heatVision = !container.heatVision;
 
     if (container.heatVision) {
-      // $spectralGraph.css({opacity:1});
       $spectralGraph.addClass("heatvision").fadeIn();
       $iconNav.addClass("heatvision");
     } else {
-      // $spectralGraph.css({opacity:0});
       $spectralGraph.removeClass("heatvision").fadeOut();
       $iconNav.removeClass("heatvision");
     }
@@ -288,46 +219,32 @@ function generateHipparcosStars() {
 
   window.toggleHeatVision = container.toggleHeatVision;
 
-  var pSystem = new THREE.ParticleSystem(pGeo, shaderMaterial);
-  pSystem.dynamic = false;
+  var pSystem = new THREE.Points(geometry, shaderMaterial);
 
-  //	set the values to the shader
-  var values_size = datastarAttributes.size.value;
-  var values_color = datastarAttributes.customColor.value;
-  var values_spectral = datastarAttributes.colorIndex.value;
+  var lineGeometry = new THREE.BufferGeometry();
+  lineGeometry.setAttribute('position', new THREE.Float32BufferAttribute(linePositions, 3));
 
-  for (var v = 0; v < pGeo.vertices.length; v++) {
-    values_size[v] = pGeo.vertices[v].size;
-    values_color[v] = pGeo.colors[v];
-    values_spectral[v] = pGeo.vertices[v].spectralLookup;
-  }
-
-  //	-----------------------------------------------------------------------------
-  //	attach lines from star to plane base
-  var lineMesh = new THREE.Line(
-    pLineGeo,
+  var lineMesh = new THREE.LineSegments(
+    lineGeometry,
     new THREE.LineBasicMaterial({
       color: 0x333333,
       blending: THREE.AdditiveBlending,
       depthTest: false,
       depthWrite: false,
       transparent: true,
-    }),
-    THREE.LinePieces,
+    })
   );
   pSystem.add(lineMesh);
 
-  //	-----------------------------------------------------------------------------
-  //	create a ring of degree marks around the plane
   var degCounter = 12;
-  var radius = 600;
+  var degRadius = 600;
   for (var i = 0; i < degCounter; i++) {
     var degrees = (i / degCounter) * 360;
     var zerodeg = new THREE.Gyroscope();
     zerodeg.scale.setLength(0.8);
     var angle = (i / degCounter) * Math.TWO_PI;
-    var x = Math.cos(angle) * radius;
-    var y = Math.sin(angle) * radius;
+    var x = Math.cos(angle) * degRadius;
+    var y = Math.sin(angle) * degRadius;
     zerodeg.position.x = x;
     zerodeg.position.z = -y;
     zerodeg.name = degrees + "°";
@@ -335,9 +252,7 @@ function generateHipparcosStars() {
     container.add(zerodeg);
   }
 
-  //	-----------------------------------------------------------------------------
-  //	create base circles for each named star on the plane
-  var starBaseTexture = THREE.ImageUtils.loadTexture(
+  var starBaseTexture = textureLoader.load(
     "src/assets/textures/starbase.png",
   );
   var starBaseMaterial = new THREE.MeshBasicMaterial({
@@ -349,27 +264,20 @@ function generateHipparcosStars() {
     side: THREE.DoubleSide,
   });
   var starBaseGeometry = new THREE.PlaneGeometry(10, 10);
-  var matrix = new THREE.Matrix4();
-  //	seriously?
-  var euler = new THREE.Euler(Math.PI / 2, 0, 0);
-  var quat = new THREE.Quaternion();
-  quat.setFromEuler(euler);
-  matrix.makeRotationFromQuaternion(quat);
-
-  starBaseGeometry.applyMatrix(matrix);
-  var baseGeometryCombined = new THREE.Geometry();
-  var circles = new THREE.Object3D();
-  for (var i in pGeo.vertices) {
-    var p = pGeo.vertices[i];
-    if (p.name !== undefined && p.name.length > 0) {
-      var geo = starBaseGeometry.clone();
-      var geoMatrix = new THREE.Matrix4();
-      geoMatrix.setPosition(p.x, 0, p.z);
-      geo.applyMatrix(geoMatrix);
-      THREE.GeometryUtils.merge(baseGeometryCombined, geo);
-    }
+  
+  var starBases = new THREE.InstancedMesh(starBaseGeometry, starBaseMaterial, namedStars.length);
+  var dummy = new THREE.Object3D();
+  
+  for (var i = 0; i < namedStars.length; i++) {
+      var ns = namedStars[i];
+      dummy.position.set(ns.x, 0, ns.z); 
+      
+      dummy.rotation.x = -Math.PI / 2;
+      
+      dummy.updateMatrix();
+      starBases.setMatrixAt(i, dummy.matrix);
   }
-  var starBases = new THREE.Mesh(baseGeometryCombined, starBaseMaterial);
+  
   starBases.update = function () {
     this.material.opacity = constrain(
       (camera.position.z - 400.0) * 0.002,
@@ -381,19 +289,14 @@ function generateHipparcosStars() {
   };
   pSystem.add(starBases);
 
-  //	-----------------------------------------------------------------------------
-  //	add everything to the container
   container.add(pSystem);
 
-  //	-----------------------------------------------------------------------------
-  //	give it an update function to handle transitions
   container.update = function () {
     var blueshift = (camera.position.z + 5000.0) / 60000.0;
     blueshift = constrain(blueshift, 0.0, 0.2);
 
     var brightnessScale = constrain(10 / Math.sqrt(camera.position.z), 0, 1);
 
-    // console.log(blueshift);
     if (container.heatVision) {
       datastarUniforms.cameraDistance.value = 0.0;
       datastarUniforms.brightnessScale.value = 1.0;
@@ -415,22 +318,8 @@ function generateHipparcosStars() {
     datastarUniforms.scale.value = Math.sqrt(areaOfWindow) * 1.5;
 
     if (camera.position.z < 1500) {
-      // controllers.datastarSize += (0.8 - controllers.datastarSize) * 0.02;
-      // controllers.sceneSize += (10000 - controllers.sceneSize) * 0.06;
     } else {
-      // controllers.datastarSize += (3.0 - controllers.datastarSize) * 0.02;
-      // controllers.datastarSize += (3.0 - controllers.datastarSize) * 0.02;
-      // controllers.sceneSize += (5000.0 - controllers.sceneSize) * 0.06;
     }
-
-    //	some basic LOD
-    // if( camera.position.z > 400 && camera.position.z < 40000 )
-    // 	pSystem.visible = true;
-    // else
-    // 	pSystem.visible = false;
-
-    // datastarUniforms.sceneSize.value = controllers.sceneSize
-    // datastarUniforms.scale.value = controllers.datastarSize;
 
     datastarUniforms.sceneSize.value = 10000;
   };
@@ -446,7 +335,6 @@ function generateHipparcosStars() {
       this.material.opacity += (0.0 - this.material.opacity) * 0.1;
     }
 
-    //	some basic LOD
     if (camera.position.z < 250) this.visible = false;
     else this.visible = true;
   };

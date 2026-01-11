@@ -1,12 +1,12 @@
 
-
 function makeSunEarthDiagram(){
 	var sunEarthDiagram = new THREE.Object3D();
 
 	var distanceToEarth = KMToLY(150000000);
-	var lineGeo = new THREE.Geometry();
-	lineGeo.vertices.push( new THREE.Vector3(0,0,0) );
-	lineGeo.vertices.push( new THREE.Vector3(distanceToEarth,0,0) );
+	var lineGeo = new THREE.BufferGeometry().setFromPoints([
+		new THREE.Vector3(0,0,0),
+		new THREE.Vector3(distanceToEarth,0,0)
+	]);
 	var line = new THREE.Line(lineGeo, new THREE.LineBasicMaterial({color:0xffffff}));
 	sunEarthDiagram.add( line );	
 	
@@ -27,7 +27,8 @@ function makeSunEarthDiagram(){
 	translating.add(sunEarthDiagram);
 }
 
-var clamperTexture = THREE.ImageUtils.loadTexture( 'src/assets/textures/clamper.png' );
+var textureLoader = new THREE.TextureLoader();
+var clamperTexture = textureLoader.load( 'src/assets/textures/clamper.png' );
 var clamperMaterial = new THREE.MeshBasicMaterial({
 	map: clamperTexture,
 	depthTest: false,

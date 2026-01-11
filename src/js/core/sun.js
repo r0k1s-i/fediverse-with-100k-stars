@@ -1,3 +1,4 @@
+
 var sunTexture;
 var sunColorLookupTexture;
 var solarflareTexture;
@@ -5,31 +6,33 @@ var sunHaloTexture;
 var sunHaloColorTexture;
 var sunCoronaTexture;
 
+var textureLoader = new THREE.TextureLoader();
+
 function loadStarSurfaceTextures(){
 	if( sunTexture === undefined ){
-		sunTexture = THREE.ImageUtils.loadTexture( "src/assets/textures/sun_surface.png", undefined, setLoadMessage("Igniting solar plasma") );
+		sunTexture = textureLoader.load( "src/assets/textures/sun_surface.png", undefined, setLoadMessage("Igniting solar plasma") );
 		sunTexture.anisotropy = maxAniso;
 		sunTexture.wrapS = sunTexture.wrapT = THREE.RepeatWrapping;
 	}
 
 	if( sunColorLookupTexture === undefined ){
-		sunColorLookupTexture = THREE.ImageUtils.loadTexture( "src/assets/textures/star_colorshift.png" );
+		sunColorLookupTexture = textureLoader.load( "src/assets/textures/star_colorshift.png" );
 	}
 
 	if( solarflareTexture === undefined ){
-		solarflareTexture = THREE.ImageUtils.loadTexture( "src/assets/textures/solarflare.png", undefined, setLoadMessage("Distributing solar flares")	 );
+		solarflareTexture = textureLoader.load( "src/assets/textures/solarflare.png", undefined, setLoadMessage("Distributing solar flares")	 );
 	}
 
 	if( sunHaloTexture === undefined ){
-		sunHaloTexture = THREE.ImageUtils.loadTexture( "src/assets/textures/sun_halo.png", undefined, setLoadMessage("Calculating coronal mass") );
+		sunHaloTexture = textureLoader.load( "src/assets/textures/sun_halo.png", undefined, setLoadMessage("Calculating coronal mass") );
 	}
 
 	if( sunHaloColorTexture === undefined ){
-		sunHaloColorTexture = THREE.ImageUtils.loadTexture( "src/assets/textures/halo_colorshift.png" );
+		sunHaloColorTexture = textureLoader.load( "src/assets/textures/halo_colorshift.png" );
 	}
 
 	if( sunCoronaTexture === undefined ){
-		sunCoronaTexture = THREE.ImageUtils.loadTexture( "src/assets/textures/corona.png", undefined, setLoadMessage("Projecting coronal ejecta") );
+		sunCoronaTexture = textureLoader.load( "src/assets/textures/corona.png", undefined, setLoadMessage("Projecting coronal ejecta") );
 	}
 }
 
@@ -55,9 +58,7 @@ function makeStarHalo(uniforms){
 			blending: THREE.AdditiveBlending,
 			depthTest: 		false,
 			depthWrite: 	false,
-			color: 0xffffff,
 			transparent: true,
-			//	settings that prevent z fighting
 			polygonOffset: true,
 			polygonOffsetFactor: 1,
 			polygonOffsetUnits: 100,
@@ -71,17 +72,13 @@ function makeStarHalo(uniforms){
 
 var glowGeo = new THREE.PlaneGeometry( .0000012, .0000012 );
 function makeStarGlow(uniforms){
-	//	the bright glow surrounding everything
 	var sunGlowMaterial = new THREE.ShaderMaterial(
 		{
-			//map: sunCoronaTexture,
 			uniforms: 		uniforms,
 			blending: THREE.AdditiveBlending,
 			fragmentShader: shaderList.corona.fragment,
 			vertexShader:   shaderList.corona.vertex,
-			color: 0xffffff,
 			transparent: true,
-			//	settings that prevent z fighting
 			polygonOffset: true,
 			polygonOffsetFactor: -1,
 			polygonOffsetUnits: 100,
@@ -125,10 +122,6 @@ function makeStarLensflare(size, zextra, hueShift){
 	        }
 
 	        flare.rotation = 0;
-
-
-			//flare.rotation = this.positionScreen.x * 0.5;
-	        //flare.rotation = 0;
 	    }
 
 	    for( f=2; f<fl; f++ ){
@@ -138,8 +131,6 @@ function makeStarLensflare(size, zextra, hueShift){
 	    	flare.wantedRotation = flare.x * Math.PI * 0.25;
         	flare.rotation += ( flare.wantedRotation - flare.rotation ) * 0.25;
 	    }
-	    
-	    // console.log(camDistance);
 	};
 	return sunLensFlare;
 }
@@ -152,7 +143,6 @@ function makeSolarflare( uniforms ){
 			vertexShader:   shaderList.starflare.vertex,
 			fragmentShader: shaderList.starflare.fragment,
 			blending: THREE.AdditiveBlending,
-			color: 0xffffff,
 			transparent: true,
 			depthTest: true,
 			depthWrite: false,
@@ -191,76 +181,60 @@ function makeSun( options ){
 	var radius = options.radius;
 	var spectral = options.spectral;
 
-  // console.time("load sun textures"); 
 	loadStarSurfaceTextures();
-  // console.timeEnd("load sun textures");
 
 	var sunUniforms = {
-		texturePrimary:   { type: "t", value: sunTexture },
-		textureColor:   { type: "t", value: sunColorLookupTexture },
-		textureSpectral: { type: "t", value: starColorGraph },
-		time: 			{ type: "f", value: 0 },
-		spectralLookup: { type: "f", value: 0 },		
+		texturePrimary:   { value: sunTexture },
+		textureColor:   { value: sunColorLookupTexture },
+		textureSpectral: { value: starColorGraph },
+		time: 			{ value: 0 },
+		spectralLookup: { value: 0 },		
 	};
 
 	var solarflareUniforms = {
-		texturePrimary:   { type: "t", value: solarflareTexture },
-		time: 			{ type: "f", value: 0 },
-		textureSpectral: { type: "t", value: starColorGraph },
-		spectralLookup: { type: "f", value: 0 },	
+		texturePrimary:   { value: solarflareTexture },
+		time: 			{ value: 0 },
+		textureSpectral: { value: starColorGraph },
+		spectralLookup: { value: 0 },	
 	};
 
 	var haloUniforms = {
-		texturePrimary:   { type: "t", value: sunHaloTexture },
-		textureColor:   { type: "t", value: sunHaloColorTexture },
-		time: 			{ type: "f", value: 0 },
-		textureSpectral: { type: "t", value: starColorGraph },
-		spectralLookup: { type: "f", value: 0 },			
+		texturePrimary:   { value: sunHaloTexture },
+		textureColor:   { value: sunHaloColorTexture },
+		time: 			{ value: 0 },
+		textureSpectral: { value: starColorGraph },
+		spectralLookup: { value: 0 },			
 	};
 
 	var coronaUniforms = {
-		texturePrimary:   { type: "t", value: sunCoronaTexture },
-		textureSpectral: { type: "t", value: starColorGraph },
-		spectralLookup: { type: "f", value: 0 },			
+		texturePrimary:   { value: sunCoronaTexture },
+		textureSpectral: { value: starColorGraph },
+		spectralLookup: { value: 0 },			
 	};	
 
-	//	container
 	var sun = new THREE.Object3D();
 
-	//	the actual glowy ball of fire
-  // console.time("make sun surface");
 	var starSurface = makeStarSurface( radius, sunUniforms );
 	sun.add( starSurface );
-  // console.timeEnd("make sun surface");
 
-  // console.time("make sun solarflare");
 	var solarflare = makeSolarflare( solarflareUniforms );
 	sun.solarflare = solarflare;
 	sun.add( solarflare );	
-  // console.timeEnd("make sun solarflare");
 
-	//	2D overlay elements	
 	var gyro = new THREE.Gyroscope();
 	sun.add( gyro );	
 		sun.gyro = gyro;
 
-    // console.time("make sun lensflare");
 		var starLensflare = makeStarLensflare(1.5, 0.0001, spectral);
 		sun.lensflare = starLensflare;
 		sun.lensflare.name == 'lensflare';
 		gyro.add( starLensflare );
-    // console.timeEnd("make sun lensflare");
 
-		//	the corona that lines the edge of the sun sphere
-    // console.time("make sun halo");
 		var starHalo = makeStarHalo( haloUniforms );
 		gyro.add( starHalo );
-    // console.timeEnd("make sun halo");
 	
-    // console.time("make sun glow");
 		var starGlow = makeStarGlow( coronaUniforms );
 		gyro.add( starGlow );
-    // console.timeEnd("make sun glow");
 
 
 	var latticeMaterial = new THREE.MeshBasicMaterial({
@@ -294,9 +268,6 @@ function makeSun( options ){
 	sun.haloUniforms = haloUniforms;
 	sun.coronaUniforms = coronaUniforms;
 
-	// sun.rotation.z = -0.93;
-	// sun.rotation.y = 0.2;
-
 	sun.setSpectralIndex = function( index ){
 		var starColor = map( index, -0.3, 1.52, 0, 1);	
 		starColor = constrain( starColor, 0.0, 1.0 );
@@ -311,7 +282,6 @@ function makeSun( options ){
 	sun.setScale = function( index ){
 		this.scale.setLength( index );
 		
-		//	remove old lensflare
 		this.gyro.remove( this.lensflare );
 
 		var lensflareSize = 4.0 + index * 0.5 + 0.1 * Math.pow(index,2);
@@ -334,11 +304,6 @@ function makeSun( options ){
 		this.haloUniforms.time.value = shaderTiming + rotateYAccumulate;
 		this.solarflareUniforms.time.value = shaderTiming;
 		
-		//	ugly.. terrible hack
-		//	no matter what I do I can't remove the lensflare visibility at a distance
-		//	which was causing jittering on pixels when the lensflare was too small to be visible
-		//	is this the only way?
-		
 		if( camera.position.z > 400 ){
 			var lensflareChild = this.gyro.getObjectByName('lensflare');
 			if( lensflareChild !== undefined )
@@ -353,22 +318,10 @@ function makeSun( options ){
 		
 	}		
 
-	//	test controls
-
 	var c = gui.add( sunUniforms.spectralLookup, 'value', -.25, 1.5 );
 	c.onChange( function(v){
 		sun.setSpectralIndex( v );
 	});
-
-	//	doesn't work
-	// var c = gui.add( sunUniforms.texturePrimary.value.repeat, 'x', 0.2, 100.0 )
-	// .name( 'sun texture repeat')
-	// .onChange( function(v){
-	// 	sunUniforms.texturePrimary.value.repeat.y = v;
-	// 	sunUniforms.texturePrimary.value.needsUpdate = true;
-	// });	
-	
-
 
 	return sun;
 }

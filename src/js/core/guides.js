@@ -1,5 +1,5 @@
-THREE.ImageUtils.crossOrigin = null;
-var guidePointTexture = THREE.ImageUtils.loadTexture( "src/assets/textures/p_1.png" );
+
+var guidePointTexture = new THREE.TextureLoader().load( "src/assets/textures/p_1.png" );
 
 function createSpaceRadius( radius, color, representationScale ){
 	color = color ? color : 0xffffff;
@@ -20,15 +20,13 @@ function createSpaceRadius( radius, color, representationScale ){
 		verts.push( v );
 	}
 
-	var geometry = new THREE.Geometry();
-	geometry.vertices = verts;
-
+	var geometry = new THREE.BufferGeometry().setFromPoints(verts);
 
 	var areaOfWindow = window.innerWidth * window.innerHeight;
 
 	var pointSize = 0.000004 * areaOfWindow;
 
-	var particleMaterial = new THREE.ParticleBasicMaterial( 
+	var particleMaterial = new THREE.PointsMaterial( 
 		{
 			color: color, 
 			size: pointSize, 
@@ -40,7 +38,7 @@ function createSpaceRadius( radius, color, representationScale ){
 		} 
 	);
 
-	var mesh = new THREE.ParticleSystem( geometry, particleMaterial );
+	var mesh = new THREE.Points( geometry, particleMaterial );
 
 	mesh.update = function(){
 		if( camera.position.z < 2.0 )
@@ -57,16 +55,9 @@ function createSpaceRadius( radius, color, representationScale ){
 }
 
 function createDistanceMeasurement( vecA, vecB ){
-	var geometry = new THREE.Geometry();
 	var distance = vecA.distanceTo( vecB );
 	var height = distance * 0.04;
 	var bufferSpace = 0.38;
-
-	/*
-		vecA--------vecAMargin .....bufferspace	..... vecBMargin--------vecB		
-		|																   |
-		clamperA													clamperB
-	*/
 
 	var upwards = new THREE.Vector3( 0, 0, 0 );
 	var downwards = new THREE.Vector3( 0, -height, 0 );
@@ -76,29 +67,41 @@ function createDistanceMeasurement( vecA, vecB ){
 	vecB.add( upwards );	
 
 	var center = vecA.clone().lerp( vecB, 0.5 );
-	vecAMargin = vecA.clone().lerp( vecB, bufferSpace );
-	vecBMargin = vecB.clone().lerp( vecA, bufferSpace );
+	var vecAMargin = vecA.clone().lerp( vecB, bufferSpace );
+	var vecBMargin = vecB.clone().lerp( vecA, bufferSpace );
 
-	geometry.vertices.push( clamperA );
-	geometry.vertices.push( vecA );
-	geometry.vertices.push( vecAMargin );	//	double down on the margin vertex to create a solid to transparent separation
-	geometry.vertices.push( vecAMargin );
-	geometry.vertices.push( vecBMargin );
-	geometry.vertices.push( vecBMargin );
-	geometry.vertices.push( vecB );
-	geometry.vertices.push( clamperB );
+    var points = [
+        clamperA,
+        vecA,
+        vecAMargin,
+        vecAMargin,
+        vecBMargin,
+        vecBMargin,
+        vecB,
+        clamperB
+    ];
 
-	var solid = new THREE.Color(0x888888);
+    var solid = new THREE.Color(0x888888);
 	var nonsolid = new THREE.Color(0x000000);
 
-	geometry.colors.push( solid );
-	geometry.colors.push( solid );
-	geometry.colors.push( solid );
-	geometry.colors.push( nonsolid );
-	geometry.colors.push( nonsolid );
-	geometry.colors.push( solid );
-	geometry.colors.push( solid );
-	geometry.colors.push( solid );
+    var colors = [
+        solid,
+        solid,
+        solid,
+        nonsolid,
+        nonsolid,
+        solid,
+        solid,
+        solid
+    ];
+
+    var geometry = new THREE.BufferGeometry().setFromPoints(points);
+    
+    var colorArray = [];
+    for(var i=0; i<colors.length; i++) {
+        colorArray.push(colors[i].r, colors[i].g, colors[i].b);
+    }
+    geometry.setAttribute('color', new THREE.Float32BufferAttribute(colorArray, 3));
 
 	var material = new THREE.LineBasicMaterial(
 		{

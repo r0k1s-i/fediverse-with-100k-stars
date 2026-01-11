@@ -1,9 +1,3 @@
-/**
- * Fediverse Instance Visualization
- * Replaces hipparcos.js star data with Fediverse instances
- *
- * Uses legacy Three.js r58 patterns for compatibility with existing codebase
- */
 
 function loadFediverseData(dataFile, callback) {
   var xhr = new XMLHttpRequest();
@@ -31,24 +25,26 @@ function loadFediverseData(dataFile, callback) {
   xhr.send(null);
 }
 
-var fediverseTexture0 = THREE.ImageUtils.loadTexture("src/assets/textures/p_0.png");
-var fediverseTexture1 = THREE.ImageUtils.loadTexture("src/assets/textures/p_2.png");
-var fediverseHeatVisionTexture = THREE.ImageUtils.loadTexture(
+var textureLoader = new THREE.TextureLoader();
+
+var fediverseTexture0 = textureLoader.load("src/assets/textures/p_0.png");
+var fediverseTexture1 = textureLoader.load("src/assets/textures/p_2.png");
+var fediverseHeatVisionTexture = textureLoader.load(
   "src/assets/textures/sharppoint.png",
 );
-var instancePreviewTexture = THREE.ImageUtils.loadTexture(
+var instancePreviewTexture = textureLoader.load(
   "src/assets/textures/star_preview.png",
   undefined,
   setLoadMessage("Focusing optics"),
 );
-var fediverseColorGraph = THREE.ImageUtils.loadTexture(
+var fediverseColorGraph = textureLoader.load(
   "src/assets/textures/star_color_modified.png",
 );
 
-var instanceSunHaloTexture = THREE.ImageUtils.loadTexture(
+var instanceSunHaloTexture = textureLoader.load(
   "src/assets/textures/sun_halo.png",
 );
-var instanceCoronaTexture = THREE.ImageUtils.loadTexture(
+var instanceCoronaTexture = textureLoader.load(
   "src/assets/textures/corona.png",
 );
 
@@ -116,36 +112,25 @@ function createMajorInstancePreview(color) {
 }
 
 var fediverseUniforms = {
-  color: { type: "c", value: new THREE.Color(0xffffff) },
-  texture0: { type: "t", value: fediverseTexture0 },
-  texture1: { type: "t", value: fediverseTexture1 },
-  heatVisionTexture: { type: "t", value: fediverseHeatVisionTexture },
-  spectralLookup: { type: "t", value: fediverseColorGraph },
-  idealDepth: { type: "f", value: 1.0 },
-  blurPower: { type: "f", value: 1.0 },
-  blurDivisor: { type: "f", value: 2.0 },
-  sceneSize: { type: "f", value: 120.0 },
-  cameraDistance: { type: "f", value: 800.0 },
-  zoomSize: { type: "f", value: 1.0 },
-  scale: { type: "f", value: 1.0 },
-  brightnessScale: { type: "f", value: 1.0 },
-  heatVision: { type: "f", value: 0.0 },
-};
-
-var fediverseAttributes = {
-  size: { type: "f", value: [] },
-  customColor: { type: "c", value: [] },
-  colorIndex: { type: "f", value: [] },
-  isVirtual: { type: "f", value: [] },
+  color: { value: new THREE.Color(0xffffff) },
+  texture0: { value: fediverseTexture0 },
+  texture1: { value: fediverseTexture1 },
+  heatVisionTexture: { value: fediverseHeatVisionTexture },
+  spectralLookup: { value: fediverseColorGraph },
+  idealDepth: { value: 1.0 },
+  blurPower: { value: 1.0 },
+  blurDivisor: { value: 2.0 },
+  sceneSize: { value: 120.0 },
+  cameraDistance: { value: 800.0 },
+  zoomSize: { value: 1.0 },
+  scale: { value: 1.0 },
+  brightnessScale: { value: 1.0 },
+  heatVision: { value: 0.0 },
 };
 
 var fediverseInstances = [];
 var fediverseMeshes = [];
 
-/**
- * Generate virtual background particles for visual effect
- * These particles are non-interactive and randomly positioned each session
- */
 function generateVirtualParticles(targetCount) {
   var virtualParticles = [];
   var realCount = fediverseInstances.length;
@@ -213,12 +198,19 @@ function generateVirtualParticles(targetCount) {
 
 function generateFediverseInstances() {
   var container = new THREE.Object3D();
-  var pGeo = new THREE.Geometry();
   var count = fediverseInstances.length;
 
-  // Generate virtual particles to reach 100k total
   var TARGET_PARTICLE_COUNT = 100000;
   var virtualParticles = generateVirtualParticles(TARGET_PARTICLE_COUNT);
+  
+  var totalPoints = count + virtualParticles.length;
+  var geometry = new THREE.BufferGeometry();
+  
+  var positions = new Float32Array(totalPoints * 3);
+  var colors = new Float32Array(totalPoints * 3);
+  var sizes = new Float32Array(totalPoints);
+  var colorIndexes = new Float32Array(totalPoints);
+  var isVirtuals = new Float32Array(totalPoints);
 
   var instancePreviews = new THREE.Object3D();
   container.add(instancePreviews);
@@ -235,64 +227,57 @@ function generateFediverseInstances() {
     new THREE.PlaneGeometry(40, 40),
     instancePreviewMaterial,
   );
-  var pLineGeo = new THREE.Geometry();
+  
+  var linePositions = [];
   var MIN_USERS_FOR_LINE = 50000;
 
-  // Add real instances
   for (var i = 0; i < count; i++) {
     var instance = fediverseInstances[i];
 
-    var p = new THREE.Vector3(
-      instance.position.x,
-      instance.position.y,
-      instance.position.z,
-    );
+    var x = instance.position.x;
+    var y = instance.position.y;
+    var z = instance.position.z;
 
     var userCount = instance.stats ? instance.stats.user_count : 1;
-    p.size = Math.max(15.0, Math.log(userCount + 1) * 8);
-    p.name = instance.name || instance.domain;
-    p.instanceData = instance;
-
-    // Use white color for normal mode (like HIPPARCOS stars)
-    // The spectral lookup texture will provide subtle color tones
-    var threeColor = new THREE.Color(0xffffff);
-
-    // Use domain-based pseudo-random spectral lookup for variety in normal mode
-    // This gives each instance a consistent but varied color tone
+    var size = Math.max(15.0, Math.log(userCount + 1) * 8);
+    
     var domainHash = 0;
     for (var j = 0; j < instance.domain.length; j++) {
       domainHash = (domainHash * 31 + instance.domain.charCodeAt(j)) % 1000;
     }
 
-    p.spectralLookup = 0.2 + (domainHash / 1000) * 0.6;
-    p.brightness = 1.0;
-    p.isVirtual = false;
+    var spectralLookup = 0.2 + (domainHash / 1000) * 0.6;
+    var brightness = 1.0;
+    var isVirtual = 0.0;
 
-    pGeo.vertices.push(p);
-    pGeo.colors.push(threeColor);
+    positions[i * 3] = x;
+    positions[i * 3 + 1] = y;
+    positions[i * 3 + 2] = z;
+    
+    colors[i * 3] = 1.0;
+    colors[i * 3 + 1] = 1.0;
+    colors[i * 3 + 2] = 1.0;
+    
+    sizes[i] = size;
+    colorIndexes[i] = spectralLookup;
+    isVirtuals[i] = isVirtual;
 
     if (userCount >= MIN_USERS_FOR_LINE) {
-      pLineGeo.vertices.push(p.clone());
-      var base = p.clone();
-      base.z = 0;
-      pLineGeo.vertices.push(base);
+        linePositions.push(x, y, z);
+        linePositions.push(x, y, 0);
     }
 
-    // Create mesh objects for ALL instances to make them clickable via raycasting
-    // But only show HTML text labels for very large instances
-    var MIN_USERS_FOR_HTML_LABEL = 999999999; // Effectively disable all HTML labels
+    var MIN_USERS_FOR_HTML_LABEL = 999999999;
     var showHTMLLabel = userCount >= MIN_USERS_FOR_HTML_LABEL;
 
-    // Always create the mesh object for raycasting/clicking
     if (
       instance.positionType === "three_star_center" ||
       instance.positionType === "galaxy_center" ||
       userCount > 1000
     ) {
-      // Only create meshes for instances with 1000+ users to reduce overhead
 
       var gyroInstance = new THREE.Gyroscope();
-      gyroInstance.position.copy(p);
+      gyroInstance.position.set(x, y, z);
 
       if (isMajorInstance(instance.domain)) {
         var majorColor = getMajorInstanceColor(instance.domain);
@@ -321,11 +306,10 @@ function generateFediverseInstances() {
       container.add(g);
       g.name = instance.name || instance.domain;
       g.instanceData = instance;
-      g.position.copy(p);
+      g.position.set(x, y, z);
       g.scale.setLength(1.0);
       g.visible = true;
 
-      // Only attach HTML label for very large instances
       if (showHTMLLabel) {
         attachLegacyMarker(instance.domain, g, 1.0, { min: 0, max: 50000 });
       }
@@ -335,26 +319,32 @@ function generateFediverseInstances() {
     }
   }
 
+  var offset = count;
   for (var i = 0; i < virtualParticles.length; i++) {
     var vp = virtualParticles[i];
+    var idx = offset + i;
 
-    var p = new THREE.Vector3(vp.position.x, vp.position.y, vp.position.z);
-    p.size = vp.size;
-    p.spectralLookup = vp.spectralLookup;
-    p.brightness = vp.brightness;
-    p.isVirtual = true;
-
-    // Use white color for virtual particles too
-    // Brightness will be controlled by spectralLookup and shader
-    var vColor = new THREE.Color(0xffffff);
-
-    pGeo.vertices.push(p);
-    pGeo.colors.push(vColor);
+    positions[idx * 3] = vp.position.x;
+    positions[idx * 3 + 1] = vp.position.y;
+    positions[idx * 3 + 2] = vp.position.z;
+    
+    colors[idx * 3] = 1.0;
+    colors[idx * 3 + 1] = 1.0;
+    colors[idx * 3 + 2] = 1.0;
+    
+    sizes[idx] = vp.size;
+    colorIndexes[idx] = vp.spectralLookup;
+    isVirtuals[idx] = 1.0;
   }
+  
+  geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  geometry.setAttribute('customColor', new THREE.BufferAttribute(colors, 3));
+  geometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+  geometry.setAttribute('colorIndex', new THREE.BufferAttribute(colorIndexes, 1));
+  geometry.setAttribute('isVirtual', new THREE.BufferAttribute(isVirtuals, 1));
 
   var shaderMaterial = new THREE.ShaderMaterial({
     uniforms: fediverseUniforms,
-    attributes: fediverseAttributes,
     vertexShader: shaderList.datastars.vertex,
     fragmentShader: shaderList.datastars.fragment,
     blending: THREE.AdditiveBlending,
@@ -394,35 +384,24 @@ function generateFediverseInstances() {
 
   window.toggleHeatVision = container.toggleHeatVision;
 
-  var pSystem = new THREE.ParticleSystem(pGeo, shaderMaterial);
-  pSystem.dynamic = false;
+  var pSystem = new THREE.Points(geometry, shaderMaterial);
 
-  var values_size = fediverseAttributes.size.value;
-  var values_color = fediverseAttributes.customColor.value;
-  var values_spectral = fediverseAttributes.colorIndex.value;
-  var values_isVirtual = fediverseAttributes.isVirtual.value;
-
-  for (var v = 0; v < pGeo.vertices.length; v++) {
-    values_size[v] = pGeo.vertices[v].size;
-    values_color[v] = pGeo.colors[v];
-    values_spectral[v] = pGeo.vertices[v].spectralLookup;
-    values_isVirtual[v] = pGeo.vertices[v].isVirtual ? 1.0 : 0.0;
-  }
-
-  var lineMesh = new THREE.Line(
-    pLineGeo,
+  var lineGeometry = new THREE.BufferGeometry();
+  lineGeometry.setAttribute('position', new THREE.Float32BufferAttribute(linePositions, 3));
+  
+  var lineMesh = new THREE.LineSegments(
+    lineGeometry,
     new THREE.LineBasicMaterial({
       color: 0x333333,
       blending: THREE.AdditiveBlending,
       depthTest: false,
       depthWrite: false,
       transparent: true,
-    }),
-    THREE.LinePieces,
+    })
   );
   pSystem.add(lineMesh);
 
-  var glowSpanTexture = THREE.ImageUtils.loadTexture(
+  var glowSpanTexture = textureLoader.load(
     "src/assets/textures/glowspan.png",
   );
   var gridMaterial = new THREE.MeshBasicMaterial({

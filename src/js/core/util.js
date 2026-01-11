@@ -1,3 +1,4 @@
+
 function toTHREEColor( colorString ){
 	return new THREE.Color( parseInt( colorString.substr(1) , 16)  );
 }
@@ -49,26 +50,24 @@ function wrap(value, min, rangeSize) {
 	return value % rangeSize;
 }
 
-THREE.Curve.Utils.createLineGeometry = function( points ) {
-	var geometry = new THREE.Geometry();
-	for( var i = 0; i < points.length; i ++ ) {
-		geometry.vertices.push( points[i] );
-	}
-	return geometry;
-};
+if (THREE.Curve && THREE.Curve.Utils) {
+	THREE.Curve.Utils.createLineGeometry = function( points ) {
+		var geometry = new THREE.BufferGeometry().setFromPoints( points );
+		return geometry;
+	};
+}
 
 function getAbsOrigin( object3D ){
 	var mat = object3D.matrixWorld;
 	var worldpos = new THREE.Vector3();
-	worldpos.x = mat.n14;
-	worldpos.y = mat.n24;
-	worldpos.z = mat.n34;
+	worldpos.setFromMatrixPosition(mat);
 	return worldpos;
 }
 
-var projector = new THREE.Projector();
 function screenXY(object){	
-  var vector = projector.projectVector(new THREE.Vector3().getPositionFromMatrix(object.matrixWorld), camera);  
+  var vector = new THREE.Vector3().setFromMatrixPosition(object.matrixWorld);
+  vector.project(camera);
+
 	var result = new Object();
     var windowWidth = window.innerWidth;
     var minWidth = 1280;
@@ -94,7 +93,7 @@ function buildHexColumnGeo(rad, height){
 
 	var options = {
 		size: 			0,
-		amount: 		height,
+		depth: 		height,
 		steps: 			1,
 		bevelEnabled:  	false,
 	};
@@ -123,7 +122,6 @@ function save(data, filename, mime) {
       var create = function() {
         fs.root.getFile("data.tar", {create: true}, function(fileEntry) {
 
-          // Create a FileWriter object for our FileEntry (log.txt).
           fileEntry.createWriter(function(fileWriter) {
 
 
@@ -134,7 +132,6 @@ function save(data, filename, mime) {
             bb.append(header);
             bb.append(data);
 
-//
             fileWriter.write(bb.getBlob('tar/archive'));
             window.open(fileEntry.toURL(), "_blank", "width=400,height=10");
 
@@ -143,7 +140,6 @@ function save(data, filename, mime) {
 
         }, errorHandler("Error getting file"));
       };
-      // delete any previous
       fs.root.getFile("data.tar", {create: false}, function(fileEntry) {
         fileEntry.remove(create, errorHandler("Error deleting file"));
       }, create);
@@ -180,26 +176,21 @@ function save(data, filename, mime) {
     sum += dumpString(name, ia, 0, 99);
     sum += dumpString(size.toString(8), ia, 124, 12);
     sum += dumpString(padLeft("644 \0", 8), ia, 100, 8)
-      // timestamp
       var ts = new Date().getTime();
     ts = Math.floor(ts/1000);
     sum += dumpString(ts.toString(8), ia, 136, 12);
 
-    // extra header info
     sum += dumpString("0", ia, 156, 1);
     sum += dumpString("ustar ", ia, 257, 6);
     sum += dumpString("00", ia, 263, 2);
 
-    // assume checksum to be 8 spaces
     sum += 8*32;
-    //checksum 6 digit octal followed by null and space
     dumpString(padLeft(sum.toString(8)+"\0 ", 8), ia, 148, 8)
       return ab;
   }
 
   function dataURItoBlob(byteString) {
 
-    // write the bytes of the string to an ArrayBuffer
     var padding = 512 - (byteString.length % 512);
     var ab = new ArrayBuffer(byteString.length + padding);
     var ia = new Uint8Array(ab);
@@ -213,17 +204,8 @@ function save(data, filename, mime) {
 
     function errorHandler(msg) {
 		return function(e) {
-      // console.log(msg, e);
 		}
     }
-}
-
-function wrap(value, min, rangeSize) {
-  rangeSize-=min;
-    while (value < min) {
-      value += rangeSize;
-  }
-  return value % rangeSize;
 }
 
 function constrain(v, min, max){
@@ -241,24 +223,12 @@ function random(low, high) {
   return (Math.random() * diff) + low;
 }
 
-function map( value, istart, istop, ostart, ostop) {
-  return ostart + (ostop - ostart) * ((value - istart) / (istop - istart));
-}
-
 function getZoomByStarRadius( radius ){
-  return radius * 2.0;
+  return radius * 2.0; 
 }
 
 function getOffsetByStarRadius( radius ){
-  return new THREE.Vector3(0, 0, 0);
-}
-
-function getZoomByStarRadius( radius ){
-  return radius * 2.0; // Safe distance factor
-}
-
-function getOffsetByStarRadius( radius ){
-  return new THREE.Vector3(0, 0, 0); // Centered for now
+  return new THREE.Vector3(0, 0, 0); 
 }
 
 var enableFediverse = (gup('fediverse') == 1) || true;

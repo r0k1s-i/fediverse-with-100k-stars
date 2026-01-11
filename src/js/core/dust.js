@@ -1,47 +1,34 @@
-var dustTexture = THREE.ImageUtils.loadTexture( "src/assets/textures/dust.png" );
+
+var dustTexture = new THREE.TextureLoader().load( "src/assets/textures/dust.png" );
 
 var dustUniforms = {
-	color:     { type: "c", value: new THREE.Color( 0xffffff ) },
-	scale: 		{ type: 'f', value: 1.0 },
-	texture0:   { type: "t", value: dustTexture },
-	cameraPitch: { type: "f", value: 0 },
-};
-
-var dustAttributes = {
-	size: 			{ type: 'f', value: [] },	
-	customColor: 	{ type: 'c', value: [] }
+	color:     { value: new THREE.Color( 0xffffff ) },
+	scale: 		{ value: 1.0 },
+	texture0:   { value: dustTexture },
+	cameraPitch: { value: 0 },
 };
 
 function generateDust(){
 
-	var dustShaderMaterial = new THREE.ShaderMaterial( {
-		uniforms: 		dustUniforms,
-		attributes:     dustAttributes,
-		vertexShader:   shaderList.galacticdust.vertex,
-		fragmentShader: shaderList.galacticdust.fragment,
-
-		blending: 		THREE.SubtractiveBlending,
-		depthTest: 		false,
-		depthWrite: 	false,
-		transparent:	true,
-		sizeAttenuation: false,		
-	});	
-
-	var pGalacticDust = new THREE.Geometry();	
-
+	var geometry = new THREE.BufferGeometry();
 	var count = 10000;
+	
+	var positions = new Float32Array(count * 3);
+	var colors = new Float32Array(count * 3);
+	var sizes = new Float32Array(count);
+
 	var numArms = 5;
 	var arm = 0;
 	var countPerArm = count / numArms;
 	var ang = 0;
 	var dist = 0;
+	
 	for( var i=0; i<count; i++ ){
 		var x = Math.cos(ang) * dist;
 		var y = 0;
 		var z = Math.sin(ang) * dist;
 
-		//	scatter
-		var sa = 120 - Math.sqrt(dist);				//	scatter amt
+		var sa = 120 - Math.sqrt(dist);
 		if( Math.random() > 0.3)
 			sa *= ( 1 + Math.random() ) * 4;
 		x += random(-sa, sa);
@@ -55,19 +42,23 @@ function generateDust(){
 		y *= 20;
 		z *= 20;
 
-		var p = new THREE.Vector3(x,y,z);
-		p.size = 140 + constrain( 300/dist,0,8000);	
+		var size = 140 + constrain( 300/dist,0,8000);	
 		if( Math.random() > 0.99 )
-			p.size *= Math.pow(1 + Math.random(), 4 + Math.random() * 3) * .2;			
+			size *= Math.pow(1 + Math.random(), 4 + Math.random() * 3) * .2;			
 
-		pGalacticDust.vertices.push( p );
+		positions[i * 3] = x;
+		positions[i * 3 + 1] = y;
+		positions[i * 3 + 2] = z;
 		
 		var r = 1;
 		var g = 1;
 		var b = 1;
-		var c = new THREE.Color();
-		c.r = r; c.g = g; c.b = b;
-		pGalacticDust.colors.push( c );	
+		
+		colors[i * 3] = r;
+		colors[i * 3 + 1] = g;
+		colors[i * 3 + 2] = b;
+		
+		sizes[i] = size;
 
 		ang -= 0.0012;	
 		dist += .5;
@@ -79,16 +70,23 @@ function generateDust(){
 		}
 	}		
 
-	pDustSystem = new THREE.ParticleSystem( pGalacticDust, dustShaderMaterial );
+	geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+	geometry.setAttribute('customColor', new THREE.BufferAttribute(colors, 3));
+	geometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
 
-	//	set the values to the shader
-	var values_size = dustAttributes.size.value;
-	var values_color = dustAttributes.customColor.value;
+	var dustShaderMaterial = new THREE.ShaderMaterial( {
+		uniforms: 		dustUniforms,
+		vertexShader:   shaderList.galacticdust.vertex,
+		fragmentShader: shaderList.galacticdust.fragment,
 
-	for( var v = 0; v < pGalacticDust.vertices.length; v++ ) {		
-		values_size[ v ] = pGalacticDust.vertices[v].size;
-		values_color[ v ] = pGalacticDust.colors[v];
-	}
+		blending: 		THREE.SubtractiveBlending,
+		depthTest: 		false,
+		depthWrite: 	false,
+		transparent:	true,
+	});	
+
+	var pDustSystem = new THREE.Points( geometry, dustShaderMaterial );
+
 	var twoPI = Math.PI * 2;
 	pDustSystem.update = function(){		
 
@@ -101,7 +99,6 @@ function generateDust(){
 			dustUniforms.cameraPitch.value += twoPI;
 		}		
 
-		//	scale the particles based off of screen size
 		var areaOfWindow = window.innerWidth * window.innerHeight;
 		dustUniforms.scale.value = areaOfWindow / 720.0;
 
