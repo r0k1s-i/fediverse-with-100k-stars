@@ -372,9 +372,17 @@
     $('#detailContainer').fadeOut();
     $('#css-container').css('display', 'block');
     if (!!home) {
-      centerOnSun();
-      setTimeout(hideSunButton, 500);
-      zoomOut(555);
+      // If returning from a major Fediverse instance, go to the software ecosystem center
+      if (typeof shouldShowFediverseSystem === "function" && shouldShowFediverseSystem()) {
+        goToFediverseCenter();
+        if (typeof fediverseInteraction !== "undefined") {
+          fediverseInteraction.lastViewedInstance = null;
+        }
+      } else {
+        centerOnSun();
+        setTimeout(hideSunButton, 500);
+        zoomOut(555);
+      }
     } else {
       // zoomOut();
     }

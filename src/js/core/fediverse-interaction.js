@@ -5,7 +5,46 @@ var fediverseInteraction = {
   baseThreshold: 100.0,
   clickHandled: false,
   lastClickTime: 0,
+  lastViewedInstance: null,  // Track the last viewed instance
 };
+
+// Three major Fediverse platforms
+var MAJOR_FEDIVERSE_DOMAINS = [
+  "mastodon.social",
+  "misskey.io",
+  "pixelfed.social"
+];
+
+// Center position of the three major instances (calculated average)
+var FEDIVERSE_CENTER = { x: 0, y: 0, z: 0 };
+
+function isMajorFediverseInstance(domain) {
+  return MAJOR_FEDIVERSE_DOMAINS.indexOf(domain) !== -1;
+}
+
+function shouldShowFediverseSystem() {
+  return fediverseInteraction.lastViewedInstance && 
+         isMajorFediverseInstance(fediverseInteraction.lastViewedInstance);
+}
+
+function goToFediverseCenter() {
+  if (typeof translating !== "undefined") {
+    translating.targetPosition.set(
+      -FEDIVERSE_CENTER.x,
+      -FEDIVERSE_CENTER.y,
+      -FEDIVERSE_CENTER.z
+    );
+  }
+  if (typeof camera !== "undefined") {
+    camera.position.target.z = 15; // Zoom level to see the software ecosystem
+  }
+  if (typeof updateMinimap === "function") {
+    updateMinimap();
+  }
+  if (typeof window.hideSunButton === "function") {
+    window.hideSunButton();
+  }
+}
 
 function getInteractionThreshold() {
   if (typeof camera === "undefined") {
@@ -268,6 +307,9 @@ function onFediverseClick(event) {
 
   var data = clickTarget.instanceData || clickTarget;
   if (!data || !data.position) return;
+
+  // Track the viewed instance domain for return navigation
+  fediverseInteraction.lastViewedInstance = data.domain || null;
 
   var position = new THREE.Vector3(
     data.position.x,
