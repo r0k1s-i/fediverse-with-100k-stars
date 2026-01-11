@@ -139,7 +139,7 @@ func CalculateColor(instance *Instance, cfg Config) *Color {
 	eraOffset := getEraOffset(createdAt, cfg)
 	hashValue := domainHash(instance.Domain)
 	perturbation := (hashValue - 0.5) * 2 * cfg.DomainHashRange
-	
+
 	// For red hues (low values < 60°), we need to constrain the total adjustment
 	// to keep the result in the [0, 60°) range and avoid wrapping to 300°+
 	if hue < 60.0 {
@@ -147,20 +147,20 @@ func CalculateColor(instance *Instance, cfg Config) *Color {
 		maxPositiveAdjustment := 60.0 - hue
 		maxNegativeAdjustment := hue - 0.0
 		totalAdjustment := eraOffset + perturbation
-		
+
 		if totalAdjustment > maxPositiveAdjustment {
 			totalAdjustment = maxPositiveAdjustment
 		}
 		if totalAdjustment < -maxNegativeAdjustment {
 			totalAdjustment = -maxNegativeAdjustment
 		}
-		
+
 		hue += totalAdjustment
 	} else {
 		// Not in red zone, apply normally
 		hue += eraOffset
 		hue += perturbation
-		
+
 		// Normalize to [0, 360) range
 		hue = math.Mod(hue, 360.0)
 		if hue < 0 {
@@ -209,14 +209,23 @@ func CalculateColor(instance *Instance, cfg Config) *Color {
 	rgb := hslToRGB(hue, saturation, lightness)
 	hexColor := rgbToHex(rgb)
 
+	// Calculate temperature based on hue (0-360° → 3,840K to 42,000K)
+	// Temperature gradient: red(3840K) -> orange -> yellow(7300K) -> white -> blue(42000K)
+	temperature := calculateTemperature(hue)
+
+	// Calculate star type based on hue (color) and user count (size)
+	starType := calculateStarType(hue, userCount)
+
 	return &Color{
 		HSL: HSL{
 			H: math.Round(hue*10) / 10,
 			S: math.Round(saturation*10) / 10,
 			L: math.Round(lightness*10) / 10,
 		},
-		RGB: rgb,
-		Hex: hexColor,
+		RGB:         rgb,
+		Hex:         hexColor,
+		Temperature: temperature,
+		StarType:    starType,
 		Debug: Debug{
 			AgeDays:          int(ageDays),
 			AgeNorm:          math.Round(ageNorm*1000) / 1000,
@@ -226,6 +235,70 @@ func CalculateColor(instance *Instance, cfg Config) *Color {
 			ActivityRatio:    math.Round(activityRatio*1000) / 1000,
 		},
 	}
+}
+
+// calculateTemperature maps hue (0-360°) to stellar temperature in Kelvin
+// Based on B-V stellar color index: red stars are cooler, blue stars are hotter
+// Temperature range: 3,840K (red/cool) to 42,000K (blue/hot)
+func calculateTemperature(hue float64) int {
+	const (
+		minTemp = 3840  // Coolest (red)
+		midTemp = 7300  // Medium (yellow)
+		maxTemp = 42000 // Hottest (blue)
+	)
+
+	// Normalize hue to spectralIndex (0-1)
+	spectralIndex := hue / 360.0
+
+	var temp float64
+	if spectralIndex < 0.5 {
+		// 0 to 0.5: from min temp to mid temp
+		temp = float64(minTemp) + (float64(midTemp-minTemp) * (spectralIndex * 2))
+	} else {
+		// 0.5 to 1: from mid temp to max temp
+		temp = float64(midTemp) + (float64(maxTemp-midTemp) * ((spectralIndex - 0.5) * 2))
+	}
+
+	return int(math.Round(temp))
+}
+
+// calculateStarType determines stellar classification based on color (hue) and size (user count)
+// Color types: Red, Orange, Yellow, Green, Cyan, Blue, Violet
+// Size classes: Dwarf, Sub-giant, Main Sequence, Giant, Supergiant
+func calculateStarType(hue float64, userCount int) string {
+	// Determine size class based on user count
+	var sizeClass string
+	if userCount >= 500000 {
+		sizeClass = "Supergiant"
+	} else if userCount >= 100000 {
+		sizeClass = "Giant"
+	} else if userCount >= 10000 {
+		sizeClass = "Main Sequence"
+	} else if userCount >= 1000 {
+		sizeClass = "Sub-giant"
+	} else {
+		sizeClass = "Dwarf"
+	}
+
+	// Determine color type based on hue
+	var colorType string
+	if hue < 30 || hue >= 330 {
+		colorType = "Red"
+	} else if hue < 60 {
+		colorType = "Orange"
+	} else if hue < 90 {
+		colorType = "Yellow"
+	} else if hue < 150 {
+		colorType = "Green"
+	} else if hue < 210 {
+		colorType = "Cyan"
+	} else if hue < 270 {
+		colorType = "Blue"
+	} else {
+		colorType = "Violet"
+	}
+
+	return colorType + " " + sizeClass
 }
 
 func ProcessColors(instances []Instance, cfg Config) []Instance {
