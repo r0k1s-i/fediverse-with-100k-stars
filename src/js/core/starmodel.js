@@ -1,4 +1,8 @@
-function makeStarModels(){
+
+import { AUToLY } from '../utils/app.js';
+
+export function makeStarModels(){
+    var makeSun = window.makeSun;
 	var sun = makeSun({
 		radius: 7.35144e-8,
 		spectral: 0.9
@@ -18,34 +22,32 @@ function makeStarModels(){
 }
 
 function hideAllSubStars(){
+    var starModel = window.starModel;
 	for( var i=0; i<starModel.substars.length; i++ ){
 		var sub = starModel.substars[i];
 		starModel.remove( sub );
 	}
 }
 
-function setStarModel( position, name ){
+export function setStarModel( position, name ){
+    var starModel = window.starModel;
+    var starSystems = window.starSystems;
+    var makeSun = window.makeSun; 
+
 	hideAllSubStars();
 
 	starModel.position.copy( position );
 
 	var starSystem = starSystems[name];
 
-	//	couldn't find the star?
 	if( starSystem === undefined ){
-    // console.log( name + ' not listed in systems database' );   
 		starModel.setSpectralIndex( 0 );
         return;
 	}
 
-	// console.log( starSystem );
-
 	var mainStar = starSystem.sub[0];
 
-	//	set the main star	
 	if( name === 'Sol' )
-		//	for whatever reason the sun is being colored off-white into purple range
-		//	this is an unfortunate hack for the time being
 		starModel.setSpectralIndex(0.9);
 	else
 		starModel.setSpectralIndex( mainStar.c );
@@ -62,7 +64,6 @@ function setStarModel( position, name ){
 
 	var separation = AUToLY(starSystem.sep) * 0.01;
 
-	//	set the sub stars
 	for( var i=0; i<numSubStars; i++ ){		
 		var subStar = starSystem.sub[i+1];
 		var subStarModelIndex = i;
@@ -97,3 +98,6 @@ function setStarModel( position, name ){
 	}
 
 }
+
+window.makeStarModels = makeStarModels;
+window.setStarModel = setStarModel;

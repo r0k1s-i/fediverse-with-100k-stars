@@ -35,6 +35,10 @@ function getSoftwareBrandColor(name) {
 }
 
 function createSoftwareRing(radius, color, softwareName, instanceCount) {
+  var guidePointTexture = window.guidePointTexture;
+  var attachLegacyMarker = window.attachLegacyMarker;
+  var camera = window.camera;
+
   var resolution = 180;
   var twoPI = Math.PI * 2;
   var angPerRes = twoPI / resolution;
@@ -89,6 +93,9 @@ function createSoftwareRing(radius, color, softwareName, instanceCount) {
 }
 
 function createCentralTriangle(triangleRadius) {
+  var attachLegacyMarker = window.attachLegacyMarker;
+  var camera = window.camera;
+
   var container = new THREE.Object3D();
 
   var positions = [];
@@ -159,6 +166,9 @@ function createCentralTriangle(triangleRadius) {
 }
 
 function createInnerCircle(radius) {
+  var guidePointTexture = window.guidePointTexture;
+  var camera = window.camera;
+
   var resolution = 60;
   var twoPI = Math.PI * 2;
   var angPerRes = twoPI / resolution;
@@ -202,7 +212,11 @@ function createInnerCircle(radius) {
   return mesh;
 }
 
-function makeFediverseSystem() {
+export function makeFediverseSystem() {
+  var createDistanceMeasurement = window.createDistanceMeasurement;
+  var attachLegacyMarker = window.attachLegacyMarker;
+  var camera = window.camera;
+
   var fediverseSystem = new THREE.Object3D();
 
   var triangleRadius = 0.00003;
@@ -248,3 +262,5 @@ function makeFediverseSystem() {
 
   return fediverseSystem;
 }
+
+window.makeFediverseSystem = makeFediverseSystem;

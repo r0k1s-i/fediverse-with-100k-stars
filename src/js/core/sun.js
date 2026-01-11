@@ -1,4 +1,6 @@
 
+import { constrain, map } from '../utils/math.js';
+
 var sunTexture;
 var sunColorLookupTexture;
 var solarflareTexture;
@@ -38,6 +40,7 @@ function loadStarSurfaceTextures(){
 
 var surfaceGeo = new THREE.SphereGeometry( 7.35144e-8, 60, 30);
 function makeStarSurface( radius, uniforms ){
+    var shaderList = window.shaderList;
 	var sunShaderMaterial = new THREE.ShaderMaterial( {
 		uniforms: 		uniforms,
 		vertexShader:   shaderList.starsurface.vertex,
@@ -50,6 +53,7 @@ function makeStarSurface( radius, uniforms ){
 
 var haloGeo = new THREE.PlaneGeometry( .00000022, .00000022 );
 function makeStarHalo(uniforms){
+    var shaderList = window.shaderList;
 	var sunHaloMaterial = new THREE.ShaderMaterial(
 		{
 			uniforms: 		uniforms,
@@ -72,6 +76,7 @@ function makeStarHalo(uniforms){
 
 var glowGeo = new THREE.PlaneGeometry( .0000012, .0000012 );
 function makeStarGlow(uniforms){
+    var shaderList = window.shaderList;
 	var sunGlowMaterial = new THREE.ShaderMaterial(
 		{
 			uniforms: 		uniforms,
@@ -93,8 +98,12 @@ function makeStarGlow(uniforms){
 }
 
 function makeStarLensflare(size, zextra, hueShift){
+    var addStarLensFlare = window.addStarLensFlare;
+    var constrain = window.constrain; 
+    
 	var sunLensFlare = addStarLensFlare( 0,0,zextra, size, undefined, hueShift);
 	sunLensFlare.customUpdateCallback = function(object){
+        var camera = window.camera;
 		if( object.visible == false )
 			return;
 	    var f, fl = this.lensFlares.length;
@@ -137,6 +146,7 @@ function makeStarLensflare(size, zextra, hueShift){
 
 var solarflareGeometry = new THREE.TorusGeometry( 0.00000003, 0.000000001 + 0.000000002, 60, 90, 0.15 + Math.PI  );
 function makeSolarflare( uniforms ){
+    var shaderList = window.shaderList;
 	var solarflareMaterial = new THREE.ShaderMaterial(
 		{
 			uniforms: 		uniforms,
@@ -177,7 +187,13 @@ function makeSolarflare( uniforms ){
 	return solarflareMesh;
 }
 
-function makeSun( options ){
+export function makeSun( options ){
+    var shaderList = window.shaderList;
+    var starColorGraph = window.starColorGraph || window.fediverseColorGraph; 
+    var glowSpanTexture = window.glowSpanTexture;
+    var camera = window.camera;
+    var gui = window.gui;
+    
 	var radius = options.radius;
 	var spectral = options.spectral;
 
@@ -300,6 +316,9 @@ function makeSun( options ){
 	sun.setSpectralIndex( spectral );
 
 	sun.update = function(){
+        var shaderTiming = window.shaderTiming;
+        var rotateYAccumulate = window.rotateYAccumulate;
+        
 		this.sunUniforms.time.value = shaderTiming;
 		this.haloUniforms.time.value = shaderTiming + rotateYAccumulate;
 		this.solarflareUniforms.time.value = shaderTiming;
@@ -318,10 +337,14 @@ function makeSun( options ){
 		
 	}		
 
-	var c = gui.add( sunUniforms.spectralLookup, 'value', -.25, 1.5 );
-	c.onChange( function(v){
-		sun.setSpectralIndex( v );
-	});
+    if (gui) {
+        var c = gui.add( sunUniforms.spectralLookup, 'value', -.25, 1.5 );
+        c.onChange( function(v){
+            sun.setSpectralIndex( v );
+        });
+    }
 
 	return sun;
 }
+
+window.makeSun = makeSun;

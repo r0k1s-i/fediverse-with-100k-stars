@@ -1,17 +1,20 @@
-//	These markers use screenspace by doing fancy 3D to 2D calculations
-//	Much slower, use with caution!
+
+import { screenXY } from '../utils/three-helpers.js';
 
 var legacyMarkers = [];
 
-//	called by animate per frame
-function updateLegacyMarkers(){
+export function updateLegacyMarkers(){
 	for( var i in legacyMarkers ){
 		var marker = legacyMarkers[i];
 		marker.update();
 	}
 }
 
-function attachLegacyMarker( text, obj, size, visibleRange ){
+export function attachLegacyMarker( text, obj, size, visibleRange ){
+    var camera = window.camera;
+    var screenWidth = window.screenWidth;
+    var screenHeight = window.screenHeight;
+
 	var template = document.getElementById( 'legacy_marker_template' );
 
 	var marker = template.cloneNode(true);
@@ -23,7 +26,7 @@ function attachLegacyMarker( text, obj, size, visibleRange ){
 	marker.visMin = visibleRange === undefined ? 0 : visibleRange.min;
 	marker.visMax = visibleRange === undefined ? 10000000 : visibleRange.max;
 
-	marker.$ = $(marker);	// jQuery reference	
+	marker.$ = $(marker);	
 
 	var container = document.getElementById('visualization');
 	container.appendChild( marker );
@@ -50,7 +53,6 @@ function attachLegacyMarker( text, obj, size, visibleRange ){
 		x -= this.markerWidth * 0.5;
 		this.style.left = x + 'px';
 		this.style.top = y + 'px';	
-		// this.style.zIndex = z;
 	};
 
 	var nameLayer = marker.children[0];
@@ -79,3 +81,6 @@ function attachLegacyMarker( text, obj, size, visibleRange ){
 	legacyMarkers.push( marker );
 
 }
+
+window.updateLegacyMarkers = updateLegacyMarkers;
+window.attachLegacyMarker = attachLegacyMarker;

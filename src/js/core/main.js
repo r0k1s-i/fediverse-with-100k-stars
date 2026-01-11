@@ -14,7 +14,7 @@ var enableDirector = true;
 
 var firstTime = localStorage ? localStorage.getItem("first") == null : true;
 
-var tour = new Tour(GALAXY_TOUR);
+var tour = new Tour(window.GALAXY_TOUR);
 
 var initialAutoRotate = true;
 
@@ -33,6 +33,10 @@ var $spectralGraph = $("#spectral-graph");
 
 var rotating;
 var translating;
+var galacticCentering;
+var camera;
+var scene;
+var renderer;
 
 var lastRotateY = 0;
 var rotateYAccumulate = 0;
@@ -43,6 +47,7 @@ var pGalacticSystem;
 var pDustSystem;
 var earth;
 var spacePlane;
+var starModel;
 
 var screenWhalf, screenHhalf;
 var divCSSWorld, divCSSCamera;
@@ -63,6 +68,11 @@ var rtparam = {
 var rt;
 
 var antialias = gup("antialias") == 1 ? true : false;
+
+var markerThreshold = {
+  min: window.enableFediverse ? 200 : 400,
+  max: window.enableFediverse ? 45000 : 1500,
+};
 
 function start(e) {
   if (!Detector.webgl) {
@@ -103,23 +113,26 @@ var postStarGradientLoaded = function () {
     return gradientCtx.getImageData(0, percentage * gradientImage.height, 1, 1)
       .data;
   };
+  
+  window.gradientCanvas = gradientCanvas;
 
-  loadShaders(shaderList, function (e) {
-    shaderList = e;
+  loadShaders(window.shaderList, function (e) {
+    window.shaderList = e;
     postShadersLoaded();
   });
 };
 
 var postShadersLoaded = function () {
-  if (enableFediverse) {
-    loadFediverseData(fediverseDataPath, function (loadedData) {
-      fediverseInstances = loadedData;
+  if (window.enableFediverse) {
+    loadFediverseData(window.fediverseDataPath, function (loadedData) {
+      window.fediverseInstances = loadedData;
       initScene();
       animate();
     });
   } else if (enableDataStar) {
     loadStarData("data/stars_all.json", function (loadedData) {
       starData = loadedData.stars;
+      window.starData = starData;
       initScene();
       animate();
     });
@@ -148,6 +161,7 @@ var controllers = {
 };
 
 var gui;
+var c;
 
 function buildGUI() {
   gui = new dat.GUI();
@@ -166,7 +180,9 @@ function buildGUI() {
   c = gui.add(controllers, "hipparcos");
   c = gui.add(controllers, "milkyway");
 
-  initializeMinimap();
+  window.gui = gui;
+
+  if(window.initializeMinimap) window.initializeMinimap();
 }
 
 function initScene() {
@@ -193,11 +209,19 @@ function initScene() {
     if (this.position.distanceTo(this.targetPosition) < 0.01)
       this.position.copy(this.targetPosition);
   };
+  
+  window.scene = scene;
+  window.rotating = rotating;
+  window.translating = translating;
+  window.galacticCentering = galacticCentering;
 
   screenWidth = window.innerWidth;
   screenHeight = window.innerHeight;
   screenWhalf = window.innerWidth / 2;
   screenHhalf = window.innerHeight / 2;
+  
+  window.screenWidth = screenWidth;
+  window.screenHeight = screenHeight;
 
   renderer = new THREE.WebGLRenderer({ antialias: antialias });
 
@@ -214,6 +238,7 @@ function initScene() {
   renderer.sortObjects = false;
 
   maxAniso = renderer.capabilities.getMaxAnisotropy();
+  window.maxAniso = maxAniso;
 
   document.getElementById("glContainer").appendChild(renderer.domElement);
 
@@ -239,7 +264,7 @@ function initScene() {
     0.5,
     10000000,
   );
-  camera.position.z = enableFediverse ? 500 : 2000;
+  camera.position.z = window.enableFediverse ? 500 : 2000;
   camera.rotation.vx = 0;
   camera.rotation.vy = 0;
   camera.position.target = {
@@ -247,9 +272,11 @@ function initScene() {
     z: 2000,
     pz: 2000,
   };
+  window.camera = camera;
 
   if (enableSkybox) {
     setupSkyboxScene();
+    initSkybox(false);
   }
 
   camera.update = function () {
@@ -268,17 +295,19 @@ function initScene() {
   scene.add(camera);
 
   var windowResize = THREEx.WindowResize(renderer, camera);
-  if (enableSkybox) windowResize = THREEx.WindowResize(renderer, cameraCube);
+  if (enableSkybox) windowResize = THREEx.WindowResize(renderer, window.cameraCube);
 
-  rotateY = Math.PI / 2;
-  rotateX = Math.PI * 0.05;
+  var rotateY = Math.PI / 2;
+  var rotateX = Math.PI * 0.05;
+  window.rotateY = rotateY;
+  window.rotateX = rotateX;
 
   buildGUI();
 
   sceneSetup();
 
   initCSS3D();
-  initFediverseLabels();
+  if(window.initFediverseLabels) initFediverseLabels();
 
   var $exout = $("#ex-out").click(function (e) {
     e.preventDefault();
@@ -297,7 +326,7 @@ function initScene() {
     
     if (typeof shouldShowFediverseSystem === "function" && shouldShowFediverseSystem()) {
       goToFediverseCenter();
-      fediverseInteraction.lastViewedInstance = null;
+      if (window.fediverseInteraction) fediverseInteraction.lastViewedInstance = null;
     } else {
       zoomOut(750);
     }
@@ -328,7 +357,7 @@ function initScene() {
       }, 500);
     }
 
-    if (markers.length > 0 && !enableFediverse) markers[0].select();
+    if (window.markers && window.markers.length > 0 && !window.enableFediverse) window.markers[0].select();
   }, 500);
 
   document.getElementById("bgmusicA").addEventListener(
@@ -375,15 +404,17 @@ function sceneSetup() {
     starModel.setSpectralIndex(0.9);
     starModel.setScale(1.0);
     translating.add(starModel);
+    window.starModel = starModel;
   }
 
-  if (enableFediverse) {
+  if (window.enableFediverse) {
     pSystem = generateFediverseInstances();
     translating.add(pSystem);
   } else if (enableDataStar) {
     pSystem = generateHipparcosStars();
     translating.add(pSystem);
   }
+  window.pSystem = pSystem;
 
   if (enableGalaxy) {
     pGalacticSystem = generateGalaxy();
@@ -391,6 +422,7 @@ function sceneSetup() {
     if (enableDust) {
       pDustSystem = generateDust();
       pGalacticSystem.add(pDustSystem);
+      window.pDustSystem = pDustSystem;
     }
   }
 
@@ -405,7 +437,6 @@ function sceneSetup() {
   }
 
   if (enableSkybox) {
-    initSkybox(false);
   }
 }
 
@@ -417,7 +448,12 @@ function animate() {
     camera.position.z < markerThreshold.max &&
     camera.position.z > markerThreshold.min;
 
-  lastRotateY = rotateY;
+  lastRotateY = window.rotateY;
+  
+  var rotateX = window.rotateX;
+  var rotateY = window.rotateY;
+  var rotateVX = window.rotateVX;
+  var rotateVY = window.rotateVY;
 
   if (!camera.__tour) {
     rotateX += rotateVX;
@@ -426,7 +462,7 @@ function animate() {
     rotateVX *= 0.9;
     rotateVY *= 0.9;
 
-    if (dragging) {
+    if (window.dragging) {
       rotateVX *= 0.6;
       rotateVY *= 0.6;
     }
@@ -456,6 +492,8 @@ function animate() {
 
     var isZoomedIn = camera.position.target.z < markerThreshold.min;
     var isZoomedToSolarSystem = camera.position.target.z > markerThreshold.min;
+    
+    var fediverseInteraction = window.fediverseInteraction;
 
     var isFediverseHover =
       typeof fediverseInteraction !== "undefined" &&
@@ -511,11 +549,14 @@ function animate() {
   );
   camera.fov = targetFov;
   fovValue = (0.5 / Math.tan((camera.fov * Math.PI) / 360)) * screenHeight;
+  window.fovValue = fovValue;
   camera.updateProjectionMatrix();
 
   shaderTiming = (Date.now() - startTime) / 1000;
+  window.shaderTiming = shaderTiming;
 
   rotateYAccumulate += Math.abs(rotateY - lastRotateY) * 5;
+  window.rotateYAccumulate = rotateYAccumulate;
 
   rotating.traverse(function (mesh) {
     if (mesh.update !== undefined) {
@@ -535,6 +576,11 @@ function animate() {
   updateMarkers();
   updateLegacyMarkers();
   updateFediverseLabels();
+  
+  window.rotateX = rotateX;
+  window.rotateY = rotateY;
+  window.rotateVX = rotateVX;
+  window.rotateVY = rotateVY;
 
   requestAnimationFrame(animate);
 
@@ -567,7 +613,7 @@ function unmuteSound() {
 
 function displayIntroMessage() {
   Tour.meta.fadeIn();
-  if (enableFediverse) {
+  if (window.enableFediverse) {
     tour
       .showMessage("Welcome to the Fediverse Universe.", 5000)
       .showMessage(
@@ -576,6 +622,7 @@ function displayIntroMessage() {
       )
       .showMessage("Scroll and zoom to explore.", 4000, function () {
         firstTime = false;
+        window.firstTime = false;
         $(window).trigger("resize");
         $iconNav.find("#tour-button").trigger("mouseover");
       })
@@ -589,9 +636,20 @@ function displayIntroMessage() {
       )
       .showMessage("Scroll and zoom to explore.", 4000, function () {
         firstTime = false;
+        window.firstTime = false;
         $(window).trigger("resize");
         $iconNav.find("#tour-button").trigger("mouseover");
       })
       .endMessages();
   }
 }
+
+window.start = start;
+window.$starName = $starName;
+window.$detailContainer = $detailContainer;
+window.$iconNav = $iconNav;
+window.$spectralGraph = $spectralGraph;
+window.muteSound = muteSound;
+window.unmuteSound = unmuteSound;
+window.firstTime = firstTime;
+window.markerThreshold = markerThreshold;

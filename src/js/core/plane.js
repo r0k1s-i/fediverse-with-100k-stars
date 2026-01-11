@@ -1,7 +1,12 @@
 
-var glowSpanTexture = new THREE.TextureLoader().load('src/assets/textures/transparent.png');
+import { constrain } from '../utils/math.js';
 
-function createSpacePlane(){
+export var glowSpanTexture = new THREE.TextureLoader().load('src/assets/textures/transparent.png');
+
+export function createSpacePlane(){
+    var translating = window.translating;
+    var camera = window.camera;
+
 	var cylinderMaterial = new THREE.MeshBasicMaterial({
 		map: glowSpanTexture,
 		blending: THREE.AdditiveBlending,
@@ -72,3 +77,6 @@ function createSpacePlane(){
 	mesh.update = updatePlaneMaterial;
 	return mesh;
 }
+
+window.glowSpanTexture = glowSpanTexture;
+window.createSpacePlane = createSpacePlane;

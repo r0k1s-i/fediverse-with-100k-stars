@@ -1,4 +1,11 @@
-function centerOn(vec3){
+
+import { AUToLY, KMToLY } from '../utils/app.js';
+
+export function centerOn(vec3){
+    var translating = window.translating;
+    var updateMinimap = window.updateMinimap;
+    var tour = window.tour; 
+    
 	var target = vec3.clone().negate();
 	translating.easePanning = new TWEEN.Tween(translating.position)
       .to({
@@ -6,28 +13,34 @@ function centerOn(vec3){
         y: target.y,
         z: target.z,
       }, 2200)
-      .easing(Tour.Easing)
+      .easing(window.Tour ? window.Tour.Easing : TWEEN.Easing.Sinusoidal.InOut) 
       .start()
       .onComplete(function() {
       	translating.easePanning = undefined;
       });
 
 	translating.targetPosition.copy( target );
-	updateMinimap();
+	if(updateMinimap) updateMinimap();
 }
 
-function snapTo(vec3){
+export function snapTo(vec3){
+    var translating = window.translating;
+    var updateMinimap = window.updateMinimap;
+
 	translating.targetPosition.copy( vec3.clone().negate() );
 	translating.position.copy( vec3.clone().negate() );
-	updateMinimap();
+	if(updateMinimap) updateMinimap();
 }
 
-function zoomIn(v) {
+export function zoomIn(v) {
+    var camera = window.camera;
+    var updateMinimap = window.updateMinimap;
+
 	camera.easeZooming = new TWEEN.Tween(camera.position)
       .to({
         z: v
       }, 3000)
-      .easing(Tour.Easing)
+      .easing(window.Tour ? window.Tour.Easing : TWEEN.Easing.Sinusoidal.InOut)
       .start()
       .onComplete(function() {
       	camera.easeZooming = undefined;
@@ -35,45 +48,29 @@ function zoomIn(v) {
 
 	camera.position.target.pz = camera.position.z;
 	camera.position.target.z = v;
-	updateMinimap();
+	if(updateMinimap) updateMinimap();
 }
 
-function zoomOut(v) {
+export function zoomOut(v) {
+    var camera = window.camera;
+    var updateMinimap = window.updateMinimap;
+
 	camera.position.target.z = v || camera.position.target.pz;
-	updateMinimap();
+	if(updateMinimap) updateMinimap();
 }
 
-function centerOnSun() {
-	// zoomOut();
-	// translating.targetPosition.set(0, 0, 0);
-	markers[0].select();
+export function centerOnSun() {
+    var markers = window.markers;
+	if(markers && markers[0]) markers[0].select();
 }
 
-function KMToLY( kilometers ){
-	return kilometers * 1.05702341 * Math.pow(10,-13);
-}
-
-function LYToKM( LY ) {
-	return LY / 1.05702341 * Math.pow(10,-13);
-}
-
-function AUToLY( AU ){
-	return AU * 1.58128451 * Math.pow(10,-5);
-}
-
-Math.TWO_PI = Math.PI * 2.0;
-
-//	from
-//	Ryan Scranton
-//	http://code.google.com/p/astro-stomp/source/browse/trunk/stomp/stomp_angular_coordinate.cc#688
-function EquatorialToGalactic( ra, dec ){
+export function EquatorialToGalactic( ra, dec ){
 	var g_psi = 0.57477043300;
 	var sTheta = 0.88998808748;
 	var ctheta = 0.45598377618;
 	var g_phi = 4.9368292465;
 
 	var a = ra - g_phi;
-	// var b = dec;
 
 	var sb = Math.sin( dec );
 	var cb = Math.cos( dec );
@@ -105,3 +102,10 @@ function EquatorialToGalactic( ra, dec ){
 	};
 
 }
+
+window.centerOn = centerOn;
+window.snapTo = snapTo;
+window.zoomIn = zoomIn;
+window.zoomOut = zoomOut;
+window.centerOnSun = centerOnSun;
+window.EquatorialToGalactic = EquatorialToGalactic;

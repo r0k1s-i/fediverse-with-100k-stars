@@ -5,7 +5,7 @@
 //	Color index is B-V
 
 
-var starSystems = {
+export var starSystems = {
     "268 G. Cet": {
         "id": 12082,
         "name": "Alabama",
@@ -2484,3 +2484,5 @@ var starSystems = {
 //         ]
 //     }
 // }
+
+window.starSystems = starSystems;

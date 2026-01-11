@@ -1,399 +1,351 @@
-(function() {
 
-  // reference to window
-  var root = window;
+import { map, constrain } from '../utils/math.js';
 
-  // globals taken from scss
-  var border_width = 1;
-  var padding = 30;
+var border_width = 1;
+var padding = 30;
 
-  // Loading variables
-  var ready = false;
-  var count = 0;
-  var timer = null
-  var dragged = false;
+var ready = false;
+var count = 0;
+var timer = null
+var dragged = false;
 
-  // SVG loadables
-  var $soundOn, $soundOff, $heatvision, $tour, $home;
+var $soundOn, $soundOff, $heatvision, $tour, $home;
 
-  // jQuery elements
-  var $domElement = $('#minimap');
-  var $minimap = $domElement.find('#zoom-levels');
-  var $volume = $domElement.find('#volume').load(updateCount);
-  var $about = $domElement.find('#about').load(updateCount);
-  // var $tour = $domElement.find('#tour').load(updateCount);
-  // var $heatvision = $domElement.find('#heatvision').load(updateCount);
-  // var $sound = $domElement.find('#sound').load(updateCount);
-  // var $soundoff = $domElement.find('#soundoff').load(updateCount);
-  // var $backdrop = $domElement.find("#zoom-backdrop");
-  var $cursor = $domElement.find('#zoom-cursor');
+var $domElement = $('#minimap');
+var $minimap = $domElement.find('#zoom-levels');
+var $volume = $domElement.find('#volume').load(updateCount);
+var $about = $domElement.find('#about').load(updateCount);
+var $cursor = $domElement.find('#zoom-cursor');
 
-  // Calculation variables
-  var POWER = 3;
-  var position = 0; // The default position of the cursor, as a pct (%).
-  var curve = function(t) {
-    return Math.pow(t, 1 / POWER);
-  };
-  var curve_inverse = function(t) {
-    return Math.pow(t, POWER);
-  };
+var POWER = 3;
+var position = 0; 
+var curve = function(t) {
+return Math.pow(t, 1 / POWER);
+};
+var curve_inverse = function(t) {
+return Math.pow(t, POWER);
+};
 
-  var $window = $(window);
+var $window = $(window);
 
-  function clickEvent( e ){
-    // console.log('touched outside');
-    var id = $(e.target).attr('id');
+function clickEvent( e ){
+var id = $(e.target).attr('id');
 
-    if (dragged || (id !== 'css-world' && id !== 'css-camera' && id !== 'glContainer')) {
-      dragged = false;
-      return;
+if (dragged || (id !== 'css-world' && id !== 'css-camera' && id !== 'glContainer')) {
+    dragged = false;
+    return;
+}
+
+unfocus();
+}
+
+function touchEvent( e ){
+var event = e.originalEvent;
+var id = $(event.target).attr('id');
+
+if (dragged || (id !== 'css-world' && id !== 'css-camera' && id !== 'glContainer')) {
+    dragged = false;
+    return;
+}
+
+unfocus();    
+}
+
+$window.click( clickEvent );
+
+$window
+.resize(function() {
+    var firstTime = window.firstTime;
+    if (!ready) {
+    if (timer) {
+        updateCount();
+        clearTimeout(timer);
+    }
+    timer = setTimeout(function() {
+        if( firstTime == false )
+        $window.trigger('resize');
+    }, 500);
+
+    return;
+
     }
 
-    unfocus();
-  }
+    var offset = $volume.outerHeight() + $about.outerHeight() + padding;
+    var h = $domElement.height() - offset;
 
-  function touchEvent( e ){
-    var event = e.originalEvent;
-    var id = $(event.target).attr('id');
+    $minimap.height(h - border_width * 2);
 
-    if (dragged || (id !== 'css-world' && id !== 'css-camera' && id !== 'glContainer')) {
-      dragged = false;
-      return;
-    }
+if (!$domElement.hasClass('ready')) {
+    $domElement.addClass('ready');
+}
 
-    unfocus();    
-  }
+})
+.bind('mouseup', onWindowMouseUp)
+.bind('touchend', onWindowMouseUp)
+.trigger('resize');
 
-  $window.click( clickEvent );
+export function initializeMinimap() {
+this.updateMinimap();
+};
 
-  $window
-    .resize(function() {
-      if (!ready) {
-        // If not all images are loaded then we need to halt this procedure
-        // and time it out.
-        if (timer) {
-          updateCount();
-          clearTimeout(timer);
-        }
-        timer = setTimeout(function() {
-          if( firstTime == false )
-            $window.trigger('resize');
-        }, 500);
+export function updateMinimap() {
+    var camera = window.camera;
 
-        return;
+if (!camera) {
+    return;
+}
 
-      }
+var normal = cmap(camera.position.target.z, 1.1, 40000, 0, 1);
+position = cmap(curve(normal), 0, 1, 0, 100);
+updateCursorPosition(true);
 
-      var offset = $volume.outerHeight() + $about.outerHeight() + padding;
-      var h = $domElement.height() - offset;
+};
 
-      $minimap.height(h - border_width * 2);
+export function setScrollPositionFromTouch( touch ){
+var y = (touch.pageY - $minimap.offset().top);
+position = cmap(y, 0, $minimap.height(), 0, 100);
+updateCursorPosition();
+}
 
-    // // Now that we're ready fade in the entire minimap.
-    if (!$domElement.hasClass('ready')) {
-      $domElement.addClass('ready');
-    }
+export function setMinimap(b) {
+dragged = !!b;
+};
 
+export function showSunButton() {
+if ($home) {
+    $home.css({opacity:1.0,display:'inline'});
+}
+};
+
+export function hideSunButton() {
+if ($home) {
+    $home.fadeOut();
+}
+};
+
+$minimap
+.bind('mousedown', onElementMouseDown);
+
+$minimap
+.bind('touchstart', onElementTouchStart);
+
+$about
+.click(function(e) {
+    var $detailContainer = window.$detailContainer; 
+    if (!$detailContainer) $detailContainer = $('#detailContainer');
+
+    var line_height = 20;
+    e.preventDefault();
+
+    $detailContainer.addClass('about');
+
+    $('#css-container').css('display', 'none');
+
+    $.get('detail/about.html', function(data) {
+    $('#detailBody').html(data);
+    });
+
+    $('#detailTitle').find('span').html('100,000 Stars');
+
+    $detailContainer.css({
+    paddingTop: line_height * 3 + 'px'
+    });
+
+    $detailContainer.fadeIn();
+
+});
+
+var muted = localStorage.getItem('sound') === '0';
+
+$.get('src/assets/icons/sound-on.svg', function(resp) {
+$soundOn = $(resp).find('svg').addClass('icon')
+    .css({
+    display: muted ? 'none' : 'block'
     })
-    .bind('mouseup', onWindowMouseUp)
-    .bind('touchend', onWindowMouseUp)
-    .trigger('resize');
-
-  // Exports
-
-  // Create an initializer
-
-  var initializeMinimap = root.initializeMinimap = function() {
-
-    this.updateMinimap();
-
-  };
-
-  // A means to update the minimap
-
-  var updateMinimap = root.updateMinimap = function() {
-
-    if (!root.camera) {
-      return;
-    }
-
-    var normal = cmap(root.camera.position.target.z, 1.1, 40000, 0, 1);
-    position = cmap(curve(normal), 0, 1, 0, 100);
-    updateCursorPosition(true);
-
-  };
-
-  var setScrollPosition = root.setScrollPositionFromTouch = function( touch ){
-    var y = (touch.pageY - $minimap.offset().top);
-    position = cmap(y, 0, $minimap.height(), 0, 100);
-    updateCursorPosition();
-  }
-
-  var setMinimap = root.setMinimap = function(b) {
-    dragged = !!b;
-  };
-
-  var showSunButton = root.showSunButton = function() {
-    // $home.css({
-    //   height: 25 + 'px'
-    // });
-    // setTimeout(function() {
-    //   $window.trigger('resize');
-    // }, 250);
-    
-    if ($home) {
-      // console.log("show home button");
-      // $home.fadeIn();
-      $home.css({opacity:1.0,display:'inline'});
-    }
-  };
-
-  var hideSunButton = root.hideSunButton = function() {
-    // $home.fadeOut();
-    // $home.css({
-    //   height: 0
-    // });
-    // setTimeout(function() {
-    //   $window.trigger('resize');
-    // }, 250);
-    if ($home) {
-      $home.fadeOut();
-    }
-  };
-
-  /**
-   * Setup the dragging functionality for the minimap
-   */
-
-  $minimap
-    .bind('mousedown', onElementMouseDown);
-
-  $minimap
-    .bind('touchstart', onElementTouchStart);
-
-  // $home
-  //   .css({
-  //     height: 0,
-  //     overflow: 'hidden'
-  //   })
-  //   // .tip('Center camera on the sun.')
-  //   .click(function(e) {
-  //     // markers[0].$.trigger('click');
-  //     unfocus(true);
-  //   });
-
-  $about
     .click(function(e) {
-
-      var line_height = 20;
-      e.preventDefault();
-
-      $detailContainer.addClass('about');
-
-      $('#css-container').css('display', 'none');
-
-      $.get('detail/about.html', function(data) {
-        $('#detailBody').html(data);
-      });
-
-      $('#detailTitle').find('span').html('100,000 Stars');
-
-      $detailContainer.css({
-        paddingTop: line_height * 3 + 'px'
-      });
-
-      $detailContainer.fadeIn();
-
+    e.preventDefault();
+    $soundOn.css({ display: 'none' });
+    var muteSound = window.muteSound;
+    muteSound();
+    if ($soundOff) {
+        $soundOff.css({ display: 'inline-block' });
+    }
     });
+$volume.append($soundOn);
+});
 
-  var muted = localStorage.getItem('sound') === '0';
+$.get('src/assets/icons/sound-off.svg', function(resp) {
+$soundOff = $(resp).find('svg').addClass('icon')
+    .css({
+    display: !muted ? 'none' : 'block'
+    })
+    .click(function(e) {
+    e.preventDefault();
+    $soundOff.css({ display: 'none' });
+    var unmuteSound = window.unmuteSound;
+    unmuteSound();
+    if ($soundOn) {
+        $soundOn.css({ display: 'inline-block' });
+    }
+    });
+    $volume.append($soundOff);
+});
 
-  $.get('src/assets/icons/sound-on.svg', function(resp) {
-    $soundOn = $(resp).find('svg').addClass('icon')
-      .css({
-        display: muted ? 'none' : 'block'
-      })
-      .click(function(e) {
+$.get('src/assets/icons/big-tour.svg', function(resp) {
+    var $iconNav = window.$iconNav || $('#icon-nav');
+    var tour = window.tour;
+
+$tour = $(resp).find('svg').addClass('icon')
+    .attr('id', 'tour-button')
+    .tip('Take a tour.')
+    .click(function(e) {
+    e.preventDefault();
+    tour.start();
+    });
+$iconNav.append($tour);
+
+$.get('src/assets/icons/heat-vision.svg', function(resp) {
+    var toggleHeatVision = window.toggleHeatVision;
+
+    $heatvision = $(resp).find('svg').addClass('icon')
+    .click(function(e) {
         e.preventDefault();
-        $soundOn.css({ display: 'none' });
-        muteSound();
-        if ($soundOff) {
-          $soundOff.css({ display: 'inline-block' });
-        }
-      });
-    $volume.append($soundOn);
-  });
+        toggleHeatVision();
+    })
+    .hover(function(e) {
+        $tour.trigger('mouseleave', [true]);
+    }, function(e) {
+        $tour.trigger('mouseenter');
+    })
+    .tip('Toggle Spectral Index.');
+    $iconNav.append($heatvision);
 
-  $.get('src/assets/icons/sound-off.svg', function(resp) {
-    $soundOff = $(resp).find('svg').addClass('icon')
-      .css({
-        display: !muted ? 'none' : 'block'
-      })
-      .click(function(e) {
-        e.preventDefault();
-        $soundOff.css({ display: 'none' });
-        unmuteSound();
-        if ($soundOn) {
-          $soundOn.css({ display: 'inline-block' });
-        }
-      });
-      $volume.append($soundOff);
-  });
-
-  $.get('src/assets/icons/big-tour.svg', function(resp) {
-
-    $tour = $(resp).find('svg').addClass('icon')
-      .attr('id', 'tour-button')
-      .tip('Take a tour.')
-      .click(function(e) {
-        e.preventDefault();
-        tour.start();
-      });
-    $iconNav.append($tour);
-
-    $.get('src/assets/icons/heat-vision.svg', function(resp) {
-
-      $heatvision = $(resp).find('svg').addClass('icon')
-        .click(function(e) {
-          e.preventDefault();
-          toggleHeatVision();
-        })
+    $.get('src/assets/icons/center-sun.svg', function(resp) {
+    $home = $(resp).find('svg').addClass('icon')
+        .tip('Center camera position to the Sun.')
         .hover(function(e) {
-          $tour.trigger('mouseleave', [true]);
+        $tour.trigger('mouseleave', [true]);
         }, function(e) {
-          $tour.trigger('mouseenter');
+        $tour.trigger('mouseenter');
         })
-        .tip('Toggle Spectral Index.');
-      $iconNav.append($heatvision);
-
-      $.get('src/assets/icons/center-sun.svg', function(resp) {
-        $home = $(resp).find('svg').addClass('icon')
-          .tip('Center camera position to the Sun.')
-          .hover(function(e) {
-            $tour.trigger('mouseleave', [true]);
-          }, function(e) {
-            $tour.trigger('mouseenter');
-          })
-          .click(function(e) {
-            e.preventDefault();
-            unfocus(true);
-          })
-          .css({
-            display: 'none'
-          });
-        $iconNav.append($home);
-      });
-
+        .click(function(e) {
+        e.preventDefault();
+        unfocus(true);
+        })
+        .css({
+        display: 'none'
+        });
+    $iconNav.append($home);
     });
 
-  });
+});
 
-  function onElementMouseDown(e) {
+});
 
-    var y = (e.pageY - $minimap.offset().top);
-    position = cmap(y, 0, $minimap.height(), 0, 100);
+function onElementMouseDown(e) {
 
-    updateCursorPosition();
+var y = (e.pageY - $minimap.offset().top);
+position = cmap(y, 0, $minimap.height(), 0, 100);
 
-    $window
-      .bind('mousemove', drag);
-  }
+updateCursorPosition();
 
-  function onElementTouchStart(e){
-    var event = e.originalEvent;
-    var touch = event.touches[0];
+$window
+    .bind('mousemove', drag);
+}
 
-    var y = (touch.pageY - $minimap.offset().top);
-    position = cmap(y, 0, $minimap.height(), 0, 100);
+function onElementTouchStart(e){
+var event = e.originalEvent;
+var touch = event.touches[0];
 
-    updateCursorPosition();    
-    root.scrollbaring = true;
-    // $window
-    //   .bind('touchmove', dragTouch);    
-  }
+var y = (touch.pageY - $minimap.offset().top);
+position = cmap(y, 0, $minimap.height(), 0, 100);
 
-  function drag(e) {
-    var y = (e.pageY - $minimap.offset().top);
-    position = cmap(y, 0, $minimap.height(), 0, 100);
+updateCursorPosition();    
+window.scrollbaring = true;
+}
 
-    updateCursorPosition();
+function drag(e) {
+var y = (e.pageY - $minimap.offset().top);
+position = cmap(y, 0, $minimap.height(), 0, 100);
 
-  }
+updateCursorPosition();
 
-  function dragTouch(e){    
-    var event = e.originalEvent;
-    if( event.touches.length != 1 )
-      return;    
+}
 
-    // event.preventDefault();    
-    // event.stopImmediatePropagation();
-    // Make sure the document doesn't scroll
-    // document.body.scrollTop = document.body.scrollLeft = 0;
-  }
+function dragTouch(e){    
+var event = e.originalEvent;
+if( event.touches.length != 1 )
+    return;    
+}
 
-  function onWindowMouseUp(e) {
-    // console.log('minimap end');
-    $window
-      .unbind('mousemove', drag);
-    $window
-      .unbind('touchmove', dragTouch);
-  }
+function onWindowMouseUp(e) {
+$window
+    .unbind('mousemove', drag);
+$window
+    .unbind('touchmove', dragTouch);
+}
 
-  function updateCursorPosition(silent) {
+function updateCursorPosition(silent) {
 
-    $cursor.css({
-      top: position + '%'
-    });
-    if (!silent) {
-      updateCameraPosition();
+$cursor.css({
+    top: position + '%'
+});
+if (!silent) {
+    updateCameraPosition();
+}
+
+}
+
+function updateCameraPosition() {
+    var camera = window.camera;
+
+if (camera) {
+    var normal = position / 100;
+    camera.position.target.z = cmap(curve_inverse(normal), 0, 1, 1.1, 40000);
+    camera.position.target.pz = camera.position.target.z;
+}
+
+}
+
+function cmap(v, i1, i2, o1, o2) {
+return Math.max(Math.min(map(v, i1, i2, o1, o2), o2), o1);
+}
+
+function unfocus(home) {
+    var centerOnSun = window.centerOnSun;
+    var zoomOut = window.zoomOut;
+    var shouldShowFediverseSystem = window.shouldShowFediverseSystem;
+    var goToFediverseCenter = window.goToFediverseCenter;
+    var fediverseInteraction = window.fediverseInteraction;
+
+$('#detailContainer').fadeOut();
+$('#css-container').css('display', 'block');
+if (!!home) {
+    if (typeof shouldShowFediverseSystem === "function" && shouldShowFediverseSystem()) {
+    goToFediverseCenter();
+    if (typeof fediverseInteraction !== "undefined") {
+        fediverseInteraction.lastViewedInstance = null;
     }
-
-  }
-
-  function updateCameraPosition() {
-
-    if (root.camera) {
-      var normal = position / 100;
-      root.camera.position.target.z = cmap(curve_inverse(normal), 0, 1, 1.1, 40000);
-      root.camera.position.target.pz = root.camera.position.target.z;
-    }
-
-  }
-
-  function map(v, i1, i2, o1, o2) {
-    return o1 + (o2 - o1) * ((v - i1) / (i2 - i1));
-  }
-
-  function cmap(v, i1, i2, o1, o2) {
-    return Math.max(Math.min(map(v, i1, i2, o1, o2), o2), o1);
-  }
-
-  function unfocus(home) {
-    $('#detailContainer').fadeOut();
-    $('#css-container').css('display', 'block');
-    if (!!home) {
-      // If returning from a major Fediverse instance, go to the software ecosystem center
-      if (typeof shouldShowFediverseSystem === "function" && shouldShowFediverseSystem()) {
-        goToFediverseCenter();
-        if (typeof fediverseInteraction !== "undefined") {
-          fediverseInteraction.lastViewedInstance = null;
-        }
-      } else {
-        centerOnSun();
-        setTimeout(hideSunButton, 500);
-        zoomOut(555);
-      }
     } else {
-      // zoomOut();
+    centerOnSun();
+    setTimeout(hideSunButton, 500);
+    zoomOut(555);
     }
-  }
+} else {
+}
+}
 
-  function updateCount() {
-    if (count < 3) {
-      count++;
-    } else if (!ready) {
-      ready = true;
-    }
-  }
+function updateCount() {
+if (count < 3) {
+    count++;
+} else if (!ready) {
+    ready = true;
+}
+}
 
-})();
+window.initializeMinimap = initializeMinimap;
+window.updateMinimap = updateMinimap;
+window.setScrollPositionFromTouch = setScrollPositionFromTouch;
+window.setMinimap = setMinimap;
+window.showSunButton = showSunButton;
+window.hideSunButton = hideSunButton;

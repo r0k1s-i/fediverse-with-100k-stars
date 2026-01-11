@@ -1,7 +1,7 @@
 
-var guidePointTexture = new THREE.TextureLoader().load( "src/assets/textures/p_1.png" );
+export var guidePointTexture = new THREE.TextureLoader().load( "src/assets/textures/p_1.png" );
 
-function createSpaceRadius( radius, color, representationScale ){
+export function createSpaceRadius( radius, color, representationScale ){
 	color = color ? color : 0xffffff;
 	representationScale = representationScale ? representationScale : 1;
 
@@ -54,7 +54,7 @@ function createSpaceRadius( radius, color, representationScale ){
 	return mesh;
 }
 
-function createDistanceMeasurement( vecA, vecB ){
+export function createDistanceMeasurement( vecA, vecB ){
 	var distance = vecA.distanceTo( vecB );
 	var height = distance * 0.04;
 	var bufferSpace = 0.38;
@@ -115,3 +115,7 @@ function createDistanceMeasurement( vecA, vecB ){
 	var mesh = new THREE.Line( geometry, material );	
 	return mesh;
 }
+
+window.guidePointTexture = guidePointTexture;
+window.createSpaceRadius = createSpaceRadius;
+window.createDistanceMeasurement = createDistanceMeasurement;

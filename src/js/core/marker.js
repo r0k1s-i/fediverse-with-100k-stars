@@ -1,28 +1,39 @@
-var markers = [];
-var markerThreshold = {
-  min: enableFediverse ? 200 : 400,
-  max: enableFediverse ? 45000 : 1500,
-};
 
-//	called by animate per frame
-function updateMarkers() {
+import { screenXY } from '../utils/three-helpers.js';
+import { constrain } from '../utils/math.js';
+import { getZoomByStarRadius, getOffsetByStarRadius } from '../utils/app.js';
+
+var markers = [];
+
+export function updateMarkers() {
   for (var i in markers) {
     var marker = markers[i];
     marker.update();
   }
 }
 
-function attachMarker(obj, size) {
+export function attachMarker(obj, size) {
+  var camera = window.camera;
+  var markerThreshold = window.markerThreshold;
+  var enableFediverse = window.enableFediverse;
+  var starSystems = window.starSystems;
+  var $starName = window.$starName; 
+  var setStarModel = window.setStarModel;
+  var starModel = window.starModel;
+  var enableStarModel = window.enableStarModel;
+  var zoomIn = window.zoomIn;
+  var centerOn = window.centerOn;
+  var snapTo = window.snapTo;
+  var setDivPosition = window.setDivPosition;
+
   var padding = 3;
   var line_height = 20;
   var title, extraData;
   var container = document.getElementById("css-camera");
   var template = document.getElementById("marker_template");
   var marker = template.cloneNode(true);
-  marker.$ = $(marker); // jQuery reference
+  marker.$ = $(marker); 
 
-  //	strip out the apostrophe in names first before looking them up
-  //	the same is done in the details data file already, as well as the star system lookup
   obj.name = obj.name.replace("'", "");
 
   marker.obj = obj;
@@ -37,8 +48,7 @@ function attachMarker(obj, size) {
 
   var nameLayer = marker.children[0];
 
-  //	get the formal name of the star
-  var system = starSystems[obj.name];
+  var system = starSystems ? starSystems[obj.name] : undefined;
 
   if (system !== undefined) {
     var systemName = system.name;
@@ -47,9 +57,6 @@ function attachMarker(obj, size) {
     nameLayer.innerHTML = obj.name;
   }
 
-  //	because these stars appear in the db as named stars and they are so closely packed together
-  //	we need to force them to be smaller font
-  //	totally sucks :|
   if (
     obj.name === "Proxima Centauri" ||
     obj.name === "Rigel Kentaurus A" ||
@@ -57,7 +64,6 @@ function attachMarker(obj, size) {
   )
     marker.style.fontSize = 10 + "px";
 
-  //	let's not even do Alpha Centauri B here because it just leads to the same description
   if (obj.name === "Rigel Kentaurus B") return;
 
   if (obj.name === "Rigel Kentaurus A") nameLayer.innerHTML = "Alpha Centauri";
@@ -67,12 +73,8 @@ function attachMarker(obj, size) {
   var name = marker.id.toLowerCase();
   title = nameLayer.innerHTML;
 
-  // console.log(name);
   var fileName = name.replace(/ /g, "_");
-  // fileName = fileName.replace(/\'/g, "%27");
   var pathToDetail = encodeURI("detail/" + fileName + ".html");
-
-  // console.log(pathToDetail);
 
   var obj_name = obj.name.match("°");
 
@@ -85,7 +87,7 @@ function attachMarker(obj, size) {
 
         $body.find("a").each(function () {
           var $this = $(this);
-          ahref = $this.attr("href");
+          var ahref = $this.attr("href");
           var finalLink = "http://en.wikipedia.org" + ahref;
           $this.attr("href", finalLink);
           $this.attr("target", "blank");
@@ -123,9 +125,6 @@ function attachMarker(obj, size) {
 
     var markerClick = function (e) {
       if (enableFediverse) return;
-      // $iconNav.css({
-      // 	display: 'none'
-      // });
 
       var vec = marker.absPosition.clone();
 
@@ -146,11 +145,9 @@ function attachMarker(obj, size) {
       var isStarSystem = system !== undefined;
 
       if (isStarSystem) {
-        //	this also sets the scale, and thus the star radius
         setStarModel(vec, marker.id);
         var modelScale = starModel.scale.length();
 
-        // we use the radius to determine how much we're going to zoom and offset
         var zoomByStarRadius = getZoomByStarRadius(modelScale);
         zoomIn(zoomByStarRadius);
 
@@ -158,7 +155,6 @@ function attachMarker(obj, size) {
         vec.add(offset);
       }
 
-      //	set the star
       centerOn(vec);
     };
 
@@ -179,12 +175,6 @@ function attachMarker(obj, size) {
     } else {
       this.style.opacity = 0.0;
     }
-    // var isVisible = this.$.css('display') == 'none';
-    // if ( !vis && isVisible ){
-    // 	this.$.fadeOut();
-    // } else if ( vis && !isVisible ) {
-    // 	this.$.fadeIn();
-    // }
     return this;
   };
 
@@ -197,9 +187,7 @@ function attachMarker(obj, size) {
     setStarModel(vec, marker.id);
     var modelScale = starModel.scale.length();
 
-    // we use the radius to determine how much we're going to zoom and offset
     var zoomByStarRadius = getZoomByStarRadius(modelScale);
-    // zoomIn( zoomByStarRadius );
 
     var title = nameLayer.innerHTML;
     var offset = getOffsetByStarRadius(modelScale);
@@ -229,7 +217,8 @@ function attachMarker(obj, size) {
     this.setVisible(camera.markersVisible);
   };
 
-  // nameLayer.innerHTML = "TESTING TESTING TESTING";
-
   markers.push(marker);
 }
+
+window.updateMarkers = updateMarkers;
+window.attachMarker = attachMarker;

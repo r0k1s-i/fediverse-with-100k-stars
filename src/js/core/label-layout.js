@@ -1,4 +1,5 @@
-class LabelLayout {
+
+export class LabelLayout {
     constructor() {
         this.placed = [];
     }
@@ -36,8 +37,4 @@ class LabelLayout {
     }
 }
 
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = LabelLayout;
-} else {
-    window.LabelLayout = LabelLayout;
-}
+window.LabelLayout = LabelLayout;

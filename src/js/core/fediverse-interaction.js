@@ -1,3 +1,4 @@
+
 var fediverseInteraction = {
   mouse: new THREE.Vector2(),
   raycaster: new THREE.Raycaster(),
@@ -5,29 +6,32 @@ var fediverseInteraction = {
   baseThreshold: 100.0,
   clickHandled: false,
   lastClickTime: 0,
-  lastViewedInstance: null,  // Track the last viewed instance
+  lastViewedInstance: null,  
 };
 
-// Three major Fediverse platforms
 var MAJOR_FEDIVERSE_DOMAINS = [
   "mastodon.social",
   "misskey.io",
   "pixelfed.social"
 ];
 
-// Center position of the three major instances (calculated average)
 var FEDIVERSE_CENTER = { x: 0, y: 0, z: 0 };
 
-function isMajorFediverseInstance(domain) {
+export function isMajorFediverseInstance(domain) {
   return MAJOR_FEDIVERSE_DOMAINS.indexOf(domain) !== -1;
 }
 
-function shouldShowFediverseSystem() {
+export function shouldShowFediverseSystem() {
   return fediverseInteraction.lastViewedInstance && 
          isMajorFediverseInstance(fediverseInteraction.lastViewedInstance);
 }
 
-function goToFediverseCenter() {
+export function goToFediverseCenter() {
+  var translating = window.translating;
+  var camera = window.camera;
+  var updateMinimap = window.updateMinimap;
+  var hideSunButton = window.hideSunButton;
+  
   if (typeof translating !== "undefined") {
     translating.targetPosition.set(
       -FEDIVERSE_CENTER.x,
@@ -36,23 +40,22 @@ function goToFediverseCenter() {
     );
   }
   if (typeof camera !== "undefined") {
-    camera.position.target.z = 15; // Zoom level to see the software ecosystem
+    camera.position.target.z = 15; 
   }
   if (typeof updateMinimap === "function") {
     updateMinimap();
   }
-  if (typeof window.hideSunButton === "function") {
-    window.hideSunButton();
+  if (typeof hideSunButton === "function") {
+    hideSunButton();
   }
   
-  // Hide UI elements that might be left over from viewing an instance
   var $starName = $("#star-name");
   var $detailContainer = $("#detailContainer");
   var $cssContainer = $("#css-container");
   
   if ($starName.length) {
-    $starName.hide(); // Immediately hide instead of fadeOut to prevent border showing
-    $starName.find("span").html(""); // Clear the star name content
+    $starName.hide(); 
+    $starName.find("span").html(""); 
   }
   if ($detailContainer.length) {
     $detailContainer.fadeOut();
@@ -61,15 +64,13 @@ function goToFediverseCenter() {
     $cssContainer.css("display", "block");
   }
   
-  // Clear any hover state
   fediverseInteraction.intersected = null;
   
-  // Set flag to indicate we are viewing the Fediverse software ecosystem center
   window._fediverseCenterMode = true;
 }
 
-// Check if camera is at Fediverse center (near origin with appropriate zoom)
-function isAtFediverseCenter() {
+export function isAtFediverseCenter() {
+  var translating = window.translating;
   if (!window._fediverseCenterMode) return false;
   if (typeof translating === "undefined") return false;
   
@@ -78,7 +79,6 @@ function isAtFediverseCenter() {
     pos.x * pos.x + pos.y * pos.y + pos.z * pos.z
   );
   
-  // If we moved away from center, clear the flag
   if (distFromCenter > 100) {
     window._fediverseCenterMode = false;
     return false;
@@ -88,23 +88,22 @@ function isAtFediverseCenter() {
 }
 
 function getInteractionThreshold() {
+  var camera = window.camera;
   if (typeof camera === "undefined") {
     return fediverseInteraction.baseThreshold;
   }
 
   var z = Math.abs(camera.position.z);
 
-  // Linear dynamic threshold: ~3% of screen height
   var dynamicThreshold = z * 0.025;
 
-  // Small minimum to ensure usability, but NOT the large baseThreshold
-  // which caused the "black hole" effect at origin when zoomed in
   var MIN_THRESHOLD = 5.0;
 
   return Math.max(MIN_THRESHOLD, dynamicThreshold);
 }
 
-function initFediverseInteraction() {
+export function initFediverseInteraction() {
+  var camera = window.camera;
   if (typeof camera === "undefined") {
     setTimeout(initFediverseInteraction, 500);
     return;
@@ -115,6 +114,14 @@ function initFediverseInteraction() {
 }
 
 function onFediverseMouseMove(event) {
+  var enableFediverse = window.enableFediverse;
+  var camera = window.camera;
+  var fediverseMeshes = window.fediverseMeshes;
+  var fediverseInstances = window.fediverseInstances;
+  var rotating = window.rotating;
+  var translating = window.translating;
+  var InteractionMath = window.InteractionMath;
+
   if (!enableFediverse) return;
   if (typeof camera === "undefined") return;
 
@@ -134,7 +141,7 @@ function onFediverseMouseMove(event) {
   );
 
   var intersects = fediverseInteraction.raycaster.intersectObjects(
-    fediverseMeshes,
+    fediverseMeshes || [],
     true,
   );
 
@@ -154,23 +161,17 @@ function onFediverseMouseMove(event) {
     typeof InteractionMath !== "undefined" &&
     typeof rotating !== "undefined"
   ) {
-    // Transform ray from world space to local space (accounting for rotating + translating)
-    // The scene hierarchy is: rotating -> translating -> instances
-    // We need the inverse of this transform to convert ray to local coordinates
 
     rotating.updateMatrixWorld(true);
     translating.updateMatrixWorld(true);
 
-    // Get the combined world matrix of translating (includes rotating's transform)
     var worldMatrix = translating.matrixWorld.clone();
     var inverseMatrix = new THREE.Matrix4();
     inverseMatrix.copy(worldMatrix).invert();
 
-    // Transform ray origin to local space
     var rayOrigin = fediverseInteraction.raycaster.ray.origin.clone();
     rayOrigin.applyMatrix4(inverseMatrix);
 
-    // Transform ray direction to local space (rotation only, no translation)
     var rayDirection = fediverseInteraction.raycaster.ray.direction.clone();
     var rotationMatrix = new THREE.Matrix4();
     rotationMatrix.extractRotation(inverseMatrix);
@@ -196,16 +197,16 @@ function onFediverseMouseMove(event) {
 }
 
 function handleHover(object) {
-  // When zoomed in very close (like original star view), don't show hover tooltip
-  // The star name is shown in the fixed bottom-left position by main.js
+  var camera = window.camera;
+  var markerThreshold = window.markerThreshold;
+  var $starName = window.$starName || $('#star-name');
+
   var isZoomedInClose =
     typeof camera !== "undefined" &&
     typeof markerThreshold !== "undefined" &&
     camera.position.z < markerThreshold.min;
 
   if (isZoomedInClose) {
-    // When zoomed in close, don't interfere with the standard star name display
-    // Clear any hover state
     if (fediverseInteraction.intersected) {
       fediverseInteraction.intersected = null;
       document.body.style.cursor = "default";
@@ -218,7 +219,6 @@ function handleHover(object) {
 
     if (object) {
       $starName.html("<span>" + object.name + "</span>");
-      // Use inline styles for tooltip mode (following mouse)
       $starName
         .css({
           opacity: 1.0,
@@ -230,7 +230,6 @@ function handleHover(object) {
       document.body.style.cursor = "pointer";
     } else {
       $starName.hide();
-      // Reset to default CSS positioning when not hovering
       $starName.css({
         position: "",
         left: "",
@@ -263,9 +262,6 @@ function isClickOnUI(event) {
       id === "ex-out" ||
       id === "zoom-back" ||
       id === "icon-nav" ||
-      // NOTE: Removed css-container and css-camera - these are the 3D scene containers and should allow clicks
-      // id === "css-container" ||
-      // id === "css-camera" ||
       id === "minimap" ||
       id === "about" ||
       className.indexOf("marker") !== -1 ||
@@ -279,6 +275,21 @@ function isClickOnUI(event) {
 }
 
 function onFediverseClick(event) {
+  var enableFediverse = window.enableFediverse;
+  var camera = window.camera;
+  var markerThreshold = window.markerThreshold;
+  var translating = window.translating;
+  var fediverseInstances = window.fediverseInstances;
+  var showSunButton = window.showSunButton;
+  var hideSunButton = window.hideSunButton;
+  var setMinimap = window.setMinimap;
+  var starModel = window.starModel;
+  var enableStarModel = window.enableStarModel;
+  var getOffsetByStarRadius = window.getOffsetByStarRadius;
+  var centerOn = window.centerOn;
+  var zoomIn = window.zoomIn;
+  var $starName = window.$starName || $('#star-name');
+
   if (!enableFediverse) return;
 
   if (isClickOnUI(event)) {
@@ -289,7 +300,6 @@ function onFediverseClick(event) {
   if (now - fediverseInteraction.lastClickTime < 300) return;
   fediverseInteraction.lastClickTime = now;
 
-  // Check if we're zoomed in close
   var isZoomedInClose =
     typeof camera !== "undefined" &&
     typeof markerThreshold !== "undefined" &&
@@ -298,14 +308,10 @@ function onFediverseClick(event) {
   var clickTarget = null;
 
   if (isZoomedInClose) {
-    // When zoomed in close, ONLY allow clicking on the current instance
-    // Don't allow jumping to other instances - bad UX
     if (typeof translating !== "undefined") {
-      // Use targetPosition if available (more accurate than animated position)
       var transPos = translating.targetPosition || translating.position;
       var currentPos = transPos.clone().negate();
 
-      // Find the closest instance to current position
       var closestDist = Infinity;
       var closestInst = null;
 
@@ -326,7 +332,6 @@ function onFediverseClick(event) {
         }
       }
 
-      // Only accept if very close (threshold 10)
       if (closestInst && closestDist < 10) {
         clickTarget = {
           name: closestInst.name || closestInst.domain,
@@ -335,7 +340,6 @@ function onFediverseClick(event) {
       }
     }
   } else {
-    // When zoomed out, use the hover-selected instance
     clickTarget = fediverseInteraction.intersected;
   }
 
@@ -349,7 +353,6 @@ function onFediverseClick(event) {
   var data = clickTarget.instanceData || clickTarget;
   if (!data || !data.position) return;
 
-  // Track the viewed instance domain for return navigation
   fediverseInteraction.lastViewedInstance = data.domain || null;
 
   var position = new THREE.Vector3(
@@ -359,17 +362,17 @@ function onFediverseClick(event) {
   );
 
   if (position.length() > 0.001) {
-    if (typeof window.showSunButton === "function") {
-      window.showSunButton();
+    if (typeof showSunButton === "function") {
+      showSunButton();
     }
   } else {
-    if (typeof window.hideSunButton === "function") {
-      window.hideSunButton();
+    if (typeof hideSunButton === "function") {
+      hideSunButton();
     }
   }
 
-  if (typeof window.setMinimap === "function") {
-    window.setMinimap(true);
+  if (typeof setMinimap === "function") {
+    setMinimap(true);
   }
 
   var userCount = data.stats ? data.stats.user_count : 1;
@@ -377,7 +380,6 @@ function onFediverseClick(event) {
 
   var MIN_STAR_SCALE = 1.5;
   var modelScale = Math.max(MIN_STAR_SCALE, instanceSize * 0.1);
-  // Clamp zoomLevel to keep consistent visual size regardless of star scale
   var zoomLevel = Math.min(3.0, Math.max(1.5, modelScale * 0.8));
 
   if (
@@ -410,8 +412,6 @@ function onFediverseClick(event) {
     zoomIn(zoomLevel);
   }
 
-  // Reset $starName to default CSS positioning (bottom-left fixed)
-  // This allows main.js to control its visibility based on zoom level
   $starName.css({
     position: "",
     left: "",
@@ -427,12 +427,12 @@ function onFediverseClick(event) {
 function showInstanceDetails(data) {
   var $title = $("#detailTitle span");
   var $body = $("#detailBody");
+  var numberWithCommas = window.numberWithCommas;
 
   $title.text(data.name || data.domain);
 
   var html = '<div style="margin-top: 20px;">';
 
-  // 描述放在最前面
   if (data.description) {
     html +=
       '<p style="font-style: italic; margin-bottom: 20px;">' +
@@ -440,7 +440,6 @@ function showInstanceDetails(data) {
       "</p>";
   }
 
-  // 星球类型：软件名 + 星球类型（直接从数据读取）
   var starType = "Unknown";
   if (data.color && data.color.starType) {
     starType = data.color.starType;
@@ -454,32 +453,27 @@ function showInstanceDetails(data) {
     starType +
     "</p>";
 
-  // 星球温度（直接从数据读取）
-  var temperature = 7300; // 默认中等温度
+  var temperature = 7300; 
   if (data.color && data.color.temperature) {
     temperature = data.color.temperature;
   }
   html +=
     "<p><strong>Surface Temperature:</strong> " +
-    numberWithCommas(temperature) +
+    (numberWithCommas ? numberWithCommas(temperature) : temperature) +
     "°K</p>";
 
-  // 星球居民数（原Total Users）
   if (data.stats) {
     html +=
       "<p><strong>Planetary Population:</strong> " +
-      numberWithCommas(data.stats.user_count) +
+      (numberWithCommas ? numberWithCommas(data.stats.user_count) : data.stats.user_count) +
       "</p>";
   }
 
-  // 宇宙坐标
   if (data.position) {
-    // 换算为科学描述，使用光年作为单位（1单位 ≈ 10光年）
     var x = (data.position.x * 10).toFixed(1);
     var y = (data.position.y * 10).toFixed(1);
     var z = (data.position.z * 10).toFixed(1);
 
-    // 格式化坐标，正数用+号，负数用-号
     var formatCoord = function (val) {
       return (val >= 0 ? "+" : "") + val;
     };
@@ -509,7 +503,6 @@ function showInstanceDetails(data) {
 
   $body.html(html);
 
-  // 设置 ↗ 符号的点击事件（跳转到实例）
   var $instancePortal = $("#instance-portal");
   $instancePortal.off("click").on("click", function (e) {
     e.stopPropagation();
@@ -518,9 +511,17 @@ function showInstanceDetails(data) {
     }
   });
 
+  var $detailContainer = $("#detailContainer");
   $detailContainer.fadeIn();
   $("#css-container").css("display", "none");
 }
+
+window.fediverseInteraction = fediverseInteraction;
+window.initFediverseInteraction = initFediverseInteraction;
+window.shouldShowFediverseSystem = shouldShowFediverseSystem;
+window.goToFediverseCenter = goToFediverseCenter;
+window.isAtFediverseCenter = isAtFediverseCenter;
+window.isMajorFediverseInstance = isMajorFediverseInstance;
 
 $(document).ready(function () {
   initFediverseInteraction();

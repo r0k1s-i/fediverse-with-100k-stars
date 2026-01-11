@@ -1,11 +1,8 @@
-////////////////////////////////////////
-//	HELP HUD
-////////////////////////////////////////
 
-var hideHelpHudTime = 8000;		//	milliseconds
+var hideHelpHudTime = 8000;		
 var helpHidden = false;
 
-function hideHelp(){
+export function hideHelp(){
 	if( helpHidden )
 		return;
 	
@@ -17,7 +14,6 @@ function hideHelp(){
 	help.style.display = 'none';
 }
 
-//	make the help hud automatically go away after some seconds
 setTimeout( function(){
 	hideHelp();
 }, hideHelpHudTime );	
@@ -25,3 +21,5 @@ setTimeout( function(){
 document.addEventListener( 'mousedown', function(){
 	hideHelp();
 }, true);	 
+
+window.hideHelp = hideHelp;
