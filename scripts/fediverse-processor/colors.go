@@ -187,7 +187,7 @@ func CalculateColor(instance *Instance, cfg Config) *Color {
 		saturation = cfg.SaturationMin
 	}
 
-	// Calculate lightness based on activity ratio
+	// Calculate activity ratio (used for both lightness and temperature)
 	mau := 0
 	totalUsers := 1
 	if instance.Stats != nil {
@@ -197,6 +197,8 @@ func CalculateColor(instance *Instance, cfg Config) *Color {
 		}
 	}
 	activityRatio := math.Min(float64(mau)/float64(totalUsers), 1)
+
+	// Lightness based on activity ratio
 	lightness := cfg.LightnessMin + (activityRatio * (cfg.LightnessMax - cfg.LightnessMin))
 	// Clamp lightness to [0, 100]
 	if lightness > 100 {
@@ -209,9 +211,10 @@ func CalculateColor(instance *Instance, cfg Config) *Color {
 	rgb := hslToRGB(hue, saturation, lightness)
 	hexColor := rgbToHex(rgb)
 
-	// Calculate temperature based on hue (0-360° → 3,840K to 42,000K)
-	// Temperature gradient: red(3840K) -> orange -> yellow(7300K) -> white -> blue(42000K)
-	temperature := calculateTemperature(hue)
+	// Calculate temperature based on activity ratio (not age/hue)
+	// Active instances = hot (bright), inactive = cool (dim)
+	// Temperature range: 3,840K (inactive) to 42,000K (very active)
+	temperature := calculateTemperatureFromActivity(activityRatio)
 
 	// Calculate star type based on hue (color) and user count (size)
 	starType := calculateStarType(hue, userCount)
@@ -237,26 +240,29 @@ func CalculateColor(instance *Instance, cfg Config) *Color {
 	}
 }
 
-// calculateTemperature maps hue (0-360°) to stellar temperature in Kelvin
-// Based on B-V stellar color index: red stars are cooler, blue stars are hotter
-// Temperature range: 3,840K (red/cool) to 42,000K (blue/hot)
-func calculateTemperature(hue float64) int {
+// calculateTemperatureFromActivity maps activity ratio (0-1) to temperature in Kelvin
+// Active instances are "hot" (high activity = high temperature)
+// Inactive instances are "cool" (low activity = low temperature)
+// Temperature range: 3,840K (inactive) to 42,000K (very active)
+func calculateTemperatureFromActivity(activityRatio float64) int {
 	const (
-		minTemp = 3840  // Coolest (red)
-		midTemp = 7300  // Medium (yellow)
-		maxTemp = 42000 // Hottest (blue)
+		minTemp = 3840  // Coolest (inactive, 0% activity)
+		midTemp = 7300  // Medium activity (~15%)
+		maxTemp = 42000 // Hottest (very active, 100%+)
 	)
 
-	// Normalize hue to spectralIndex (0-1)
-	spectralIndex := hue / 360.0
-
 	var temp float64
-	if spectralIndex < 0.5 {
+
+	// Use non-linear mapping to better spread the temperature range
+	// Most instances have low activity, so we use sqrt to expand the lower range
+	normalizedActivity := math.Sqrt(activityRatio)
+
+	if normalizedActivity < 0.5 {
 		// 0 to 0.5: from min temp to mid temp
-		temp = float64(minTemp) + (float64(midTemp-minTemp) * (spectralIndex * 2))
+		temp = float64(minTemp) + (float64(midTemp-minTemp) * (normalizedActivity * 2))
 	} else {
 		// 0.5 to 1: from mid temp to max temp
-		temp = float64(midTemp) + (float64(maxTemp-midTemp) * ((spectralIndex - 0.5) * 2))
+		temp = float64(midTemp) + (float64(maxTemp-midTemp) * ((normalizedActivity - 0.5) * 2))
 	}
 
 	return int(math.Round(temp))
