@@ -84,7 +84,7 @@ window.addEventListener('touchend', onWindowMouseUp);
 window.dispatchEvent(new Event('resize'));
 
 export function initializeMinimap() {
-  this.updateMinimap();
+  updateMinimap();
 }
 
 export function updateMinimap() {
