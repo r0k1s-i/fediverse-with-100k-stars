@@ -11,35 +11,35 @@ import (
 
 // CLIOptions holds parsed command-line arguments
 type CLIOptions struct {
-	InputFile      string
-	OutputFile     string
-	ColorOnly      bool
-	PositionsOnly  bool
-	Verbose        bool
-	JSONOutput     bool
-	ConfigFile     string
-	Help           bool
+	InputFile     string
+	OutputFile    string
+	ColorOnly     bool
+	PositionsOnly bool
+	Verbose       bool
+	JSONOutput    bool
+	ConfigFile    string
+	Help          bool
 }
 
 // ParseCLI parses command-line arguments
 func ParseCLI() CLIOptions {
 	opts := CLIOptions{}
 
-	flag.StringVar(&opts.InputFile, "input", "", 
+	flag.StringVar(&opts.InputFile, "input", "",
 		"Input JSON file (default: data/fediverse_raw.json, use '-' for stdin)")
-	flag.StringVar(&opts.OutputFile, "output", "", 
+	flag.StringVar(&opts.OutputFile, "output", "",
 		"Output JSON file (default: data/fediverse_final.json, use '-' for stdout)")
-	flag.BoolVar(&opts.ColorOnly, "colors-only", false, 
+	flag.BoolVar(&opts.ColorOnly, "colors-only", false,
 		"Only calculate colors, skip position processing")
-	flag.BoolVar(&opts.PositionsOnly, "positions-only", false, 
+	flag.BoolVar(&opts.PositionsOnly, "positions-only", false,
 		"Only calculate positions (input must have color data)")
-	flag.BoolVar(&opts.Verbose, "verbose", false, 
+	flag.BoolVar(&opts.Verbose, "verbose", false,
 		"Print detailed processing information")
-	flag.BoolVar(&opts.JSONOutput, "json", false, 
+	flag.BoolVar(&opts.JSONOutput, "json", false,
 		"Output statistics as JSON instead of human-readable text")
-	flag.StringVar(&opts.ConfigFile, "config", "", 
+	flag.StringVar(&opts.ConfigFile, "config", "",
 		"Configuration file (YAML/JSON format)")
-	flag.BoolVar(&opts.Help, "help", false, 
+	flag.BoolVar(&opts.Help, "help", false,
 		"Print help message")
 
 	flag.Usage = func() {
@@ -167,7 +167,8 @@ func WriteInstances(outputFile string, instances []Instance) error {
 
 // ProcessInstances applies the specified processing phases
 func ProcessInstances(instances []Instance, cfg Config, opts CLIOptions) []Instance {
-	// Default: process both colors and positions
+	normalizeStats(instances)
+
 	doColors := !opts.PositionsOnly
 	doPositions := !opts.ColorOnly
 
@@ -197,10 +198,10 @@ func ProcessInstances(instances []Instance, cfg Config, opts CLIOptions) []Insta
 // PrintStatisticsJSON outputs statistics as JSON
 func PrintStatisticsJSON(instances []Instance) {
 	stats := map[string]interface{}{
-		"total_instances": len(instances),
+		"total_instances":       len(instances),
 		"software_distribution": buildSoftwareStats(instances),
 		"position_distribution": buildPositionStats(instances),
-		"color_statistics": buildColorStats(instances),
+		"color_statistics":      buildColorStats(instances),
 	}
 
 	data, _ := json.MarshalIndent(stats, "", "  ")
@@ -222,6 +223,16 @@ func buildPositionStats(instances []Instance) map[string]int {
 		stats[inst.PositionType]++
 	}
 	return stats
+}
+
+func normalizeStats(instances []Instance) {
+	for i := range instances {
+		if instances[i].Stats == nil {
+			instances[i].Stats = &Stats{UserCount: 1, MonthlyActiveUsers: 0}
+		} else if instances[i].Stats.UserCount < 1 {
+			instances[i].Stats.UserCount = 1
+		}
+	}
 }
 
 func buildColorStats(instances []Instance) map[string]interface{} {

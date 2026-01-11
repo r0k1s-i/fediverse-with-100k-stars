@@ -169,8 +169,8 @@ func CalculateColor(instance *Instance, cfg Config) *Color {
 	}
 
 	// Calculate saturation based on user count (logarithmic scaling with diminishing returns)
-	userCount := 0
-	if instance.Stats != nil {
+	userCount := 1 // Default to 1 to avoid negative values in log calculation
+	if instance.Stats != nil && instance.Stats.UserCount > 0 {
 		userCount = instance.Stats.UserCount
 	}
 	// Use (userCount-1) to ensure that 1 user gives saturation = SaturationMin
