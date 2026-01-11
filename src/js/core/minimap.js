@@ -234,7 +234,6 @@ function loadHeatVisionIcon() {
     .then(function(response) { return response.text(); })
     .then(function(resp) {
       var iconNavEl = window.iconNavEl || $('#icon-nav');
-      var toggleHeatVision = window.toggleHeatVision;
 
       var parser = new DOMParser();
       var doc = parser.parseFromString(resp, 'image/svg+xml');
@@ -244,6 +243,7 @@ function loadHeatVisionIcon() {
         heatvisionEl.setAttribute('data-tip', 'Toggle Spectral Index.');
         heatvisionEl.addEventListener('click', function(e) {
           e.preventDefault();
+          var toggleHeatVision = window.toggleHeatVision;
           if (toggleHeatVision) toggleHeatVision();
         });
         heatvisionEl.addEventListener('mouseenter', function(e) {
