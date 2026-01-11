@@ -1,4 +1,4 @@
-var dustTexture = THREE.ImageUtils.loadTexture( "index_files/dust.png" );
+var dustTexture = THREE.ImageUtils.loadTexture( "src/assets/textures/dust.png" );
 
 var dustUniforms = {
 	color:     { type: "c", value: new THREE.Color( 0xffffff ) },

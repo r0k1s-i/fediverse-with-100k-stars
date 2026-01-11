@@ -1,7 +1,7 @@
-var textureFlare0 = THREE.ImageUtils.loadTexture( "index_files/lensflare0.png" );
-var textureFlare1 = THREE.ImageUtils.loadTexture( "index_files/lensflare1.png" );
-var textureFlare2 = THREE.ImageUtils.loadTexture( "index_files/lensflare2.png" );
-var textureFlare3 = THREE.ImageUtils.loadTexture( "index_files/lensflare3.png", undefined, setLoadMessage("Calibrating optics") );
+var textureFlare0 = THREE.ImageUtils.loadTexture( "src/assets/textures/lensflare0.png" );
+var textureFlare1 = THREE.ImageUtils.loadTexture( "src/assets/textures/lensflare1.png" );
+var textureFlare2 = THREE.ImageUtils.loadTexture( "src/assets/textures/lensflare2.png" );
+var textureFlare3 = THREE.ImageUtils.loadTexture( "src/assets/textures/lensflare3.png", undefined, setLoadMessage("Calibrating optics") );
 
 //	just used in galactic core
 function addLensFlare(x,y,z, size, overrideImage){

@@ -208,7 +208,7 @@
 
   var muted = localStorage.getItem('sound') === '0';
 
-  $.get('index_files//sound-on.svg', function(resp) {
+  $.get('src/assets/icons/sound-on.svg', function(resp) {
     $soundOn = $(resp).find('svg').addClass('icon')
       .css({
         display: muted ? 'none' : 'block'
@@ -224,7 +224,7 @@
     $volume.append($soundOn);
   });
 
-  $.get('index_files//sound-off.svg', function(resp) {
+  $.get('src/assets/icons/sound-off.svg', function(resp) {
     $soundOff = $(resp).find('svg').addClass('icon')
       .css({
         display: !muted ? 'none' : 'block'
@@ -240,7 +240,7 @@
       $volume.append($soundOff);
   });
 
-  $.get('index_files//big-tour.svg', function(resp) {
+  $.get('src/assets/icons/big-tour.svg', function(resp) {
 
     $tour = $(resp).find('svg').addClass('icon')
       .attr('id', 'tour-button')
@@ -251,7 +251,7 @@
       });
     $iconNav.append($tour);
 
-    $.get('index_files//heat-vision.svg', function(resp) {
+    $.get('src/assets/icons/heat-vision.svg', function(resp) {
 
       $heatvision = $(resp).find('svg').addClass('icon')
         .click(function(e) {
@@ -266,7 +266,7 @@
         .tip('Toggle Spectral Index.');
       $iconNav.append($heatvision);
 
-      $.get('index_files//center-sun.svg', function(resp) {
+      $.get('src/assets/icons/center-sun.svg', function(resp) {
         $home = $(resp).find('svg').addClass('icon')
           .tip('Center camera position to the Sun.')
           .hover(function(e) {

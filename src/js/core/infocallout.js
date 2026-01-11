@@ -27,7 +27,7 @@ function makeSunEarthDiagram(){
 	translating.add(sunEarthDiagram);
 }
 
-var clamperTexture = THREE.ImageUtils.loadTexture( 'index_files/clamper.png' );
+var clamperTexture = THREE.ImageUtils.loadTexture( 'src/assets/textures/clamper.png' );
 var clamperMaterial = new THREE.MeshBasicMaterial({
 	map: clamperTexture,
 	depthTest: false,

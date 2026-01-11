@@ -1,5 +1,5 @@
 THREE.ImageUtils.crossOrigin = null;
-var guidePointTexture = THREE.ImageUtils.loadTexture( "index_files/p_1.png" );
+var guidePointTexture = THREE.ImageUtils.loadTexture( "src/assets/textures/p_1.png" );
 
 function createSpaceRadius( radius, color, representationScale ){
 	color = color ? color : 0xffffff;
