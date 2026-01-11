@@ -333,9 +333,10 @@ function onFediverseClick(event) {
   var userCount = data.stats ? data.stats.user_count : 1;
   var instanceSize = Math.max(15.0, Math.log(userCount + 1) * 8);
 
-  var MIN_STAR_SCALE = 0.5;
-  var modelScale = Math.max(MIN_STAR_SCALE, instanceSize * 0.05);
-  var zoomLevel = modelScale * 3.0;
+  var MIN_STAR_SCALE = 1.5;
+  var modelScale = Math.max(MIN_STAR_SCALE, instanceSize * 0.1);
+  // Clamp zoomLevel to keep consistent visual size regardless of star scale
+  var zoomLevel = Math.min(3.0, Math.max(1.5, modelScale * 0.8));
 
   if (
     typeof starModel !== "undefined" &&
