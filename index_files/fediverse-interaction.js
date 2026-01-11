@@ -7,47 +7,6 @@ var fediverseInteraction = {
   lastClickTime: 0,
 };
 
-// 根据光谱索引（色相）映射星球类型
-// 光谱索引范围 0-1 对应色相 0-360
-// 用户数量影响星球的大小级别
-function getStarType(spectralIndex, userCount) {
-  // 根据用户数量确定大小级别
-  var sizeClass = "";
-  if (userCount >= 500000) {
-    sizeClass = "Supergiant";
-  } else if (userCount >= 100000) {
-    sizeClass = "Giant";
-  } else if (userCount >= 10000) {
-    sizeClass = "Main Sequence";
-  } else if (userCount >= 1000) {
-    sizeClass = "Sub-giant";
-  } else {
-    sizeClass = "Dwarf";
-  }
-
-  // 根据光谱索引（色相）确定颜色类型
-  var hue = spectralIndex * 360;
-  var colorType = "";
-
-  if (hue < 30 || hue >= 330) {
-    colorType = "Red";
-  } else if (hue < 60) {
-    colorType = "Orange";
-  } else if (hue < 90) {
-    colorType = "Yellow";
-  } else if (hue < 150) {
-    colorType = "Green";
-  } else if (hue < 210) {
-    colorType = "Cyan";
-  } else if (hue < 270) {
-    colorType = "Blue";
-  } else {
-    colorType = "Violet";
-  }
-
-  return colorType + " " + sizeClass;
-}
-
 function getInteractionThreshold() {
   if (typeof camera === "undefined") {
     return fediverseInteraction.baseThreshold;
@@ -398,13 +357,11 @@ function showInstanceDetails(data) {
       "</p>";
   }
 
-  // 星球类型：软件名 + 星球类型
-  var spectralIndex = 0.5;
-  if (data.color && data.color.hsl) {
-    spectralIndex = data.color.hsl.h / 360;
+  // 星球类型：软件名 + 星球类型（直接从数据读取）
+  var starType = "Unknown";
+  if (data.color && data.color.starType) {
+    starType = data.color.starType;
   }
-  var userCount = data.stats ? data.stats.user_count : 1;
-  var starType = getStarType(spectralIndex, userCount);
   var softwareName = data.software ? data.software.name : "Unknown";
 
   html +=
@@ -413,6 +370,16 @@ function showInstanceDetails(data) {
     " · " +
     starType +
     "</p>";
+
+  // 星球温度（直接从数据读取）
+  var temperature = 7300; // 默认中等温度
+  if (data.color && data.color.temperature) {
+    temperature = data.color.temperature;
+  }
+  html +=
+    "<p><strong>Surface Temperature:</strong> " +
+    numberWithCommas(temperature) +
+    "°K</p>";
 
   // 星球居民数（原Total Users）
   if (data.stats) {

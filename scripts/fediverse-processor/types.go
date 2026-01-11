@@ -29,10 +29,12 @@ type CreationTime struct {
 }
 
 type Color struct {
-	HSL   HSL    `json:"hsl"`
-	RGB   RGB    `json:"rgb"`
-	Hex   string `json:"hex"`
-	Debug Debug  `json:"debug"`
+	HSL         HSL    `json:"hsl"`
+	RGB         RGB    `json:"rgb"`
+	Hex         string `json:"hex"`
+	Temperature int    `json:"temperature"` // Surface temperature in Kelvin
+	StarType    string `json:"starType"`    // Stellar classification (e.g., "Red Dwarf", "Blue Giant")
+	Debug       Debug  `json:"debug"`
 }
 
 type HSL struct {
