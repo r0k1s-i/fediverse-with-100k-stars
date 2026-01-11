@@ -126,7 +126,7 @@ function onFediverseMouseMove(event) {
     fediverseInteraction.mouse.y,
     1,
   );
-  projector.unprojectVector(vector, camera);
+  vector.unproject(camera);
 
   fediverseInteraction.raycaster.set(
     camera.position,
@@ -164,7 +164,7 @@ function onFediverseMouseMove(event) {
     // Get the combined world matrix of translating (includes rotating's transform)
     var worldMatrix = translating.matrixWorld.clone();
     var inverseMatrix = new THREE.Matrix4();
-    inverseMatrix.getInverse(worldMatrix);
+    inverseMatrix.copy(worldMatrix).invert();
 
     // Transform ray origin to local space
     var rayOrigin = fediverseInteraction.raycaster.ray.origin.clone();

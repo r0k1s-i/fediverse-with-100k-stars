@@ -1,10 +1,6 @@
-//	CSS/HTML Setup
+
 var masterContainer = document.getElementById("visualization");
 
-//	Clear cross origin flags
-THREE.ImageUtils.crossOrigin = null;
-
-//	Graphic Settings
 var maxAniso = 1;
 var enableDataStar = true;
 var enableSkybox = true;
@@ -18,12 +14,10 @@ var enableDirector = true;
 
 var firstTime = localStorage ? localStorage.getItem("first") == null : true;
 
-// Tour
 var tour = new Tour(GALAXY_TOUR);
 
 var initialAutoRotate = true;
 
-//	animation timing
 var startTime = Date.now();
 var clock = new THREE.Clock();
 var shaderTiming = 0;
@@ -37,14 +31,12 @@ var $cssContainer = $("#css-container");
 
 var $spectralGraph = $("#spectral-graph");
 
-//	world transform
 var rotating;
 var translating;
 
 var lastRotateY = 0;
 var rotateYAccumulate = 0;
 
-//	global objects
 var starData;
 var pSystem;
 var pGalacticSystem;
@@ -55,7 +47,6 @@ var spacePlane;
 var screenWhalf, screenHhalf;
 var divCSSWorld, divCSSCamera;
 var fovValue;
-// var glCube;
 
 var screenWidth;
 var screenHeight;
@@ -73,9 +64,7 @@ var rt;
 
 var antialias = gup("antialias") == 1 ? true : false;
 
-//	called from body onload
 function start(e) {
-  // detect for webgl and reject everything else
   if (!Detector.webgl) {
     if (Detector.Chrome) {
       Detector.addGetWebGLMessage(
@@ -115,9 +104,7 @@ var postStarGradientLoaded = function () {
       .data;
   };
 
-  //	load all the shaders first before doing anything
   loadShaders(shaderList, function (e) {
-    //	we have the shaders loaded now...
     shaderList = e;
     postShadersLoaded();
   });
@@ -165,7 +152,6 @@ var gui;
 function buildGUI() {
   gui = new dat.GUI();
   gui.domElement.style.display = "none";
-  // gui.domElement.style.display = 'none';
 
   c = gui.add(controllers, "viewSize", 0.01, 4.0);
   c.onChange(function (v) {
@@ -180,15 +166,10 @@ function buildGUI() {
   c = gui.add(controllers, "hipparcos");
   c = gui.add(controllers, "milkyway");
 
-  // c = gui.add(camera, 'fov', 1.0, 200.0 );
   initializeMinimap();
 }
 
-//	-----------------------------------------------------------------------------
-//	All the initialization stuff for THREE
 function initScene() {
-  //	-----------------------------------------------------------------------------
-  //	Let's make a scene
   scene = new THREE.Scene();
 
   scene.add(new THREE.AmbientLight(0x505050));
@@ -213,8 +194,6 @@ function initScene() {
       this.position.copy(this.targetPosition);
   };
 
-  //	-----------------------------------------------------------------------------
-  //	Setup our renderer
   screenWidth = window.innerWidth;
   screenHeight = window.innerHeight;
   screenWhalf = window.innerWidth / 2;
@@ -222,9 +201,7 @@ function initScene() {
 
   renderer = new THREE.WebGLRenderer({ antialias: antialias });
 
-  // The devicePixelRatio caused odd alignment and behavior in retina displays
-  // that were not "tablets", so I took it out.
-  var devicePixelRatio = 1; //window.devicePixelRatio || 1;
+  var devicePixelRatio = window.devicePixelRatio || 1;
 
   renderer.setSize(
     screenWidth * devicePixelRatio,
@@ -235,14 +212,11 @@ function initScene() {
 
   renderer.autoClear = false;
   renderer.sortObjects = false;
-  renderer.generateMipmaps = false;
 
-  maxAniso = renderer.getMaxAnisotropy();
+  maxAniso = renderer.capabilities.getMaxAnisotropy();
 
   document.getElementById("glContainer").appendChild(renderer.domElement);
 
-  //	-----------------------------------------------------------------------------
-  //	Event listeners
   window.addEventListener("mousemove", onDocumentMouseMove, true);
   masterContainer.addEventListener("windowResize", onDocumentResize, true);
   masterContainer.addEventListener("mousedown", onDocumentMouseDown, true);
@@ -259,8 +233,6 @@ function initScene() {
   window.addEventListener("touchend", touchEnd, false);
   window.addEventListener("touchmove", touchMove, { passive: false });
 
-  //	-----------------------------------------------------------------------------
-  //	Setup our camera
   camera = new THREE.PerspectiveCamera(
     30,
     window.innerWidth / window.innerHeight,
@@ -287,22 +259,6 @@ function initScene() {
 
     if (this.easeZooming) return;
 
-    //	cam shake
-    //	except it's horrible when zoomed in
-    //	let's not use it
-
-    // camera.rotation.vx += (0 - camera.rotation.x) * 0.005 * camera.position.z / 100;
-    // camera.rotation.vy += (0 - camera.rotation.y) * 0.005 * camera.position.z / 100;
-
-    // camera.rotation.x += camera.rotation.vx;// + Math.cos( (Date.now() + Math.random()) * 0.004 ) * 0.000015 * camera.position.z / 1000000;
-    // camera.rotation.y += camera.rotation.vy;// + Math.sin( (Date.now() + Math.random()) * 0.004 ) * 0.000015 * camera.position.z / 1000000;
-
-    // camera.rotation.vx *= 0.98 * camera.position.z / 1000;
-    // camera.rotation.vy *= 0.98 * camera.position.z / 1000;
-
-    // camera.rotation.x *= constrain(camera.position.z / 100, 0, 1);
-    // camera.rotation.y *= constrain(camera.position.z / 100, 0, 1);
-
     camera.position.z += (camera.position.target.z - camera.position.z) * 0.125;
   };
 
@@ -314,7 +270,6 @@ function initScene() {
   var windowResize = THREEx.WindowResize(renderer, camera);
   if (enableSkybox) windowResize = THREEx.WindowResize(renderer, cameraCube);
 
-  //	turn it 90 deg
   rotateY = Math.PI / 2;
   rotateX = Math.PI * 0.05;
 
@@ -324,8 +279,6 @@ function initScene() {
 
   initCSS3D();
   initFediverseLabels();
-
-  // Close Button
 
   var $exout = $("#ex-out").click(function (e) {
     e.preventDefault();
@@ -342,19 +295,13 @@ function initScene() {
     e.stopPropagation();
     $exout.click();
     
-    // If returning from a major Fediverse instance, go to the software ecosystem center
     if (typeof shouldShowFediverseSystem === "function" && shouldShowFediverseSystem()) {
       goToFediverseCenter();
-      fediverseInteraction.lastViewedInstance = null; // Reset after navigation
+      fediverseInteraction.lastViewedInstance = null;
     } else {
       zoomOut(750);
     }
   });
-
-  // 不再加载 zoom-out SVG 图标，已改用 ⁂ 符号
-  // $.get("index_files//zoom-out.svg", function (resp) {
-  //   $(resp).find("svg").addClass("icon").appendTo($zoomback);
-  // });
 
   setTimeout(function () {
     var s = "scale(1.0)";
@@ -418,21 +365,16 @@ function initScene() {
   }
 
   if (localStorage && localStorage.getItem("sound") == 0) {
-    // console.log('localstorage sound is off');
-    // $('#soundoff').show();
-    // $('#sound').hide();
     muteSound();
   }
 }
 
 function sceneSetup() {
   if (enableStarModel) {
-    // console.time("make star models");
     starModel = makeStarModels();
     starModel.setSpectralIndex(0.9);
     starModel.setScale(1.0);
     translating.add(starModel);
-    // console.timeEnd("make star models");
   }
 
   if (enableFediverse) {
@@ -453,7 +395,6 @@ function sceneSetup() {
   }
 
   if (enableSolarSystem) {
-    // Use Fediverse software ecosystem instead of traditional solar system
     var fediverseSystem = makeFediverseSystem();
     translating.add(fediverseSystem);
   }
@@ -469,7 +410,6 @@ function sceneSetup() {
 }
 
 function animate() {
-  // Make sure the document doesn't scroll
   document.body.scrollTop = document.body.scrollLeft = 0;
 
   camera.update();
@@ -479,7 +419,6 @@ function animate() {
 
   lastRotateY = rotateY;
 
-  // Tween the camera if we're not touring.
   if (!camera.__tour) {
     rotateX += rotateVX;
     rotateY += rotateVY;
@@ -494,8 +433,6 @@ function animate() {
 
     if (initialAutoRotate) rotateVY = 0.0015;
 
-    //	treat the solar system a bit differently
-    //	since we are at 0,0,0 floating point percision won't be as big of a problem
     var spinCutoff = 100;
     if (translating.position.length() < 0.0001) {
       spinCutoff = 2;
@@ -524,7 +461,6 @@ function animate() {
       typeof fediverseInteraction !== "undefined" &&
       fediverseInteraction.intersected;
 
-    // Check if we're at Fediverse center (don't show starName there)
     var atFediverseCenter = typeof isAtFediverseCenter === "function" && isAtFediverseCenter();
     
     if (
@@ -532,7 +468,7 @@ function animate() {
       camera.position.z < markerThreshold.min &&
       $detailContainer.css("display") == "none" &&
       $starName.css("display") == "none" &&
-      !atFediverseCenter // Don't show starName when at Fediverse center
+      !atFediverseCenter
     ) {
       $starName.fadeIn();
     } else if (
@@ -559,7 +495,7 @@ function animate() {
 
     if (
       $detailContainer.css("display") ==
-      "none" /* && starModel.scale.length() < 10 */
+      "none"
     ) {
       camera.position.x *= 0.95;
     } else {

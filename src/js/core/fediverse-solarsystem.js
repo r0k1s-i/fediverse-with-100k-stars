@@ -1,12 +1,4 @@
-/**
- * Fediverse Software Visualization
- * Replaces the traditional solar system with Fediverse software ecosystem
- * 
- * Center: Triangle of three major platforms (Mastodon, Misskey, Pixelfed)
- * Concentric circles: 8 other major software platforms
- */
 
-// Top 8 software platforms (excluding Mastodon, Misskey, Pixelfed)
 var FEDIVERSE_SOFTWARE_RINGS = [
   { name: "Lemmy", instances: 312, radius: 0.00008 },
   { name: "PeerTube", instances: 293, radius: 0.00016 },
@@ -18,14 +10,12 @@ var FEDIVERSE_SOFTWARE_RINGS = [
   { name: "Gancio", instances: 57, radius: 0.00064 },
 ];
 
-// Three major platforms forming the central triangle
 var FEDIVERSE_MAJOR_SOFTWARE = [
-  { name: "Mastodon", instances: 3226, angle: 90 },   // Top
-  { name: "Misskey", instances: 695, angle: 210 },    // Bottom-left
-  { name: "Pixelfed", instances: 202, angle: 330 },   // Bottom-right
+  { name: "Mastodon", instances: 3226, angle: 90 },   
+  { name: "Misskey", instances: 695, angle: 210 },    
+  { name: "Pixelfed", instances: 202, angle: 330 },   
 ];
 
-// Software brand colors
 var SOFTWARE_COLORS = {
   "Mastodon": 0x6364FF,
   "Misskey": 0x96d04a,
@@ -44,9 +34,6 @@ function getSoftwareBrandColor(name) {
   return SOFTWARE_COLORS[name] || 0xffffff;
 }
 
-/**
- * Create a software ring (concentric circle) with label
- */
 function createSoftwareRing(radius, color, softwareName, instanceCount) {
   var resolution = 180;
   var twoPI = Math.PI * 2;
@@ -60,13 +47,12 @@ function createSoftwareRing(radius, color, softwareName, instanceCount) {
     verts.push(v);
   }
 
-  var geometry = new THREE.Geometry();
-  geometry.vertices = verts;
+  var geometry = new THREE.BufferGeometry().setFromPoints(verts);
 
   var areaOfWindow = window.innerWidth * window.innerHeight;
   var pointSize = 0.000004 * areaOfWindow;
 
-  var particleMaterial = new THREE.ParticleBasicMaterial({
+  var particleMaterial = new THREE.PointsMaterial({
     color: color,
     size: pointSize,
     sizeAttenuation: false,
@@ -76,7 +62,7 @@ function createSoftwareRing(radius, color, softwareName, instanceCount) {
     depthWrite: false,
   });
 
-  var mesh = new THREE.ParticleSystem(geometry, particleMaterial);
+  var mesh = new THREE.Points(geometry, particleMaterial);
 
   mesh.update = function () {
     if (camera.position.z < 2.0) {
@@ -90,7 +76,6 @@ function createSoftwareRing(radius, color, softwareName, instanceCount) {
 
   mesh.rotation.x = Math.PI / 2;
 
-  // Add label marker for the software name
   var labelPosition = new THREE.Object3D();
   labelPosition.position.x = radius;
   labelPosition.position.y = 0;
@@ -103,14 +88,9 @@ function createSoftwareRing(radius, color, softwareName, instanceCount) {
   return mesh;
 }
 
-/**
- * Create the central triangle with three major software platforms
- */
 function createCentralTriangle(triangleRadius) {
   var container = new THREE.Object3D();
 
-  // Create triangle connecting lines
-  var lineGeometry = new THREE.Geometry();
   var positions = [];
 
   FEDIVERSE_MAJOR_SOFTWARE.forEach(function (software) {
@@ -120,13 +100,15 @@ function createCentralTriangle(triangleRadius) {
     positions.push(new THREE.Vector3(x, 0, y));
   });
 
-  // Close the triangle
-  lineGeometry.vertices.push(positions[0]);
-  lineGeometry.vertices.push(positions[1]);
-  lineGeometry.vertices.push(positions[1]);
-  lineGeometry.vertices.push(positions[2]);
-  lineGeometry.vertices.push(positions[2]);
-  lineGeometry.vertices.push(positions[0]);
+  var linePoints = [];
+  linePoints.push(positions[0]);
+  linePoints.push(positions[1]);
+  linePoints.push(positions[1]);
+  linePoints.push(positions[2]);
+  linePoints.push(positions[2]);
+  linePoints.push(positions[0]);
+
+  var lineGeometry = new THREE.BufferGeometry().setFromPoints(linePoints);
 
   var lineMaterial = new THREE.LineBasicMaterial({
     color: 0x666666,
@@ -136,10 +118,9 @@ function createCentralTriangle(triangleRadius) {
     linewidth: 2,
   });
 
-  var triangleLines = new THREE.Line(lineGeometry, lineMaterial, THREE.LinePieces);
+  var triangleLines = new THREE.LineSegments(lineGeometry, lineMaterial);
   container.add(triangleLines);
 
-  // Add markers for each major software at triangle vertices
   FEDIVERSE_MAJOR_SOFTWARE.forEach(function (software) {
     var angleRad = (software.angle * Math.PI) / 180;
     var x = Math.cos(angleRad) * triangleRadius;
@@ -152,7 +133,6 @@ function createCentralTriangle(triangleRadius) {
     var labelText = software.name + " (" + software.instances + ")";
     attachLegacyMarker(labelText, marker, 1.0, { min: 2.0, max: 15.0 });
 
-    // Add a small glowing sphere at each vertex
     var sphereGeometry = new THREE.SphereGeometry(triangleRadius * 0.1, 16, 8);
     var sphereMaterial = new THREE.MeshBasicMaterial({
       color: getSoftwareBrandColor(software.name),
@@ -165,7 +145,6 @@ function createCentralTriangle(triangleRadius) {
     container.add(sphere);
   });
 
-  // Visibility control based on zoom level
   container.update = function () {
     if (camera.position.z < 1.5) {
       this.visible = false;
@@ -179,9 +158,6 @@ function createCentralTriangle(triangleRadius) {
   return container;
 }
 
-/**
- * Create the inner circle connecting the three major platforms
- */
 function createInnerCircle(radius) {
   var resolution = 60;
   var twoPI = Math.PI * 2;
@@ -195,13 +171,12 @@ function createInnerCircle(radius) {
     verts.push(v);
   }
 
-  var geometry = new THREE.Geometry();
-  geometry.vertices = verts;
+  var geometry = new THREE.BufferGeometry().setFromPoints(verts);
 
   var areaOfWindow = window.innerWidth * window.innerHeight;
   var pointSize = 0.000003 * areaOfWindow;
 
-  var particleMaterial = new THREE.ParticleBasicMaterial({
+  var particleMaterial = new THREE.PointsMaterial({
     color: 0xaaaaaa,
     size: pointSize,
     sizeAttenuation: false,
@@ -211,7 +186,7 @@ function createInnerCircle(radius) {
     depthWrite: false,
   });
 
-  var mesh = new THREE.ParticleSystem(geometry, particleMaterial);
+  var mesh = new THREE.Points(geometry, particleMaterial);
   mesh.rotation.x = Math.PI / 2;
 
   mesh.update = function () {
@@ -227,25 +202,17 @@ function createInnerCircle(radius) {
   return mesh;
 }
 
-/**
- * Main function to create the Fediverse software ecosystem visualization
- * Replaces makeSolarSystem()
- */
 function makeFediverseSystem() {
   var fediverseSystem = new THREE.Object3D();
 
-  // Central triangle radius (in light years, very small)
   var triangleRadius = 0.00003;
 
-  // Create the central triangle with three major platforms
   var centralTriangle = createCentralTriangle(triangleRadius);
   fediverseSystem.add(centralTriangle);
 
-  // Create inner circle around the triangle
   var innerCircle = createInnerCircle(triangleRadius * 1.2);
   fediverseSystem.add(innerCircle);
 
-  // Create 8 concentric rings for other software platforms
   FEDIVERSE_SOFTWARE_RINGS.forEach(function (software) {
     var ring = createSoftwareRing(
       software.radius,
@@ -256,7 +223,6 @@ function makeFediverseSystem() {
     fediverseSystem.add(ring);
   });
 
-  // Add distance measurement (1 light year reference)
   var measurement = createDistanceMeasurement(
     new THREE.Vector3(0, 0, 0),
     new THREE.Vector3(1, 0, 0)

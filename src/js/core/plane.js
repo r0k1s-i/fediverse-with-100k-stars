@@ -1,5 +1,5 @@
-// changed glowspan.png to transparent.png
-var glowSpanTexture = THREE.ImageUtils.loadTexture('src/assets/textures/transparent.png');
+
+var glowSpanTexture = new THREE.TextureLoader().load('src/assets/textures/transparent.png');
 
 function createSpacePlane(){
 	var cylinderMaterial = new THREE.MeshBasicMaterial({
@@ -12,10 +12,9 @@ function createSpacePlane(){
 		opacity: 0,
 	})
 	var cylinderGeo = new THREE.CylinderGeometry( 600, 0, 0, (360/8) - 1, 100 );
-	// var cylinderGeo = new THREE.IcosahedronGeometry( 600, 6 );
 	var matrix = new THREE.Matrix4();
 	matrix.scale( new THREE.Vector3(1,0,1) );
-	cylinderGeo.applyMatrix( matrix );
+	cylinderGeo.applyMatrix4( matrix );
 	var mesh = new THREE.Mesh( cylinderGeo, cylinderMaterial );
 	mesh.material.map.wrapS = THREE.RepeatWrapping;
 	mesh.material.map.wrapT = THREE.RepeatWrapping;
@@ -28,7 +27,7 @@ function createSpacePlane(){
 	var updatePlaneMaterial = function(){
 		if( camera.position.z < 1500 ){
 			this.material.opacity = constrain( (camera.position.z - 400.0) * 0.002, 0, 0.5);
-			if( this.material.map !== undefined && this.material.opacity <= 0.001 ){
+			if( this.material.map && this.material.opacity <= 0.001 ){
 				this.material.map.offset.y = 0.0;
 				this.material.map.needsUpdate = true;
 			}
@@ -42,7 +41,6 @@ function createSpacePlane(){
 			this.material.opacity += (0.0 - this.material.opacity) * 0.1;
 		}
 
-		//	some basic LOD
 		if( camera.position.z < 400 )
 			this.visible = false;
 		else
@@ -52,12 +50,16 @@ function createSpacePlane(){
 	mesh.update = updatePlaneMaterial;
 	translating.add( mesh );
 
-	var lines = new THREE.Geometry();
-	lines.vertices.push( new THREE.Vector3(0,0,-600) );
-	lines.vertices.push( new THREE.Vector3(0,0,600) );
-	lines.vertices.push( new THREE.Vector3(-600,0,0) );
-	lines.vertices.push( new THREE.Vector3(600,0,0) );
-	mesh = new THREE.Line( lines, new THREE.LineBasicMaterial(
+	var lines = new THREE.BufferGeometry();
+    var points = [
+        new THREE.Vector3(0,0,-600),
+        new THREE.Vector3(0,0,600),
+        new THREE.Vector3(-600,0,0),
+        new THREE.Vector3(600,0,0)
+    ];
+    lines.setFromPoints(points);
+
+	mesh = new THREE.LineSegments( lines, new THREE.LineBasicMaterial(
 		{
 			color: 0x111144,
 			blending: THREE.AdditiveBlending,
@@ -66,7 +68,7 @@ function createSpacePlane(){
 			depthWrite: false,
 			wireframe: true,
 			linewidth: 2,
-		}), THREE.LinePieces );
+		}) );
 	mesh.update = updatePlaneMaterial;
 	return mesh;
 }

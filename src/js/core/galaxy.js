@@ -1,95 +1,80 @@
-var galacticTexture0 = THREE.ImageUtils.loadTexture( "src/assets/textures/galactic_sharp.png" );
-var galacticTexture1 = THREE.ImageUtils.loadTexture( "src/assets/textures/galactic_blur.png" );
+
+var galacticTexture0 = new THREE.TextureLoader().load( "src/assets/textures/galactic_sharp.png" );
+var galacticTexture1 = new THREE.TextureLoader().load( "src/assets/textures/galactic_blur.png" );
 
 var galacticUniforms = {
-	color:     { type: "c", value: new THREE.Color( 0xffffff ) },
-	texture0:   { type: "t", value: galacticTexture0 },
-	texture1:   { type: "t", value: galacticTexture1 },
-	idealDepth: { type: "f", value: 1.0 },
-	blurPower: { type: "f", value: 1.0 },
-	blurDivisor: { type: "f", value: 2.0 },
-	sceneSize: { type: "f", value: 120.0 },
-	cameraDistance: { type: "f", value: 800.0 },
-	zoomSize: 	{ type: "f", value: 1.0 },
-	scale: 		{ type: "f", value: 1.0 },
-	heatVision: { type: "f", value: 0.0 },
+	color:     { value: new THREE.Color( 0xffffff ) },
+	texture0:   { value: galacticTexture0 },
+	texture1:   { value: galacticTexture1 },
+	idealDepth: { value: 1.0 },
+	blurPower: { value: 1.0 },
+	blurDivisor: { value: 2.0 },
+	sceneSize: { value: 120.0 },
+	cameraDistance: { value: 800.0 },
+	zoomSize: 	{ value: 1.0 },
+	scale: 		{ value: 1.0 },
+	heatVision: { value: 0.0 },
 };
-
-var galacticAttributes = {
-	size: 			{ type: 'f', value: [] },
-	customColor: 	{ type: 'c', value: [] }
-};
-
 
 function generateGalaxy(){
 	setLoadMessage("Generating the galaxy");
-	var galacticShaderMaterial = new THREE.ShaderMaterial( {
-		uniforms: 		galacticUniforms,
-		attributes:     galacticAttributes,
-		vertexShader:   shaderList.galacticstars.vertex,
-		fragmentShader: shaderList.galacticstars.fragment,
-
-		blending: 		THREE.AdditiveBlending,
-		depthTest: 		false,
-		depthWrite: 	false,
-		transparent:	true,
-		sizeAttenuation: true,
-		opacity: 		0.0,
-	});
-
-	var pGalaxy = new THREE.Geometry();
-
+	
+	var geometry = new THREE.BufferGeometry();
 	var count = 100000;
+	
+	var positions = new Float32Array(count * 3);
+	var colors = new Float32Array(count * 3);
+	var sizes = new Float32Array(count);
+
 	var numArms = 5;
 	var arm = 0;
 	var countPerArm = count / numArms;
 	var ang = 0;
 	var dist = 0;
+	
 	for( var i=0; i<count; i++ ){
 		var x = Math.cos(ang) * dist;
 		var y = 0;
 		var z = Math.sin(ang) * dist;
 
-		//	scatter
-		var sa = 100 - Math.sqrt(dist);				//	scatter amt
+		var scatterAmount = 100 - Math.sqrt(dist);
 		if( Math.random() > 0.3)
-			sa *= ( 1 + Math.random() ) * 4;
-		x += random(-sa, sa);
-		z += random(-sa, sa);
+			scatterAmount *= ( 1 + Math.random() ) * 4;
+		x += random(-scatterAmount, scatterAmount);
+		z += random(-scatterAmount, scatterAmount);
 
 		var distanceToCenter = Math.sqrt( x*x + z*z);
 		var thickness = constrain( Math.pow( constrain(90-distanceToCenter*0.1,0,100000),2) * 0.02,2,10000) + Math.random() * 120;
 		y += random( -thickness, thickness);
 
-		// x -= 100;
-		// z -= 1500;
-
 		x *= 20;
 		y *= 20;
 		z *= 20;
 
-		var p = new THREE.Vector3(x,y,z);
-		p.size = 200 + constrain( 600/dist,0,32000);
+		var size = 200 + constrain( 600/dist,0,32000);
 		if( Math.random() > 0.99 )
-			p.size *= Math.pow(1 + Math.random(), 3 + Math.random() * 3) * .9;
+			size *= Math.pow(1 + Math.random(), 3 + Math.random() * 3) * .9;
 		else
 			if( Math.random() > 0.7 )
-				p.size *= 1 + Math.pow(1 + Math.random(), 2) * .04;
+				size *= 1 + Math.pow(1 + Math.random(), 2) * .04;
 
 		if( i == 0 ){
-			p.size = 100000;
-			// p.x = -100 * 20;
-			// p.y = 0;
-			// p.z = -1500 * 20;;
+			size = 100000;
 		}
-		pGalaxy.vertices.push( p );
+		
+		positions[i * 3] = x;
+		positions[i * 3 + 1] = y;
+		positions[i * 3 + 2] = z;
+		
+		sizes[i] = size;
 
 		var r = constrain(1 - (Math.pow(dist,3)*0.00000002),.3,1) + random(-.1,.1);
 		var g = constrain(0.7 - (Math.pow(dist,2)*0.000001),.41,1) + random(-.1,.1);
 		var b = constrain(0.1 + dist * 0.004,.3,.6) + random(-.1,.1);
-		var c = new THREE.Color();
-		c.r = r; c.g = g; c.b = b;
-		pGalaxy.colors.push( c );
+		
+		colors[i * 3] = r;
+		colors[i * 3 + 1] = g;
+		colors[i * 3 + 2] = b;
 
 		ang += 0.0002;
 		dist += .08;
@@ -101,25 +86,30 @@ function generateGalaxy(){
 		}
 	}
 
-	var pGalacticSystem = new THREE.ParticleSystem( pGalaxy, galacticShaderMaterial );
+	geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+	geometry.setAttribute('customColor', new THREE.BufferAttribute(colors, 3));
+	geometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
 
-	//	set the values to the shader
-	var values_size = galacticAttributes.size.value;
-	var values_color = galacticAttributes.customColor.value;
+	var galacticShaderMaterial = new THREE.ShaderMaterial( {
+		uniforms: 		galacticUniforms,
+		vertexShader:   shaderList.galacticstars.vertex,
+		fragmentShader: shaderList.galacticstars.fragment,
 
-	for( var v = 0; v < pGalaxy.vertices.length; v++ ) {
-		values_size[ v ] = pGalaxy.vertices[v].size;
-		values_color[ v ] = pGalaxy.colors[v];
-	}
+		blending: 		THREE.AdditiveBlending,
+		depthTest: 		false,
+		depthWrite: 	false,
+		transparent:	true,
+		opacity: 		0.0,
+	});
 
-	//	galactic core is 27000 ly from earth
+	var pGalacticSystem = new THREE.Points( geometry, galacticShaderMaterial );
+
 	pGalacticSystem.position.x = 27000;
 
 	pGalacticSystem.add( addLensFlare(0,0,0) );
 
-	//	make a top down image
 	var galacticTopMaterial = new THREE.MeshBasicMaterial({
-		map: THREE.ImageUtils.loadTexture('src/assets/textures/galactictop.png'),
+		map: new THREE.TextureLoader().load('src/assets/textures/galactictop.png'),
 		blending: THREE.AdditiveBlending,
 		depthTest: false,
 		depthWrite: false,
@@ -127,21 +117,11 @@ function generateGalaxy(){
 		transparent: true,
 	});
 
-	//	the milky way is about 100,000 to 120,000 LY across
-	//	however the texture of the milky way is smaller than this on the plane
-	//	we'll make it roughly 10% bigger than it really will be to arrive at the correct size
-
-	//	note:
-	//	normally we want to do this with one poly quad
-	//	however on certain GPUs this seems to break because the quad is looking like it's attempted to be culled
-	//	throwing my polygons at the problem apparently fixes this
-
 	var plane = new THREE.Mesh( new THREE.PlaneGeometry(150000,150000, 30, 30), galacticTopMaterial );
 	plane.rotation.x = Math.PI/2;
 	plane.material.map.anisotropy = maxAniso;
 	pGalacticSystem.add( plane );
 
-	//	a measurement of the galactic plane
 	var measurement = createDistanceMeasurement( new THREE.Vector3( 0,0,-55000 ), new THREE.Vector3( 0,0,55000 ) );
 	measurement.position.y = -1000;
 	measurement.visible = false;
@@ -157,7 +137,6 @@ function generateGalaxy(){
 			pGalacticSystem.measurement.visible = desired;
 	}
 
-	//	a heat-vision skeleton of the galactic plane
 	var cylinderMaterial = new THREE.MeshBasicMaterial({
 		map: glowSpanTexture,
 		blending: THREE.AdditiveBlending,
@@ -170,53 +149,50 @@ function generateGalaxy(){
 	var isogeo = new THREE.IcosahedronGeometry( 40000, 4 );
 	var matrix = new THREE.Matrix4();
 	matrix.scale( new THREE.Vector3(1,0,1) );
-	isogeo.applyMatrix( matrix );
+	isogeo.applyMatrix4( matrix );
 	var isoball = new THREE.Mesh( isogeo, cylinderMaterial );
 	isoball.material.map.wrapS = THREE.RepeatWrapping;
 	isoball.material.map.wrapT = THREE.RepeatWrapping;
 	isoball.material.map.needsUpdate = true;
 	isoball.update = function(){
-		var heatVisionValue = pSystem.shaderMaterial.uniforms.heatVision.value;
-		//this.material.opacity = (1.0 - heatVisionValue);
+		var mat = pSystem ? (pSystem.shaderMaterial || pSystem.material) : null;
+		var heatVisionValue = (mat && mat.uniforms) ? mat.uniforms.heatVision.value : 0;
 	}
 	isoball.material.map.onUpdate = function(){
 		this.offset.y -= 0.0001;
 		this.needsUpdate = true;
 	}
-	//pGalacticSystem.add( isoball );
 
 
 	pGalacticSystem.update = function(){
-		//	reduce the galactic particle sizes when zooming way in (otherwise massive overdraw, drop in fps, too bright..)
 		galacticUniforms.zoomSize.value = 1.0 + 10000 / camera.position.z;
 
-		//	scale the particles based off of screen size
 		var areaOfWindow = window.innerWidth * window.innerHeight;
 
 		galacticUniforms.scale.value = Math.sqrt(areaOfWindow) * 1.5;
 
 		galacticTopMaterial.opacity = galacticShaderMaterial.opacity;
 
-		//	for heat vision...
 		if( pSystem ){
-			var heatVisionValue = pSystem.shaderMaterial.uniforms.heatVision.value;
+			var mat = pSystem.shaderMaterial || pSystem.material;
+			if (mat && mat.uniforms && mat.uniforms.heatVision) {
+				var heatVisionValue = mat.uniforms.heatVision.value;
 
-			if( heatVisionValue > 0 ){
-				galacticTopMaterial.opacity = 1.0 - heatVisionValue;
+				if( heatVisionValue > 0 ){
+					galacticTopMaterial.opacity = 1.0 - heatVisionValue;
+				}
+
+				galacticUniforms.heatVision.value = heatVisionValue;
+
+				if( pDustSystem ){
+					if( heatVisionValue > 0 )
+						pDustSystem.visible = false;
+					else
+						pDustSystem.visible = true;
+				}
 			}
-
-			galacticUniforms.heatVision.value = heatVisionValue;
-
-			if( pDustSystem ){
-				if( heatVisionValue > 0 )
-					pDustSystem.visible = false;
-				else
-					pDustSystem.visible = true;
-			}
-
 		}
 
-		// console.log( galacticUniforms.zoomSize.value);
 		if( camera.position.z < 2500 ){
 			if( galacticShaderMaterial.opacity > 0 )
 				galacticShaderMaterial.opacity -= 0.05;
@@ -245,7 +221,6 @@ function generateGalaxy(){
 
 	}
 
-	//	position it as if the disc visible in the star data were the actual galactic disc
 	pGalacticSystem.position.x = 11404;
 	pGalacticSystem.position.y = 14000;
 	pGalacticSystem.position.z = 10000;
@@ -254,12 +229,5 @@ function generateGalaxy(){
 	pGalacticSystem.rotation.y = -0.4;
 	pGalacticSystem.rotation.z = -1.099999;
 
-	// pGalacticSystem.targetPosition = pGalacticSystem.position.clone();
-	// pGalacticSystem.zeroRotation = new THREE.Vector3();
-	// pGalacticSystem.targetRotation = pGalacticSystem.rotation.clone();
-
-
-
-	// pGalacticSystem.scale.x = pGalacticSystem.scale.y = pGalacticSystem.scale.z = 100;
 	return pGalacticSystem;
 }
