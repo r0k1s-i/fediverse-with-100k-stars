@@ -12,6 +12,10 @@
 	<link rel="image_src">
 	<title>Fediverse Universe</title>
 
+	<link rel="preload" href="src/assets/textures/star_color_modified.png" as="image">
+	<link rel="preload" href="src/assets/textures/star_preview.png" as="image">
+	<link rel="preload" href="src/assets/textures/p_0.png" as="image">
+	<link rel="preload" href="data/fediverse_final.json" as="fetch" crossorigin>
 
 	<link rel="stylesheet" type="text/css" href="./src/css/style.css">
 	<link href="./src/css/fonts.css" rel="stylesheet" type="text/css">
@@ -131,52 +135,7 @@
 	<script src="src/js/lib/THREEx.WindowResize.js"></script>
 	<script src="src/js/lib/underscore.js"></script>
 
-    <script type="module" src="src/js/utils/dom.js"></script>
-    <script type="module" src="src/js/core/globals.js"></script>
-    <script type="module" src="src/js/core/config.js"></script>
-    <script type="module" src="src/js/utils/math.js"></script>
-    <script type="module" src="src/js/utils/misc.js"></script>
-    <script type="module" src="src/js/utils/three-helpers.js"></script>
-    <script type="module" src="src/js/utils/app.js"></script>
-    <script type="module" src="src/js/core/shaders.js"></script>
-
-	<script type="module" src="src/js/core/skybox.js"></script>
-	<script type="module" src="src/js/core/plane.js"></script>
-	<script type="module" src="src/js/core/guides.js"></script>
-	<script type="module" src="src/js/core/dust.js"></script>
-	<script type="module" src="src/js/core/lensflare.js"></script>
-	<script type="module" src="src/js/core/legacymarkers.js"></script>
-	<script type="module" src="src/js/core/marker.js"></script>
-
-	<script type="module" src="src/js/core/mousekeyboard.js"></script>
-	<script src="src/js/core/urlArgs.js" defer></script>
-
-	<script>
-		var loadTextEl = document.getElementById('loadtext');
-		function setLoadMessage(msg){
-			if (loadTextEl) loadTextEl.innerHTML = msg+"&hellip;";
-		}
-	</script>
-
-	<script type="module" src="src/js/core/infocallout.js"></script>
-	<script type="module" src="src/js/core/starsystems.js"></script>
-	<script type="module" src="src/js/core/starmodel.js"></script>
-	<script type="module" src="src/js/core/css3worldspace.js"></script>
-	<script type="module" src="src/js/core/helphud.js"></script>
-	<script type="module" src="src/js/core/spacehelpers.js"></script>
-	<script type="module" src="src/js/core/hipparcos.js"></script>
-	<script type="module" src="src/js/core/fediverse.js"></script>
-	<script type="module" src="src/js/core/interaction-math.js"></script>
-	<script type="module" src="src/js/core/fediverse-interaction.js"></script>
-	<script type="module" src="src/js/core/label-layout.js"></script>
-	<script type="module" src="src/js/core/fediverse-labels.js"></script>
-	<script type="module" src="src/js/core/galaxy.js"></script>
-	<script src="src/js/core/solarsystem.js" type="text/javascript" defer></script>
-	<script type="module" src="src/js/core/fediverse-solarsystem.js"></script>
-	<script type="module" src="src/js/core/sun.js"></script>
-	<script type="module" src="src/js/core/tour.js"></script>
 	<script type="module" src="src/js/core/main.js"></script>
-	<script type="module" src="src/js/core/minimap.js"></script>
 </body>
 
 </html>
