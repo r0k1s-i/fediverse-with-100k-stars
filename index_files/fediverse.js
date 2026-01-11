@@ -178,12 +178,19 @@ function generateFediverseInstances() {
     p.name = instance.name || instance.domain;
     p.instanceData = instance;
 
-    var hexColor = instance.color ? instance.color.hex : "#ffffff";
-    var threeColor = new THREE.Color(hexColor);
+    // Use white color for normal mode (like HIPPARCOS stars)
+    // The spectral lookup texture will provide subtle color tones
+    var threeColor = new THREE.Color(0xffffff);
 
-    // 根据色相映射 spectralLookup (色相 0-360 → spectralLookup 0-1)
-    p.spectralLookup =
-      instance.color && instance.color.hsl ? instance.color.hsl.h / 360 : 0.5;
+    // Use domain-based pseudo-random spectral lookup for variety in normal mode
+    // This gives each instance a consistent but varied color tone
+    var domainHash = 0;
+    for (var j = 0; j < instance.domain.length; j++) {
+      domainHash = (domainHash * 31 + instance.domain.charCodeAt(j)) % 1000;
+    }
+
+    // Map hash to a spectralLookup value (0.2 to 0.8 for variety, avoiding extremes)
+    p.spectralLookup = 0.2 + (domainHash / 1000) * 0.6;
 
     pGeo.vertices.push(p);
     pGeo.colors.push(threeColor);
