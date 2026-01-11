@@ -1,4 +1,3 @@
-
 var masterContainer = document.getElementById("visualization");
 
 var maxAniso = 1;
@@ -113,7 +112,7 @@ var postStarGradientLoaded = function () {
     return gradientCtx.getImageData(0, percentage * gradientImage.height, 1, 1)
       .data;
   };
-  
+
   window.gradientCanvas = gradientCanvas;
 
   loadShaders(window.shaderList, function (e) {
@@ -182,7 +181,7 @@ function buildGUI() {
 
   window.gui = gui;
 
-  if(window.initializeMinimap) window.initializeMinimap();
+  if (window.initializeMinimap) window.initializeMinimap();
 }
 
 function initScene() {
@@ -209,7 +208,7 @@ function initScene() {
     if (this.position.distanceTo(this.targetPosition) < 0.01)
       this.position.copy(this.targetPosition);
   };
-  
+
   window.scene = scene;
   window.rotating = rotating;
   window.translating = translating;
@@ -219,11 +218,12 @@ function initScene() {
   screenHeight = window.innerHeight;
   screenWhalf = window.innerWidth / 2;
   screenHhalf = window.innerHeight / 2;
-  
+
   window.screenWidth = screenWidth;
   window.screenHeight = screenHeight;
 
   renderer = new THREE.WebGLRenderer({ antialias: antialias });
+  window.renderer = renderer; // 导出到 window 供 skybox 使用
 
   var devicePixelRatio = window.devicePixelRatio || 1;
 
@@ -295,7 +295,8 @@ function initScene() {
   scene.add(camera);
 
   var windowResize = THREEx.WindowResize(renderer, camera);
-  if (enableSkybox) windowResize = THREEx.WindowResize(renderer, window.cameraCube);
+  if (enableSkybox)
+    windowResize = THREEx.WindowResize(renderer, window.cameraCube);
 
   var rotateY = Math.PI / 2;
   var rotateX = Math.PI * 0.05;
@@ -307,7 +308,7 @@ function initScene() {
   sceneSetup();
 
   initCSS3D();
-  if(window.initFediverseLabels) initFediverseLabels();
+  if (window.initFediverseLabels) initFediverseLabels();
 
   var $exout = $("#ex-out").click(function (e) {
     e.preventDefault();
@@ -323,10 +324,14 @@ function initScene() {
     e.preventDefault();
     e.stopPropagation();
     $exout.click();
-    
-    if (typeof shouldShowFediverseSystem === "function" && shouldShowFediverseSystem()) {
+
+    if (
+      typeof shouldShowFediverseSystem === "function" &&
+      shouldShowFediverseSystem()
+    ) {
       goToFediverseCenter();
-      if (window.fediverseInteraction) fediverseInteraction.lastViewedInstance = null;
+      if (window.fediverseInteraction)
+        fediverseInteraction.lastViewedInstance = null;
     } else {
       zoomOut(750);
     }
@@ -357,7 +362,8 @@ function initScene() {
       }, 500);
     }
 
-    if (window.markers && window.markers.length > 0 && !window.enableFediverse) window.markers[0].select();
+    if (window.markers && window.markers.length > 0 && !window.enableFediverse)
+      window.markers[0].select();
   }, 500);
 
   document.getElementById("bgmusicA").addEventListener(
@@ -405,6 +411,7 @@ function sceneSetup() {
     starModel.setScale(1.0);
     translating.add(starModel);
     window.starModel = starModel;
+    window.enableStarModel = enableStarModel;
   }
 
   if (window.enableFediverse) {
@@ -449,7 +456,7 @@ function animate() {
     camera.position.z > markerThreshold.min;
 
   lastRotateY = window.rotateY;
-  
+
   var rotateX = window.rotateX;
   var rotateY = window.rotateY;
   var rotateVX = window.rotateVX;
@@ -492,15 +499,16 @@ function animate() {
 
     var isZoomedIn = camera.position.target.z < markerThreshold.min;
     var isZoomedToSolarSystem = camera.position.target.z > markerThreshold.min;
-    
+
     var fediverseInteraction = window.fediverseInteraction;
 
     var isFediverseHover =
       typeof fediverseInteraction !== "undefined" &&
       fediverseInteraction.intersected;
 
-    var atFediverseCenter = typeof isAtFediverseCenter === "function" && isAtFediverseCenter();
-    
+    var atFediverseCenter =
+      typeof isAtFediverseCenter === "function" && isAtFediverseCenter();
+
     if (
       isZoomedIn &&
       camera.position.z < markerThreshold.min &&
@@ -531,10 +539,7 @@ function animate() {
       $detailContainer.fadeOut();
     }
 
-    if (
-      $detailContainer.css("display") ==
-      "none"
-    ) {
+    if ($detailContainer.css("display") == "none") {
       camera.position.x *= 0.95;
     } else {
       camera.position.x +=
@@ -576,7 +581,7 @@ function animate() {
   updateMarkers();
   updateLegacyMarkers();
   updateFediverseLabels();
-  
+
   window.rotateX = rotateX;
   window.rotateY = rotateY;
   window.rotateVX = rotateVX;
@@ -592,11 +597,15 @@ function animate() {
 }
 
 function render() {
-  renderer.clear();
-
-  if (enableSkybox) renderSkybox();
-
-  renderer.render(scene, camera);
+  if (enableSkybox) {
+    renderSkybox();
+    // 渲染主场景时不自动清除，保留skybox
+    renderer.autoClear = false;
+    renderer.render(scene, camera);
+    renderer.autoClear = true;
+  } else {
+    renderer.render(scene, camera);
+  }
 }
 
 function muteSound() {
