@@ -341,7 +341,14 @@ function initScene() {
     e.preventDefault();
     e.stopPropagation();
     $exout.click();
-    zoomOut(750);
+    
+    // If returning from a major Fediverse instance, go to the software ecosystem center
+    if (typeof shouldShowFediverseSystem === "function" && shouldShowFediverseSystem()) {
+      goToFediverseCenter();
+      fediverseInteraction.lastViewedInstance = null; // Reset after navigation
+    } else {
+      zoomOut(750);
+    }
   });
 
   // 不再加载 zoom-out SVG 图标，已改用 ⁂ 符号
