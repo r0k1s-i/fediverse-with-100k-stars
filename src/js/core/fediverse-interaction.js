@@ -253,7 +253,8 @@ function isClickOnUI(event) {
   var target = event.target;
   while (target && target !== document.body) {
     var id = target.id || "";
-    var className = target.className || "";
+    var className = target.className;
+    var classStr = typeof className === "string" ? className : (className.baseVal || "");
     if (
       id === "detailContainer" ||
       id === "detailTitle" ||
@@ -264,8 +265,8 @@ function isClickOnUI(event) {
       id === "icon-nav" ||
       id === "minimap" ||
       id === "about" ||
-      className.indexOf("marker") !== -1 ||
-      className.indexOf("legacy-marker") !== -1
+      classStr.indexOf("marker") !== -1 ||
+      classStr.indexOf("legacy-marker") !== -1
     ) {
       return true;
     }
