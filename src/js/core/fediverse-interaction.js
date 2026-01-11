@@ -1,4 +1,3 @@
-
 var fediverseInteraction = {
   mouse: new THREE.Vector2(),
   raycaster: new THREE.Raycaster(),
@@ -6,13 +5,13 @@ var fediverseInteraction = {
   baseThreshold: 100.0,
   clickHandled: false,
   lastClickTime: 0,
-  lastViewedInstance: null,  
+  lastViewedInstance: null,
 };
 
 var MAJOR_FEDIVERSE_DOMAINS = [
   "mastodon.social",
   "misskey.io",
-  "pixelfed.social"
+  "pixelfed.social",
 ];
 
 var FEDIVERSE_CENTER = { x: 0, y: 0, z: 0 };
@@ -22,8 +21,10 @@ export function isMajorFediverseInstance(domain) {
 }
 
 export function shouldShowFediverseSystem() {
-  return fediverseInteraction.lastViewedInstance && 
-         isMajorFediverseInstance(fediverseInteraction.lastViewedInstance);
+  return (
+    fediverseInteraction.lastViewedInstance &&
+    isMajorFediverseInstance(fediverseInteraction.lastViewedInstance)
+  );
 }
 
 export function goToFediverseCenter() {
@@ -31,16 +32,16 @@ export function goToFediverseCenter() {
   var camera = window.camera;
   var updateMinimap = window.updateMinimap;
   var hideSunButton = window.hideSunButton;
-  
+
   if (typeof translating !== "undefined") {
     translating.targetPosition.set(
       -FEDIVERSE_CENTER.x,
       -FEDIVERSE_CENTER.y,
-      -FEDIVERSE_CENTER.z
+      -FEDIVERSE_CENTER.z,
     );
   }
   if (typeof camera !== "undefined") {
-    camera.position.target.z = 15; 
+    camera.position.target.z = 15;
   }
   if (typeof updateMinimap === "function") {
     updateMinimap();
@@ -48,14 +49,14 @@ export function goToFediverseCenter() {
   if (typeof hideSunButton === "function") {
     hideSunButton();
   }
-  
+
   var $starName = $("#star-name");
   var $detailContainer = $("#detailContainer");
   var $cssContainer = $("#css-container");
-  
+
   if ($starName.length) {
-    $starName.hide(); 
-    $starName.find("span").html(""); 
+    $starName.hide();
+    $starName.find("span").html("");
   }
   if ($detailContainer.length) {
     $detailContainer.fadeOut();
@@ -63,9 +64,9 @@ export function goToFediverseCenter() {
   if ($cssContainer.length) {
     $cssContainer.css("display", "block");
   }
-  
+
   fediverseInteraction.intersected = null;
-  
+
   window._fediverseCenterMode = true;
 }
 
@@ -73,17 +74,15 @@ export function isAtFediverseCenter() {
   var translating = window.translating;
   if (!window._fediverseCenterMode) return false;
   if (typeof translating === "undefined") return false;
-  
+
   var pos = translating.targetPosition || translating.position;
-  var distFromCenter = Math.sqrt(
-    pos.x * pos.x + pos.y * pos.y + pos.z * pos.z
-  );
-  
+  var distFromCenter = Math.sqrt(pos.x * pos.x + pos.y * pos.y + pos.z * pos.z);
+
   if (distFromCenter > 100) {
     window._fediverseCenterMode = false;
     return false;
   }
-  
+
   return true;
 }
 
@@ -161,7 +160,6 @@ function onFediverseMouseMove(event) {
     typeof InteractionMath !== "undefined" &&
     typeof rotating !== "undefined"
   ) {
-
     rotating.updateMatrixWorld(true);
     translating.updateMatrixWorld(true);
 
@@ -199,7 +197,7 @@ function onFediverseMouseMove(event) {
 function handleHover(object) {
   var camera = window.camera;
   var markerThreshold = window.markerThreshold;
-  var $starName = window.$starName || $('#star-name');
+  var $starName = window.$starName || $("#star-name");
 
   var isZoomedInClose =
     typeof camera !== "undefined" &&
@@ -288,7 +286,7 @@ function onFediverseClick(event) {
   var getOffsetByStarRadius = window.getOffsetByStarRadius;
   var centerOn = window.centerOn;
   var zoomIn = window.zoomIn;
-  var $starName = window.$starName || $('#star-name');
+  var $starName = window.$starName || $("#star-name");
 
   if (!enableFediverse) return;
 
@@ -387,6 +385,7 @@ function onFediverseClick(event) {
     typeof enableStarModel !== "undefined" &&
     enableStarModel
   ) {
+    // 星球模型放置在实例的位置
     starModel.position.copy(position);
 
     var spectralIndex = 0.5;
@@ -396,6 +395,9 @@ function onFediverseClick(event) {
     starModel.setSpectralIndex(spectralIndex);
     starModel.setScale(modelScale);
     starModel.randomizeSolarFlare();
+
+    // 确保星球模型可见
+    starModel.visible = true;
   }
 
   var offset = new THREE.Vector3(0, 0, 0);
@@ -453,7 +455,7 @@ function showInstanceDetails(data) {
     starType +
     "</p>";
 
-  var temperature = 7300; 
+  var temperature = 7300;
   if (data.color && data.color.temperature) {
     temperature = data.color.temperature;
   }
@@ -465,7 +467,9 @@ function showInstanceDetails(data) {
   if (data.stats) {
     html +=
       "<p><strong>Planetary Population:</strong> " +
-      (numberWithCommas ? numberWithCommas(data.stats.user_count) : data.stats.user_count) +
+      (numberWithCommas
+        ? numberWithCommas(data.stats.user_count)
+        : data.stats.user_count) +
       "</p>";
   }
 
