@@ -528,7 +528,8 @@ function animate() {
       isZoomedIn &&
       camera.position.z < markerThreshold.min &&
       $detailContainer.css("display") == "none" &&
-      $starName.css("display") == "none"
+      $starName.css("display") == "none" &&
+      !window._fediverseCenterMode // Don't show starName when in Fediverse center mode
     ) {
       $starName.fadeIn();
     } else if (
