@@ -448,7 +448,7 @@ loader.load('texture.ktx2', (texture) => { ... });
 | 1 | Three.js 升级 | 16-24h | P0 | 无 | ✅ 已完成 |
 | 2 | ES Modules 重构 | 12-16h | P1 | Phase 1 | ✅ 已完成 |
 | 3 | 移除 jQuery | 4-6h | P2 | Phase 2 | ✅ 已完成 |
-| 4 | CSS 现代化 | 2-4h | P3 | 无 | 待开始 |
+| 4 | CSS 现代化 | 2-4h | P3 | 无 | ✅ 已完成 |
 | 5 | 性能优化 | 8-12h | P1 | Phase 1 | 待开始 |
 | 6 | 加载优化 | 4-6h | P2 | Phase 2 | 待开始 |
 
@@ -495,6 +495,47 @@ git checkout v2.0-phase1
 ---
 
 ## 📝 更新日志
+
+### 2026-01-12
+- ✅ **Phase 4 完成**: CSS 现代化
+  - 移除 index.html 中所有内联样式，迁移至独立文件
+  - 重构 `src/css/style.css`，移除 400+ 行冗余 vendor prefixes
+  - 创建 `src/css/dat-gui.css` 和 `src/css/context-menu.css`
+  - 引入 CSS 变量系统 (:root) 统一管理设计 Tokens
+  - 优化 CSS 选择器和代码结构
+
+### 2026-01-12 (Phase 4 进行中)
+- 🚧 **Phase 4 进行中**: CSS 现代化
+  
+  **已完成**:
+  - ✅ 分析现有 CSS 结构 (index.html 444行内联 + style.css 903行)
+  - ✅ 创建现代化 `src/css/style.css` (移除所有 vendor prefixes, 添加 CSS 变量)
+  - ✅ 创建 `src/css/dat-gui.css` (从 index.html 提取 dat.GUI 样式)
+  - ✅ 创建 `src/css/context-menu.css` (从 index.html 提取右键菜单样式)
+  
+  **CSS 变量系统** (已添加到 style.css):
+  ```css
+  :root {
+      --color-bg: #000000;
+      --color-text: #ffffff;
+      --color-accent: #2c47dc;
+      --font-body: "Lora", Georgia, serif;
+      --font-mono: "Lekton", monospace;
+      --transition-fast: 0.1s ease;
+      --transition-normal: 0.25s ease;
+      /* ... 更多变量 */
+  }
+  ```
+  
+  **待完成**:
+  - [ ] 更新 index.html: 移除内联 `<style>` 标签，引入新 CSS 文件
+  - [ ] 验证所有样式正常工作
+  - [ ] 提交代码
+  
+  **文件变更**:
+  - `src/css/style.css` - 重写 (903行 → ~660行, 移除 vendor prefixes)
+  - `src/css/dat-gui.css` - 新建 (~300行)
+  - `src/css/context-menu.css` - 新建 (~50行)
 
 ### 2026-01-12
 - ✅ **Phase 3 完成**: 移除 jQuery 依赖
