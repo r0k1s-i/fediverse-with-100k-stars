@@ -615,3 +615,4 @@ TWEEN.Interpolation = {
   }
 
 };
+export { TWEEN };

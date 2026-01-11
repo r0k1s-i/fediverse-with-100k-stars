@@ -1,4 +1,6 @@
+import * as THREE from 'three';
 import { $, css, html, fadeIn, fadeOut, find, createEl, trigger } from '../utils/dom.js';
+import { TWEEN } from '../lib/tween.js';
 
 export var GALAXY_TOUR = [
   {"rx":0.5522785678088462,"ry":1.324151395815386,"z":1672.4214873346518,"travelTime":5000,"restTime":5000,"message":"You're seeing the actual density and location of over 100,000 stars in this view."},

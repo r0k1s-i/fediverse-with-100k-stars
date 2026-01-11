@@ -1,3 +1,4 @@
+import * as THREE from 'three';
 import { screenXY } from '../utils/three-helpers.js';
 
 var legacyMarkers = [];

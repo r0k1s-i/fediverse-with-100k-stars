@@ -1,4 +1,6 @@
 
+import * as THREE from 'three';
+
 var FEDIVERSE_SOFTWARE_RINGS = [
   { name: "Lemmy", instances: 312, radius: 0.00008 },
   { name: "PeerTube", instances: 293, radius: 0.00016 },

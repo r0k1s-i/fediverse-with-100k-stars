@@ -1,6 +1,7 @@
-
+import * as THREE from 'three';
 import { map, constrain } from '../utils/math.js';
 import { addClass, removeClass, fadeIn, fadeOut } from '../utils/dom.js';
+import { Gyroscope } from './Gyroscope.js';
 
 export function loadStarData(dataFile, callback) {
   var xhr = new XMLHttpRequest();
@@ -172,7 +173,7 @@ export function generateHipparcosStars() {
         linePositions.push(x, 0, z); 
 
         var preview = starPreview.clone();
-        var gyroStar = new THREE.Gyroscope();
+        var gyroStar = new Gyroscope();
         gyroStar.position.set(x, y, z);
         gyroStar.add(preview);
 
@@ -190,7 +191,7 @@ export function generateHipparcosStars() {
             );
         };
 
-        var g = new THREE.Gyroscope();
+        var g = new Gyroscope();
         container.add(g);
 
         g.name = name;
@@ -274,7 +275,7 @@ export function generateHipparcosStars() {
   var degRadius = 600;
   for (var i = 0; i < degCounter; i++) {
     var degrees = (i / degCounter) * 360;
-    var zerodeg = new THREE.Gyroscope();
+    var zerodeg = new Gyroscope();
     zerodeg.scale.setLength(0.8);
     var angle = (i / degCounter) * Math.TWO_PI;
     var x = Math.cos(angle) * degRadius;

@@ -12,6 +12,15 @@
 	<link rel="image_src">
 	<title>Fediverse Universe</title>
 
+	<script type="importmap">
+	{
+		"imports": {
+			"three": "https://unpkg.com/three@0.158.0/build/three.module.js",
+			"three/addons/": "https://unpkg.com/three@0.158.0/examples/jsm/"
+		}
+	}
+	</script>
+
 	<link rel="preload" href="data/fediverse_final.json" as="fetch" crossorigin>
 
 	<link rel="stylesheet" type="text/css" href="./src/css/style.css">
@@ -20,7 +29,7 @@
 	<link rel="stylesheet" type="text/css" href="./src/css/context-menu.css">
 </head>
 
-<body onload="start()" oncontextmenu="return false">
+<body oncontextmenu="return false">
 
 	<filter id="svg-glow">
 		<feGaussianBlur in="SourceAlpha" stdDeviation="3" />
@@ -124,9 +133,6 @@
 	</audio>
 
 	<script src="src/js/lib/dat.gui.min.js"></script>
-	<script src="src/js/lib/three.r158.min.js"></script>
-	<script src="src/js/lib/three-compat.js"></script>
-	<script src="src/js/lib/tween.js"></script>
 	<script src="src/js/lib/Detector.js"></script>
 	<script src="src/js/lib/THREEx.KeyboardState.js"></script>
 	<script src="src/js/lib/THREEx.WindowResize.js"></script>

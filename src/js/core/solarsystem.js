@@ -1,4 +1,8 @@
 
+import { KMToLY } from '../utils/app.js';
+import { random } from '../utils/math.js';
+import { Gyroscope } from './Gyroscope.js';
+
 function makeOortCloud(){
 	var count = 10000;
 	var dist = 0.790642941;
@@ -33,7 +37,7 @@ function makeOortCloud(){
 	var material = new THREE.PointsMaterial({color:0x333333, size: 0.1});
 	var particles = new THREE.Points( particlesGeo, material );
 
-	var oortInfo = new THREE.Gyroscope();
+	var oortInfo = new Gyroscope();
 	oortInfo.name = "Oort Cloud";
 	oortInfo.position.set( dist, -dist , 0 );
 	oortInfo.scale.setLength( 0.1 );

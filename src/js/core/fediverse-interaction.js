@@ -1,4 +1,16 @@
-import { $, css, show, hide, fadeIn, fadeOut, html, find, on, ready } from '../utils/dom.js';
+import * as THREE from "three";
+import {
+  $,
+  css,
+  show,
+  hide,
+  fadeIn,
+  fadeOut,
+  html,
+  find,
+  on,
+  ready,
+} from "../utils/dom.js";
 
 var fediverseInteraction = {
   mouse: new THREE.Vector2(),
@@ -243,8 +255,14 @@ function handleHover(object) {
 
   if (object && starNameEl && starNameEl.style.display !== "none") {
     css(starNameEl, {
-      left: ((fediverseInteraction.mouse.x + 1) / 2) * window.innerWidth + 15 + "px",
-      top: (-(fediverseInteraction.mouse.y - 1) / 2) * window.innerHeight + 15 + "px",
+      left:
+        ((fediverseInteraction.mouse.x + 1) / 2) * window.innerWidth +
+        15 +
+        "px",
+      top:
+        (-(fediverseInteraction.mouse.y - 1) / 2) * window.innerHeight +
+        15 +
+        "px",
     });
   }
 }
@@ -254,7 +272,12 @@ function isClickOnUI(event) {
   while (target && target !== document.body) {
     var id = target.id || "";
     var className = target.className;
-    var classStr = typeof className === "string" ? className : (className.baseVal || "");
+    var classStr =
+      typeof className === "string"
+        ? className
+        : className && className.baseVal
+          ? className.baseVal
+          : "";
     if (
       id === "detailContainer" ||
       id === "detailTitle" ||

@@ -1,6 +1,7 @@
-
+import * as THREE from 'three';
 import { constrain } from '../utils/math.js';
 import { addClass, removeClass, fadeIn, fadeOut } from '../utils/dom.js';
+import { Gyroscope } from './Gyroscope.js';
 
 var textureLoader = new THREE.TextureLoader();
 
@@ -355,14 +356,14 @@ export function generateFediverseInstances() {
     ) {
 
       if (isMajorInstance(instance.domain)) {
-        var gyroInstance = new THREE.Gyroscope();
+        var gyroInstance = new Gyroscope();
         gyroInstance.position.set(x, y, z);
         var majorColor = getMajorInstanceColor(instance.domain);
         var majorPreview = createMajorInstancePreview(majorColor);
         gyroInstance.add(majorPreview);
         instancePreviews.add(gyroInstance);
         
-        var g = new THREE.Gyroscope();
+        var g = new Gyroscope();
         container.add(g);
         g.name = instance.name || instance.domain;
         g.instanceData = instance;

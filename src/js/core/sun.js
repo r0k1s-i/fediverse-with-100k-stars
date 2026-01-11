@@ -1,4 +1,6 @@
+import * as THREE from 'three';
 import { constrain, map } from "../utils/math.js";
+import { Gyroscope } from "./Gyroscope.js";
 
 var sunTexture;
 var sunColorLookupTexture;
@@ -272,7 +274,7 @@ export function makeSun(options) {
   sun.solarflare = solarflare;
   sun.add(solarflare);
 
-  var gyro = new THREE.Gyroscope();
+  var gyro = new Gyroscope();
   sun.add(gyro);
   sun.gyro = gyro;
 
