@@ -1,7 +1,13 @@
 
 import { constrain } from '../utils/math.js';
 
-export var glowSpanTexture = new THREE.TextureLoader().load('src/assets/textures/transparent.png');
+var textureLoader = new THREE.TextureLoader();
+
+function onTextureError(err) {
+  console.error("Error loading plane texture:", err);
+}
+
+export var glowSpanTexture = textureLoader.load('src/assets/textures/transparent.png', undefined, undefined, onTextureError);
 
 export function createSpacePlane(){
     var translating = window.translating;

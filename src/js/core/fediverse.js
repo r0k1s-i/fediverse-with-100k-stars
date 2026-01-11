@@ -4,25 +4,93 @@ import { addClass, removeClass, fadeIn, fadeOut } from '../utils/dom.js';
 
 var textureLoader = new THREE.TextureLoader();
 
-var fediverseTexture0 = textureLoader.load("src/assets/textures/p_0.png");
-var fediverseTexture1 = textureLoader.load("src/assets/textures/p_2.png");
+function onTextureError(err) {
+  console.error("Error loading texture:", err);
+}
+
+var fediverseTexture0 = textureLoader.load(
+  "src/assets/textures/p_0.png",
+  undefined,
+  undefined,
+  onTextureError
+);
+var fediverseTexture1 = textureLoader.load(
+  "src/assets/textures/p_2.png",
+  undefined,
+  undefined,
+  onTextureError
+);
 var fediverseHeatVisionTexture = textureLoader.load(
   "src/assets/textures/sharppoint.png",
+  undefined,
+  undefined,
+  onTextureError
 );
+
+setLoadMessage("Focusing optics");
 var instancePreviewTexture = textureLoader.load(
   "src/assets/textures/star_preview.png",
   undefined,
-  setLoadMessage("Focusing optics"),
+  undefined,
+  onTextureError
 );
 var fediverseColorGraph = textureLoader.load(
   "src/assets/textures/star_color_modified.png",
+  undefined,
+  undefined,
+  onTextureError
 );
 
 var instanceSunHaloTexture = textureLoader.load(
   "src/assets/textures/sun_halo.png",
+  undefined,
+  undefined,
+  onTextureError
 );
 var instanceCoronaTexture = textureLoader.load(
   "src/assets/textures/corona.png",
+  undefined,
+  undefined,
+  onTextureError
+);
+var fediverseTexture1 = textureLoader.load(
+  "src/assets/textures/p_2.png",
+  undefined,
+  undefined,
+  onTextureError
+);
+var fediverseHeatVisionTexture = textureLoader.load(
+  "src/assets/textures/sharppoint.png",
+  undefined,
+  undefined,
+  onTextureError
+);
+
+setLoadMessage("Focusing optics");
+var instancePreviewTexture = textureLoader.load(
+  "src/assets/textures/star_preview.png",
+  undefined,
+  undefined,
+  onTextureError
+);
+var fediverseColorGraph = textureLoader.load(
+  "src/assets/textures/star_color_modified.png",
+  undefined,
+  undefined,
+  onTextureError
+);
+
+var instanceSunHaloTexture = textureLoader.load(
+  "src/assets/textures/sun_halo.png",
+  undefined,
+  undefined,
+  onTextureError
+);
+var instanceCoronaTexture = textureLoader.load(
+  "src/assets/textures/corona.png",
+  undefined,
+  undefined,
+  onTextureError
 );
 
 var MAJOR_INSTANCE_COLORS = {

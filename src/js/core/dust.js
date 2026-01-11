@@ -1,7 +1,13 @@
 
 import { constrain, random } from '../utils/math.js';
 
-var dustTexture = new THREE.TextureLoader().load( "src/assets/textures/dust.png" );
+var textureLoader = new THREE.TextureLoader();
+
+function onTextureError(err) {
+  console.error("Error loading texture:", err);
+}
+
+var dustTexture = textureLoader.load( "src/assets/textures/dust.png", undefined, undefined, onTextureError );
 
 var dustUniforms = {
 	color:     { value: new THREE.Color( 0xffffff ) },

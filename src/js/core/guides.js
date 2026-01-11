@@ -1,5 +1,11 @@
 
-export var guidePointTexture = new THREE.TextureLoader().load( "src/assets/textures/p_1.png" );
+var textureLoader = new THREE.TextureLoader();
+
+function onTextureError(err) {
+  console.error("Error loading guide texture:", err);
+}
+
+export var guidePointTexture = textureLoader.load( "src/assets/textures/p_1.png", undefined, undefined, onTextureError );
 
 export function createSpaceRadius( radius, color, representationScale ){
 	color = color ? color : 0xffffff;
