@@ -1,5 +1,6 @@
 
 import { map, constrain } from '../utils/math.js';
+import { addClass, removeClass, fadeIn, fadeOut } from '../utils/dom.js';
 
 export function loadStarData(dataFile, callback) {
   var xhr = new XMLHttpRequest();
@@ -58,8 +59,8 @@ export function generateHipparcosStars() {
   var attachMarker = window.attachMarker;
   var camera = window.camera;
   var starData = window.starData;
-  var $spectralGraph = window.$spectralGraph;
-  var $iconNav = window.$iconNav;
+  var spectralGraphEl = window.spectralGraphEl;
+  var iconNavEl = window.iconNavEl;
 
   var container = new THREE.Object3D();
 
@@ -218,11 +219,13 @@ export function generateHipparcosStars() {
     container.heatVision = !container.heatVision;
 
     if (container.heatVision) {
-      $spectralGraph.addClass("heatvision").fadeIn();
-      $iconNav.addClass("heatvision");
+      addClass(spectralGraphEl, "heatvision");
+      fadeIn(spectralGraphEl);
+      addClass(iconNavEl, "heatvision");
     } else {
-      $spectralGraph.removeClass("heatvision").fadeOut();
-      $iconNav.removeClass("heatvision");
+      removeClass(spectralGraphEl, "heatvision");
+      fadeOut(spectralGraphEl);
+      removeClass(iconNavEl, "heatvision");
     }
   };
 
