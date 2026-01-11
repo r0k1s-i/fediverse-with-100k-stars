@@ -44,6 +44,24 @@ function goToFediverseCenter() {
   if (typeof window.hideSunButton === "function") {
     window.hideSunButton();
   }
+  
+  // Hide UI elements that might be left over from viewing an instance
+  var $starName = $("#star-name");
+  var $detailContainer = $("#detailContainer");
+  var $cssContainer = $("#css-container");
+  
+  if ($starName.length) {
+    $starName.fadeOut();
+  }
+  if ($detailContainer.length) {
+    $detailContainer.fadeOut();
+  }
+  if ($cssContainer.length) {
+    $cssContainer.css("display", "block");
+  }
+  
+  // Clear any hover state
+  fediverseInteraction.intersected = null;
 }
 
 function getInteractionThreshold() {
