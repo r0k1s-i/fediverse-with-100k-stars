@@ -1,3 +1,4 @@
+import * as THREE from 'three';
 import { constrain } from "../utils/math.js";
 
 var skybox;

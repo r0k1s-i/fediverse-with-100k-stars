@@ -77,24 +77,15 @@ Detector.getWebGLErrorMessage = function (message) {
      '<p><iframe style="margin-top:4em;" id="trailer" width=800 height=600 src="http://www.youtube.com/embed/TU6RAjABX40" frameborder="0" allowfullscreen></iframe></p>',
    ].join( '\n' );
 
-   var youtube = $('#trailer');
+   var youtube = document.getElementById('trailer');
 
-   var $window = $(window);
-   var $element = $(element);
+   var onResize = function(e) {
+       element.style.width = window.innerWidth + 'px';
+       element.style.height = window.innerHeight + 'px';
+   };
 
-   $window
-     .resize(function(e) {
-
-       // console.log('resizing');
-       $element
-         .width( $window.width() )
-         .height( $window.height() );
-       // youtube
-       //  .width($window.width())
-       //  .height($window.height());
-
-     })
-     .trigger('resize');
+   window.addEventListener('resize', onResize);
+   onResize();
 
   }
 
@@ -106,7 +97,7 @@ Detector.addGetWebGLMessage = function ( message ) {
 
   var parent, id, element;
 
-  parameters = window.parameters || {};
+  var parameters = window.parameters || {};
 
   parent = parameters.parent !== undefined ? parameters.parent : document.body;
   id = parameters.id !== undefined ? parameters.id : 'oldie';
@@ -114,10 +105,8 @@ Detector.addGetWebGLMessage = function ( message ) {
   element = Detector.getWebGLErrorMessage(message);
   element.id = id;
 
-  $(element).css({
-   border: 0,
-   padding: 0,
-  });
+  element.style.border = '0';
+  element.style.padding = '0';
 
   parent.appendChild( element );
 

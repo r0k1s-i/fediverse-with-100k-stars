@@ -1,4 +1,4 @@
-
+import * as THREE from 'three';
 import { constrain, random } from '../utils/math.js';
 
 var textureLoader = new THREE.TextureLoader();

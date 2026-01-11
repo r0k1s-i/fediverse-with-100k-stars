@@ -1,7 +1,14 @@
 import { $, css, fadeIn, fadeOut, trigger, find } from '../utils/dom.js';
 import { constrain } from '../utils/math.js';
+import * as THREE from 'three';
+import { TWEEN } from '../lib/tween.js';
+
+window.THREE = THREE;
+window.TWEEN = TWEEN;
 
 import './globals.js';
+
+
 import './config.js';
 import '../utils/misc.js';
 import '../utils/three-helpers.js';
@@ -720,3 +727,5 @@ window.muteSound = muteSound;
 window.unmuteSound = unmuteSound;
 window.firstTime = firstTime;
 window.markerThreshold = markerThreshold;
+
+window.addEventListener('load', start);
