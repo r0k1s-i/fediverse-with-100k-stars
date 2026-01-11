@@ -106,6 +106,14 @@ var fediverseUniforms = {
   heatVision: { value: 0.0 },
 };
 
+var iconUniforms = {
+  color: { value: new THREE.Color(0xffffff) },
+  map: { value: instancePreviewTexture },
+  scale: { value: 1.0 },
+  zoomSize: { value: 1.0 },
+  cameraZ: { value: 1000.0 },
+};
+
 var fediverseInstances = [];
 var fediverseMeshes = [];
 
@@ -226,18 +234,9 @@ export function generateFediverseInstances() {
   var instancePreviews = new THREE.Object3D();
   container.add(instancePreviews);
 
-  var instancePreviewMaterial = new THREE.MeshBasicMaterial({
-    map: instancePreviewTexture,
-    blending: THREE.AdditiveBlending,
-    transparent: true,
-    depthTest: false,
-    depthWrite: false,
-  });
-
-  var instancePreview = new THREE.Mesh(
-    new THREE.PlaneGeometry(40, 40),
-    instancePreviewMaterial,
-  );
+  var iconPositions = [];
+  var iconColors = [];
+  var iconSizes = [];
   
   var linePositions = [];
   var MIN_USERS_FOR_LINE = 50000;
@@ -287,46 +286,32 @@ export function generateFediverseInstances() {
       userCount > 1000
     ) {
 
-      var gyroInstance = new THREE.Gyroscope();
-      gyroInstance.position.set(x, y, z);
-
       if (isMajorInstance(instance.domain)) {
+        var gyroInstance = new THREE.Gyroscope();
+        gyroInstance.position.set(x, y, z);
         var majorColor = getMajorInstanceColor(instance.domain);
         var majorPreview = createMajorInstancePreview(majorColor);
         gyroInstance.add(majorPreview);
+        instancePreviews.add(gyroInstance);
+        
+        var g = new THREE.Gyroscope();
+        container.add(g);
+        g.name = instance.name || instance.domain;
+        g.instanceData = instance;
+        g.position.set(x, y, z);
+        g.scale.setLength(1.0);
+        g.visible = true;
+        fediverseMeshes.push(g);
+
+        if (showHTMLLabel) {
+            attachLegacyMarker(instance.domain, g, 1.0, { min: 0, max: 50000 });
+        }
+
       } else {
-        var preview = instancePreview.clone();
-        gyroInstance.add(preview);
-
-        preview.update = function () {
-          this.material.opacity = constrain(
-            Math.pow(camera.position.z * 0.002, 2),
-            0,
-            1,
-          );
-          if (this.material.opacity < 0.1) this.material.opacity = 0.0;
-          if (this.material.opacity <= 0.0) this.visible = false;
-          else this.visible = true;
-          this.scale.setLength(
-            constrain(Math.pow(camera.position.z * 0.001, 2), 0, 1),
-          );
-        };
+        iconPositions.push(x, y, z);
+        iconColors.push(1.0, 1.0, 1.0); 
+        iconSizes.push(40.0);
       }
-
-      var g = new THREE.Gyroscope();
-      container.add(g);
-      g.name = instance.name || instance.domain;
-      g.instanceData = instance;
-      g.position.set(x, y, z);
-      g.scale.setLength(1.0);
-      g.visible = true;
-
-      if (showHTMLLabel) {
-        attachLegacyMarker(instance.domain, g, 1.0, { min: 0, max: 50000 });
-      }
-
-      instancePreviews.add(gyroInstance);
-      fediverseMeshes.push(g);
     }
   }
 
@@ -398,6 +383,26 @@ export function generateFediverseInstances() {
   window.toggleHeatVision = container.toggleHeatVision;
 
   var pSystem = new THREE.Points(geometry, shaderMaterial);
+
+  if (iconPositions.length > 0) {
+      var iconGeometry = new THREE.BufferGeometry();
+      iconGeometry.setAttribute('position', new THREE.Float32BufferAttribute(iconPositions, 3));
+      iconGeometry.setAttribute('customColor', new THREE.Float32BufferAttribute(iconColors, 3));
+      iconGeometry.setAttribute('size', new THREE.Float32BufferAttribute(iconSizes, 1));
+      
+      var iconMaterial = new THREE.ShaderMaterial({
+          uniforms: iconUniforms,
+          vertexShader: shaderList.icon.vertex,
+          fragmentShader: shaderList.icon.fragment,
+          blending: THREE.AdditiveBlending,
+          depthTest: false,
+          depthWrite: false,
+          transparent: true,
+      });
+      
+      var iconSystem = new THREE.Points(iconGeometry, iconMaterial);
+      container.add(iconSystem);
+  }
 
   var lineGeometry = new THREE.BufferGeometry();
   lineGeometry.setAttribute('position', new THREE.Float32BufferAttribute(linePositions, 3));
@@ -486,6 +491,10 @@ export function generateFediverseInstances() {
     fediverseUniforms.scale.value = Math.sqrt(areaOfWindow) * 1.5;
 
     fediverseUniforms.sceneSize.value = 10000;
+    
+    iconUniforms.cameraZ.value = camera.position.z;
+    iconUniforms.zoomSize.value = fediverseUniforms.zoomSize.value;
+    iconUniforms.scale.value = fediverseUniforms.scale.value;
   };
 
   lineMesh.update = function () {

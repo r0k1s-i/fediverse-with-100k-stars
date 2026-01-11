@@ -1,5 +1,5 @@
 
-export var shaderList = ['src/shaders/starsurface', 'src/shaders/starhalo', 'src/shaders/starflare', 'src/shaders/galacticstars', 'src/shaders/galacticdust', 'src/shaders/datastars', 'src/shaders/cubemapcustom', 'src/shaders/corona'];
+export var shaderList = ['src/shaders/starsurface', 'src/shaders/starhalo', 'src/shaders/starflare', 'src/shaders/galacticstars', 'src/shaders/galacticdust', 'src/shaders/datastars', 'src/shaders/cubemapcustom', 'src/shaders/corona', 'src/shaders/icon'];
 
 export function loadShaders( list, callback ){
 	var shaders = {};
