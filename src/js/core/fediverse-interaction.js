@@ -51,7 +51,7 @@ function goToFediverseCenter() {
   var $cssContainer = $("#css-container");
   
   if ($starName.length) {
-    $starName.fadeOut();
+    $starName.hide(); // Immediately hide instead of fadeOut to prevent border showing
     $starName.find("span").html(""); // Clear the star name content
   }
   if ($detailContainer.length) {
