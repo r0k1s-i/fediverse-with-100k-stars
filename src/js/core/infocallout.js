@@ -33,6 +33,7 @@ export function makeSunEarthDiagram(){
 }
 
 var textureLoader = new THREE.TextureLoader();
+textureLoader.setCrossOrigin('anonymous');
 var clamperTexture = textureLoader.load( 'src/assets/textures/clamper.png' );
 var clamperMaterial = new THREE.MeshBasicMaterial({
 	map: clamperTexture,

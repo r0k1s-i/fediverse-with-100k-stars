@@ -9,7 +9,7 @@ void main() {
     
     vec4 texColor = texture2D( map, gl_PointCoord );
     
-    if (texColor.a < 0.1) discard;
+    if (texColor.a < 0.1 && length(texColor.rgb) < 0.1) discard;
     
-    gl_FragColor = vec4( color * vColor, opacity * texColor.a );
+    gl_FragColor = vec4( color * vColor * texColor.rgb, opacity * texColor.a );
 }
