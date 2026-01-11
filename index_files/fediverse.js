@@ -136,15 +136,89 @@ var fediverseAttributes = {
   size: { type: "f", value: [] },
   customColor: { type: "c", value: [] },
   colorIndex: { type: "f", value: [] },
+  isVirtual: { type: "f", value: [] },
 };
 
 var fediverseInstances = [];
 var fediverseMeshes = [];
 
+/**
+ * Generate virtual background particles for visual effect
+ * These particles are non-interactive and randomly positioned each session
+ */
+function generateVirtualParticles(targetCount) {
+  var virtualParticles = [];
+  var realCount = fediverseInstances.length;
+  var virtualCount = Math.max(0, targetCount - realCount);
+
+  if (realCount === 0 || virtualCount === 0) {
+    return virtualParticles;
+  }
+
+  var totalWeight = 0;
+  var weights = [];
+  for (var i = 0; i < realCount; i++) {
+    var userCount = fediverseInstances[i].stats
+      ? fediverseInstances[i].stats.user_count
+      : 1;
+    var weight = Math.log(userCount + 1) + 1;
+    weights.push(weight);
+    totalWeight += weight;
+  }
+
+  for (var i = 0; i < virtualCount; i++) {
+    var r = Math.random() * totalWeight;
+    var cumulative = 0;
+    var parentIdx = 0;
+    for (var j = 0; j < realCount; j++) {
+      cumulative += weights[j];
+      if (r <= cumulative) {
+        parentIdx = j;
+        break;
+      }
+    }
+
+    var parent = fediverseInstances[parentIdx];
+    var parentPos = parent.position;
+    var parentUserCount = parent.stats ? parent.stats.user_count : 1;
+
+    var spread = 50 + Math.log(parentUserCount + 1) * 30;
+
+    var offsetX = (Math.random() - 0.5) * spread * 2;
+    var offsetY = (Math.random() - 0.5) * spread * 2;
+    var offsetZ = (Math.random() - 0.5) * spread * 0.5;
+
+    var domainHash = 0;
+    for (var k = 0; k < parent.domain.length; k++) {
+      domainHash = (domainHash * 31 + parent.domain.charCodeAt(k)) % 1000;
+    }
+    var baseSpectral = 0.2 + (domainHash / 1000) * 0.6;
+    var spectralVariation = (Math.random() - 0.5) * 0.15;
+
+    virtualParticles.push({
+      position: {
+        x: parentPos.x + offsetX,
+        y: parentPos.y + offsetY,
+        z: parentPos.z + offsetZ,
+      },
+      size: 8 + Math.random() * 10,
+      spectralLookup: Math.max(0.1, Math.min(0.9, baseSpectral + spectralVariation)),
+      brightness: 0.5 + Math.random() * 0.4,
+      isVirtual: true,
+    });
+  }
+
+  return virtualParticles;
+}
+
 function generateFediverseInstances() {
   var container = new THREE.Object3D();
   var pGeo = new THREE.Geometry();
   var count = fediverseInstances.length;
+
+  // Generate virtual particles to reach 100k total
+  var TARGET_PARTICLE_COUNT = 100000;
+  var virtualParticles = generateVirtualParticles(TARGET_PARTICLE_COUNT);
 
   var instancePreviews = new THREE.Object3D();
   container.add(instancePreviews);
@@ -164,6 +238,7 @@ function generateFediverseInstances() {
   var pLineGeo = new THREE.Geometry();
   var MIN_USERS_FOR_LINE = 50000;
 
+  // Add real instances
   for (var i = 0; i < count; i++) {
     var instance = fediverseInstances[i];
 
@@ -189,8 +264,9 @@ function generateFediverseInstances() {
       domainHash = (domainHash * 31 + instance.domain.charCodeAt(j)) % 1000;
     }
 
-    // Map hash to a spectralLookup value (0.2 to 0.8 for variety, avoiding extremes)
     p.spectralLookup = 0.2 + (domainHash / 1000) * 0.6;
+    p.brightness = 1.0;
+    p.isVirtual = false;
 
     pGeo.vertices.push(p);
     pGeo.colors.push(threeColor);
@@ -259,6 +335,23 @@ function generateFediverseInstances() {
     }
   }
 
+  for (var i = 0; i < virtualParticles.length; i++) {
+    var vp = virtualParticles[i];
+
+    var p = new THREE.Vector3(vp.position.x, vp.position.y, vp.position.z);
+    p.size = vp.size;
+    p.spectralLookup = vp.spectralLookup;
+    p.brightness = vp.brightness;
+    p.isVirtual = true;
+
+    // Use white color for virtual particles too
+    // Brightness will be controlled by spectralLookup and shader
+    var vColor = new THREE.Color(0xffffff);
+
+    pGeo.vertices.push(p);
+    pGeo.colors.push(vColor);
+  }
+
   var shaderMaterial = new THREE.ShaderMaterial({
     uniforms: fediverseUniforms,
     attributes: fediverseAttributes,
@@ -307,11 +400,13 @@ function generateFediverseInstances() {
   var values_size = fediverseAttributes.size.value;
   var values_color = fediverseAttributes.customColor.value;
   var values_spectral = fediverseAttributes.colorIndex.value;
+  var values_isVirtual = fediverseAttributes.isVirtual.value;
 
   for (var v = 0; v < pGeo.vertices.length; v++) {
     values_size[v] = pGeo.vertices[v].size;
     values_color[v] = pGeo.colors[v];
     values_spectral[v] = pGeo.vertices[v].spectralLookup;
+    values_isVirtual[v] = pGeo.vertices[v].isVirtual ? 1.0 : 0.0;
   }
 
   var lineMesh = new THREE.Line(

@@ -15,9 +15,15 @@ varying vec3 vColor;
 varying float dist;
 varying float zoom;
 varying float starColorLookup;
+varying float vIsVirtual;
 
 
 void main() {
+
+	// In heatVision mode, hide virtual particles completely
+	if( heatVision > 0.0 && vIsVirtual > 0.5 ){
+		discard;
+	}
 
 	gl_FragColor = vec4( color * vColor, 1. );
 
