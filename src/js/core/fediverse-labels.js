@@ -1,3 +1,4 @@
+
 var fediverseLabels = {
   canvas: null,
   ctx: null,
@@ -8,7 +9,11 @@ var fediverseLabels = {
   font: '12px "Segoe UI", Arial, sans-serif',
 };
 
-function initFediverseLabels() {
+export function initFediverseLabels() {
+  var enableFediverse = window.enableFediverse;
+  var fediverseInstances = window.fediverseInstances;
+  var LabelLayout = window.LabelLayout;
+
   if (!enableFediverse) return;
 
   if (typeof fediverseInstances === "undefined") {
@@ -47,16 +52,17 @@ function initFediverseLabels() {
   });
 }
 
-function updateFediverseLabels() {
+export function updateFediverseLabels() {
   if (!fediverseLabels.canvas) return;
 
   var ctx = fediverseLabels.ctx;
   var width = fediverseLabels.canvas.width;
   var height = fediverseLabels.canvas.height;
 
-  // Clear canvas - don't render any labels
   ctx.clearRect(0, 0, width, height);
 
-  // Disabled: only show labels on hover, not constantly visible
   return;
 }
+
+window.initFediverseLabels = initFediverseLabels;
+window.updateFediverseLabels = updateFediverseLabels;

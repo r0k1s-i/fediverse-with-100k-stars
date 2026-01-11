@@ -1,4 +1,6 @@
 
+import { constrain, random } from '../utils/math.js';
+
 var galacticTexture0 = new THREE.TextureLoader().load( "src/assets/textures/galactic_sharp.png" );
 var galacticTexture1 = new THREE.TextureLoader().load( "src/assets/textures/galactic_blur.png" );
 
@@ -16,7 +18,18 @@ var galacticUniforms = {
 	heatVision: { value: 0.0 },
 };
 
-function generateGalaxy(){
+export function generateGalaxy(){
+    var shaderList = window.shaderList;
+    var addLensFlare = window.addLensFlare;
+    var createDistanceMeasurement = window.createDistanceMeasurement;
+    var attachLegacyMarker = window.attachLegacyMarker;
+    var glowSpanTexture = window.glowSpanTexture;
+    var camera = window.camera;
+    var galacticCentering = window.galacticCentering;
+    var pSystem = window.pSystem;
+    var pDustSystem = window.pDustSystem;
+    var maxAniso = window.maxAniso || 1;
+
 	setLoadMessage("Generating the galaxy");
 	
 	var geometry = new THREE.BufferGeometry();
@@ -165,6 +178,10 @@ function generateGalaxy(){
 
 
 	pGalacticSystem.update = function(){
+        camera = window.camera;
+        pSystem = window.pSystem;
+        pDustSystem = window.pDustSystem;
+        
 		galacticUniforms.zoomSize.value = 1.0 + 10000 / camera.position.z;
 
 		var areaOfWindow = window.innerWidth * window.innerHeight;
@@ -231,3 +248,5 @@ function generateGalaxy(){
 
 	return pGalacticSystem;
 }
+
+window.generateGalaxy = generateGalaxy;

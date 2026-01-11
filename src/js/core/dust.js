@@ -1,4 +1,6 @@
 
+import { constrain, random } from '../utils/math.js';
+
 var dustTexture = new THREE.TextureLoader().load( "src/assets/textures/dust.png" );
 
 var dustUniforms = {
@@ -8,7 +10,10 @@ var dustUniforms = {
 	cameraPitch: { value: 0 },
 };
 
-function generateDust(){
+export function generateDust(){
+    var shaderList = window.shaderList;
+    var rotating = window.rotating;
+    var camera = window.camera;
 
 	var geometry = new THREE.BufferGeometry();
 	var count = 10000;
@@ -121,3 +126,5 @@ function generateDust(){
 
 	return pDustSystem;
 }
+
+window.generateDust = generateDust;

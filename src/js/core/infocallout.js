@@ -1,5 +1,10 @@
 
-function makeSunEarthDiagram(){
+import { KMToLY } from '../utils/app.js';
+
+export function makeSunEarthDiagram(){
+    var translating = window.translating;
+    var attachMarker = window.attachMarker;
+
 	var sunEarthDiagram = new THREE.Object3D();
 
 	var distanceToEarth = KMToLY(150000000);
@@ -39,16 +44,18 @@ var clamperMaterial = new THREE.MeshBasicMaterial({
 });
 
 function makeClamper( scale ){
+    var maxAniso = window.maxAniso || 1;
 	clamperTexture.anisotropy = maxAniso;
 	var plane = new THREE.Mesh( new THREE.PlaneGeometry(1,1), clamperMaterial );
 	plane.scale.setLength( scale );
 	return plane;
 }
 
-function displaySunEarthDiagram(){
+export function displaySunEarthDiagram(){
 }
 
-function highlightStarHeat(){
+export function highlightStarHeat(){
+    var toggleHeatVision = window.toggleHeatVision;
 	var seconds = 6.0;
 	toggleHeatVision( true );
 	setTimeout( function(){
@@ -56,10 +63,16 @@ function highlightStarHeat(){
 	}, seconds * 1000.0 )
 }
 
-function highlightMilkyWay(){
+export function highlightMilkyWay(){
+    var toggleGalacticMeasurement = window.toggleGalacticMeasurement;
 	var seconds = 6.0;
 	toggleGalacticMeasurement( true );
 	setTimeout( function(){
 		toggleGalacticMeasurement( false );
 	}, seconds * 1000.0 )	
 }
+
+window.makeSunEarthDiagram = makeSunEarthDiagram;
+window.displaySunEarthDiagram = displaySunEarthDiagram;
+window.highlightStarHeat = highlightStarHeat;
+window.highlightMilkyWay = highlightMilkyWay;

@@ -1,12 +1,15 @@
 
+import { constrain } from '../utils/math.js';
+
 var textureLoader = new THREE.TextureLoader();
 var textureFlare0 = textureLoader.load( "src/assets/textures/lensflare0.png" );
 var textureFlare1 = textureLoader.load( "src/assets/textures/lensflare1.png" );
 var textureFlare2 = textureLoader.load( "src/assets/textures/lensflare2.png" );
 var textureFlare3 = textureLoader.load( "src/assets/textures/lensflare3.png", undefined, setLoadMessage("Calibrating optics") );
 
-function addLensFlare(x,y,z, size, overrideImage){
-	var flareColor = new THREE.Color( 0xffffff );
+export function addLensFlare(x,y,z, size, overrideImage){
+	var lensFlare;
+    var flareColor = new THREE.Color( 0xffffff );
 	flareColor.offsetHSL( 0.08, 0.5, 0.5 );
 
 	lensFlare = new THREE.LensFlare( overrideImage ? overrideImage : textureFlare0, 700, 0.0, THREE.AdditiveBlending, flareColor );
@@ -17,13 +20,15 @@ function addLensFlare(x,y,z, size, overrideImage){
 	lensFlare.add( textureFlare2, 512, 0.0, THREE.AdditiveBlending );
 
 	lensFlare.customUpdateCallback = lensFlareUpdateCallback;
-	lensFlare.position = new THREE.Vector3(x,y,z);
+	lensFlare.position.set(x,y,z);
 	lensFlare.size = size ? size : 16000 ;
 	return lensFlare;
 }
 
-function addStarLensFlare(x,y,z, size, overrideImage, hueShift){
-	var flareColor = new THREE.Color( 0xffffff );
+export function addStarLensFlare(x,y,z, size, overrideImage, hueShift){
+    var gradientCanvas = window.gradientCanvas;
+	var lensFlare;
+    var flareColor = new THREE.Color( 0xffffff );
 
 	hueShift = 1.0 - hueShift;
 	hueShift = constrain( hueShift, 0.0, 1.0 );
@@ -37,7 +42,7 @@ function addStarLensFlare(x,y,z, size, overrideImage, hueShift){
 
 	lensFlare = new THREE.LensFlare( overrideImage ? overrideImage : textureFlare0, 700, 0.0, THREE.AdditiveBlending, flareColor );
 	lensFlare.customUpdateCallback = lensFlareUpdateCallback;
-	lensFlare.position = new THREE.Vector3(x,y,z);
+	lensFlare.position.set(x,y,z);
 	lensFlare.size = size ? size : 16000 ;
 
 	lensFlare.add( textureFlare1, 512, 0.0, THREE.AdditiveBlending );
@@ -50,6 +55,9 @@ function addStarLensFlare(x,y,z, size, overrideImage, hueShift){
 }
 
 function lensFlareUpdateCallback( object ) {
+    var camera = window.camera;
+    var pSystem = window.pSystem;
+
     var f, fl = this.lensFlares.length;
     var flare;
     var vecX = -this.positionScreen.x * 2;
@@ -58,7 +66,8 @@ function lensFlareUpdateCallback( object ) {
 
     var camDistance = camera.position.length();
 
-	var heatVisionValue = pSystem ? pSystem.material.uniforms.heatVision.value : 0.0;
+    var mat = pSystem ? (pSystem.shaderMaterial || pSystem.material) : null;
+	var heatVisionValue = (mat && mat.uniforms) ? mat.uniforms.heatVision.value : 0.0;
 
     for( f = 0; f < fl; f ++ ) {
 
@@ -72,3 +81,6 @@ function lensFlareUpdateCallback( object ) {
         flare.opacity = 1.0 - heatVisionValue;
     }
 }
+
+window.addLensFlare = addLensFlare;
+window.addStarLensFlare = addStarLensFlare;

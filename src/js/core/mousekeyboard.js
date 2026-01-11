@@ -1,3 +1,6 @@
+
+import { constrain } from '../utils/math.js';
+
 var mouseX = 0, mouseY = 0, pmouseX = 0, pmouseY = 0;
 var pressX = 0, pressY = 0;
 
@@ -22,7 +25,7 @@ var touchMode = TOUCHMODES.NONE;
 var previousTouchDelta = 0;
 var touchDelta = 0;
 
-function onDocumentMouseMove( event ) {
+export function onDocumentMouseMove( event ) {
 
 	if( touchMode != TOUCHMODES.NONE ){
 		event.preventDefault();
@@ -37,43 +40,40 @@ function onDocumentMouseMove( event ) {
 
 	if(dragging ){
 		doCameraRotationFromInteraction();
-    window.setMinimap(dragging);
+        if (window.setMinimap)
+            window.setMinimap(dragging);
 	}
 }
 
-function onDocumentMouseDown( event ) {	
+export function onDocumentMouseDown( event ) {	
     dragging = true;			   
     pressX = mouseX;
     pressY = mouseY;   	
     rotateTargetX = undefined;
     rotateTargetX = undefined;
 
-    if( initialAutoRotate ){
-	    initialAutoRotate = false;	 
+    if( window.initialAutoRotate ){
+	    window.initialAutoRotate = false;	 
 	}
 }	
 
-function onDocumentMouseUp( event ){
+export function onDocumentMouseUp( event ){
 	dragging = false;
-	histogramPressed = false;
-  // window.setMinimap(dragging);
 }
 
-function onClick( event ){
-	//	make the rest not work if the event was actually a drag style click
+export function onClick( event ){
 	if( Math.abs(pressX - mouseX) > 3 || Math.abs(pressY - mouseY) > 3 )
 		return;				
 }
 
-function onKeyDown( event ){	
+export function onKeyDown( event ){	
 }
 
 function handleMWheel( delta ) {
-	// camera.scale.z += delta * 0.1;
+    var camera = window.camera;
 	camera.position.target.z += delta * camera.position.target.z * 0.01;
 	camera.position.target.z = constrain( camera.position.target.z, 0.8, 80000 );
   	camera.position.target.pz = camera.position.target.z;
-	// console.log( camera.position.z );
 	
 	camera.rotation.vx += (-0.0001 + Math.random() * 0.0002) * camera.position.z / 1000;
 	camera.rotation.vy += (-0.0001 + Math.random() * 0.0002) * camera.position.z / 1000;
@@ -82,18 +82,17 @@ function handleMWheel( delta ) {
     	window.updateMinimap();
   	}
 
-	if( initialAutoRotate ){
-	    initialAutoRotate = false;
+	if( window.initialAutoRotate ){
+	    window.initialAutoRotate = false;
 	}
 }
 
-function onMouseWheel( event ){
+export function onMouseWheel( event ){
 	var delta = 0;
 
-	if (event.wheelDelta) { /* IE/Opera. */
+	if (event.wheelDelta) { 
 	        delta = event.wheelDelta/120;
 	} 
-	//	firefox
 	else if( event.detail ){
 		delta = -event.detail/3;
 	}
@@ -104,7 +103,7 @@ function onMouseWheel( event ){
 	event.returnValue = false;			
 }	
 
-function onDocumentResize(e){
+export function onDocumentResize(e){
 	
 }
 
@@ -142,59 +141,51 @@ function equalizeTouchTracking( event ){
 	pmouseX = mouseY = touch.pageY- window.innerHeight * 0.5;	
 }
 
-function touchStart( event ){
+export function touchStart( event ){
 	onDocumentMouseDown(event);
-	// console.log('touchstart');
 
 	determineTouchMode( event );
 	equalizeTouchTracking( event );
 	event.preventDefault();
 }
 
-function touchEnd( event ){
+export function touchEnd( event ){
 	scrollbaring = false;
 
 	onDocumentMouseUp(event);
-	// console.log('touchend');
 	determineTouchMode( event );
 	equalizeTouchTracking( event );
-	// event.preventDefault();
 }
 
-function touchMove( event ){
+export function touchMove( event ){
 	if( scrollbaring ){
 
     var touch = event.touches[0];    
-    setScrollPositionFromTouch( touch );
+    if (window.setScrollPositionFromTouch)
+        window.setScrollPositionFromTouch( touch );
     event.preventDefault();
     return;
 	}	
 
 	determineTouchMode( event );
 
-	//	single touch
 	if ( touchMode == TOUCHMODES.SINGLE ) {
 		pmouseX = mouseX;
 		pmouseY = mouseY;
 
-		// console.log('swiping');
-		// console.log('touches: ' + event.touches.length );
 		var touch = event.touches[0];
 
 		mouseX = touch.pageX - window.innerWidth * 0.5;
 		mouseY = touch.pageY- window.innerHeight * 0.5;
 
-		// console.log( mouseX, pmouseX );
-		// console.log(mouseX - pmouseX);
-
 		if(dragging){			
 			doCameraRotationFromInteraction();
-	    window.setMinimap(dragging);
+            if (window.setMinimap)
+    	    window.setMinimap(dragging);
 		}	
 	}
 
 	else if( touchMode == TOUCHMODES.DOUBLE ){
-		// console.log('pinching');
 		var touchA = event.touches[0];
 		var touchB = event.touches[1];
 
@@ -202,14 +193,8 @@ function touchMove( event ){
 		touchDelta = calculateTouchDistance( touchA, touchB );
 
 		var pinchAmount = touchDelta - previousTouchDelta;
-		// console.log('pinch amount ' + pinchAmount );
 		handleMWheel( -pinchAmount * 0.25 );		
 	}
-
-
-
-	// event.stopImmediatePropagation();
-	// event.preventDefault();
 }
 
 function calculateTouchDistance( touchA, touchB ){
@@ -222,9 +207,27 @@ function calculateTouchDistance( touchA, touchB ){
 }
 
 function doCameraRotationFromInteraction(){
-	rotateVY += (mouseX - pmouseX) / 2 * Math.PI / 180 * 0.2;
-	rotateVX += (mouseY - pmouseY) / 2 * Math.PI / 180 * 0.2;	
+    var camera = window.camera;
+	window.rotateVY += (mouseX - pmouseX) / 2 * Math.PI / 180 * 0.2;
+	window.rotateVX += (mouseY - pmouseY) / 2 * Math.PI / 180 * 0.2;	
 
 	camera.rotation.vy += (mouseX - pmouseX) * 0.00005 * camera.position.z / 10000;
 	camera.rotation.vx += (mouseY - pmouseY) * 0.00005 * camera.position.z / 10000;	
 }
+
+window.rotateVX = 0;
+window.rotateVY = 0;
+window.rotateX = 0;
+window.rotateY = 0;
+window.dragging = false;
+
+window.onDocumentMouseMove = onDocumentMouseMove;
+window.onDocumentMouseDown = onDocumentMouseDown;
+window.onDocumentMouseUp = onDocumentMouseUp;
+window.onClick = onClick;
+window.onKeyDown = onKeyDown;
+window.onMouseWheel = onMouseWheel;
+window.onDocumentResize = onDocumentResize;
+window.touchStart = touchStart;
+window.touchEnd = touchEnd;
+window.touchMove = touchMove;

@@ -1,29 +1,5 @@
 
-function loadFediverseData(dataFile, callback) {
-  var xhr = new XMLHttpRequest();
-  setLoadMessage("Fetching Fediverse data");
-  xhr.addEventListener(
-    "load",
-    function (event) {
-      var parsed = JSON.parse(xhr.responseText);
-      var SCALE_FACTOR = 5;
-      for (var i = 0; i < parsed.length; i++) {
-        if (parsed[i].position) {
-          parsed[i].position.x /= SCALE_FACTOR;
-          parsed[i].position.y /= SCALE_FACTOR;
-          parsed[i].position.z /= SCALE_FACTOR;
-        }
-      }
-      if (callback) {
-        setLoadMessage("Parsing instance data");
-        callback(parsed);
-      }
-    },
-    false,
-  );
-  xhr.open("GET", dataFile, true);
-  xhr.send(null);
-}
+import { constrain } from '../utils/math.js';
 
 var textureLoader = new THREE.TextureLoader();
 
@@ -63,6 +39,7 @@ function getMajorInstanceColor(domain) {
 }
 
 function createMajorInstancePreview(color) {
+  var camera = window.camera;
   var container = new THREE.Object3D();
 
   var haloMaterial = new THREE.MeshBasicMaterial({
@@ -196,7 +173,40 @@ function generateVirtualParticles(targetCount) {
   return virtualParticles;
 }
 
-function generateFediverseInstances() {
+export function loadFediverseData(dataFile, callback) {
+  var xhr = new XMLHttpRequest();
+  setLoadMessage("Fetching Fediverse data");
+  xhr.addEventListener(
+    "load",
+    function (event) {
+      var parsed = JSON.parse(xhr.responseText);
+      var SCALE_FACTOR = 5;
+      for (var i = 0; i < parsed.length; i++) {
+        if (parsed[i].position) {
+          parsed[i].position.x /= SCALE_FACTOR;
+          parsed[i].position.y /= SCALE_FACTOR;
+          parsed[i].position.z /= SCALE_FACTOR;
+        }
+      }
+      if (callback) {
+        setLoadMessage("Parsing instance data");
+        fediverseInstances = parsed;
+        callback(parsed);
+      }
+    },
+    false,
+  );
+  xhr.open("GET", dataFile, true);
+  xhr.send(null);
+}
+
+export function generateFediverseInstances() {
+  var shaderList = window.shaderList;
+  var camera = window.camera;
+  var attachLegacyMarker = window.attachLegacyMarker;
+  var $spectralGraph = window.$spectralGraph; 
+  var $iconNav = window.$iconNav;
+
   var container = new THREE.Object3D();
   var count = fediverseInstances.length;
 
@@ -401,9 +411,7 @@ function generateFediverseInstances() {
   );
   pSystem.add(lineMesh);
 
-  var glowSpanTexture = textureLoader.load(
-    "src/assets/textures/glowspan.png",
-  );
+  var glowSpanTexture = window.glowSpanTexture;
   var gridMaterial = new THREE.MeshBasicMaterial({
     map: glowSpanTexture,
     blending: THREE.AdditiveBlending,
@@ -443,6 +451,8 @@ function generateFediverseInstances() {
   container.add(pSystem);
 
   container.update = function () {
+    camera = window.camera; 
+    
     var blueshift = (camera.position.z + 5000.0) / 60000.0;
     blueshift = constrain(blueshift, 0.0, 0.2);
 
@@ -490,10 +500,12 @@ function generateFediverseInstances() {
     else this.visible = true;
   };
 
+  window.fediverseMeshes = fediverseMeshes;
+  
   return container;
 }
 
-function getInstanceByDomain(domain) {
+export function getInstanceByDomain(domain) {
   for (var i = 0; i < fediverseInstances.length; i++) {
     if (fediverseInstances[i].domain === domain) {
       return fediverseInstances[i];
@@ -502,7 +514,7 @@ function getInstanceByDomain(domain) {
   return null;
 }
 
-function getSoftwareColor(softwareName) {
+export function getSoftwareColor(softwareName) {
   var colors = {
     Mastodon: "#6364FF",
     Misskey: "#86b300",
@@ -517,3 +529,10 @@ function getSoftwareColor(softwareName) {
   };
   return colors[softwareName] || "#888888";
 }
+
+window.loadFediverseData = loadFediverseData;
+window.generateFediverseInstances = generateFediverseInstances;
+window.getInstanceByDomain = getInstanceByDomain;
+window.getSoftwareColor = getSoftwareColor;
+window.fediverseInstances = fediverseInstances;
+window.fediverseColorGraph = fediverseColorGraph;

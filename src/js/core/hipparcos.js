@@ -1,5 +1,7 @@
 
-function loadStarData(dataFile, callback) {
+import { map, constrain } from '../utils/math.js';
+
+export function loadStarData(dataFile, callback) {
   var xhr = new XMLHttpRequest();
   setLoadMessage("Fetching stellar data");
   xhr.addEventListener(
@@ -51,7 +53,14 @@ var datastarUniforms = {
   heatVision: { value: 0.0 },
 };
 
-function generateHipparcosStars() {
+export function generateHipparcosStars() {
+  var shaderList = window.shaderList;
+  var attachMarker = window.attachMarker;
+  var camera = window.camera;
+  var starData = window.starData;
+  var $spectralGraph = window.$spectralGraph;
+  var $iconNav = window.$iconNav;
+
   var container = new THREE.Object3D();
 
   var count = starData.length;
@@ -137,7 +146,7 @@ function generateHipparcosStars() {
 
     if (name && name.length > 0) {
         linePositions.push(x, y, z);
-        linePositions.push(x, 0, z);
+        linePositions.push(x, 0, z); 
 
         var preview = starPreview.clone();
         var gyroStar = new THREE.Gyroscope();
@@ -292,6 +301,8 @@ function generateHipparcosStars() {
   container.add(pSystem);
 
   container.update = function () {
+    camera = window.camera;
+    
     var blueshift = (camera.position.z + 5000.0) / 60000.0;
     blueshift = constrain(blueshift, 0.0, 0.2);
 
@@ -317,10 +328,6 @@ function generateHipparcosStars() {
     var areaOfWindow = window.innerWidth * window.innerHeight;
     datastarUniforms.scale.value = Math.sqrt(areaOfWindow) * 1.5;
 
-    if (camera.position.z < 1500) {
-    } else {
-    }
-
     datastarUniforms.sceneSize.value = 10000;
   };
 
@@ -341,3 +348,7 @@ function generateHipparcosStars() {
 
   return container;
 }
+
+window.loadStarData = loadStarData;
+window.generateHipparcosStars = generateHipparcosStars;
+window.starColorGraph = starColorGraph;

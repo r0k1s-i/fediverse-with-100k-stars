@@ -1,15 +1,18 @@
 
+import { constrain } from '../utils/math.js';
+
 var skybox;
 var skyboxUniforms;
 
 var cameraCube, sceneCube;
 
-function setupSkyboxScene(){
+export function setupSkyboxScene(){
 	cameraCube = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 1, 10000000 );
+    window.cameraCube = cameraCube;
 	sceneCube = new THREE.Scene();	
 }
 
-function initSkybox( highres ){
+export function initSkybox( highres ){
 	setLoadMessage("Loading internal stars")
 	var r = "src/assets/textures/";
 
@@ -21,11 +24,14 @@ function initSkybox( highres ){
 				 r + "pz.jpg", r + "nz.jpg" ];
 
 	var textureCube = new THREE.CubeTextureLoader().load( urls, undefined, setLoadMessage("Loading interstellar bodies") );
-	textureCube.anisotropy = maxAniso;
+	textureCube.anisotropy = window.maxAniso || 1;
 	var shader = THREE.ShaderLib[ "cube" ];
 	shader.uniforms[ "tCube" ].value = textureCube;
 	shader.uniforms[ "opacity" ] = { value: 1.0, type: "f" };
 	skyboxUniforms = shader.uniforms;
+	
+    var shaderList = window.shaderList;
+    
 	var skyboxMat = new THREE.ShaderMaterial( {
 		fragmentShader: shaderList.cubemapcustom.fragment,
 		vertexShader: shaderList.cubemapcustom.vertex,
@@ -39,9 +45,13 @@ function initSkybox( highres ){
 	sceneCube.add( skybox );
 }
 
-function updateSkybox(override){
+export function updateSkybox(override){
 	cameraCube.rotation.order = 'YXZ';
 	
+    var starModel = window.starModel;
+    var rotating = window.rotating;
+    var camera = window.camera;
+
 	if( starModel ){
 		var rot = starModel.rotation.clone();		
 		rot.x -= Math.PI/4;
@@ -61,6 +71,12 @@ function updateSkybox(override){
 	skyboxUniforms["opacity"].value = skyboxBrightness;
 }
 
-function renderSkybox(){
-	renderer.render( sceneCube, cameraCube );
+export function renderSkybox(){
+    if(window.renderer)
+	    window.renderer.render( sceneCube, cameraCube );
 }
+
+window.setupSkyboxScene = setupSkyboxScene;
+window.initSkybox = initSkybox;
+window.updateSkybox = updateSkybox;
+window.renderSkybox = renderSkybox;
