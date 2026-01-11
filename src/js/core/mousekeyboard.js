@@ -46,19 +46,21 @@ export function onDocumentMouseMove( event ) {
 }
 
 export function onDocumentMouseDown( event ) {	
-    dragging = true;			   
+    dragging = true;
+    window.dragging = true;
     pressX = mouseX;
     pressY = mouseY;   	
     rotateTargetX = undefined;
-    rotateTargetX = undefined;
+    rotateTargetY = undefined;
 
-    if( window.initialAutoRotate ){
-	    window.initialAutoRotate = false;	 
-	}
+    window.rotateVX = 0;
+    window.rotateVY = 0;
+    window.initialAutoRotate = false;
 }	
 
 export function onDocumentMouseUp( event ){
 	dragging = false;
+	window.dragging = false;
 }
 
 export function onClick( event ){
@@ -206,13 +208,16 @@ function calculateTouchDistance( touchA, touchB ){
 	return dist;
 }
 
+var DRAG_SENSITIVITY = 0.08;
+
 function doCameraRotationFromInteraction(){
     var camera = window.camera;
-	window.rotateVY += (mouseX - pmouseX) / 2 * Math.PI / 180 * 0.2;
-	window.rotateVX += (mouseY - pmouseY) / 2 * Math.PI / 180 * 0.2;	
+	window.rotateVY += (mouseX - pmouseX) / 2 * Math.PI / 180 * DRAG_SENSITIVITY;
+	window.rotateVX += (mouseY - pmouseY) / 2 * Math.PI / 180 * DRAG_SENSITIVITY;	
 
-	camera.rotation.vy += (mouseX - pmouseX) * 0.00005 * camera.position.z / 10000;
-	camera.rotation.vx += (mouseY - pmouseY) * 0.00005 * camera.position.z / 10000;	
+	var camFactor = 0.000015 * camera.position.z / 10000;
+	camera.rotation.vy += (mouseX - pmouseX) * camFactor;
+	camera.rotation.vx += (mouseY - pmouseY) * camFactor;	
 }
 
 window.rotateVX = 0;

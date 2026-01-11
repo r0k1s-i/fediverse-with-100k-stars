@@ -15,7 +15,7 @@ var firstTime = localStorage ? localStorage.getItem("first") == null : true;
 
 var tour = new Tour(window.GALAXY_TOUR);
 
-var initialAutoRotate = true;
+window.initialAutoRotate = true;
 
 var startTime = Date.now();
 var clock = new THREE.Clock();
@@ -474,7 +474,7 @@ function animate() {
       rotateVY *= 0.6;
     }
 
-    if (initialAutoRotate) rotateVY = 0.0015;
+    if (window.initialAutoRotate) rotateVY = 0.0003;
 
     var spinCutoff = 100;
     if (translating.position.length() < 0.0001) {
