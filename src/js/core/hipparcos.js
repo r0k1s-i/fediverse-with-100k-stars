@@ -22,19 +22,41 @@ export function loadStarData(dataFile, callback) {
 
 var textureLoader = new THREE.TextureLoader();
 
-var datastarTexture0 = textureLoader.load("src/assets/textures/p_0.png");
-var datastarTexture1 = textureLoader.load("src/assets/textures/p_2.png");
+function onTextureError(err) {
+  console.error("Error loading texture:", err);
+}
+
+var datastarTexture0 = textureLoader.load(
+  "src/assets/textures/p_0.png",
+  undefined,
+  undefined,
+  onTextureError
+);
+var datastarTexture1 = textureLoader.load(
+  "src/assets/textures/p_2.png",
+  undefined,
+  undefined,
+  onTextureError
+);
 var datastarHeatVisionTexture = textureLoader.load(
   "src/assets/textures/sharppoint.png",
+  undefined,
+  undefined,
+  onTextureError
 );
 
+setLoadMessage("Focusing optics");
 var starPreviewTexture = textureLoader.load(
   "src/assets/textures/star_preview.png",
   undefined,
-  setLoadMessage("Focusing optics"),
+  undefined,
+  onTextureError
 );
 var starColorGraph = textureLoader.load(
   "src/assets/textures/star_color_hsl.png",
+  undefined,
+  undefined,
+  onTextureError
 );
 
 var datastarUniforms = {
@@ -264,9 +286,12 @@ export function generateHipparcosStars() {
     container.add(zerodeg);
   }
 
-  var starBaseTexture = textureLoader.load(
-    "src/assets/textures/starbase.png",
-  );
+var starBaseTexture = textureLoader.load(
+  "src/assets/textures/starbase.png",
+  undefined,
+  undefined,
+  onTextureError
+);
   var starBaseMaterial = new THREE.MeshBasicMaterial({
     map: starBaseTexture,
     blending: THREE.AdditiveBlending,

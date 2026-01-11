@@ -1,8 +1,14 @@
 
 import { constrain, random } from '../utils/math.js';
 
-var galacticTexture0 = new THREE.TextureLoader().load( "src/assets/textures/galactic_sharp.png" );
-var galacticTexture1 = new THREE.TextureLoader().load( "src/assets/textures/galactic_blur.png" );
+var textureLoader = new THREE.TextureLoader();
+
+function onTextureError(err) {
+  console.error("Error loading texture:", err);
+}
+
+var galacticTexture0 = textureLoader.load( "src/assets/textures/galactic_sharp.png", undefined, undefined, onTextureError );
+var galacticTexture1 = textureLoader.load( "src/assets/textures/galactic_blur.png", undefined, undefined, onTextureError );
 
 var galacticUniforms = {
 	color:     { value: new THREE.Color( 0xffffff ) },
@@ -122,12 +128,11 @@ export function generateGalaxy(){
 	pGalacticSystem.add( addLensFlare(0,0,0) );
 
 	var galacticTopMaterial = new THREE.MeshBasicMaterial({
-		map: new THREE.TextureLoader().load('src/assets/textures/galactictop.png'),
-		blending: THREE.AdditiveBlending,
-		depthTest: false,
-		depthWrite: false,
-		side: THREE.DoubleSide,
-		transparent: true,
+		map: textureLoader.load('src/assets/textures/galactictop.png', undefined, undefined, onTextureError),
+    blending: THREE.AdditiveBlending,
+    depthTest: false,
+    depthWrite: false,
+    transparent: true,
 	});
 
 	var plane = new THREE.Mesh( new THREE.PlaneGeometry(150000,150000, 30, 30), galacticTopMaterial );

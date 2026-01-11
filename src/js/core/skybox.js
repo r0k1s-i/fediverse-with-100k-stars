@@ -31,10 +31,12 @@ export function initSkybox(highres) {
     r + "nz.jpg",
   ];
 
+  setLoadMessage("Loading interstellar bodies");
   var textureCube = new THREE.CubeTextureLoader().load(
     urls,
     undefined,
-    setLoadMessage("Loading interstellar bodies"),
+    undefined,
+    function(err) { console.error("Error loading skybox:", err); }
   );
   textureCube.anisotropy = window.maxAniso || 1;
   var shader = THREE.ShaderLib["cube"];

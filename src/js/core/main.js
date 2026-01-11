@@ -130,6 +130,7 @@ function start(e) {
   }
 
   gradientImage = document.createElement("img");
+  gradientImage.crossOrigin = "Anonymous";
   gradientImage.onload = postStarGradientLoaded;
   gradientImage.src = "src/assets/textures/star_color_modified.png";
 }

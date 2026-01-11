@@ -2,10 +2,16 @@
 import { constrain } from '../utils/math.js';
 
 var textureLoader = new THREE.TextureLoader();
-var textureFlare0 = textureLoader.load( "src/assets/textures/lensflare0.png" );
-var textureFlare1 = textureLoader.load( "src/assets/textures/lensflare1.png" );
-var textureFlare2 = textureLoader.load( "src/assets/textures/lensflare2.png" );
-var textureFlare3 = textureLoader.load( "src/assets/textures/lensflare3.png", undefined, setLoadMessage("Calibrating optics") );
+
+function onTextureError(err) {
+  console.error("Error loading texture:", err);
+}
+
+var textureFlare0 = textureLoader.load( "src/assets/textures/lensflare0.png", undefined, undefined, onTextureError );
+var textureFlare1 = textureLoader.load( "src/assets/textures/lensflare1.png", undefined, undefined, onTextureError );
+var textureFlare2 = textureLoader.load( "src/assets/textures/lensflare2.png", undefined, undefined, onTextureError );
+setLoadMessage("Calibrating optics");
+var textureFlare3 = textureLoader.load( "src/assets/textures/lensflare3.png", undefined, undefined, onTextureError );
 
 export function addLensFlare(x,y,z, size, overrideImage){
 	var lensFlare;

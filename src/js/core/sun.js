@@ -9,12 +9,18 @@ var sunCoronaTexture;
 
 var textureLoader = new THREE.TextureLoader();
 
+function onTextureError(err) {
+  console.error("Error loading texture:", err);
+}
+
 function loadStarSurfaceTextures() {
   if (sunTexture === undefined) {
+    setLoadMessage("Igniting solar plasma");
     sunTexture = textureLoader.load(
       "src/assets/textures/sun_surface.png",
       undefined,
-      setLoadMessage("Igniting solar plasma"),
+      undefined,
+      onTextureError
     );
     sunTexture.anisotropy = maxAniso;
     sunTexture.wrapS = sunTexture.wrapT = THREE.RepeatWrapping;
@@ -23,36 +29,48 @@ function loadStarSurfaceTextures() {
   if (sunColorLookupTexture === undefined) {
     sunColorLookupTexture = textureLoader.load(
       "src/assets/textures/star_colorshift.png",
+      undefined,
+      undefined,
+      onTextureError
     );
   }
 
   if (solarflareTexture === undefined) {
+    setLoadMessage("Distributing solar flares");
     solarflareTexture = textureLoader.load(
       "src/assets/textures/solarflare.png",
       undefined,
-      setLoadMessage("Distributing solar flares"),
+      undefined,
+      onTextureError
     );
   }
 
   if (sunHaloTexture === undefined) {
+    setLoadMessage("Calculating coronal mass");
     sunHaloTexture = textureLoader.load(
       "src/assets/textures/sun_halo.png",
       undefined,
-      setLoadMessage("Calculating coronal mass"),
+      undefined,
+      onTextureError
     );
   }
 
   if (sunHaloColorTexture === undefined) {
     sunHaloColorTexture = textureLoader.load(
       "src/assets/textures/halo_colorshift.png",
+      undefined,
+      undefined,
+      onTextureError
     );
   }
 
   if (sunCoronaTexture === undefined) {
+    setLoadMessage("Projecting coronal ejecta");
     sunCoronaTexture = textureLoader.load(
       "src/assets/textures/corona.png",
       undefined,
-      setLoadMessage("Projecting coronal ejecta"),
+      undefined,
+      onTextureError
     );
   }
 }
