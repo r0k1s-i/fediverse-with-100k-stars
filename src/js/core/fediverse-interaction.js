@@ -1,3 +1,5 @@
+import { $, css, show, hide, fadeIn, fadeOut, html, find, on, ready } from '../utils/dom.js';
+
 var fediverseInteraction = {
   mouse: new THREE.Vector2(),
   raycaster: new THREE.Raycaster(),
@@ -50,19 +52,20 @@ export function goToFediverseCenter() {
     hideSunButton();
   }
 
-  var $starName = $("#star-name");
-  var $detailContainer = $("#detailContainer");
-  var $cssContainer = $("#css-container");
+  var starNameEl = $("#star-name");
+  var detailContainerEl = $("#detailContainer");
+  var cssContainerEl = $("#css-container");
 
-  if ($starName.length) {
-    $starName.hide();
-    $starName.find("span").html("");
+  if (starNameEl) {
+    hide(starNameEl);
+    var span = find(starNameEl, "span");
+    if (span) html(span, "");
   }
-  if ($detailContainer.length) {
-    $detailContainer.fadeOut();
+  if (detailContainerEl) {
+    fadeOut(detailContainerEl);
   }
-  if ($cssContainer.length) {
-    $cssContainer.css("display", "block");
+  if (cssContainerEl) {
+    css(cssContainerEl, { display: "block" });
   }
 
   fediverseInteraction.intersected = null;
@@ -197,7 +200,7 @@ function onFediverseMouseMove(event) {
 function handleHover(object) {
   var camera = window.camera;
   var markerThreshold = window.markerThreshold;
-  var $starName = window.$starName || $("#star-name");
+  var starNameEl = window.starNameEl || $("#star-name");
 
   var isZoomedInClose =
     typeof camera !== "undefined" &&
@@ -216,19 +219,18 @@ function handleHover(object) {
     fediverseInteraction.intersected = object;
 
     if (object) {
-      $starName.html("<span>" + object.name + "</span>");
-      $starName
-        .css({
-          opacity: 1.0,
-          position: "fixed",
-          bottom: "auto",
-          margin: 0,
-        })
-        .show();
+      html(starNameEl, "<span>" + object.name + "</span>");
+      css(starNameEl, {
+        opacity: "1.0",
+        position: "fixed",
+        bottom: "auto",
+        margin: "0",
+      });
+      show(starNameEl);
       document.body.style.cursor = "pointer";
     } else {
-      $starName.hide();
-      $starName.css({
+      hide(starNameEl);
+      css(starNameEl, {
         position: "",
         left: "",
         top: "",
@@ -239,10 +241,10 @@ function handleHover(object) {
     }
   }
 
-  if (object && $starName.is(":visible")) {
-    $starName.css({
-      left: ((fediverseInteraction.mouse.x + 1) / 2) * window.innerWidth + 15,
-      top: (-(fediverseInteraction.mouse.y - 1) / 2) * window.innerHeight + 15,
+  if (object && starNameEl && starNameEl.style.display !== "none") {
+    css(starNameEl, {
+      left: ((fediverseInteraction.mouse.x + 1) / 2) * window.innerWidth + 15 + "px",
+      top: (-(fediverseInteraction.mouse.y - 1) / 2) * window.innerHeight + 15 + "px",
     });
   }
 }
@@ -286,7 +288,7 @@ function onFediverseClick(event) {
   var getOffsetByStarRadius = window.getOffsetByStarRadius;
   var centerOn = window.centerOn;
   var zoomIn = window.zoomIn;
-  var $starName = window.$starName || $("#star-name");
+  var starNameEl = window.starNameEl || $("#star-name");
 
   if (!enableFediverse) return;
 
@@ -414,24 +416,25 @@ function onFediverseClick(event) {
     zoomIn(zoomLevel);
   }
 
-  $starName.css({
+  css(starNameEl, {
     position: "",
     left: "",
     top: "",
     bottom: "",
     margin: "",
   });
-  $starName.find("span").html(data.name || data.domain);
+  var spanEl = find(starNameEl, "span");
+  if (spanEl) html(spanEl, data.name || data.domain);
 
   showInstanceDetails(data);
 }
 
 function showInstanceDetails(data) {
-  var $title = $("#detailTitle span");
-  var $body = $("#detailBody");
+  var titleEl = $("#detailTitle span");
+  var bodyEl = $("#detailBody");
   var numberWithCommas = window.numberWithCommas;
 
-  $title.text(data.name || data.domain);
+  if (titleEl) titleEl.textContent = data.name || data.domain;
 
   var html = '<div style="margin-top: 20px;">';
 
@@ -505,19 +508,21 @@ function showInstanceDetails(data) {
 
   html += "</div>";
 
-  $body.html(html);
+  if (bodyEl) bodyEl.innerHTML = html;
 
-  var $instancePortal = $("#instance-portal");
-  $instancePortal.off("click").on("click", function (e) {
-    e.stopPropagation();
-    if (data.domain) {
-      window.open("https://" + data.domain, "_blank", "noopener,noreferrer");
-    }
-  });
+  var instancePortalEl = $("#instance-portal");
+  if (instancePortalEl) {
+    instancePortalEl.onclick = function (e) {
+      e.stopPropagation();
+      if (data.domain) {
+        window.open("https://" + data.domain, "_blank", "noopener,noreferrer");
+      }
+    };
+  }
 
-  var $detailContainer = $("#detailContainer");
-  $detailContainer.fadeIn();
-  $("#css-container").css("display", "none");
+  var detailContainerEl = $("#detailContainer");
+  fadeIn(detailContainerEl);
+  css($("#css-container"), { display: "none" });
 }
 
 window.fediverseInteraction = fediverseInteraction;
@@ -527,6 +532,6 @@ window.goToFediverseCenter = goToFediverseCenter;
 window.isAtFediverseCenter = isAtFediverseCenter;
 window.isMajorFediverseInstance = isMajorFediverseInstance;
 
-$(document).ready(function () {
+ready(function () {
   initFediverseInteraction();
 });

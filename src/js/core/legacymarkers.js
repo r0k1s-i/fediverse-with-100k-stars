@@ -1,4 +1,3 @@
-
 import { screenXY } from '../utils/three-helpers.js';
 
 var legacyMarkers = [];
@@ -25,8 +24,6 @@ export function attachLegacyMarker( text, obj, size, visibleRange ){
 
 	marker.visMin = visibleRange === undefined ? 0 : visibleRange.min;
 	marker.visMax = visibleRange === undefined ? 10000000 : visibleRange.max;
-
-	marker.$ = $(marker);	
 
 	var container = document.getElementById('visualization');
 	container.appendChild( marker );
@@ -58,7 +55,7 @@ export function attachLegacyMarker( text, obj, size, visibleRange ){
 	var nameLayer = marker.children[0];
 	marker.nameLayer = nameLayer;
 	nameLayer.innerHTML = text;
-	marker.markerWidth = marker.$.outerWidth();
+	marker.markerWidth = marker.offsetWidth;
 
 	marker.zero = new THREE.Vector3();
 	marker.update = function() {
