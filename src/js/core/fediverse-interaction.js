@@ -52,6 +52,7 @@ function goToFediverseCenter() {
   
   if ($starName.length) {
     $starName.fadeOut();
+    $starName.find("span").html(""); // Clear the star name content
   }
   if ($detailContainer.length) {
     $detailContainer.fadeOut();
@@ -62,6 +63,12 @@ function goToFediverseCenter() {
   
   // Clear any hover state
   fediverseInteraction.intersected = null;
+  
+  // Set a flag to prevent starName from showing up again in animate loop
+  window._fediverseCenterMode = true;
+  setTimeout(function() {
+    window._fediverseCenterMode = false;
+  }, 1000);
 }
 
 function getInteractionThreshold() {
