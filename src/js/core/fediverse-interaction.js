@@ -64,11 +64,27 @@ function goToFediverseCenter() {
   // Clear any hover state
   fediverseInteraction.intersected = null;
   
-  // Set a flag to prevent starName from showing up again in animate loop
+  // Set flag to indicate we are viewing the Fediverse software ecosystem center
   window._fediverseCenterMode = true;
-  setTimeout(function() {
+}
+
+// Check if camera is at Fediverse center (near origin with appropriate zoom)
+function isAtFediverseCenter() {
+  if (!window._fediverseCenterMode) return false;
+  if (typeof translating === "undefined") return false;
+  
+  var pos = translating.targetPosition || translating.position;
+  var distFromCenter = Math.sqrt(
+    pos.x * pos.x + pos.y * pos.y + pos.z * pos.z
+  );
+  
+  // If we moved away from center, clear the flag
+  if (distFromCenter > 100) {
     window._fediverseCenterMode = false;
-  }, 1000);
+    return false;
+  }
+  
+  return true;
 }
 
 function getInteractionThreshold() {
