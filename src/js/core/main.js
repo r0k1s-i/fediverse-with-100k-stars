@@ -524,12 +524,15 @@ function animate() {
       typeof fediverseInteraction !== "undefined" &&
       fediverseInteraction.intersected;
 
+    // Check if we're at Fediverse center (don't show starName there)
+    var atFediverseCenter = typeof isAtFediverseCenter === "function" && isAtFediverseCenter();
+    
     if (
       isZoomedIn &&
       camera.position.z < markerThreshold.min &&
       $detailContainer.css("display") == "none" &&
       $starName.css("display") == "none" &&
-      !window._fediverseCenterMode // Don't show starName when in Fediverse center mode
+      !atFediverseCenter // Don't show starName when at Fediverse center
     ) {
       $starName.fadeIn();
     } else if (
