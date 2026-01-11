@@ -572,11 +572,9 @@
 	<script src="src/js/lib/Detector.js"></script>
 	<script src="src/js/lib/THREEx.KeyboardState.js"></script>
 	<script src="src/js/lib/THREEx.WindowResize.js"></script>
-	<script src="src/js/lib/jquery-1.7.1.min.js"></script>
 	<script src="src/js/lib/underscore.js"></script>
-	<script src="src/js/lib/jquery.mousewheel.js"></script>
-	<script src="src/js/lib/jquery.preventMacBackScroll.js"></script>
 
+    <script type="module" src="src/js/utils/dom.js"></script>
     <script type="module" src="src/js/core/globals.js"></script>
     <script type="module" src="src/js/core/config.js"></script>
     <script type="module" src="src/js/utils/math.js"></script>
@@ -597,9 +595,9 @@
 	<script src="src/js/core/urlArgs.js" defer></script>
 
 	<script>
-		var $loadText = $('#loadtext');
+		var loadTextEl = document.getElementById('loadtext');
 		function setLoadMessage(msg){
-			$loadText.html(msg+"&hellip;");
+			if (loadTextEl) loadTextEl.innerHTML = msg+"&hellip;";
 		}
 	</script>
 
@@ -621,8 +619,6 @@
 	<script type="module" src="src/js/core/sun.js"></script>
 	<script type="module" src="src/js/core/tour.js"></script>
 	<script type="module" src="src/js/core/main.js"></script>
-
-	<script src="src/js/lib/jquery.tooltip.js" type="text/javascript" defer></script>
 	<script type="module" src="src/js/core/minimap.js"></script>
 </body>
 

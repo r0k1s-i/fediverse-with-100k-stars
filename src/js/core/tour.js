@@ -1,3 +1,4 @@
+import { $, css, html, fadeIn, fadeOut, find, createEl, trigger } from '../utils/dom.js';
 
 export var GALAXY_TOUR = [
   {"rx":0.5522785678088462,"ry":1.324151395815386,"z":1672.4214873346518,"travelTime":5000,"restTime":5000,"message":"You're seeing the actual density and location of over 100,000 stars in this view."},
@@ -14,23 +15,23 @@ export var Tour = function(stops) {
   this.timingBuffer = 0;
   this.timers = [];
 
-  this.domElement = $('<div id="theater" />')
-    .css({
-      display: 'none',
-      position: 'fixed',
-      zIndex: 9998,
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      width: 100 + '%',
-      height: 100 + '%'
-    })
-    .html('<div class="top-bar"></div><div class="bottom-bar"></div><div class="message" style="display: none;"></div>');
+  this.domElement = createEl('<div id="theater"></div>');
+  css(this.domElement, {
+    display: 'none',
+    position: 'fixed',
+    zIndex: '9998',
+    top: '0',
+    left: '0',
+    right: '0',
+    bottom: '0',
+    width: '100%',
+    height: '100%'
+  });
+  this.domElement.innerHTML = '<div class="top-bar"></div><div class="bottom-bar"></div><div class="message" style="display: none;"></div>';
 
-  this.top = this.domElement.find('.top-bar');
-  this.bottom = this.domElement.find('.bottom-bar');
-  this.content = this.domElement.find('.message');
+  this.top = find(this.domElement, '.top-bar');
+  this.bottom = find(this.domElement, '.bottom-bar');
+  this.content = find(this.domElement, '.message');
 
 };
 
@@ -66,16 +67,16 @@ Tour.prototype = {
 
   start: function() {
     var camera = window.camera;
-    var $detailContainer = window.$detailContainer || $('#detailContainer');
+    var detailContainerEl = window.detailContainerEl || $('#detailContainer');
     var centerOn = window.centerOn;
     var markers = window.markers;
     var toggleHeatVision = window.toggleHeatVision;
 
     var _this = this, next;
     if( _this.current == 0 ){
-      next = $('<a href="#" />')
-      .html('Stop')
-      .click(function(e) {
+      next = createEl('<a href="#"></a>');
+      next.textContent = 'Stop';
+      next.addEventListener('click', function(e) {
         e.preventDefault();
         _this.stop();
       });
@@ -85,14 +86,18 @@ Tour.prototype = {
     _this.touring = false;
     _this.timingBuffer = 0;
 
-    _this.content.html('');
-    Tour.meta.fadeOut();
-    _this.domElement.fadeOut();
+    html(_this.content, '');
+    fadeOut(Tour.meta);
+    fadeOut(_this.domElement);
 
-    var p = Tour.meta.find('p').html(next);
-    Tour.meta.css({
-      marginLeft: - Tour.meta.width() / 2 + 'px'
-    });
+    var p = find(Tour.meta, 'p');
+    if (p) {
+      p.innerHTML = '';
+      if (next) p.appendChild(next);
+    }
+    if (Tour.meta) {
+      css(Tour.meta, { marginLeft: - Tour.meta.offsetWidth / 2 + 'px' });
+    }
 
     this.show(function() {
 
@@ -102,9 +107,9 @@ Tour.prototype = {
 
     });
 
-    $detailContainer.fadeOut();
+    fadeOut(detailContainerEl);
     centerOn( new THREE.Vector3(0,0,0) );
-    if( markers.length > 0 )
+    if( markers && markers.length > 0 )
       markers[0].select();
     camera.position.target.x = 0;
 
@@ -135,22 +140,16 @@ Tour.prototype = {
 
     var _this = this;
 
-    this.domElement.appendTo(document.body).fadeIn(function() {
+    document.body.appendChild(this.domElement);
+    fadeIn(this.domElement).then(function() {
 
-      Tour.meta.fadeIn();
+      fadeIn(Tour.meta);
 
-      _this.bottom.animate({
-        marginBottom: 0
-      }, Tour.Duration, 'swing');
-
-      _this.top.animate({
-        marginTop: 0
-      }, Tour.Duration, 'swing', function() {
-
+      animateElement(_this.bottom, { marginBottom: '0' }, Tour.Duration);
+      animateElement(_this.top, { marginTop: '0' }, Tour.Duration, function() {
         if (callback) {
           callback.call(_this);
         }
-
       });
 
     });
@@ -163,17 +162,12 @@ Tour.prototype = {
 
     var _this = this;
 
-    Tour.meta.fadeOut();
+    fadeOut(Tour.meta);
 
-    this.bottom.animate({
-      marginBottom: - cinematic_width + 'px'
-    }, Tour.Duration, 'swing');
+    animateElement(this.bottom, { marginBottom: - cinematic_width + 'px' }, Tour.Duration);
+    animateElement(this.top, { marginTop: - cinematic_width + 'px' }, Tour.Duration, function() {
 
-    this.top.animate({
-      marginTop: - cinematic_width + 'px'
-    }, Tour.Duration, 'swing', function() {
-
-      _this.domElement.fadeOut();
+      fadeOut(_this.domElement);
 
       if (callback) {
         callback.call(_this);
@@ -191,33 +185,37 @@ Tour.prototype = {
     _this.show();
 
     var onStart = function(){
-      _this.content.html('<p><span>' + message + '</span></p>');
-      _this.content.fadeIn();
+      html(_this.content, '<p><span>' + message + '</span></p>');
+      fadeIn(_this.content);
 
-      var next = $('<a href="#" />')
-      .html('Skip')
-      .click(function(e) {
+      var next = createEl('<a href="#"></a>');
+      next.textContent = 'Skip';
+      next.addEventListener('click', function(e) {
         e.preventDefault();
         _this.hide();
-        Tour.meta.fadeOut();
+        fadeOut(Tour.meta);
         _this.timingBuffer = 0.0;
         _this.clearTimers();
         window.firstTime = false;
-        $(window).trigger('resize');
+        trigger(window, 'resize');
       });
-      var p = Tour.meta.find('p').html(next);
-      Tour.meta.css({
-        marginLeft: - Tour.meta.width() / 2 + 'px'
-      });
+      var p = find(Tour.meta, 'p');
+      if (p) {
+        p.innerHTML = '';
+        p.appendChild(next);
+      }
+      if (Tour.meta) {
+        css(Tour.meta, { marginLeft: - Tour.meta.offsetWidth / 2 + 'px' });
+      }
     };
     _this.timers.push( window.setTimeout( onStart, _this.timingBuffer + 1000.0 ) );
 
     var onFinished = function(){
-      _this.content.fadeOut( function(){
+      fadeOut(_this.content).then(function() {
         if( callback )
           callback();
       });
-    }
+    };
 
     _this.timingBuffer += duration + 1000.0;
     _this.timers.push( window.setTimeout( onFinished, _this.timingBuffer ) );
@@ -263,12 +261,13 @@ Tour.prototype = {
     else
       this.arrivalCallback = undefined;
 
-    if (this.content.css('display') != 'none') {
-      this.content.fadeOut(function() {
-        _this.content.html('<p><span>' + state.message + '</span></p>');
+    var contentDisplay = this.content ? this.content.style.display : 'none';
+    if (contentDisplay !== 'none') {
+      fadeOut(this.content).then(function() {
+        html(_this.content, '<p><span>' + state.message + '</span></p>');
       });
     } else {
-      this.content.html('<p><span>' + state.message + '</span></p>');
+      html(this.content, '<p><span>' + state.message + '</span></p>');
     }
 
     this.rotating_tween = new TWEEN.Tween(rotating.rotation)
@@ -288,7 +287,7 @@ Tour.prototype = {
         camera.position.target.z = camera.position.z;
         if( _this.arrivalCallback )
           _this.arrivalCallback();
-        _this.content.fadeIn(function() {
+        fadeIn(_this.content).then(function() {
           Tour.timeouts.push(setTimeout(function() {
             if (continuous) {
               _this.next(true);
@@ -309,6 +308,21 @@ Tour.prototype = {
   }
 
 };
+
+function animateElement(el, props, duration, callback) {
+  if (!el) {
+    if (callback) callback();
+    return;
+  }
+  
+  el.style.transition = 'all ' + duration + 'ms ease';
+  Object.assign(el.style, props);
+  
+  setTimeout(function() {
+    el.style.transition = '';
+    if (callback) callback();
+  }, duration);
+}
 
 var getTourState = function(t1, t2, msg) {
     var rotating = window.rotating;

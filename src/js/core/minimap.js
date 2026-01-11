@@ -1,346 +1,385 @@
-
 import { map, constrain } from '../utils/math.js';
+import { $, css, addClass, fadeIn, fadeOut, find, html, on, ajax } from '../utils/dom.js';
 
 var border_width = 1;
 var padding = 30;
 
 var ready = false;
 var count = 0;
-var timer = null
+var timer = null;
 var dragged = false;
 
-var $soundOn, $soundOff, $heatvision, $tour, $home;
+var soundOnEl, soundOffEl, heatvisionEl, tourEl, homeEl;
 
-var $domElement = $('#minimap');
-var $minimap = $domElement.find('#zoom-levels');
-var $volume = $domElement.find('#volume').load(updateCount);
-var $about = $domElement.find('#about').load(updateCount);
-var $cursor = $domElement.find('#zoom-cursor');
+var domElement = $('#minimap');
+var minimapEl = find(domElement, '#zoom-levels');
+var volumeEl = find(domElement, '#volume');
+var aboutEl = find(domElement, '#about');
+var cursorEl = find(domElement, '#zoom-cursor');
 
 var POWER = 3;
-var position = 0; 
+var position = 0;
 var curve = function(t) {
-return Math.pow(t, 1 / POWER);
+  return Math.pow(t, 1 / POWER);
 };
 var curve_inverse = function(t) {
-return Math.pow(t, POWER);
+  return Math.pow(t, POWER);
 };
 
-var $window = $(window);
+function clickEvent(e) {
+  var id = e.target.id || '';
 
-function clickEvent( e ){
-var id = $(e.target).attr('id');
-
-if (dragged || (id !== 'css-world' && id !== 'css-camera' && id !== 'glContainer')) {
+  if (dragged || (id !== 'css-world' && id !== 'css-camera' && id !== 'glContainer')) {
     dragged = false;
     return;
+  }
+
+  unfocus();
 }
 
-unfocus();
-}
+function touchEvent(e) {
+  var id = e.target.id || '';
 
-function touchEvent( e ){
-var event = e.originalEvent;
-var id = $(event.target).attr('id');
-
-if (dragged || (id !== 'css-world' && id !== 'css-camera' && id !== 'glContainer')) {
+  if (dragged || (id !== 'css-world' && id !== 'css-camera' && id !== 'glContainer')) {
     dragged = false;
     return;
+  }
+
+  unfocus();
 }
 
-unfocus();    
-}
+window.addEventListener('click', clickEvent);
 
-$window.click( clickEvent );
-
-$window
-.resize(function() {
-    var firstTime = window.firstTime;
-    if (!ready) {
+window.addEventListener('resize', function() {
+  var firstTime = window.firstTime;
+  if (!ready) {
     if (timer) {
-        updateCount();
-        clearTimeout(timer);
+      updateCount();
+      clearTimeout(timer);
     }
     timer = setTimeout(function() {
-        if( firstTime == false )
-        $window.trigger('resize');
+      if (firstTime == false)
+        window.dispatchEvent(new Event('resize'));
     }, 500);
 
     return;
+  }
 
-    }
+  var volumeHeight = volumeEl ? volumeEl.offsetHeight : 0;
+  var aboutHeight = aboutEl ? aboutEl.offsetHeight : 0;
+  var offset = volumeHeight + aboutHeight + padding;
+  var h = domElement ? domElement.offsetHeight - offset : 0;
 
-    var offset = $volume.outerHeight() + $about.outerHeight() + padding;
-    var h = $domElement.height() - offset;
+  if (minimapEl) {
+    minimapEl.style.height = (h - border_width * 2) + 'px';
+  }
 
-    $minimap.height(h - border_width * 2);
+  if (domElement && !domElement.classList.contains('ready')) {
+    addClass(domElement, 'ready');
+  }
+});
 
-if (!$domElement.hasClass('ready')) {
-    $domElement.addClass('ready');
-}
-
-})
-.bind('mouseup', onWindowMouseUp)
-.bind('touchend', onWindowMouseUp)
-.trigger('resize');
+window.addEventListener('mouseup', onWindowMouseUp);
+window.addEventListener('touchend', onWindowMouseUp);
+window.dispatchEvent(new Event('resize'));
 
 export function initializeMinimap() {
-this.updateMinimap();
-};
-
-export function updateMinimap() {
-    var camera = window.camera;
-
-if (!camera) {
-    return;
+  this.updateMinimap();
 }
 
-var normal = cmap(camera.position.target.z, 1.1, 40000, 0, 1);
-position = cmap(curve(normal), 0, 1, 0, 100);
-updateCursorPosition(true);
+export function updateMinimap() {
+  var camera = window.camera;
 
-};
+  if (!camera) {
+    return;
+  }
 
-export function setScrollPositionFromTouch( touch ){
-var y = (touch.pageY - $minimap.offset().top);
-position = cmap(y, 0, $minimap.height(), 0, 100);
-updateCursorPosition();
+  var normal = cmap(camera.position.target.z, 1.1, 40000, 0, 1);
+  position = cmap(curve(normal), 0, 1, 0, 100);
+  updateCursorPosition(true);
+}
+
+export function setScrollPositionFromTouch(touch) {
+  var minimapRect = minimapEl ? minimapEl.getBoundingClientRect() : { top: 0, height: 1 };
+  var y = touch.pageY - minimapRect.top;
+  var height = minimapEl ? minimapEl.offsetHeight : 1;
+  position = cmap(y, 0, height, 0, 100);
+  updateCursorPosition();
 }
 
 export function setMinimap(b) {
-dragged = !!b;
-};
+  dragged = !!b;
+}
 
 export function showSunButton() {
-if ($home) {
-    $home.css({opacity:1.0,display:'inline'});
+  if (homeEl) {
+    css(homeEl, { opacity: '1.0', display: 'inline' });
+  }
 }
-};
 
 export function hideSunButton() {
-if ($home) {
-    $home.fadeOut();
+  if (homeEl) {
+    fadeOut(homeEl);
+  }
 }
-};
 
-$minimap
-.bind('mousedown', onElementMouseDown);
+if (minimapEl) {
+  minimapEl.addEventListener('mousedown', onElementMouseDown);
+  minimapEl.addEventListener('touchstart', onElementTouchStart);
+}
 
-$minimap
-.bind('touchstart', onElementTouchStart);
-
-$about
-.click(function(e) {
-    var $detailContainer = window.$detailContainer; 
-    if (!$detailContainer) $detailContainer = $('#detailContainer');
+if (aboutEl) {
+  aboutEl.addEventListener('click', function(e) {
+    var detailContainerEl = window.detailContainerEl || $('#detailContainer');
 
     var line_height = 20;
     e.preventDefault();
 
-    $detailContainer.addClass('about');
+    if (detailContainerEl) {
+      addClass(detailContainerEl, 'about');
+    }
 
-    $('#css-container').css('display', 'none');
+    css($('#css-container'), { display: 'none' });
 
-    $.get('detail/about.html', function(data) {
-    $('#detailBody').html(data);
-    });
+    fetch('detail/about.html')
+      .then(function(response) { return response.text(); })
+      .then(function(data) {
+        html($('#detailBody'), data);
+      });
 
-    $('#detailTitle').find('span').html('100,000 Stars');
+    var titleSpan = find($('#detailTitle'), 'span');
+    if (titleSpan) html(titleSpan, '100,000 Stars');
 
-    $detailContainer.css({
-    paddingTop: line_height * 3 + 'px'
-    });
-
-    $detailContainer.fadeIn();
-
-});
+    if (detailContainerEl) {
+      css(detailContainerEl, { paddingTop: line_height * 3 + 'px' });
+      fadeIn(detailContainerEl);
+    }
+  });
+}
 
 var muted = localStorage.getItem('sound') === '0';
 
-$.get('src/assets/icons/sound-on.svg', function(resp) {
-$soundOn = $(resp).find('svg').addClass('icon')
-    .css({
-    display: muted ? 'none' : 'block'
-    })
-    .click(function(e) {
-    e.preventDefault();
-    $soundOn.css({ display: 'none' });
-    var muteSound = window.muteSound;
-    muteSound();
-    if ($soundOff) {
-        $soundOff.css({ display: 'inline-block' });
+fetch('src/assets/icons/sound-on.svg')
+  .then(function(response) { return response.text(); })
+  .then(function(resp) {
+    var parser = new DOMParser();
+    var doc = parser.parseFromString(resp, 'image/svg+xml');
+    soundOnEl = doc.querySelector('svg');
+    if (soundOnEl) {
+      addClass(soundOnEl, 'icon');
+      css(soundOnEl, { display: muted ? 'none' : 'block' });
+      soundOnEl.addEventListener('click', function(e) {
+        e.preventDefault();
+        css(soundOnEl, { display: 'none' });
+        var muteSound = window.muteSound;
+        if (muteSound) muteSound();
+        if (soundOffEl) {
+          css(soundOffEl, { display: 'inline-block' });
+        }
+      });
+      if (volumeEl) volumeEl.appendChild(soundOnEl);
+      updateCount();
     }
-    });
-$volume.append($soundOn);
-});
+  });
 
-$.get('src/assets/icons/sound-off.svg', function(resp) {
-$soundOff = $(resp).find('svg').addClass('icon')
-    .css({
-    display: !muted ? 'none' : 'block'
-    })
-    .click(function(e) {
-    e.preventDefault();
-    $soundOff.css({ display: 'none' });
-    var unmuteSound = window.unmuteSound;
-    unmuteSound();
-    if ($soundOn) {
-        $soundOn.css({ display: 'inline-block' });
+fetch('src/assets/icons/sound-off.svg')
+  .then(function(response) { return response.text(); })
+  .then(function(resp) {
+    var parser = new DOMParser();
+    var doc = parser.parseFromString(resp, 'image/svg+xml');
+    soundOffEl = doc.querySelector('svg');
+    if (soundOffEl) {
+      addClass(soundOffEl, 'icon');
+      css(soundOffEl, { display: !muted ? 'none' : 'block' });
+      soundOffEl.addEventListener('click', function(e) {
+        e.preventDefault();
+        css(soundOffEl, { display: 'none' });
+        var unmuteSound = window.unmuteSound;
+        if (unmuteSound) unmuteSound();
+        if (soundOnEl) {
+          css(soundOnEl, { display: 'inline-block' });
+        }
+      });
+      if (volumeEl) volumeEl.appendChild(soundOffEl);
+      updateCount();
     }
-    });
-    $volume.append($soundOff);
-});
+  });
 
-$.get('src/assets/icons/big-tour.svg', function(resp) {
-    var $iconNav = window.$iconNav || $('#icon-nav');
+fetch('src/assets/icons/big-tour.svg')
+  .then(function(response) { return response.text(); })
+  .then(function(resp) {
+    var iconNavEl = window.iconNavEl || $('#icon-nav');
     var tour = window.tour;
 
-$tour = $(resp).find('svg').addClass('icon')
-    .attr('id', 'tour-button')
-    .tip('Take a tour.')
-    .click(function(e) {
-    e.preventDefault();
-    tour.start();
-    });
-$iconNav.append($tour);
-
-$.get('src/assets/icons/heat-vision.svg', function(resp) {
-    var toggleHeatVision = window.toggleHeatVision;
-
-    $heatvision = $(resp).find('svg').addClass('icon')
-    .click(function(e) {
+    var parser = new DOMParser();
+    var doc = parser.parseFromString(resp, 'image/svg+xml');
+    tourEl = doc.querySelector('svg');
+    if (tourEl) {
+      addClass(tourEl, 'icon');
+      tourEl.id = 'tour-button';
+      tourEl.setAttribute('data-tip', 'Take a tour.');
+      tourEl.addEventListener('click', function(e) {
         e.preventDefault();
-        toggleHeatVision();
-    })
-    .hover(function(e) {
-        $tour.trigger('mouseleave', [true]);
-    }, function(e) {
-        $tour.trigger('mouseenter');
-    })
-    .tip('Toggle Spectral Index.');
-    $iconNav.append($heatvision);
+        if (tour) tour.start();
+      });
+      if (iconNavEl) iconNavEl.appendChild(tourEl);
 
-    $.get('src/assets/icons/center-sun.svg', function(resp) {
-    $home = $(resp).find('svg').addClass('icon')
-        .tip('Center camera position to the Sun.')
-        .hover(function(e) {
-        $tour.trigger('mouseleave', [true]);
-        }, function(e) {
-        $tour.trigger('mouseenter');
-        })
-        .click(function(e) {
-        e.preventDefault();
-        unfocus(true);
-        })
-        .css({
-        display: 'none'
+      loadHeatVisionIcon();
+    }
+    updateCount();
+  });
+
+function loadHeatVisionIcon() {
+  fetch('src/assets/icons/heat-vision.svg')
+    .then(function(response) { return response.text(); })
+    .then(function(resp) {
+      var iconNavEl = window.iconNavEl || $('#icon-nav');
+      var toggleHeatVision = window.toggleHeatVision;
+
+      var parser = new DOMParser();
+      var doc = parser.parseFromString(resp, 'image/svg+xml');
+      heatvisionEl = doc.querySelector('svg');
+      if (heatvisionEl) {
+        addClass(heatvisionEl, 'icon');
+        heatvisionEl.setAttribute('data-tip', 'Toggle Spectral Index.');
+        heatvisionEl.addEventListener('click', function(e) {
+          e.preventDefault();
+          if (toggleHeatVision) toggleHeatVision();
         });
-    $iconNav.append($home);
+        heatvisionEl.addEventListener('mouseenter', function(e) {
+          if (tourEl) tourEl.dispatchEvent(new MouseEvent('mouseleave', { bubbles: true }));
+        });
+        heatvisionEl.addEventListener('mouseleave', function(e) {
+          if (tourEl) tourEl.dispatchEvent(new MouseEvent('mouseenter', { bubbles: true }));
+        });
+        if (iconNavEl) iconNavEl.appendChild(heatvisionEl);
+
+        loadHomeIcon();
+      }
     });
-
-});
-
-});
-
-function onElementMouseDown(e) {
-
-var y = (e.pageY - $minimap.offset().top);
-position = cmap(y, 0, $minimap.height(), 0, 100);
-
-updateCursorPosition();
-
-$window
-    .bind('mousemove', drag);
 }
 
-function onElementTouchStart(e){
-var event = e.originalEvent;
-var touch = event.touches[0];
+function loadHomeIcon() {
+  fetch('src/assets/icons/center-sun.svg')
+    .then(function(response) { return response.text(); })
+    .then(function(resp) {
+      var iconNavEl = window.iconNavEl || $('#icon-nav');
 
-var y = (touch.pageY - $minimap.offset().top);
-position = cmap(y, 0, $minimap.height(), 0, 100);
+      var parser = new DOMParser();
+      var doc = parser.parseFromString(resp, 'image/svg+xml');
+      homeEl = doc.querySelector('svg');
+      if (homeEl) {
+        addClass(homeEl, 'icon');
+        homeEl.setAttribute('data-tip', 'Center camera position to the Sun.');
+        homeEl.addEventListener('mouseenter', function(e) {
+          if (tourEl) tourEl.dispatchEvent(new MouseEvent('mouseleave', { bubbles: true }));
+        });
+        homeEl.addEventListener('mouseleave', function(e) {
+          if (tourEl) tourEl.dispatchEvent(new MouseEvent('mouseenter', { bubbles: true }));
+        });
+        homeEl.addEventListener('click', function(e) {
+          e.preventDefault();
+          unfocus(true);
+        });
+        css(homeEl, { display: 'none' });
+        if (iconNavEl) iconNavEl.appendChild(homeEl);
+      }
+    });
+}
 
-updateCursorPosition();    
-window.scrollbaring = true;
+function onElementMouseDown(e) {
+  var minimapRect = minimapEl ? minimapEl.getBoundingClientRect() : { top: 0 };
+  var y = e.pageY - minimapRect.top;
+  var height = minimapEl ? minimapEl.offsetHeight : 1;
+  position = cmap(y, 0, height, 0, 100);
+
+  updateCursorPosition();
+
+  window.addEventListener('mousemove', drag);
+}
+
+function onElementTouchStart(e) {
+  var touch = e.touches[0];
+  var minimapRect = minimapEl ? minimapEl.getBoundingClientRect() : { top: 0 };
+  var y = touch.pageY - minimapRect.top;
+  var height = minimapEl ? minimapEl.offsetHeight : 1;
+  position = cmap(y, 0, height, 0, 100);
+
+  updateCursorPosition();
+  window.scrollbaring = true;
 }
 
 function drag(e) {
-var y = (e.pageY - $minimap.offset().top);
-position = cmap(y, 0, $minimap.height(), 0, 100);
+  var minimapRect = minimapEl ? minimapEl.getBoundingClientRect() : { top: 0 };
+  var y = e.pageY - minimapRect.top;
+  var height = minimapEl ? minimapEl.offsetHeight : 1;
+  position = cmap(y, 0, height, 0, 100);
 
-updateCursorPosition();
-
+  updateCursorPosition();
 }
 
-function dragTouch(e){    
-var event = e.originalEvent;
-if( event.touches.length != 1 )
-    return;    
+function dragTouch(e) {
+  if (e.touches.length != 1)
+    return;
 }
 
 function onWindowMouseUp(e) {
-$window
-    .unbind('mousemove', drag);
-$window
-    .unbind('touchmove', dragTouch);
+  window.removeEventListener('mousemove', drag);
+  window.removeEventListener('touchmove', dragTouch);
 }
 
 function updateCursorPosition(silent) {
-
-$cursor.css({
-    top: position + '%'
-});
-if (!silent) {
+  if (cursorEl) {
+    css(cursorEl, { top: position + '%' });
+  }
+  if (!silent) {
     updateCameraPosition();
-}
-
+  }
 }
 
 function updateCameraPosition() {
-    var camera = window.camera;
+  var camera = window.camera;
 
-if (camera) {
+  if (camera) {
     var normal = position / 100;
     camera.position.target.z = cmap(curve_inverse(normal), 0, 1, 1.1, 40000);
     camera.position.target.pz = camera.position.target.z;
-}
-
+  }
 }
 
 function cmap(v, i1, i2, o1, o2) {
-return Math.max(Math.min(map(v, i1, i2, o1, o2), o2), o1);
+  return Math.max(Math.min(map(v, i1, i2, o1, o2), o2), o1);
 }
 
 function unfocus(home) {
-    var centerOnSun = window.centerOnSun;
-    var zoomOut = window.zoomOut;
-    var shouldShowFediverseSystem = window.shouldShowFediverseSystem;
-    var goToFediverseCenter = window.goToFediverseCenter;
-    var fediverseInteraction = window.fediverseInteraction;
+  var centerOnSun = window.centerOnSun;
+  var zoomOut = window.zoomOut;
+  var shouldShowFediverseSystem = window.shouldShowFediverseSystem;
+  var goToFediverseCenter = window.goToFediverseCenter;
+  var fediverseInteraction = window.fediverseInteraction;
 
-$('#detailContainer').fadeOut();
-$('#css-container').css('display', 'block');
-if (!!home) {
+  fadeOut($('#detailContainer'));
+  css($('#css-container'), { display: 'block' });
+  if (!!home) {
     if (typeof shouldShowFediverseSystem === "function" && shouldShowFediverseSystem()) {
-    goToFediverseCenter();
-    if (typeof fediverseInteraction !== "undefined") {
+      goToFediverseCenter();
+      if (typeof fediverseInteraction !== "undefined") {
         fediverseInteraction.lastViewedInstance = null;
-    }
+      }
     } else {
-    centerOnSun();
-    setTimeout(hideSunButton, 500);
-    zoomOut(555);
+      if (centerOnSun) centerOnSun();
+      setTimeout(hideSunButton, 500);
+      if (zoomOut) zoomOut(555);
     }
-} else {
-}
+  }
 }
 
 function updateCount() {
-if (count < 3) {
+  if (count < 3) {
     count++;
-} else if (!ready) {
+  } else if (!ready) {
     ready = true;
-}
+  }
 }
 
 window.initializeMinimap = initializeMinimap;

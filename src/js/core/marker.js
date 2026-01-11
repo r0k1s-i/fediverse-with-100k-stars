@@ -1,7 +1,7 @@
-
 import { screenXY } from '../utils/three-helpers.js';
 import { constrain } from '../utils/math.js';
 import { getZoomByStarRadius, getOffsetByStarRadius } from '../utils/app.js';
+import { $, addClass, css, fadeIn, find, html, on } from '../utils/dom.js';
 
 var markers = [];
 
@@ -17,7 +17,7 @@ export function attachMarker(obj, size) {
   var markerThreshold = window.markerThreshold;
   var enableFediverse = window.enableFediverse;
   var starSystems = window.starSystems;
-  var $starName = window.$starName; 
+  var starNameEl = window.starNameEl;
   var setStarModel = window.setStarModel;
   var starModel = window.starModel;
   var enableStarModel = window.enableStarModel;
@@ -32,7 +32,6 @@ export function attachMarker(obj, size) {
   var container = document.getElementById("css-camera");
   var template = document.getElementById("marker_template");
   var marker = template.cloneNode(true);
-  marker.$ = $(marker); 
 
   obj.name = obj.name.replace("'", "");
 
@@ -79,49 +78,52 @@ export function attachMarker(obj, size) {
   var obj_name = obj.name.match("°");
 
   if (obj_name && obj_name[0] == "°") {
-    marker.$.addClass("label");
+    addClass(marker, "label");
   } else {
     var extraData = function () {
-      $.get(pathToDetail, function (data) {
-        var $body = $("#detailBody").html(data);
+      fetch(pathToDetail)
+        .then(function(response) { return response.text(); })
+        .then(function(data) {
+          var bodyEl = $("#detailBody");
+          html(bodyEl, data);
 
-        $body.find("a").each(function () {
-          var $this = $(this);
-          var ahref = $this.attr("href");
-          var finalLink = "http://en.wikipedia.org" + ahref;
-          $this.attr("href", finalLink);
-          $this.attr("target", "blank");
-        });
-
-        var $title = $("#detailTitle");
-        $title.find("span").html(title);
-        var $foot = $("#detailFooter");
-
-        $("#detailContainer").fadeIn();
-        $("#css-container").css("display", "none");
-        setTimeout(function () {
-          var offset =
-            $title.outerHeight() + $body.outerHeight() + $foot.outerHeight();
-          $("#detailContainer").css({
-            paddingTop:
-              Math.max(($(window).height() - offset) / 2, line_height * 3) +
-              "px",
+          var links = bodyEl.querySelectorAll('a');
+          links.forEach(function(link) {
+            var ahref = link.getAttribute("href");
+            var finalLink = "http://en.wikipedia.org" + ahref;
+            link.setAttribute("href", finalLink);
+            link.setAttribute("target", "blank");
           });
-        }, 0);
-      });
+
+          var titleEl = $("#detailTitle");
+          var titleSpan = find(titleEl, 'span');
+          if (titleSpan) html(titleSpan, title);
+          var footEl = $("#detailFooter");
+
+          fadeIn($("#detailContainer"));
+          css($("#css-container"), { display: "none" });
+          setTimeout(function () {
+            var offset =
+              titleEl.offsetHeight + bodyEl.offsetHeight + footEl.offsetHeight;
+            css($("#detailContainer"), {
+              paddingTop:
+                Math.max((window.innerHeight - offset) / 2, line_height * 3) +
+                "px",
+            });
+          }, 0);
+        });
     };
 
-    marker.$.hover(
-      function (e) {
-        var ideal = 20;
-        var posAvgRange = 200;
-        marker.style.fontSize =
-          10 + ideal * (camera.position.z / posAvgRange) + "px";
-      },
-      function (e) {
-        marker.style.fontSize = marker.defaultSize;
-      },
-    );
+    marker.addEventListener('mouseenter', function(e) {
+      var ideal = 20;
+      var posAvgRange = 200;
+      marker.style.fontSize =
+        10 + ideal * (camera.position.z / posAvgRange) + "px";
+    });
+    
+    marker.addEventListener('mouseleave', function(e) {
+      marker.style.fontSize = marker.defaultSize;
+    });
 
     var markerClick = function (e) {
       if (enableFediverse) return;
@@ -137,8 +139,9 @@ export function attachMarker(obj, size) {
 
       window.setMinimap(true);
 
-      $starName.find("span").html(title);
-      $starName[0].onclick = extraData;
+      var spanEl = find(starNameEl, 'span');
+      if (spanEl) html(spanEl, title);
+      starNameEl.onclick = extraData;
 
       extraData();
 
@@ -159,12 +162,12 @@ export function attachMarker(obj, size) {
     };
 
     var markerTouch = function (e) {
-      if (e.originalEvent.touches.length > 1) return;
+      if (e.touches.length > 1) return;
       markerClick(e);
     };
 
-    marker.$.bind("click", markerClick);
-    marker.$.bind("touchstart", markerTouch);
+    marker.addEventListener("click", markerClick);
+    marker.addEventListener("touchstart", markerTouch);
   }
 
   container.appendChild(marker);
@@ -192,9 +195,10 @@ export function attachMarker(obj, size) {
     var title = nameLayer.innerHTML;
     var offset = getOffsetByStarRadius(modelScale);
 
-    $starName.find("span").html(title);
+    var spanEl = find(starNameEl, 'span');
+    if (spanEl) html(spanEl, title);
 
-    $starName[0].onclick = extraData;
+    starNameEl.onclick = extraData;
 
     vec.add(offset);
     snapTo(vec);
@@ -222,3 +226,4 @@ export function attachMarker(obj, size) {
 
 window.updateMarkers = updateMarkers;
 window.attachMarker = attachMarker;
+window.markers = markers;

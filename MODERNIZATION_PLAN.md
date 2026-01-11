@@ -443,14 +443,14 @@ loader.load('texture.ktx2', (texture) => { ... });
 
 ## 📅 实施时间表
 
-| Phase | 名称 | 预计工时 | 优先级 | 依赖 |
-|-------|------|----------|--------|------|
-| 1 | Three.js 升级 | 16-24h | P0 | 无 |
-| 2 | ES Modules 重构 | 12-16h | P1 | Phase 1 |
-| 3 | 移除 jQuery | 4-6h | P2 | Phase 2 |
-| 4 | CSS 现代化 | 2-4h | P3 | 无 |
-| 5 | 性能优化 | 8-12h | P1 | Phase 1 |
-| 6 | 加载优化 | 4-6h | P2 | Phase 2 |
+| Phase | 名称 | 预计工时 | 优先级 | 依赖 | 状态 |
+|-------|------|----------|--------|------|------|
+| 1 | Three.js 升级 | 16-24h | P0 | 无 | ✅ 已完成 |
+| 2 | ES Modules 重构 | 12-16h | P1 | Phase 1 | ✅ 已完成 |
+| 3 | 移除 jQuery | 4-6h | P2 | Phase 2 | ✅ 已完成 |
+| 4 | CSS 现代化 | 2-4h | P3 | 无 | 待开始 |
+| 5 | 性能优化 | 8-12h | P1 | Phase 1 | 待开始 |
+| 6 | 加载优化 | 4-6h | P2 | Phase 2 | 待开始 |
 
 **总计**: 46-68 小时
 
@@ -472,7 +472,7 @@ loader.load('texture.ktx2', (texture) => { ... });
 
 ### 代码质量
 - [ ] 零全局变量污染
-- [ ] 零 jQuery 依赖
+- [x] 零 jQuery 依赖
 - [ ] 零废弃 API 使用
 - [ ] ESLint 零错误
 
@@ -484,6 +484,7 @@ loader.load('texture.ktx2', (texture) => { ... });
 ```bash
 git tag -a v2.0-phase1 -m "Three.js r158 upgrade"
 git tag -a v2.0-phase2 -m "ES Modules migration"
+git tag -a v2.0-phase3 -m "jQuery removal"
 ```
 
 如需回滚:
@@ -494,6 +495,14 @@ git checkout v2.0-phase1
 ---
 
 ## 📝 更新日志
+
+### 2026-01-12
+- ✅ **Phase 3 完成**: 移除 jQuery 依赖
+  - 创建 `src/js/utils/dom.js` 原生 DOM 工具库
+  - 迁移 6 个核心文件 (main.js, fediverse-interaction.js, minimap.js, tour.js, marker.js, legacymarkers.js)
+  - 移除 jQuery 库文件 (jquery-1.7.1.min.js, jquery.mousewheel.js, jquery.preventMacBackScroll.js, jquery.tooltip.js)
+  - 更新 index.html 移除 jQuery 引用
+  - 减少约 100KB 外部依赖
 
 ### 2026-01-11
 - 📝 创建现代化升级计划文档

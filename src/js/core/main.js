@@ -1,3 +1,5 @@
+import { $, css, fadeIn, fadeOut, trigger, find } from '../utils/dom.js';
+
 var masterContainer = document.getElementById("visualization");
 
 var maxAniso = 1;
@@ -21,14 +23,14 @@ var startTime = Date.now();
 var clock = new THREE.Clock();
 var shaderTiming = 0;
 
-var $starName = $("#star-name");
+var starNameEl = $("#star-name");
 
-var $iconNav = $("#icon-nav");
+var iconNavEl = $("#icon-nav");
 
-var $detailContainer = $("#detailContainer");
-var $cssContainer = $("#css-container");
+var detailContainerEl = $("#detailContainer");
+var cssContainerEl = $("#css-container");
 
-var $spectralGraph = $("#spectral-graph");
+var spectralGraphEl = $("#spectral-graph");
 
 var rotating;
 var translating;
@@ -310,20 +312,22 @@ function initScene() {
   initCSS3D();
   if (window.initFediverseLabels) initFediverseLabels();
 
-  var $exout = $("#ex-out").click(function (e) {
+  var exoutEl = $("#ex-out");
+  exoutEl.addEventListener("click", function (e) {
     e.preventDefault();
     e.stopPropagation();
-    $detailContainer.fadeOut();
-    $("#css-container").css("display", "block");
-    if ($detailContainer.hasClass("about")) {
-      $detailContainer.removeClass("about");
+    fadeOut(detailContainerEl);
+    css(cssContainerEl, { display: "block" });
+    if (detailContainerEl.classList.contains("about")) {
+      detailContainerEl.classList.remove("about");
     }
   });
 
-  var $zoomback = $("#zoom-back").click(function (e) {
+  var zoombackEl = $("#zoom-back");
+  zoombackEl.addEventListener("click", function (e) {
     e.preventDefault();
     e.stopPropagation();
-    $exout.click();
+    exoutEl.click();
 
     if (
       typeof shouldShowFediverseSystem === "function" &&
@@ -339,8 +343,9 @@ function initScene() {
 
   setTimeout(function () {
     var s = "scale(1.0)";
+    var layoutEl = $("#layout");
 
-    $("#layout").css({
+    css(layoutEl, {
       webkitTransform: s,
       mozTransform: s,
       msTransform: s,
@@ -348,17 +353,20 @@ function initScene() {
       transform: s,
     });
 
-    $("#loader").fadeOut(250);
+    fadeOut($("#loader"), 250);
 
-    $iconNav.fadeIn();
-    $iconNav.isReady = true;
+    fadeIn(iconNavEl);
+    iconNavEl.isReady = true;
 
     if (firstTime) {
       displayIntroMessage();
       if (localStorage) localStorage.setItem("first", 0);
     } else {
       _.delay(function () {
-        $iconNav.find("#tour-button").trigger("mouseover");
+        var tourButton = find(iconNavEl, "#tour-button");
+        if (tourButton) {
+          tourButton.dispatchEvent(new MouseEvent("mouseover", { bubbles: true }));
+        }
       }, 500);
     }
 
@@ -509,37 +517,42 @@ function animate() {
     var atFediverseCenter =
       typeof isAtFediverseCenter === "function" && isAtFediverseCenter();
 
+    var detailDisplay = detailContainerEl ? detailContainerEl.style.display : "none";
+    var starNameDisplay = starNameEl ? starNameEl.style.display : "none";
+    var starNameOpacity = starNameEl ? parseFloat(starNameEl.style.opacity || 0) : 0;
+    var cssDisplay = cssContainerEl ? cssContainerEl.style.display : "block";
+
     if (
       isZoomedIn &&
       camera.position.z < markerThreshold.min &&
-      $detailContainer.css("display") == "none" &&
-      $starName.css("display") == "none" &&
+      detailDisplay === "none" &&
+      starNameDisplay === "none" &&
       !atFediverseCenter
     ) {
-      $starName.fadeIn();
+      fadeIn(starNameEl);
     } else if (
       !isFediverseHover &&
-      (isZoomedToSolarSystem || $detailContainer.css("display") != "none") &&
-      $starName.css("opacity") == 1.0
+      (isZoomedToSolarSystem || detailDisplay !== "none") &&
+      starNameOpacity === 1.0
     ) {
-      $starName.fadeOut();
+      fadeOut(starNameEl);
     }
 
-    if (isZoomedIn && $cssContainer.css("display") != "none") {
-      $cssContainer.css({ display: "none" });
-    } else if (!isZoomedIn && $cssContainer.css("display") == "none") {
-      $cssContainer.css({ display: "block" });
+    if (isZoomedIn && cssDisplay !== "none") {
+      css(cssContainerEl, { display: "none" });
+    } else if (!isZoomedIn && cssDisplay === "none") {
+      css(cssContainerEl, { display: "block" });
     }
 
     if (
       isZoomedToSolarSystem &&
-      $detailContainer.css("display") != "none" &&
-      !$detailContainer.hasClass("about")
+      detailDisplay !== "none" &&
+      !detailContainerEl.classList.contains("about")
     ) {
-      $detailContainer.fadeOut();
+      fadeOut(detailContainerEl);
     }
 
-    if ($detailContainer.css("display") == "none") {
+    if (detailDisplay === "none") {
       camera.position.x *= 0.95;
     } else {
       camera.position.x +=
@@ -621,7 +634,8 @@ function unmuteSound() {
 }
 
 function displayIntroMessage() {
-  Tour.meta.fadeIn();
+  Tour.meta.style.display = "block";
+  Tour.meta.style.opacity = "1";
   if (window.enableFediverse) {
     tour
       .showMessage("Welcome to the Fediverse Universe.", 5000)
@@ -632,8 +646,11 @@ function displayIntroMessage() {
       .showMessage("Scroll and zoom to explore.", 4000, function () {
         firstTime = false;
         window.firstTime = false;
-        $(window).trigger("resize");
-        $iconNav.find("#tour-button").trigger("mouseover");
+        trigger(window, "resize");
+        var tourButton = find(iconNavEl, "#tour-button");
+        if (tourButton) {
+          tourButton.dispatchEvent(new MouseEvent("mouseover", { bubbles: true }));
+        }
       })
       .endMessages();
   } else {
@@ -646,18 +663,21 @@ function displayIntroMessage() {
       .showMessage("Scroll and zoom to explore.", 4000, function () {
         firstTime = false;
         window.firstTime = false;
-        $(window).trigger("resize");
-        $iconNav.find("#tour-button").trigger("mouseover");
+        trigger(window, "resize");
+        var tourButton = find(iconNavEl, "#tour-button");
+        if (tourButton) {
+          tourButton.dispatchEvent(new MouseEvent("mouseover", { bubbles: true }));
+        }
       })
       .endMessages();
   }
 }
 
 window.start = start;
-window.$starName = $starName;
-window.$detailContainer = $detailContainer;
-window.$iconNav = $iconNav;
-window.$spectralGraph = $spectralGraph;
+window.starNameEl = starNameEl;
+window.detailContainerEl = detailContainerEl;
+window.iconNavEl = iconNavEl;
+window.spectralGraphEl = spectralGraphEl;
 window.muteSound = muteSound;
 window.unmuteSound = unmuteSound;
 window.firstTime = firstTime;
