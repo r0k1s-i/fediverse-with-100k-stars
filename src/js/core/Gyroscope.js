@@ -20,7 +20,14 @@ export class Gyroscope extends THREE.Object3D {
           this.rotationQ,
           this.scaleV,
         );
+        
+        const worldX = this.translation.x;
+        const worldY = this.translation.y;
+        const worldZ = this.translation.z;
+
         this.matrix.decompose(this.translation, this.rotationQ, this.scaleV);
+
+        this.translation.set(worldX, worldY, worldZ);
 
         this.matrixWorld.compose(this.translation, this.rotationQ, this.scaleV);
       } else {
