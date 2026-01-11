@@ -1,5 +1,5 @@
 // changed glowspan.png to transparent.png
-var glowSpanTexture = THREE.ImageUtils.loadTexture('index_files/transparent.png');
+var glowSpanTexture = THREE.ImageUtils.loadTexture('src/assets/textures/transparent.png');
 
 function createSpacePlane(){
 	var cylinderMaterial = new THREE.MeshBasicMaterial({

@@ -31,25 +31,25 @@ function loadFediverseData(dataFile, callback) {
   xhr.send(null);
 }
 
-var fediverseTexture0 = THREE.ImageUtils.loadTexture("index_files/p_0.png");
-var fediverseTexture1 = THREE.ImageUtils.loadTexture("index_files/p_2.png");
+var fediverseTexture0 = THREE.ImageUtils.loadTexture("src/assets/textures/p_0.png");
+var fediverseTexture1 = THREE.ImageUtils.loadTexture("src/assets/textures/p_2.png");
 var fediverseHeatVisionTexture = THREE.ImageUtils.loadTexture(
-  "index_files/sharppoint.png",
+  "src/assets/textures/sharppoint.png",
 );
 var instancePreviewTexture = THREE.ImageUtils.loadTexture(
-  "index_files/star_preview.png",
+  "src/assets/textures/star_preview.png",
   undefined,
   setLoadMessage("Focusing optics"),
 );
 var fediverseColorGraph = THREE.ImageUtils.loadTexture(
-  "index_files/star_color_modified.png",
+  "src/assets/textures/star_color_modified.png",
 );
 
 var instanceSunHaloTexture = THREE.ImageUtils.loadTexture(
-  "index_files/sun_halo.png",
+  "src/assets/textures/sun_halo.png",
 );
 var instanceCoronaTexture = THREE.ImageUtils.loadTexture(
-  "index_files/corona.png",
+  "src/assets/textures/corona.png",
 );
 
 var MAJOR_INSTANCE_COLORS = {
@@ -423,7 +423,7 @@ function generateFediverseInstances() {
   pSystem.add(lineMesh);
 
   var glowSpanTexture = THREE.ImageUtils.loadTexture(
-    "index_files/glowspan.png",
+    "src/assets/textures/glowspan.png",
   );
   var gridMaterial = new THREE.MeshBasicMaterial({
     map: glowSpanTexture,

@@ -10,7 +10,7 @@ function setupSkyboxScene(){
 
 function initSkybox( highres ){
 	setLoadMessage("Loading internal stars")
-	var r = "index_files/";
+	var r = "src/assets/textures/";
 
 	if( highres == false )
 		r += "s_";

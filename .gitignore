@@ -1,10 +1,7 @@
 node_modules/
 
-# Fetch script logs and progress
-data/fetch_log.json
-data/fetch_output.log
-data/fetch_progress.json
-data/nodes.json
+# Build artifacts
+scripts/fediverse-processor/fediverse-processor
 
 # Temp data processing directory
 scripts/temp/

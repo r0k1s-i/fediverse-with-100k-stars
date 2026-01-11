@@ -93,7 +93,7 @@ function start(e) {
 
   gradientImage = document.createElement("img");
   gradientImage.onload = postStarGradientLoaded;
-  gradientImage.src = "index_files/star_color_modified.png";
+  gradientImage.src = "src/assets/textures/star_color_modified.png";
 }
 
 var postStarGradientLoaded = function () {
@@ -131,7 +131,7 @@ var postShadersLoaded = function () {
       animate();
     });
   } else if (enableDataStar) {
-    loadStarData("index_files/stars_all.json", function (loadedData) {
+    loadStarData("data/stars_all.json", function (loadedData) {
       starData = loadedData.stars;
       initScene();
       animate();

@@ -18,20 +18,20 @@ function loadStarData(dataFile, callback) {
 }
 
 //	points in the sky in HIPPARCOS star cluster
-var datastarTexture0 = THREE.ImageUtils.loadTexture("index_files/p_0.png");
-var datastarTexture1 = THREE.ImageUtils.loadTexture("index_files/p_2.png");
+var datastarTexture0 = THREE.ImageUtils.loadTexture("src/assets/textures/p_0.png");
+var datastarTexture1 = THREE.ImageUtils.loadTexture("src/assets/textures/p_2.png");
 var datastarHeatVisionTexture = THREE.ImageUtils.loadTexture(
-  "index_files/sharppoint.png",
+  "src/assets/textures/sharppoint.png",
 );
 
 //	bright flashy named stars graphic
 var starPreviewTexture = THREE.ImageUtils.loadTexture(
-  "index_files/star_preview.png",
+  "src/assets/textures/star_preview.png",
   undefined,
   setLoadMessage("Focusing optics"),
 );
 var starColorGraph = THREE.ImageUtils.loadTexture(
-  "index_files/star_color_hsl.png",
+  "src/assets/textures/star_color_hsl.png",
 );
 
 var datastarUniforms = {
@@ -338,7 +338,7 @@ function generateHipparcosStars() {
   //	-----------------------------------------------------------------------------
   //	create base circles for each named star on the plane
   var starBaseTexture = THREE.ImageUtils.loadTexture(
-    "index_files/starbase.png",
+    "src/assets/textures/starbase.png",
   );
   var starBaseMaterial = new THREE.MeshBasicMaterial({
     map: starBaseTexture,
