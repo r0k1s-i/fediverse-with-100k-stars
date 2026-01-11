@@ -1,4 +1,42 @@
 import { $, css, fadeIn, fadeOut, trigger, find } from '../utils/dom.js';
+import { constrain } from '../utils/math.js';
+
+import './globals.js';
+import './config.js';
+import '../utils/misc.js';
+import '../utils/three-helpers.js';
+import '../utils/app.js';
+
+import { shaderList, loadShaders } from './shaders.js';
+
+import './skybox.js';
+import { createSpacePlane } from './plane.js';
+import './guides.js';
+import { generateDust } from './dust.js';
+import { addLensFlare } from './lensflare.js';
+import { attachLegacyMarker } from './legacymarkers.js';
+import './marker.js';
+import './mousekeyboard.js';
+import '../core/urlArgs.js';
+
+import './infocallout.js';
+import './starsystems.js';
+import { makeStarModels } from './starmodel.js';
+import { initCSS3D, setCSSWorld, setCSSCamera } from './css3worldspace.js';
+import './helphud.js';
+import './spacehelpers.js';
+import { generateHipparcosStars, loadStarData } from './hipparcos.js';
+import { loadFediverseData, generateFediverseInstances } from './fediverse.js';
+import './interaction-math.js';
+import { initFediverseInteraction, isAtFediverseCenter, shouldShowFediverseSystem, goToFediverseCenter } from './fediverse-interaction.js';
+import './label-layout.js';
+import { initFediverseLabels, updateFediverseLabels } from './fediverse-labels.js';
+import { generateGalaxy } from './galaxy.js';
+import './solarsystem.js';
+import { makeFediverseSystem } from './fediverse-solarsystem.js';
+import './sun.js';
+import { Tour, GALAXY_TOUR } from './tour.js';
+import { updateMinimap, initializeMinimap, setMinimap } from './minimap.js';
 
 var masterContainer = document.getElementById("visualization");
 
@@ -15,7 +53,7 @@ var enableDirector = true;
 
 var firstTime = localStorage ? localStorage.getItem("first") == null : true;
 
-var tour = new Tour(window.GALAXY_TOUR);
+var tour = new Tour(GALAXY_TOUR);
 
 window.initialAutoRotate = true;
 
@@ -117,7 +155,7 @@ var postStarGradientLoaded = function () {
 
   window.gradientCanvas = gradientCanvas;
 
-  loadShaders(window.shaderList, function (e) {
+  loadShaders(shaderList, function (e) {
     window.shaderList = e;
     postShadersLoaded();
   });
@@ -183,7 +221,7 @@ function buildGUI() {
 
   window.gui = gui;
 
-  if (window.initializeMinimap) window.initializeMinimap();
+  if (initializeMinimap) initializeMinimap();
 }
 
 function initScene() {
@@ -225,7 +263,7 @@ function initScene() {
   window.screenHeight = screenHeight;
 
   renderer = new THREE.WebGLRenderer({ antialias: antialias });
-  window.renderer = renderer; // 导出到 window 供 skybox 使用
+  window.renderer = renderer;
 
   var devicePixelRatio = window.devicePixelRatio || 1;
 
@@ -310,7 +348,7 @@ function initScene() {
   sceneSetup();
 
   initCSS3D();
-  if (window.initFediverseLabels) initFediverseLabels();
+  if (initFediverseLabels) initFediverseLabels();
 
   var exoutEl = $("#ex-out");
   exoutEl.addEventListener("click", function (e) {
@@ -533,7 +571,7 @@ function animate() {
     } else if (
       !isFediverseHover &&
       (isZoomedToSolarSystem || detailDisplay !== "none") &&
-      starNameOpacity === 1.0
+      (starNameOpacity === 1.0 || starNameOpacity === "")
     ) {
       fadeOut(starNameEl);
     }
@@ -593,7 +631,7 @@ function animate() {
 
   updateMarkers();
   updateLegacyMarkers();
-  updateFediverseLabels();
+  if (updateFediverseLabels) updateFediverseLabels();
 
   window.rotateX = rotateX;
   window.rotateY = rotateY;
@@ -612,7 +650,6 @@ function animate() {
 function render() {
   if (enableSkybox) {
     renderSkybox();
-    // 渲染主场景时不自动清除，保留skybox
     renderer.autoClear = false;
     renderer.render(scene, camera);
     renderer.autoClear = true;
