@@ -1,8 +1,42 @@
 /**
- * Mixins and variables
+ * CSS Variables - Design Tokens
  */
+:root {
+    /* Colors */
+    --color-bg: #000000;
+    --color-text: #ffffff;
+    --color-text-muted: #cccccc;
+    --color-panel-bg: rgba(0, 0, 0, 0.75);
+    --color-panel-bg-solid: rgba(0, 0, 0, 0.9);
+    --color-accent: #2c47dc;
+    --color-accent-glow: #eeeeff;
+    --color-border: rgba(255, 255, 255, 0.5);
+    --color-border-light: rgba(255, 255, 255, 0.75);
+    --color-selection: #2c47dc;
+
+    /* Fonts */
+    --font-body: "Lora", Georgia, serif;
+    --font-mono: "Lekton", monospace;
+    --font-ui: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+    /* Transitions */
+    --transition-fast: 0.1s ease;
+    --transition-normal: 0.25s ease;
+    --transition-slow: 0.5s ease;
+
+    /* Shadows */
+    --text-shadow-glow: 0 0 3px #fff, 0 0 10px #000;
+    --text-shadow-accent: 0 0 3px var(--color-accent), 0 0 10px var(--color-accent-glow);
+    --text-shadow-hover: 0 0 3px #fff, 0 0 5px #fff, 0 0 10px #fff, 0 0 20px #fff;
+
+    /* Z-index layers */
+    --z-canvas: 10;
+    --z-ui: 9999;
+    --z-modal: 10000;
+}
+
 /**
- * Styles for page
+ * Reset and Base Styles
  */
 * {
     margin: 0;
@@ -10,15 +44,51 @@
 }
 
 body {
-    background-color: #000000;
+    background-color: var(--color-bg);
     font-size: 14px;
     line-height: 20px;
     margin: 0;
     overflow: hidden;
-    font-family: "Lora", Georgia, serif;
+    font-family: var(--font-body);
     position: fixed;
 }
 
+/**
+ * Selection
+ */
+::selection,
+::-moz-selection {
+    background: var(--color-selection);
+}
+
+/**
+ * Links
+ */
+a {
+    transition: border var(--transition-normal);
+}
+a:link,
+a:active,
+a:visited {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px solid var(--color-border);
+}
+a:hover {
+    border-bottom: 1px solid transparent;
+    text-decoration: none;
+}
+
+/**
+ * Utility Classes
+ */
+.unselectable {
+    user-select: none;
+}
+
+/**
+ * Loader
+ */
 #loader {
     position: fixed;
     top: 0;
@@ -27,7 +97,7 @@ body {
     bottom: 0;
     width: 100%;
     height: 100%;
-    background: #000;
+    background: var(--color-bg);
 }
 #loader div {
     display: block;
@@ -39,212 +109,79 @@ body {
     text-align: center;
 }
 #loader p {
-    color: #fff;
+    color: var(--color-text);
     width: 500px;
     font-size: 21px;
     line-height: 40px;
     font-style: italic;
     font-weight: normal;
     padding-bottom: 20px;
-    text-shadow:
-        0 0 3px #fff,
-        0 0 10px #000;
+    text-shadow: var(--text-shadow-glow);
 }
 
+/**
+ * Markers
+ */
 .marker {
-    font-family: "Lekton", monospace;
-    -moz-user-select: -moz-none;
-    -khtml-user-select: none;
-    -webkit-user-select: none;
-    /*
-   Introduced in IE 10.
-   See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
-  */
-    -ms-user-select: none;
+    font-family: var(--font-mono);
     user-select: none;
     position: absolute;
     padding: 0px 0px;
     cursor: pointer;
-    -webkit-transform-style: preserve-3d;
-    -moz-transform-style: preserve-3d;
-    -webkit-transition: opacity 0.5s;
-    -moz-transition: opacity 0.5s;
-    -ms-transition: opacity 0.5s;
-    -o-transition: opacity 0.5s;
-    transition: opacity 0.5s;
+    transform-style: preserve-3d;
+    transition: opacity var(--transition-slow);
 }
 .marker span.name {
-    color: #fff;
-    text-shadow:
-        0 0 3px #fff,
-        0 0 10px #000;
-    -webkit-transition: text-shadow 0.25s;
-    -moz-transition: text-shadow 0.25s;
-    -ms-transition: text-shadow 0.25s;
-    -o-transition: text-shadow 0.25s;
-    transition: text-shadow 0.25s;
+    color: var(--color-text);
+    text-shadow: var(--text-shadow-glow);
+    transition: text-shadow var(--transition-normal);
 }
 .marker span.name:hover {
-    text-shadow:
-        0 0 3px #fff,
-        0 0 5px #fff,
-        0 0 10px #fff,
-        0 0 20px #fff;
+    text-shadow: var(--text-shadow-hover);
 }
 .marker.label span.name {
     cursor: default !important;
     font-size-adjust: none;
 }
 .marker.label span.name:hover {
-    text-shadow:
-        0 0 3px #fff,
-        0 0 10px #000 !important;
-}
-.marker span.name {
-    color: #fff;
-    text-shadow:
-        0 0 3px #fff,
-        0 0 10px #000;
-    -webkit-transition: text-shadow 0.25s;
-    -moz-transition: text-shadow 0.25s;
-    -ms-transition: text-shadow 0.25s;
-    -o-transition: text-shadow 0.25s;
-    transition: text-shadow 0.25s;
-}
-.marker span.name:hover {
-    text-shadow:
-        0 0 3px #fff,
-        0 0 5px #fff,
-        0 0 10px #fff,
-        0 0 20px #fff;
+    text-shadow: var(--text-shadow-glow) !important;
 }
 
 .legacymarker {
-    font-family: "Lekton", monospace;
-    -moz-user-select: -moz-none;
-    -khtml-user-select: none;
-    -webkit-user-select: none;
-    /*
-   Introduced in IE 10.
-   See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
-  */
-    -ms-user-select: none;
+    font-family: var(--font-mono);
     user-select: none;
     position: absolute;
     padding: 6px 8px;
     min-width: 140px;
-    -webkit-transition: opacity 0.5s;
-    -moz-transition: opacity 0.5s;
-    -ms-transition: opacity 0.5s;
-    -o-transition: opacity 0.5s;
-    transition: opacity 0.5s;
+    transition: opacity var(--transition-slow);
     display: inline;
 }
 .legacymarker span.name {
     display: inline-block;
     width: 100%;
-    color: #fff;
+    color: var(--color-text);
     text-shadow: 0.1em 0.1em 4px #000;
-    -webkit-transition: text-shadow 0.25s;
-    -moz-transition: text-shadow 0.25s;
-    -ms-transition: text-shadow 0.25s;
-    -o-transition: text-shadow 0.25s;
-    transition: text-shadow 0.25s;
+    transition: text-shadow var(--transition-normal);
     text-align: center;
     margin-left: auto;
     margin-right: auto;
 }
 
+/**
+ * Keyframe Animations
+ */
 @keyframes aura {
     from {
-        -webkit-box-shadow: inset 0 0 1px white;
-        -moz-box-shadow: inset 0 0 1px white;
-        -ms-box-shadow: inset 0 0 1px white;
-        -o-box-shadow: inset 0 0 1px white;
         box-shadow: inset 0 0 1px white;
     }
-
     to {
-        -webkit-box-shadow: inset 0 0 50px white;
-        -moz-box-shadow: inset 0 0 50px white;
-        -ms-box-shadow: inset 0 0 50px white;
-        -o-box-shadow: inset 0 0 50px white;
         box-shadow: inset 0 0 50px white;
     }
 }
 
-@-moz-keyframes aura {
-    from {
-        -webkit-box-shadow: inset 0 0 1px white;
-        -moz-box-shadow: inset 0 0 1px white;
-        -ms-box-shadow: inset 0 0 1px white;
-        -o-box-shadow: inset 0 0 1px white;
-        box-shadow: inset 0 0 1px white;
-    }
-
-    to {
-        -webkit-box-shadow: inset 0 0 50px white;
-        -moz-box-shadow: inset 0 0 50px white;
-        -ms-box-shadow: inset 0 0 50px white;
-        -o-box-shadow: inset 0 0 50px white;
-        box-shadow: inset 0 0 50px white;
-    }
-}
-
-@-webkit-keyframes aura {
-    from {
-        -webkit-box-shadow: inset 0 0 1px white;
-        -moz-box-shadow: inset 0 0 1px white;
-        -ms-box-shadow: inset 0 0 1px white;
-        -o-box-shadow: inset 0 0 1px white;
-        box-shadow: inset 0 0 1px white;
-    }
-
-    to {
-        -webkit-box-shadow: inset 0 0 50px white;
-        -moz-box-shadow: inset 0 0 50px white;
-        -ms-box-shadow: inset 0 0 50px white;
-        -o-box-shadow: inset 0 0 50px white;
-        box-shadow: inset 0 0 50px white;
-    }
-}
-
-@-o-keyframes aura {
-    from {
-        -webkit-box-shadow: inset 0 0 1px white;
-        -moz-box-shadow: inset 0 0 1px white;
-        -ms-box-shadow: inset 0 0 1px white;
-        -o-box-shadow: inset 0 0 1px white;
-        box-shadow: inset 0 0 1px white;
-    }
-
-    to {
-        -webkit-box-shadow: inset 0 0 50px white;
-        -moz-box-shadow: inset 0 0 50px white;
-        -ms-box-shadow: inset 0 0 50px white;
-        -o-box-shadow: inset 0 0 50px white;
-        box-shadow: inset 0 0 50px white;
-    }
-}
-
-@-ms-keyframes aura {
-    from {
-        -webkit-box-shadow: inset 0 0 1px white;
-        -moz-box-shadow: inset 0 0 1px white;
-        -ms-box-shadow: inset 0 0 1px white;
-        -o-box-shadow: inset 0 0 1px white;
-        box-shadow: inset 0 0 1px white;
-    }
-
-    to {
-        -webkit-box-shadow: inset 0 0 50px white;
-        -moz-box-shadow: inset 0 0 50px white;
-        -ms-box-shadow: inset 0 0 50px white;
-        -o-box-shadow: inset 0 0 50px white;
-        box-shadow: inset 0 0 50px white;
-    }
-}
-
+/**
+ * Icon Navigation
+ */
 #icon-nav {
     position: absolute;
     top: 0;
@@ -254,35 +191,15 @@ body {
 #icon-nav #tour-button {
     margin-top: -3.33333px;
     opacity: 1;
-    -webkit-border-radius: 50%;
-    -moz-border-radius: 50%;
-    -ms-border-radius: 50%;
-    -o-border-radius: 50%;
     border-radius: 50%;
-    -webkit-animation-name: aura;
-    -moz-animation-name: aura;
     animation-name: aura;
-    -webkit-animation-duration: 2s;
-    -moz-animation-duration: 2s;
     animation-duration: 2s;
-    -webkit-animation-iteration-count: infinite;
-    -moz-animation-iteration-count: infinite;
     animation-iteration-count: infinite;
-    -webkit-animation-direction: alternate;
-    -moz-animation-direction: alternate;
     animation-direction: alternate;
-    -webkit-animation-timing-function: ease-in-out;
-    -moz-animation-timing-function: ease-in-out;
     animation-timing-function: ease-in-out;
-    -webkit-transition: background 0.25s;
-    -moz-transition: background 0.25s;
-    -ms-transition: background 0.25s;
-    -o-transition: background 0.25s;
-    transition: background 0.25s;
+    transition: background var(--transition-normal);
 }
 #icon-nav #tour-button:hover {
-    -webkit-animation-play-state: paused;
-    -moz-animation-play-state: paused;
     animation-play-state: paused;
     background: rgba(255, 255, 255, 0.66);
 }
@@ -293,11 +210,7 @@ body {
     display: inline-block;
 }
 #icon-nav > *:not(#tour-button) {
-    -webkit-transition: opacity 0.25s;
-    -moz-transition: opacity 0.25s;
-    -ms-transition: opacity 0.25s;
-    -o-transition: opacity 0.25s;
-    transition: opacity 0.25s;
+    transition: opacity var(--transition-normal);
 }
 #icon-nav > *:hover {
     opacity: 1;
@@ -306,28 +219,19 @@ body {
     margin-left: 10px;
 }
 
+/**
+ * Spectral Graph / Heat Map
+ */
 #spectral-graph {
     position: absolute;
     left: 0;
     top: 67px;
-    color: #fff;
-    font-family: "Lekton", monospace;
+    color: var(--color-text);
+    font-family: var(--font-mono);
     display: none;
-    -moz-user-select: -moz-none;
-    -khtml-user-select: none;
-    -webkit-user-select: none;
-    /*
-   Introduced in IE 10.
-   See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
-  */
-    -ms-user-select: none;
     user-select: none;
     padding: 24px 20px 20px 20px;
-    -webkit-transition: opacity 0.25s;
-    -moz-transition: opacity 0.25s;
-    -ms-transition: opacity 0.25s;
-    -o-transition: opacity 0.25s;
-    transition: opacity 0.25s;
+    transition: opacity var(--transition-normal);
     opacity: 0.8;
 }
 #spectral-graph:hover,
@@ -356,55 +260,6 @@ body {
 #spectral-graph #heat-map {
     width: 300px;
     height: 20px;
-    background: #c8420a;
-    /* Old browsers */
-    background: -moz-linear-gradient(
-        left,
-        #c8420a 0%,
-        #f8e141 25%,
-        white 50%,
-        #444fe3 98%,
-        #be78ef 100%
-    );
-    /* FF3.6+ */
-    background: -webkit-gradient(
-        linear,
-        left top,
-        right top,
-        color-stop(0%, #c8420a),
-        color-stop(25%, #f8e141),
-        color-stop(50%, white),
-        color-stop(98%, #444fe3),
-        color-stop(100%, #be78ef)
-    );
-    /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(
-        left,
-        #c8420a 0%,
-        #f8e141 25%,
-        white 50%,
-        #444fe3 98%,
-        #be78ef 100%
-    );
-    /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(
-        left,
-        #c8420a 0%,
-        #f8e141 25%,
-        white 50%,
-        #444fe3 98%,
-        #be78ef 100%
-    );
-    /* Opera 11.10+ */
-    background: -ms-linear-gradient(
-        left,
-        #c8420a 0%,
-        #f8e141 25%,
-        white 50%,
-        #444fe3 98%,
-        #be78ef 100%
-    );
-    /* IE10+ */
     background: linear-gradient(
         to right,
         #c8420a 0%,
@@ -413,18 +268,18 @@ body {
         #444fe3 98%,
         #be78ef 100%
     );
-    /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#c8420a', endColorstr='#be78ef',GradientType=1 );
-    /* IE6-9 */
 }
 
+/**
+ * Theater Mode
+ */
 #theater .top-bar {
     position: absolute;
     left: 0;
     top: 0;
     width: 100%;
     height: 67px;
-    background: #000;
+    background: var(--color-bg);
     margin-top: -67px;
 }
 #theater .bottom-bar {
@@ -433,7 +288,7 @@ body {
     bottom: 0;
     width: 100%;
     height: 67px;
-    background: #000;
+    background: var(--color-bg);
     margin-bottom: -67px;
 }
 #theater .message {
@@ -449,79 +304,48 @@ body {
     font-size: 28px;
     line-height: 40px;
     margin-top: -30px;
-    color: #fff;
+    color: var(--color-text);
     font-style: italic;
-    text-shadow:
-        0 0 3px #2c47dc,
-        0 0 10px #eeeeff;
+    text-shadow: var(--text-shadow-accent);
 }
 #theater .message p span {
     padding: 10px 20px;
-    background: rgba(0, 0, 0, 0.9);
+    background: var(--color-panel-bg-solid);
 }
 
+/**
+ * Controls Help
+ */
 #controlshelp {
     background-color: rgba(0, 0, 0, 0.65);
     padding: 15px;
-    color: #ffffff;
+    color: var(--color-text);
     font-size: 32px;
-    -moz-user-select: -moz-none;
-    -khtml-user-select: none;
-    -webkit-user-select: none;
-    /*
-   Introduced in IE 10.
-   See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
-  */
-    -ms-user-select: none;
     user-select: none;
 }
 
+/**
+ * Layout
+ */
 #layout {
-    -webkit-transform: scale(1.25);
-    -moz-transform: scale(1.25);
-    -ms-transform: scale(1.25);
-    -o-transform: scale(1.25);
     transform: scale(1.25);
-    -webkit-transition: all 0.25s;
-    -moz-transition: all 0.25s;
-    -ms-transition: all 0.25s;
-    -o-transition: all 0.25s;
-    transition: all 0.25s;
+    transition: all var(--transition-normal);
 }
 
-.unselectable {
-    -moz-user-select: -moz-none;
-    -khtml-user-select: none;
-    -webkit-user-select: none;
-    /*
-   Introduced in IE 10.
-   See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
-  */
-    -ms-user-select: none;
-    user-select: none;
-}
-
+/**
+ * Star Name & Detail Title
+ */
 #star-name,
 #detailTitle {
-    color: #fff;
+    color: var(--color-text);
     font-size: 42px;
     line-height: 60px;
     margin: 0 0 20px 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.75);
+    border-bottom: 1px solid var(--color-border-light);
     position: relative;
     display: block;
     font-style: italic;
-    text-shadow:
-        0 0 3px #2c47dc,
-        0 0 10px #eeeeff;
-    -moz-user-select: -moz-none;
-    -khtml-user-select: none;
-    -webkit-user-select: none;
-    /*
-   Introduced in IE 10.
-   See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
-  */
-    -ms-user-select: none;
+    text-shadow: var(--text-shadow-accent);
     user-select: none;
 }
 
@@ -532,23 +356,18 @@ body {
     margin: 0 20px 25px 20px;
     width: 560px;
     display: none;
-    -moz-user-select: -moz-none;
-    -khtml-user-select: none;
-    -webkit-user-select: none;
-    /*
-   Introduced in IE 10.
-   See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
-  */
-    -ms-user-select: none;
     user-select: none;
 }
 #star-name span {
     cursor: pointer;
 }
 
+/**
+ * Detail Panel
+ */
 #detailBody {
     color: white;
-    z-index: 9999;
+    z-index: var(--z-ui);
     display: block;
     text-shadow: 0 0 7px rgba(255, 255, 255, 0.7);
 }
@@ -561,7 +380,7 @@ body {
 
 #detailContainer {
     display: none;
-    background-color: rgba(0, 0, 0, 0.75);
+    background-color: var(--color-panel-bg);
     position: absolute;
     top: 0;
     bottom: 0;
@@ -569,7 +388,7 @@ body {
     padding: 0 20px 60px 20px;
     overflow: auto;
     width: 560px;
-    z-index: 9999 !important;
+    z-index: var(--z-ui) !important;
 }
 #detailContainer ul {
     margin-left: 20px;
@@ -580,7 +399,7 @@ body {
 
 #detailFooter {
     margin-top: 20px;
-    color: #ccc;
+    color: var(--color-text-muted);
     font-size: 12px;
 }
 
@@ -589,7 +408,7 @@ body {
     top: 0;
     right: 0;
     cursor: pointer;
-    color: #fff;
+    color: var(--color-text);
     padding: 10px;
     font-size: 28px;
 }
@@ -613,27 +432,24 @@ body {
     font-size: 20px;
 }
 
+/**
+ * Meta Info
+ */
 #meta {
     display: none;
     position: fixed;
     bottom: 0;
     left: 50%;
     text-align: center;
-    z-index: 9999;
-    color: #fff;
-    -webkit-transition: text-shadow 0.25s;
-    -moz-transition: text-shadow 0.25s;
-    -ms-transition: text-shadow 0.25s;
-    -o-transition: text-shadow 0.25s;
-    transition: text-shadow 0.25s;
-    text-shadow:
-        0 0 3px #2c47dc,
-        0 0 10px #eeeeff;
+    z-index: var(--z-ui);
+    color: var(--color-text);
+    transition: text-shadow var(--transition-normal);
+    text-shadow: var(--text-shadow-accent);
 }
 #meta p {
     vertical-align: bottom;
     padding: 20px 40px;
-    background: rgba(0, 0, 0, 0.9);
+    background: var(--color-panel-bg-solid);
 }
 #meta p a {
     text-decoration: none;
@@ -641,11 +457,12 @@ body {
     border: 0;
 }
 #meta:hover {
-    text-shadow:
-        0 0 5px #fff,
-        0 0 10px #eeeeff;
+    text-shadow: 0 0 5px #fff, 0 0 10px var(--color-accent-glow);
 }
 
+/**
+ * Tooltip
+ */
 div.tip {
     font-size: 14px;
     line-height: 14px;
@@ -654,40 +471,28 @@ div.tip {
     padding: 0;
     margin-top: 0;
     margin-left: 0;
-    color: #fff;
+    color: var(--color-text);
 }
 div.tip > div {
     display: inline-block;
     vertical-align: top;
 }
 
+/**
+ * Minimap
+ */
 #minimap {
     opacity: 0;
     position: fixed;
     right: 0;
     top: 0;
     bottom: 0;
-    color: #fff;
+    color: var(--color-text);
     text-align: center;
     padding: 20px;
-    -moz-user-select: -moz-none;
-    -khtml-user-select: none;
-    -webkit-user-select: none;
-    /*
-   Introduced in IE 10.
-   See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
-  */
-    -ms-user-select: none;
     user-select: none;
-    -webkit-transition: opacity 0.25s;
-    -moz-transition: opacity 0.25s;
-    -ms-transition: opacity 0.25s;
-    -o-transition: opacity 0.25s;
-    transition: opacity 0.25s;
-    z-index: 9999;
-    /**
-   * Zoom variables
-   */
+    transition: opacity var(--transition-normal);
+    z-index: var(--z-ui);
 }
 #minimap.ready {
     opacity: 0.8;
@@ -697,11 +502,7 @@ div.tip > div {
 }
 #minimap #home {
     cursor: pointer;
-    -webkit-transition: all 0.25s;
-    -moz-transition: all 0.25s;
-    -ms-transition: all 0.25s;
-    -o-transition: all 0.25s;
-    transition: all 0.25s;
+    transition: all var(--transition-normal);
 }
 #minimap #zoom-levels {
     left: 0;
@@ -710,11 +511,7 @@ div.tip > div {
     cursor: ns-resize;
     border-bottom: 2px solid white;
     border-top: 2px solid white;
-    -webkit-transition: all 0.25s;
-    -moz-transition: all 0.25s;
-    -ms-transition: all 0.25s;
-    -o-transition: all 0.25s;
-    transition: all 0.25s;
+    transition: all var(--transition-normal);
     margin-top: 10px;
 }
 #minimap #zoom-backdrop {
@@ -736,22 +533,14 @@ div.tip > div {
 }
 #minimap #about {
     position: absolute;
-    font-family: "Lekton", monospace;
+    font-family: var(--font-mono);
     font-size: 24px;
     width: 24px;
     line-height: 27px;
     text-align: center;
     height: 24px;
-    -webkit-border-radius: 24px;
-    -moz-border-radius: 24px;
-    -ms-border-radius: 24px;
-    -o-border-radius: 24px;
     border-radius: 24px;
-    -webkit-transition: all 0.25s;
-    -moz-transition: all 0.25s;
-    -ms-transition: all 0.25s;
-    -o-transition: all 0.25s;
-    transition: all 0.25s;
+    transition: all var(--transition-normal);
     font-weight: bold;
     cursor: pointer;
     bottom: 20px;
@@ -764,53 +553,39 @@ div.tip > div {
 }
 #minimap #tour {
     position: absolute;
-    font-family: "Lekton", monospace;
+    font-family: var(--font-mono);
     font-size: 14px;
     width: 50px;
     line-height: 23px;
     text-align: center;
     height: 20px;
-    -webkit-transition: all 0.25s;
-    -moz-transition: all 0.25s;
-    -ms-transition: all 0.25s;
-    -o-transition: all 0.25s;
-    transition: all 0.25s;
+    transition: all var(--transition-normal);
     font-weight: bold;
     border: 1px solid #ccc;
     cursor: pointer;
-    background: rgba(0, 0, 0, 0.9) url(../assets/textures/tourhighlight.png) center center
-        no-repeat;
+    background: var(--color-panel-bg-solid) url(../assets/textures/tourhighlight.png) center center no-repeat;
     bottom: 20px;
     right: 92px;
 }
 #minimap #heatvision {
     position: absolute;
-    font-family: "Lekton", monospace;
+    font-family: var(--font-mono);
     font-size: 14px;
     width: 105px;
     line-height: 23px;
     text-align: center;
     height: 20px;
-    -webkit-transition: all 0.25s;
-    -moz-transition: all 0.25s;
-    -ms-transition: all 0.25s;
-    -o-transition: all 0.25s;
-    transition: all 0.25s;
+    transition: all var(--transition-normal);
     font-weight: bold;
     border: 1px solid #ccc;
     cursor: pointer;
-    background: rgba(0, 0, 0, 0.9) url(../assets/textures/tourhighlight.png) center center
-        no-repeat;
+    background: var(--color-panel-bg-solid) url(../assets/textures/tourhighlight.png) center center no-repeat;
     bottom: 20px;
     right: 156px;
 }
 #minimap #sound {
     cursor: pointer;
-    -webkit-transition: all 0.25s;
-    -moz-transition: all 0.25s;
-    -ms-transition: all 0.25s;
-    -o-transition: all 0.25s;
-    transition: all 0.25s;
+    transition: all var(--transition-normal);
     bottom: 13px;
     right: 54px;
     position: absolute;
@@ -818,17 +593,16 @@ div.tip > div {
 }
 #minimap #soundoff {
     cursor: pointer;
-    -webkit-transition: all 0.25s;
-    -moz-transition: all 0.25s;
-    -ms-transition: all 0.25s;
-    -o-transition: all 0.25s;
-    transition: all 0.25s;
+    transition: all var(--transition-normal);
     bottom: 13px;
     right: 54px;
     position: absolute;
     display: none;
 }
 
+/**
+ * Superscript & References
+ */
 sup {
     vertical-align: super;
     font-size: 9.24px;
@@ -840,43 +614,20 @@ sup {
     visibility: hidden;
 }
 
-a {
-    -webkit-transition: border 0.25s;
-    -moz-transition: border 0.25s;
-    -ms-transition: border 0.25s;
-    -o-transition: border 0.25s;
-    transition: border 0.25s;
-}
-a:link,
-a:active,
-a:visited {
-    color: inherit;
-    text-decoration: none;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
-}
-a:hover {
-    border-bottom: 1px solid rgba(0, 0, 0, 0);
-    text-decoration: none;
-}
-
-::selection,
-::-moz-selection {
-    background: #2c47dc;
-}
-
+/**
+ * CSS 3D World
+ */
 #css-world {
     width: 100%;
     height: 100%;
-    -webkit-transform-style: preserve-3d;
-    -moz-transform-style: preserve-3d;
+    transform-style: preserve-3d;
     position: absolute;
 }
 
 #css-camera {
     width: 100%;
     height: 100%;
-    -webkit-transform-style: preserve-3d;
-    -moz-transform-style: preserve-3d;
+    transform-style: preserve-3d;
     position: absolute;
 }
 
@@ -888,11 +639,17 @@ a:hover {
     position: absolute;
 }
 
+/**
+ * Canvas
+ */
 canvas {
     pointer-events: none;
-    z-index: 10;
+    z-index: var(--z-canvas);
 }
 
+/**
+ * Chrome Experiments Badge
+ */
 #chrome-experiments {
     width: 141px;
     height: 72px;
