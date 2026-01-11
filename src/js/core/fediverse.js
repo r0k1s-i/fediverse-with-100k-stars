@@ -1,5 +1,6 @@
 
 import { constrain } from '../utils/math.js';
+import { addClass, removeClass, fadeIn, fadeOut } from '../utils/dom.js';
 
 var textureLoader = new THREE.TextureLoader();
 
@@ -204,8 +205,8 @@ export function generateFediverseInstances() {
   var shaderList = window.shaderList;
   var camera = window.camera;
   var attachLegacyMarker = window.attachLegacyMarker;
-  var $spectralGraph = window.$spectralGraph; 
-  var $iconNav = window.$iconNav;
+  var spectralGraphEl = window.spectralGraphEl;
+  var iconNavEl = window.iconNavEl;
 
   var container = new THREE.Object3D();
   var count = fediverseInstances.length;
@@ -384,11 +385,13 @@ export function generateFediverseInstances() {
     container.heatVision = !container.heatVision;
 
     if (container.heatVision) {
-      $spectralGraph.addClass("heatvision").fadeIn();
-      $iconNav.addClass("heatvision");
+      addClass(spectralGraphEl, "heatvision");
+      fadeIn(spectralGraphEl);
+      addClass(iconNavEl, "heatvision");
     } else {
-      $spectralGraph.removeClass("heatvision").fadeOut();
-      $iconNav.removeClass("heatvision");
+      removeClass(spectralGraphEl, "heatvision");
+      fadeOut(spectralGraphEl);
+      removeClass(iconNavEl, "heatvision");
     }
   };
 
