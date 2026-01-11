@@ -344,9 +344,10 @@ function initScene() {
     zoomOut(750);
   });
 
-  $.get("index_files//zoom-out.svg", function (resp) {
-    $(resp).find("svg").addClass("icon").appendTo($zoomback);
-  });
+  // 不再加载 zoom-out SVG 图标，已改用 ⁂ 符号
+  // $.get("index_files//zoom-out.svg", function (resp) {
+  //   $(resp).find("svg").addClass("icon").appendTo($zoomback);
+  // });
 
   setTimeout(function () {
     var s = "scale(1.0)";

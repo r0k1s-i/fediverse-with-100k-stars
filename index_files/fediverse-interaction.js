@@ -7,6 +7,47 @@ var fediverseInteraction = {
   lastClickTime: 0,
 };
 
+// 根据光谱索引（色相）映射星球类型
+// 光谱索引范围 0-1 对应色相 0-360
+// 用户数量影响星球的大小级别
+function getStarType(spectralIndex, userCount) {
+  // 根据用户数量确定大小级别
+  var sizeClass = "";
+  if (userCount >= 500000) {
+    sizeClass = "Supergiant";
+  } else if (userCount >= 100000) {
+    sizeClass = "Giant";
+  } else if (userCount >= 10000) {
+    sizeClass = "Main Sequence";
+  } else if (userCount >= 1000) {
+    sizeClass = "Sub-giant";
+  } else {
+    sizeClass = "Dwarf";
+  }
+
+  // 根据光谱索引（色相）确定颜色类型
+  var hue = spectralIndex * 360;
+  var colorType = "";
+
+  if (hue < 30 || hue >= 330) {
+    colorType = "Red";
+  } else if (hue < 60) {
+    colorType = "Orange";
+  } else if (hue < 90) {
+    colorType = "Yellow";
+  } else if (hue < 150) {
+    colorType = "Green";
+  } else if (hue < 210) {
+    colorType = "Cyan";
+  } else if (hue < 270) {
+    colorType = "Blue";
+  } else {
+    colorType = "Violet";
+  }
+
+  return colorType + " " + sizeClass;
+}
+
 function getInteractionThreshold() {
   if (typeof camera === "undefined") {
     return fediverseInteraction.baseThreshold;
@@ -347,39 +388,84 @@ function showInstanceDetails(data) {
   $title.text(data.name || data.domain);
 
   var html = '<div style="margin-top: 20px;">';
+
+  // 描述放在最前面
+  if (data.description) {
+    html +=
+      '<p style="font-style: italic; margin-bottom: 20px;">' +
+      data.description +
+      "</p>";
+  }
+
+  // 星球类型：软件名 + 星球类型
+  var spectralIndex = 0.5;
+  if (data.color && data.color.hsl) {
+    spectralIndex = data.color.hsl.h / 360;
+  }
+  var userCount = data.stats ? data.stats.user_count : 1;
+  var starType = getStarType(spectralIndex, userCount);
+  var softwareName = data.software ? data.software.name : "Unknown";
+
   html +=
-    "<p><strong>Software:</strong> " +
-    (data.software ? data.software.name : "Unknown") +
+    "<p><strong>Stellar Classification:</strong> " +
+    softwareName +
+    " · " +
+    starType +
     "</p>";
 
+  // 星球居民数（原Total Users）
   if (data.stats) {
     html +=
-      "<p><strong>Total Users:</strong> " +
+      "<p><strong>Planetary Population:</strong> " +
       numberWithCommas(data.stats.user_count) +
       "</p>";
+  }
+
+  // 宇宙坐标
+  if (data.position) {
+    // 换算为科学描述，使用光年作为单位（1单位 ≈ 10光年）
+    var x = (data.position.x * 10).toFixed(1);
+    var y = (data.position.y * 10).toFixed(1);
+    var z = (data.position.z * 10).toFixed(1);
+
+    // 格式化坐标，正数用+号，负数用-号
+    var formatCoord = function (val) {
+      return (val >= 0 ? "+" : "") + val;
+    };
+
     html +=
-      "<p><strong>Monthly Active Users:</strong> " +
-      numberWithCommas(data.stats.monthly_active_users) +
+      "<p><strong>Galactic Coordinates:</strong> " +
+      "α" +
+      formatCoord(x) +
+      " · " +
+      "β" +
+      formatCoord(y) +
+      " · " +
+      "γ" +
+      formatCoord(z) +
+      " ly" +
       "</p>";
   }
 
   if (data.first_seen_at) {
     html +=
-      "<p><strong>First Seen:</strong> " +
+      "<p><strong>First Observation:</strong> " +
       new Date(data.first_seen_at).toLocaleDateString() +
-      "</p>";
-  }
-
-  if (data.description) {
-    html +=
-      '<p style="margin-top:10px; font-style: italic;">' +
-      data.description +
       "</p>";
   }
 
   html += "</div>";
 
   $body.html(html);
+
+  // 设置 ↗ 符号的点击事件（跳转到实例）
+  var $instancePortal = $("#instance-portal");
+  $instancePortal.off("click").on("click", function (e) {
+    e.stopPropagation();
+    if (data.domain) {
+      window.open("https://" + data.domain, "_blank", "noopener,noreferrer");
+    }
+  });
 
   $detailContainer.fadeIn();
   $("#css-container").css("display", "none");
