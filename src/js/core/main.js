@@ -446,8 +446,9 @@ function sceneSetup() {
   }
 
   if (enableSolarSystem) {
-    var solarSystem = makeSolarSystem();
-    translating.add(solarSystem);
+    // Use Fediverse software ecosystem instead of traditional solar system
+    var fediverseSystem = makeFediverseSystem();
+    translating.add(fediverseSystem);
   }
 
   if (enableSpacePlane) {
