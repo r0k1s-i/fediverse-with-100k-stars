@@ -516,8 +516,8 @@ export function generateFediverseInstances() {
       // 这允许我们绘制正好 1.0 像素宽的线条，无论距离远近
       float df = fwidth(grid);
       
-      // 绘制约 1.2 像素宽的抗锯齿线
-      float line = 1.0 - smoothstep(0.0, df * 1.2, f);
+      // 绘制约 2.0 像素宽的抗锯齿线，增加可见度
+      float line = 1.0 - smoothstep(0.0, df * 2.0, f);
       
       // Circular mask fade out
       float edgeFade = 1.0 - smoothstep(0.4, 0.5, dist);
@@ -525,6 +525,7 @@ export function generateFediverseInstances() {
       // Inner fade
       float centerFade = smoothstep(0.0, 0.05, dist);
 
+      // 提高基础透明度，因为颜色较暗
       float finalAlpha = line * opacity * edgeFade * centerFade;
       
       if (finalAlpha < 0.01) discard;
@@ -535,7 +536,7 @@ export function generateFediverseInstances() {
 
   var rippleUniforms = {
     time: { value: 0 },
-    color: { value: new THREE.Color(0x113344) }, // 暗青色，避免太亮
+    color: { value: new THREE.Color(0x336699) }, // 提亮颜色，保持冷色调
     opacity: { value: 0 }
   };
 
@@ -565,7 +566,7 @@ export function generateFediverseInstances() {
       var targetOpacity = constrain(
         (camera.position.z - 300.0) * 0.001,
         0,
-        0.5,
+        0.8,
       );
       rippleUniforms.opacity.value = targetOpacity;
     } else {
