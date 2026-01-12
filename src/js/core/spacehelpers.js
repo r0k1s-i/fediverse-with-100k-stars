@@ -4,7 +4,6 @@ import { AUToLY, KMToLY } from '../utils/app.js';
 export function centerOn(vec3){
     var translating = window.translating;
     var updateMinimap = window.updateMinimap;
-    var tour = window.tour; 
     
 	var target = vec3.clone().negate();
 	translating.easePanning = new TWEEN.Tween(translating.position)
@@ -13,7 +12,7 @@ export function centerOn(vec3){
         y: target.y,
         z: target.z,
       }, 2200)
-      .easing(window.Tour ? window.Tour.Easing : TWEEN.Easing.Sinusoidal.InOut) 
+      .easing(TWEEN.Easing.Sinusoidal.InOut)
       .start()
       .onComplete(function() {
       	translating.easePanning = undefined;
@@ -40,7 +39,7 @@ export function zoomIn(v) {
       .to({
         z: v
       }, 3000)
-      .easing(window.Tour ? window.Tour.Easing : TWEEN.Easing.Sinusoidal.InOut)
+      .easing(TWEEN.Easing.Sinusoidal.InOut)
       .start()
       .onComplete(function() {
       	camera.easeZooming = undefined;

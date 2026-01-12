@@ -188,30 +188,13 @@ a:hover {
     left: 0;
     padding: 20px 20px 16px 20px;
 }
-#icon-nav #tour-button {
-    margin-top: -3.33333px;
-    opacity: 1;
-    border-radius: 50%;
-    animation-name: aura;
-    animation-duration: 2s;
-    animation-iteration-count: infinite;
-    animation-direction: alternate;
-    animation-timing-function: ease-in-out;
-    transition: background var(--transition-normal);
-}
-#icon-nav #tour-button:hover {
-    animation-play-state: paused;
-    background: rgba(255, 255, 255, 0.66);
-}
 #icon-nav > * {
     opacity: 0.8;
     vertical-align: top;
     cursor: pointer;
     display: inline-block;
 }
-#icon-nav > *:not(#tour-button) {
-    transition: opacity var(--transition-normal);
-}
+
 #icon-nav > *:hover {
     opacity: 1;
 }
@@ -552,22 +535,7 @@ div.tip > div {
     width: 24px;
     height: 24px;
 }
-#minimap #tour {
-    position: absolute;
-    font-family: var(--font-mono);
-    font-size: 14px;
-    width: 50px;
-    line-height: 23px;
-    text-align: center;
-    height: 20px;
-    transition: all var(--transition-normal);
-    font-weight: bold;
-    border: 1px solid #ccc;
-    cursor: pointer;
-    background: var(--color-panel-bg-solid) url(../assets/textures/tourhighlight.png) center center no-repeat;
-    bottom: 20px;
-    right: 92px;
-}
+
 #minimap #heatvision {
     position: absolute;
     font-family: var(--font-mono);
@@ -580,7 +548,7 @@ div.tip > div {
     font-weight: bold;
     border: 1px solid #ccc;
     cursor: pointer;
-    background: var(--color-panel-bg-solid) url(../assets/textures/tourhighlight.png) center center no-repeat;
+    background: var(--color-panel-bg-solid);
     bottom: 20px;
     right: 156px;
 }

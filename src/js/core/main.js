@@ -41,7 +41,7 @@ import { generateGalaxy } from './galaxy.js';
 import './solarsystem.js';
 import { makeFediverseSystem } from './fediverse-solarsystem.js';
 import './sun.js';
-import { Tour, GALAXY_TOUR } from './tour.js';
+
 import { updateMinimap, initializeMinimap, setMinimap } from './minimap.js';
 
 var masterContainer = document.getElementById("visualization");
@@ -54,12 +54,9 @@ var enableDust = false;
 var enableSolarSystem = true;
 var enableSpacePlane = true;
 var enableStarModel = true;
-var enableTour = true;
 var enableDirector = true;
 
 var firstTime = localStorage ? localStorage.getItem("first") == null : true;
-
-var tour = new Tour(GALAXY_TOUR);
 
 window.initialAutoRotate = true;
 
@@ -315,10 +312,6 @@ function initScene() {
   }
 
   camera.update = function () {
-    if (this.__tour) {
-      return;
-    }
-
     if (this.easeZooming) return;
 
     camera.position.z += (camera.position.target.z - camera.position.z) * 0.125;
@@ -392,15 +385,7 @@ function initScene() {
     iconNavEl.isReady = true;
 
     if (firstTime) {
-      displayIntroMessage();
       if (localStorage) localStorage.setItem("first", 0);
-    } else {
-      _.delay(function () {
-        var tourButton = find(iconNavEl, "#tour-button");
-        if (tourButton) {
-          tourButton.dispatchEvent(new MouseEvent("mouseover", { bubbles: true }));
-        }
-      }, 500);
     }
 
 
@@ -497,94 +482,92 @@ function animate() {
   var rotateVX = window.rotateVX;
   var rotateVY = window.rotateVY;
 
-  if (!camera.__tour) {
-    rotateX += rotateVX;
-    rotateY += rotateVY;
+  rotateX += rotateVX;
+  rotateY += rotateVY;
 
-    rotateVX *= 0.9;
-    rotateVY *= 0.9;
+  rotateVX *= 0.9;
+  rotateVY *= 0.9;
 
-    if (window.dragging) {
-      rotateVX *= 0.6;
-      rotateVY *= 0.6;
+  if (window.dragging) {
+    rotateVX *= 0.6;
+    rotateVY *= 0.6;
+  }
+
+  if (window.initialAutoRotate) rotateVY = 0.0003;
+
+  var spinCutoff = 100;
+  if (translating.position.length() < 0.0001) {
+    spinCutoff = 2;
+  }
+
+  if (camera.position.z < spinCutoff) {
+    if (starModel) {
+      starModel.rotation.x = rotateX;
+      starModel.rotation.y = rotateY;
     }
-
-    if (window.initialAutoRotate) rotateVY = 0.0003;
-
-    var spinCutoff = 100;
-    if (translating.position.length() < 0.0001) {
-      spinCutoff = 2;
+    rotating.rotation.x = 0;
+    rotating.rotation.y = 0;
+  } else {
+    rotating.rotation.x = rotateX;
+    rotating.rotation.y = rotateY;
+    if (starModel) {
+      starModel.rotation.x = rotateX;
+      starModel.rotation.y = rotateY;
     }
+  }
 
-    if (camera.position.z < spinCutoff) {
-      if (starModel) {
-        starModel.rotation.x = rotateX;
-        starModel.rotation.y = rotateY;
-      }
-      rotating.rotation.x = 0;
-      rotating.rotation.y = 0;
-    } else {
-      rotating.rotation.x = rotateX;
-      rotating.rotation.y = rotateY;
-      if (starModel) {
-        starModel.rotation.x = rotateX;
-        starModel.rotation.y = rotateY;
-      }
-    }
+  var isZoomedIn = camera.position.target.z < markerThreshold.min;
+  var isZoomedToSolarSystem = camera.position.target.z > markerThreshold.min;
 
-    var isZoomedIn = camera.position.target.z < markerThreshold.min;
-    var isZoomedToSolarSystem = camera.position.target.z > markerThreshold.min;
+  var fediverseInteraction = window.fediverseInteraction;
 
-    var fediverseInteraction = window.fediverseInteraction;
+  var isFediverseHover =
+    typeof fediverseInteraction !== "undefined" &&
+    fediverseInteraction.intersected;
 
-    var isFediverseHover =
-      typeof fediverseInteraction !== "undefined" &&
-      fediverseInteraction.intersected;
+  var atFediverseCenter =
+    typeof isAtFediverseCenter === "function" && isAtFediverseCenter();
 
-    var atFediverseCenter =
-      typeof isAtFediverseCenter === "function" && isAtFediverseCenter();
+  var detailDisplay = detailContainerEl ? detailContainerEl.style.display : "none";
+  var starNameDisplay = starNameEl ? starNameEl.style.display : "none";
+  var starNameOpacity = starNameEl ? parseFloat(starNameEl.style.opacity || 0) : 0;
+  var cssDisplay = cssContainerEl ? cssContainerEl.style.display : "block";
 
-    var detailDisplay = detailContainerEl ? detailContainerEl.style.display : "none";
-    var starNameDisplay = starNameEl ? starNameEl.style.display : "none";
-    var starNameOpacity = starNameEl ? parseFloat(starNameEl.style.opacity || 0) : 0;
-    var cssDisplay = cssContainerEl ? cssContainerEl.style.display : "block";
+  if (
+    isZoomedIn &&
+    camera.position.z < markerThreshold.min &&
+    detailDisplay === "none" &&
+    starNameDisplay === "none" &&
+    !atFediverseCenter
+  ) {
+    fadeIn(starNameEl);
+  } else if (
+    !isFediverseHover &&
+    (isZoomedToSolarSystem || detailDisplay !== "none") &&
+    (starNameOpacity === 1.0 || starNameOpacity === "")
+  ) {
+    fadeOut(starNameEl);
+  }
 
-    if (
-      isZoomedIn &&
-      camera.position.z < markerThreshold.min &&
-      detailDisplay === "none" &&
-      starNameDisplay === "none" &&
-      !atFediverseCenter
-    ) {
-      fadeIn(starNameEl);
-    } else if (
-      !isFediverseHover &&
-      (isZoomedToSolarSystem || detailDisplay !== "none") &&
-      (starNameOpacity === 1.0 || starNameOpacity === "")
-    ) {
-      fadeOut(starNameEl);
-    }
+  if (isZoomedIn && cssDisplay !== "none") {
+    css(cssContainerEl, { display: "none" });
+  } else if (!isZoomedIn && cssDisplay === "none") {
+    css(cssContainerEl, { display: "block" });
+  }
 
-    if (isZoomedIn && cssDisplay !== "none") {
-      css(cssContainerEl, { display: "none" });
-    } else if (!isZoomedIn && cssDisplay === "none") {
-      css(cssContainerEl, { display: "block" });
-    }
+  if (
+    isZoomedToSolarSystem &&
+    detailDisplay !== "none" &&
+    !detailContainerEl.classList.contains("about")
+  ) {
+    fadeOut(detailContainerEl);
+  }
 
-    if (
-      isZoomedToSolarSystem &&
-      detailDisplay !== "none" &&
-      !detailContainerEl.classList.contains("about")
-    ) {
-      fadeOut(detailContainerEl);
-    }
-
-    if (detailDisplay === "none") {
-      camera.position.x *= 0.95;
-    } else {
-      camera.position.x +=
-        (camera.position.target.x - camera.position.x) * 0.95;
-    }
+  if (detailDisplay === "none") {
+    camera.position.x *= 0.95;
+  } else {
+    camera.position.x +=
+      (camera.position.target.x - camera.position.x) * 0.95;
   }
 
   var targetFov = constrain(
@@ -629,7 +612,7 @@ function animate() {
 
   requestAnimationFrame(animate);
 
-  if (tour.touring || camera.easeZooming || translating.easePanning) {
+  if (camera.easeZooming || translating.easePanning) {
     updateMinimap();
 
     TWEEN.update();
@@ -659,26 +642,7 @@ function unmuteSound() {
   if (localStorage) localStorage.setItem("sound", 1);
 }
 
-function displayIntroMessage() {
-  Tour.meta.style.display = "block";
-  Tour.meta.style.opacity = "1";
-  tour
-    .showMessage("Welcome to the Fediverse Universe.", 5000)
-    .showMessage(
-      "This is a visualization of Fediverse instances as stars.",
-      5000,
-    )
-    .showMessage("Scroll and zoom to explore.", 4000, function () {
-      firstTime = false;
-      window.firstTime = false;
-      trigger(window, "resize");
-      var tourButton = find(iconNavEl, "#tour-button");
-      if (tourButton) {
-        tourButton.dispatchEvent(new MouseEvent("mouseover", { bubbles: true }));
-      }
-    })
-    .endMessages();
-}
+
 
 window.start = start;
 window.starNameEl = starNameEl;

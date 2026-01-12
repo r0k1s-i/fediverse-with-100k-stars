@@ -9,7 +9,7 @@ var count = 0;
 var timer = null;
 var dragged = false;
 
-var soundOnEl, soundOffEl, heatvisionEl, tourEl, homeEl;
+var soundOnEl, soundOffEl, heatvisionEl, homeEl;
 
 var domElement = $('#minimap');
 var minimapEl = find(domElement, '#zoom-levels');
@@ -205,29 +205,7 @@ fetch('src/assets/icons/sound-off.svg')
     }
   });
 
-fetch('src/assets/icons/big-tour.svg')
-  .then(function(response) { return response.text(); })
-  .then(function(resp) {
-    var iconNavEl = window.iconNavEl || $('#icon-nav');
-    var tour = window.tour;
-
-    var parser = new DOMParser();
-    var doc = parser.parseFromString(resp, 'image/svg+xml');
-    tourEl = doc.querySelector('svg');
-    if (tourEl) {
-      addClass(tourEl, 'icon');
-      tourEl.id = 'tour-button';
-      tourEl.setAttribute('data-tip', 'Take a tour.');
-      tourEl.addEventListener('click', function(e) {
-        e.preventDefault();
-        if (tour) tour.start();
-      });
-      if (iconNavEl) iconNavEl.appendChild(tourEl);
-
-      loadHeatVisionIcon();
-    }
-    updateCount();
-  });
+loadHeatVisionIcon();
 
 function loadHeatVisionIcon() {
   fetch('src/assets/icons/heat-vision.svg')

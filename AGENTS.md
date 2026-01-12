@@ -127,7 +127,7 @@ npx http-server .
 │   ├── solarsystem.js  # Solar system planets and orbits
 │   ├── starmodel.js    # Individual star 3D models
 │   ├── sun.js          # Sun rendering
-│   ├── tour.js         # Guided tour functionality
+
 │   ├── mousekeyboard.js # Input handling
 │   ├── util.js         # Utility functions
 │   ├── three.min.js    # Three.js r58 (legacy)
@@ -326,8 +326,7 @@ if (mesh.update !== undefined) {
 ### Modifying Camera Behavior
 Edit `camera.update()` in `main.js` - handles zoom easing and position updates.
 
-### Adding Tour Stops
-Modify `GALAXY_TOUR` constant (defined elsewhere, used by `Tour` class).
+
 
 ---
 
