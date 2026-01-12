@@ -433,9 +433,9 @@ function initScene() {
         document.removeEventListener("keydown", startAudioOnInteraction);
       };
       
-      document.addEventListener("click", startAudioOnInteraction, { once: true });
-      document.addEventListener("touchstart", startAudioOnInteraction, { once: true });
-      document.addEventListener("keydown", startAudioOnInteraction, { once: true });
+      document.addEventListener("click", startAudioOnInteraction, { once: true, capture: true });
+      document.addEventListener("touchstart", startAudioOnInteraction, { once: true, capture: true });
+      document.addEventListener("keydown", startAudioOnInteraction, { once: true, capture: true });
     });
   }
 
