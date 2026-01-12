@@ -302,7 +302,6 @@ if (mesh.update !== undefined) {
 | Three.js | r58 (legacy) | 3D WebGL rendering |
 | jQuery | 1.7.1 | DOM manipulation |
 | Underscore.js | 1.x | Utility functions |
-| dat.GUI | - | Debug controls |
 | Tween.js | - | Animation interpolation |
 
 ---

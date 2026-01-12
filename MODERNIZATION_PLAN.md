@@ -23,7 +23,6 @@
 | Three.js | r58 | 已废弃 API，无 WebGL2，性能差 |
 | jQuery | 1.7.1 | 冗余，现代浏览器不需要 |
 | Underscore.js | 1.x | 可用原生 Array 方法替代 |
-| dat.GUI | 旧版 | 可保留或升级 |
 | Tween.js | 旧版 | 可保留或升级 |
 
 ### 代码模式问题
@@ -313,7 +312,6 @@ transition: ...;
 src/css/
 ├── style.css      # 主样式
 ├── fonts.css      # 字体
-├── dat-gui.css    # dat.GUI 覆盖样式 (新建)
 └── context-menu.css # 右键菜单样式 (新建)
 ```
 
@@ -499,7 +497,7 @@ git checkout v2.0-phase1
 - ✅ **Phase 4 完成**: CSS 现代化
   - 移除 index.html 中所有内联样式，迁移至独立文件
   - 重构 `src/css/style.css`，移除 400+ 行冗余 vendor prefixes
-  - 创建 `src/css/dat-gui.css` 和 `src/css/context-menu.css`
+  - 创建 `src/css/context-menu.css`
   - 引入 CSS 变量系统 (:root) 统一管理设计 Tokens
   - 优化 CSS 选择器和代码结构
 

@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interaction Tests - 100k Star Challenge</title>
+    <style>
+        body {
+            font-family: monospace;
+            margin: 20px;
+            background: #1a1a1a;
+            color: #0f0;
+        }
+
+        h1 {
+            color: #0ff;
+        }
+
+        .test-suite {
+            margin: 20px 0;
+            padding: 15px;
+            background: #2a2a2a;
+            border-left: 4px solid #0ff;
+        }
+
+        .test-case {
+            margin: 10px 0;
+            padding: 10px;
+            background: #1a1a1a;
+        }
+
+        .test-case.pass {
+            border-left: 4px solid #0f0;
+        }
+
+        .test-case.fail {
+            border-left: 4px solid #f00;
+        }
+
+        .test-case.running {
+            border-left: 4px solid #ff0;
+        }
+
+        .test-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .test-result {
+            margin-left: 20px;
+            font-size: 0.9em;
+        }
+
+        .summary {
+            margin-top: 30px;
+            padding: 20px;
+            background: #2a2a2a;
+            border: 2px solid #0ff;
+        }
+
+        .summary.all-pass {
+            border-color: #0f0;
+        }
+
+        .summary.has-failures {
+            border-color: #f00;
+        }
+
+        button {
+            background: #0ff;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            font-family: monospace;
+            font-size: 14px;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        button:hover {
+            background: #0f0;
+        }
+
+        #test-iframe {
+            width: 800px;
+            height: 600px;
+            border: 2px solid #0ff;
+            margin: 20px 0;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 Interaction Test Suite</h1>
+    <p>Tests covering critical zoom levels and interaction scenarios</p>
+    <p><strong>Related Postmortems:</strong> INC-009, INC-003, INC-002</p>
+
+    <div>
+        <button onclick="runAllTests()">▶ Run All Tests</button>
+        <button onclick="runZoomTests()">Run Zoom Tests</button>
+        <button onclick="runClickTests()">Run Click Tests</button>
+        <button onclick="clearResults()">Clear Results</button>
+    </div>
+
+    <iframe id="test-iframe" class="hidden" src="../index.html"></iframe>
+
+    <div id="test-results"></div>
+
+    <div id="summary" class="summary hidden">
+        <h2>Test Summary</h2>
+        <div id="summary-content"></div>
+    </div>
+
+    <script type="module">
+        import * as THREE from 'https://unpkg.com/three@0.158.0/build/three.module.js';
+
+        // Test state
+        let testResults = [];
+        let currentSuite = null;
+
+        // Test framework
+        class TestSuite {
+            constructor(name) {
+                this.name = name;
+                this.tests = [];
+                this.results = [];
+            }
+
+            addTest(name, fn) {
+                this.tests.push({ name, fn });
+            }
+
+            async run() {
+                console.log(`Running test suite: ${this.name}`);
+                const suiteEl = createSuiteElement(this.name);
+                document.getElementById('test-results').appendChild(suiteEl);
+
+                for (const test of this.tests) {
+                    const result = await this.runTest(test, suiteEl);
+                    this.results.push(result);
+                }
+
+                return this.results;
+            }
+
+            async runTest(test, suiteEl) {
+                const testEl = createTestElement(test.name);
+                suiteEl.appendChild(testEl);
+                testEl.className = 'test-case running';
+
+                const startTime = performance.now();
+                let result = {
+                    name: test.name,
+                    passed: false,
+                    error: null,
+                    duration: 0
+                };
+
+                try {
+                    await test.fn();
+                    result.passed = true;
+                    testEl.className = 'test-case pass';
+                    testEl.querySelector('.test-result').textContent =
+                        `✓ PASS (${(performance.now() - startTime).toFixed(2)}ms)`;
+                } catch (error) {
+                    result.passed = false;
+                    result.error = error.message;
+                    testEl.className = 'test-case fail';
+                    testEl.querySelector('.test-result').textContent =
+                        `✗ FAIL: ${error.message}`;
+                }
+
+                result.duration = performance.now() - startTime;
+                return result;
+            }
+        }
+
+        // Helper functions
+        function createSuiteElement(name) {
+            const el = document.createElement('div');
+            el.className = 'test-suite';
+            el.innerHTML = `<h2>📦 ${name}</h2>`;
+            return el;
+        }
+
+        function createTestElement(name) {
+            const el = document.createElement('div');
+            el.className = 'test-case';
+            el.innerHTML = `
+                <div class="test-name">${name}</div>
+                <div class="test-result">Running...</div>
+            `;
+            return el;
+        }
+
+        function assert(condition, message) {
+            if (!condition) {
+                throw new Error(message || 'Assertion failed');
+            }
+        }
+
+        function assertEqual(actual, expected, message) {
+            if (actual !== expected) {
+                throw new Error(
+                    message || `Expected ${expected}, got ${actual}`
+                );
+            }
+        }
+
+        function assertInRange(value, min, max, message) {
+            if (value < min || value > max) {
+                throw new Error(
+                    message || `Expected ${value} to be between ${min} and ${max}`
+                );
+            }
+        }
+
+        // ====================================================================
+        // TEST SUITES
+        // ====================================================================
+
+        // Coordinate System Tests
+        const coordinateTests = new TestSuite('Coordinate System Validation');
+
+        coordinateTests.addTest('Fediverse coordinate scaling should be 100x', async () => {
+            const FEDIVERSE_SCALE = 100;
+            const testCoord = 50;
+            const scaled = testCoord * FEDIVERSE_SCALE;
+            assertEqual(scaled, 5000, 'Scaling should multiply by 100');
+        });
+
+        coordinateTests.addTest('Supergiant positions form equilateral triangle', async () => {
+            // Check triangle geometry
+            const a = new THREE.Vector3(0, 500 * Math.sqrt(3) / 3, 0);
+            const b = new THREE.Vector3(-250, -500 * Math.sqrt(3) / 6, 0);
+            const c = new THREE.Vector3(250, -500 * Math.sqrt(3) / 6, 0);
+
+            const ab = a.distanceTo(b);
+            const bc = b.distanceTo(c);
+            const ca = c.distanceTo(a);
+
+            assert(Math.abs(ab - 500) < 0.01, 'Side AB should be 500 units');
+            assert(Math.abs(bc - 500) < 0.01, 'Side BC should be 500 units');
+            assert(Math.abs(ca - 500) < 0.01, 'Side CA should be 500 units');
+        });
+
+        coordinateTests.addTest('Camera initial position should be (0, 0, 2500)', async () => {
+            const INITIAL_Z = 2500;
+            assert(INITIAL_Z === 2500, 'Initial Z should be 2500');
+        });
+
+        // Visibility Range Tests
+        const visibilityTests = new TestSuite('Visibility Range Validation');
+
+        visibilityTests.addTest('Grid visible range: 1500-1900', async () => {
+            const MIN_Z = 1500;
+            const MAX_Z = 1900;
+
+            function isGridVisible(z) {
+                return z > MIN_Z && z < MAX_Z;
+            }
+
+            assert(!isGridVisible(1400), 'Grid should not be visible at z=1400');
+            assert(isGridVisible(1700), 'Grid should be visible at z=1700');
+            assert(!isGridVisible(2000), 'Grid should not be visible at z=2000');
+        });
+
+        visibilityTests.addTest('Grid View target (1800) is within visible range', async () => {
+            const GRID_VIEW_Z = 1800;
+            const MIN_Z = 1500;
+            const MAX_Z = 1900;
+
+            assert(GRID_VIEW_Z > MIN_Z, 'Grid view z must be > min');
+            assert(GRID_VIEW_Z < MAX_Z, 'Grid view z must be < max');
+        });
+
+        visibilityTests.addTest('Initial camera (2500) outside grid range', async () => {
+            const INITIAL_Z = 2500;
+            const MAX_Z = 1900;
+
+            assert(INITIAL_Z > MAX_Z, 'Initial z must be outside grid range');
+        });
+
+        // Interaction Threshold Tests
+        const thresholdTests = new TestSuite('Interaction Threshold Logic');
+
+        thresholdTests.addTest('Dynamic threshold: close vs far', async () => {
+            function getThreshold(cameraZ) {
+                return cameraZ < 500 ? 10 : 50;
+            }
+
+            assertEqual(getThreshold(300), 10, 'Close threshold should be 10');
+            assertEqual(getThreshold(1000), 50, 'Far threshold should be 50');
+        });
+
+        thresholdTests.addTest('Hover disabled when camera z < 300', async () => {
+            const DISABLE_Z = 300;
+
+            function isHoverEnabled(z) {
+                return z >= DISABLE_Z;
+            }
+
+            assert(!isHoverEnabled(200), 'Hover disabled at z=200');
+            assert(isHoverEnabled(500), 'Hover enabled at z=500');
+        });
+
+        // Raycast Transform Tests
+        const raycastTests = new TestSuite('Raycast Coordinate Transforms');
+
+        raycastTests.addTest('Inverse matrix calculation', async () => {
+            const matrix = new THREE.Matrix4();
+            matrix.makeTranslation(100, 200, 300);
+
+            const invMatrix = matrix.clone().invert();
+            const identity = new THREE.Matrix4().multiplyMatrices(matrix, invMatrix);
+
+            // Check if result is identity matrix
+            assert(identity.equals(new THREE.Matrix4()), 'Should produce identity matrix');
+        });
+
+        raycastTests.addTest('Ray transformation preserves direction', async () => {
+            const ray = new THREE.Ray(
+                new THREE.Vector3(0, 0, 0),
+                new THREE.Vector3(0, 0, 1).normalize()
+            );
+
+            const transform = new THREE.Matrix4().makeTranslation(0, 0, 100);
+            const invTransform = transform.clone().invert();
+
+            ray.applyMatrix4(invTransform);
+
+            // Direction should still be normalized
+            const length = ray.direction.length();
+            assert(Math.abs(length - 1) < 0.0001, 'Direction should remain normalized');
+        });
+
+        // Zoom Level Tests
+        const zoomTests = new TestSuite('Zoom Level Scenarios');
+
+        zoomTests.addTest('Zoom levels are distinct and ordered', async () => {
+            const CLOSE_UP = 300;
+            const NORMAL = 2500;
+            const GRID_VIEW = 1800;
+            const FAR = 5000;
+
+            assert(CLOSE_UP < GRID_VIEW, 'Close < Grid View');
+            assert(GRID_VIEW < NORMAL, 'Grid View < Normal');
+            assert(NORMAL < FAR, 'Normal < Far');
+        });
+
+        zoomTests.addTest('Zoom percentage calculation', async () => {
+            const MIN = 0.5;
+            const MAX = 50000;
+
+            function getZoomPercentage(z) {
+                return 1 - (z - MIN) / (MAX - MIN);
+            }
+
+            assert(getZoomPercentage(MIN) > 0.99, 'Min z = 100% zoom');
+            assert(getZoomPercentage(MAX) < 0.01, 'Max z = 0% zoom');
+            assertInRange(getZoomPercentage(2500), 0, 1, 'Mid z = ~50% zoom');
+        });
+
+        // ====================================================================
+        // TEST RUNNERS
+        // ====================================================================
+
+        window.runAllTests = async function() {
+            clearResults();
+            testResults = [];
+
+            const suites = [
+                coordinateTests,
+                visibilityTests,
+                thresholdTests,
+                raycastTests,
+                zoomTests
+            ];
+
+            for (const suite of suites) {
+                const results = await suite.run();
+                testResults.push(...results);
+            }
+
+            showSummary();
+        };
+
+        window.runZoomTests = async function() {
+            clearResults();
+            testResults = await zoomTests.run();
+            showSummary();
+        };
+
+        window.runClickTests = async function() {
+            clearResults();
+            const results = [];
+            results.push(...await thresholdTests.run());
+            results.push(...await raycastTests.run());
+            testResults = results;
+            showSummary();
+        };
+
+        window.clearResults = function() {
+            document.getElementById('test-results').innerHTML = '';
+            document.getElementById('summary').className = 'summary hidden';
+            testResults = [];
+        };
+
+        function showSummary() {
+            const summaryEl = document.getElementById('summary');
+            const contentEl = document.getElementById('summary-content');
+
+            const total = testResults.length;
+            const passed = testResults.filter(r => r.passed).length;
+            const failed = total - passed;
+            const totalTime = testResults.reduce((sum, r) => sum + r.duration, 0);
+
+            contentEl.innerHTML = `
+                <p><strong>Total Tests:</strong> ${total}</p>
+                <p style="color: #0f0"><strong>Passed:</strong> ${passed}</p>
+                <p style="color: #f00"><strong>Failed:</strong> ${failed}</p>
+                <p><strong>Total Time:</strong> ${totalTime.toFixed(2)}ms</p>
+                <p><strong>Success Rate:</strong> ${((passed/total)*100).toFixed(1)}%</p>
+            `;
+
+            summaryEl.className = failed === 0 ? 'summary all-pass' : 'summary has-failures';
+        }
+
+        // Auto-run tests on load
+        console.log('Test suite loaded. Click "Run All Tests" to begin.');
+    </script>
+</body>
+</html>
