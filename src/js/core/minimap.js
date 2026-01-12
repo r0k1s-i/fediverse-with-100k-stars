@@ -2,7 +2,7 @@ import { map, constrain } from '../utils/math.js';
 import { $, css, addClass, fadeIn, fadeOut, find, html, on, ajax } from '../utils/dom.js';
 
 var border_width = 1;
-var padding = 40;
+var padding = 60;
 
 var ready = false;
 var active = false;
