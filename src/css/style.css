@@ -475,7 +475,7 @@ div.tip > div {
     text-align: center;
     padding: 20px;
     user-select: none;
-    transition: opacity var(--transition-normal);
+    transition: opacity 1s ease;
     z-index: var(--z-ui);
 }
 #minimap.ready {
@@ -540,7 +540,7 @@ div.tip > div {
     height: 24px;
     transition: all var(--transition-normal);
     cursor: pointer;
-    bottom: 55px;
+    bottom: 60px;
     margin-left: -2px;
     opacity: 0.7;
 }
