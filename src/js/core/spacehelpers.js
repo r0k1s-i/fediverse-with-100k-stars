@@ -109,9 +109,11 @@ export function goToGridView() {
     // gridPlane 在 z=300-1500 可见，800 为最佳观察距离
     var targetZ = 800;
     
-    // 三主星在 z=0 的 XY 平面，rotateX=0 为正面观察，0.3 为斜视约 17 度
-    var targetRotateX = 0.3;
-    var targetRotateY = Math.PI / 2;
+    // 关键修正：
+    // 1. rotateY = 0: 正对 XY 平面（三主星所在平面）
+    // 2. rotateX = PI/3 (~60度): 大角度俯视，使垂直的 XY 平面在视觉上呈现为"向后倾斜的地面"，形成水平波纹效果
+    var targetRotateX = Math.PI / 3;
+    var targetRotateY = 0;
 
     var translating = window.translating;
     if (translating) {
@@ -138,6 +140,11 @@ export function goToGridView() {
 
     var currentRotateX = window.rotateX || 0;
     var currentRotateY = window.rotateY || 0;
+    
+    // 规范化角度到 -PI ~ PI 以确保最短路径旋转
+    while (currentRotateY > Math.PI) currentRotateY -= Math.PI * 2;
+    while (currentRotateY < -Math.PI) currentRotateY += Math.PI * 2;
+    
     var startTime = Date.now();
     var duration = 2000;
     
@@ -145,6 +152,7 @@ export function goToGridView() {
         var elapsed = Date.now() - startTime;
         var progress = Math.min(elapsed / duration, 1);
         var eased = -(Math.cos(Math.PI * progress) - 1) / 2;
+        
         window.rotateX = currentRotateX + (targetRotateX - currentRotateX) * eased;
         window.rotateY = currentRotateY + (targetRotateY - currentRotateY) * eased;
         
