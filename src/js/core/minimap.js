@@ -5,6 +5,7 @@ var border_width = 1;
 var padding = 30;
 
 var ready = false;
+var active = false;
 var count = 0;
 var timer = null;
 var dragged = false;
@@ -59,8 +60,8 @@ window.addEventListener('resize', function() {
       clearTimeout(timer);
     }
     timer = setTimeout(function() {
-      if (firstTime == false)
-        window.dispatchEvent(new Event('resize'));
+      // Force loop to run regardless of firstTime to ensure minimap appears
+      if (active) window.dispatchEvent(new Event('resize'));
     }, 500);
 
     return;
@@ -75,7 +76,7 @@ window.addEventListener('resize', function() {
     minimapEl.style.height = (h - border_width * 2) + 'px';
   }
 
-  if (domElement && !domElement.classList.contains('ready')) {
+  if (domElement && !domElement.classList.contains('ready') && active) {
     addClass(domElement, 'ready');
   }
 });
@@ -86,6 +87,11 @@ window.dispatchEvent(new Event('resize'));
 
 export function initializeMinimap() {
   updateMinimap();
+}
+
+export function activateMinimap() {
+  active = true;
+  window.dispatchEvent(new Event('resize'));
 }
 
 export function updateMinimap() {
@@ -328,6 +334,7 @@ function updateCount() {
 }
 
 window.initializeMinimap = initializeMinimap;
+window.activateMinimap = activateMinimap;
 window.updateMinimap = updateMinimap;
 window.setScrollPositionFromTouch = setScrollPositionFromTouch;
 window.setMinimap = setMinimap;

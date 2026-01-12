@@ -42,7 +42,7 @@ import './solarsystem.js';
 import { makeFediverseSystem } from './fediverse-solarsystem.js';
 import './sun.js';
 
-import { updateMinimap, initializeMinimap, setMinimap } from './minimap.js';
+import { updateMinimap, initializeMinimap, setMinimap, activateMinimap } from './minimap.js';
 
 var masterContainer = document.getElementById("visualization");
 
@@ -417,8 +417,12 @@ function initScene() {
 
   var playPromise = document.getElementById("bgmusicA").play();
   if (playPromise !== undefined) {
-    playPromise.catch(function (error) {
+    playPromise.then(function() {
+      if (activateMinimap) activateMinimap();
+    }).catch(function (error) {
       var startAudioOnInteraction = function() {
+        if (activateMinimap) activateMinimap();
+
         if (localStorage && localStorage.getItem("sound") == 0) {
           return;
         }
