@@ -27,7 +27,6 @@ export const globals = {
     
     shaderList: null,
     
-    enableFediverse: true,
     enableDataStar: true,
     enableSkybox: true,
     enableGalaxy: true,

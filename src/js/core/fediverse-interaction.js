@@ -128,7 +128,6 @@ export function initFediverseInteraction() {
 }
 
 function onFediverseMouseMove(event) {
-  var enableFediverse = window.enableFediverse;
   var camera = window.camera;
   var fediverseMeshes = window.fediverseMeshes;
   var fediverseInstances = window.fediverseInstances;
@@ -136,7 +135,6 @@ function onFediverseMouseMove(event) {
   var translating = window.translating;
   var InteractionMath = window.InteractionMath;
 
-  if (!enableFediverse) return;
   if (typeof camera === "undefined") return;
 
   fediverseInteraction.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
@@ -299,7 +297,6 @@ function isClickOnUI(event) {
 }
 
 function onFediverseClick(event) {
-  var enableFediverse = window.enableFediverse;
   var camera = window.camera;
   var markerThreshold = window.markerThreshold;
   var translating = window.translating;
@@ -313,8 +310,6 @@ function onFediverseClick(event) {
   var centerOn = window.centerOn;
   var zoomIn = window.zoomIn;
   var starNameEl = window.starNameEl || $("#star-name");
-
-  if (!enableFediverse) return;
 
   if (isClickOnUI(event)) {
     return;

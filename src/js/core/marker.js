@@ -15,7 +15,6 @@ export function updateMarkers() {
 export function attachMarker(obj, size) {
   var camera = window.camera;
   var markerThreshold = window.markerThreshold;
-  var enableFediverse = window.enableFediverse;
   var starSystems = window.starSystems;
   var starNameEl = window.starNameEl;
   var setStarModel = window.setStarModel;
@@ -126,8 +125,6 @@ export function attachMarker(obj, size) {
     });
 
     var markerClick = function (e) {
-      if (enableFediverse) return;
-
       var vec = marker.absPosition.clone();
 
       if (vec.length() !== 0) {
@@ -182,7 +179,6 @@ export function attachMarker(obj, size) {
   };
 
   marker.select = function () {
-    if (enableFediverse) return;
     var vec = marker.absPosition.clone();
 
     if (enableStarModel == false) return;

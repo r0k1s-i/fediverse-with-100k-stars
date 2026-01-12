@@ -123,7 +123,7 @@ npx http-server .
 ├── index_files/        # All source files and assets
 │   ├── main.js         # Core initialization and animation loop
 │   ├── galaxy.js       # Milky Way galaxy generation
-│   ├── hipparcos.js    # Hipparcos star catalog rendering
+│   ├── fediverse.js    # Fediverse instance rendering
 │   ├── solarsystem.js  # Solar system planets and orbits
 │   ├── starmodel.js    # Individual star 3D models
 │   ├── sun.js          # Sun rendering
