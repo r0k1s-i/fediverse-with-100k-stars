@@ -66,6 +66,16 @@ export function attachLegacyMarker( text, obj, size, visibleRange ){
 		var inCamRange = (camera.position.z > this.visMin && camera.position.z < this.visMax);
 		var inCamFrame = (screenPos.x > 0 && screenPos.x < screenWidth && screenPos.y > 0 && screenPos.y < screenHeight);
 		var isParentVisible = this.obj.visible;
+		if (isParentVisible) {
+			var currentObj = this.obj.parent;
+			while (currentObj) {
+				if (!currentObj.visible) {
+					isParentVisible = false;
+					break;
+				}
+				currentObj = currentObj.parent;
+			}
+		}
 
 		if( isParentVisible && inCamRange )
 			this.setPosition( screenPos.x, screenPos.y );
