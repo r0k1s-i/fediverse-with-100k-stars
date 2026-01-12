@@ -9,7 +9,7 @@ var count = 0;
 var timer = null;
 var dragged = false;
 
-var soundOnEl, soundOffEl, heatvisionEl, homeEl;
+var soundOnEl, soundOffEl, heatvisionEl, homeEl, tourEl;
 
 var domElement = $('#minimap');
 var minimapEl = find(domElement, '#zoom-levels');
