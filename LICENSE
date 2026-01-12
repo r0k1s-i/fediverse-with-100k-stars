@@ -22,9 +22,12 @@ SOFTWARE.
 
 ---
 
-This project is based on Chrome Experiments' "100,000 Stars"
-(https://stars.chromeexperiments.com) and incorporates Fediverse data
-visualization features.
+This project is a fork of Jude-Clarke/100k-Star-Challenge
+(https://github.com/Jude-Clarke/100k-Star-Challenge), which is based on
+Chrome Experiments' "100,000 Stars" (https://stars.chromeexperiments.com).
+
+This fork incorporates Fediverse data visualization features and modernization
+improvements.
 
 Third-party libraries used in this project:
 - Three.js (MIT License) - Copyright 2010-2023 Three.js Authors
