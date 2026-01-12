@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { constrain } from '../utils/math.js';
+import { constrain, pickRandomIndices } from '../utils/math.js';
 import { addClass, removeClass, fadeIn, fadeOut } from '../utils/dom.js';
 import { Gyroscope } from './Gyroscope.js';
 
@@ -308,7 +308,8 @@ export function generateFediverseInstances() {
   var iconSizes = [];
   
   var linePositions = [];
-  var MIN_USERS_FOR_LINE = 50000;
+  var TARGET_LINE_COUNT = 50;
+  var lineIndices = new Set(pickRandomIndices(count, TARGET_LINE_COUNT));
 
   for (var i = 0; i < count; i++) {
     var instance = fediverseInstances[i];
@@ -341,7 +342,7 @@ export function generateFediverseInstances() {
     colorIndexes[i] = spectralLookup;
     isVirtuals[i] = isVirtual;
 
-    if (userCount >= MIN_USERS_FOR_LINE) {
+    if (lineIndices.has(i)) {
         linePositions.push(x, y, z);
         linePositions.push(x, y, 0);
     }

@@ -31,8 +31,28 @@ export function roundNumber(num, dec) {
 	return result;
 }
 
+export function pickRandomIndices(total, count) {
+  if (count <= 0) return [];
+  if (count >= total) {
+    var result = [];
+    for (var i = 0; i < total; i++) {
+      result.push(i);
+    }
+    return result;
+  }
+  
+  var selected = new Set();
+  while (selected.size < count) {
+    var r = Math.floor(Math.random() * total);
+    selected.add(r);
+  }
+  
+  return Array.from(selected);
+}
+
 window.constrain = constrain;
 window.random = random;
 window.map = map;
 window.wrap = wrap;
 window.roundNumber = roundNumber;
+window.pickRandomIndices = pickRandomIndices;
