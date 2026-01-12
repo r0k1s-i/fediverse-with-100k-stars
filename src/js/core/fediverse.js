@@ -504,17 +504,17 @@ export function generateFediverseInstances() {
 
     void main() {
       float dist = distance(vUv, vec2(0.5));
-      // Concentric circles expanding outward
-      float rings = fract(dist * 40.0 - time * 0.5); 
+      // 增加密度到 150.0 (更多圈)
+      float rings = fract(dist * 150.0 - time * 0.2); 
       
-      // Thin lines
-      float line = step(0.8, rings);
+      // 极细的线：只在周期最后 2% 的部分发光，并使用 smoothstep 做一点点柔边防锯齿
+      float line = smoothstep(0.96, 0.98, rings);
       
       // Circular mask fade out
-      float edgeFade = 1.0 - smoothstep(0.45, 0.5, dist);
+      float edgeFade = 1.0 - smoothstep(0.4, 0.5, dist);
       
       // Inner fade to avoid dense center aliasing
-      float centerFade = smoothstep(0.0, 0.1, dist);
+      float centerFade = smoothstep(0.0, 0.05, dist);
 
       float finalAlpha = line * opacity * edgeFade * centerFade;
       
