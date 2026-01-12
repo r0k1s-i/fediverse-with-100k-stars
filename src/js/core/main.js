@@ -454,6 +454,7 @@ function sceneSetup() {
     starModel = makeStarModels();
     starModel.setSpectralIndex(0.9);
     starModel.setScale(1.0);
+    starModel.visible = false;
     translating.add(starModel);
     window.starModel = starModel;
     window.enableStarModel = enableStarModel;
@@ -534,7 +535,12 @@ function animate() {
   var isZoomedIn = camera.position.target.z < markerThreshold.min;
   var isZoomedToSolarSystem = camera.position.target.z > markerThreshold.min;
 
-  var fediverseInteraction = window.fediverseInteraction;
+  if (
+    typeof window.updateFediverseInteraction === "function" &&
+    typeof fediverseInteraction !== "undefined"
+  ) {
+    window.updateFediverseInteraction();
+  }
 
   var isFediverseHover =
     typeof fediverseInteraction !== "undefined" &&

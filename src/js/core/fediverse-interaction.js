@@ -16,6 +16,7 @@ var fediverseInteraction = {
   mouse: new THREE.Vector2(),
   raycaster: new THREE.Raycaster(),
   intersected: null,
+  lastHoveredInstance: null,
   baseThreshold: 100.0,
   clickHandled: false,
   lastClickTime: 0,
@@ -112,6 +113,45 @@ function getInteractionThreshold() {
   return Math.max(MIN_THRESHOLD, dynamicThreshold);
 }
 
+export function updateFediverseInteraction() {
+  var camera = window.camera;
+  var markerThreshold = window.markerThreshold;
+
+  if (typeof camera === "undefined") return;
+
+  var isZoomedInClose =
+    typeof markerThreshold !== "undefined" &&
+    camera.position.z < markerThreshold.min;
+
+  // Only render starModel for the currently hovered/intersected instance
+  if (isZoomedInClose && fediverseInteraction.intersected) {
+      var starModel = window.starModel;
+      var enableStarModel = window.enableStarModel;
+      var closestInst = fediverseInteraction.intersected.instanceData;
+      
+      if (closestInst && typeof starModel !== "undefined" && enableStarModel) {
+          if (!starModel.visible || starModel.position.distanceTo(closestInst.position) > 0.1) {
+              starModel.position.copy(closestInst.position);
+              
+              var userCount = closestInst.stats ? closestInst.stats.user_count : 1;
+              var instanceSize = Math.max(15.0, Math.log(userCount + 1) * 8);
+              var MIN_STAR_SCALE = 1.5;
+              var modelScale = Math.max(MIN_STAR_SCALE, instanceSize * 0.1);
+              
+              var spectralIndex = 0.5;
+              if (closestInst.color && closestInst.color.hsl) {
+                  spectralIndex = closestInst.color.hsl.h / 360;
+              }
+              
+              starModel.setSpectralIndex(spectralIndex);
+              starModel.setScale(modelScale);
+              starModel.randomizeSolarFlare();
+              starModel.visible = true;
+          }
+      }
+  }
+}
+
 export function initFediverseInteraction() {
   var camera = window.camera;
   if (typeof camera === "undefined") {
@@ -121,6 +161,15 @@ export function initFediverseInteraction() {
 
   document.addEventListener("mousemove", onFediverseMouseMove, false);
   document.addEventListener("click", onFediverseClick, true);
+  
+  var starNameEl = window.starNameEl || $("#star-name");
+  if (starNameEl) {
+    starNameEl.addEventListener("click", function(event) {
+      if (fediverseInteraction.intersected || fediverseInteraction.lastHoveredInstance) {
+        onFediverseClick(event);
+      }
+    }, false);
+  }
 }
 
 function onFediverseMouseMove(event) {
@@ -213,16 +262,21 @@ function handleHover(object) {
     typeof markerThreshold !== "undefined" &&
     camera.position.z < markerThreshold.min;
 
-  if (isZoomedInClose) {
-    if (fediverseInteraction.intersected) {
+
+
+  if (!isZoomedInClose) {
+    if (fediverseInteraction.intersected && !object) {
       fediverseInteraction.intersected = null;
       document.body.style.cursor = "default";
     }
-    return;
   }
 
   if (fediverseInteraction.intersected !== object) {
     fediverseInteraction.intersected = object;
+    if (object) {
+      fediverseInteraction.lastHoveredInstance = object;
+    }
+
 
     if (object) {
       html(starNameEl, "<span>" + object.name + "</span>");
@@ -272,6 +326,9 @@ function isClickOnUI(event) {
         : className && className.baseVal
           ? className.baseVal
           : "";
+    if (id === "star-name") {
+      return false;
+    }
     if (
       id === "detailContainer" ||
       id === "detailTitle" ||
@@ -293,10 +350,7 @@ function isClickOnUI(event) {
 }
 
 function onFediverseClick(event) {
-  var camera = window.camera;
-  var markerThreshold = window.markerThreshold;
-  var translating = window.translating;
-  var fediverseInstances = window.fediverseInstances;
+
   var setMinimap = window.setMinimap;
   var starModel = window.starModel;
   var enableStarModel = window.enableStarModel;
@@ -310,51 +364,23 @@ function onFediverseClick(event) {
   }
 
   var now = Date.now();
-  if (now - fediverseInteraction.lastClickTime < 300) return;
+  if (now - fediverseInteraction.lastClickTime < 300) {
+    return;
+  }
   fediverseInteraction.lastClickTime = now;
 
+  var camera = window.camera;
+  var markerThreshold = window.markerThreshold;
   var isZoomedInClose =
     typeof camera !== "undefined" &&
     typeof markerThreshold !== "undefined" &&
     camera.position.z < markerThreshold.min;
 
-  var clickTarget = null;
-
-  if (isZoomedInClose) {
-    if (typeof translating !== "undefined") {
-      var transPos = translating.targetPosition || translating.position;
-      var currentPos = transPos.clone().negate();
-
-      var closestDist = Infinity;
-      var closestInst = null;
-
-      if (typeof fediverseInstances !== "undefined") {
-        for (var i = 0; i < fediverseInstances.length; i++) {
-          var inst = fediverseInstances[i];
-          if (inst.position) {
-            var dist = Math.sqrt(
-              Math.pow(inst.position.x - currentPos.x, 2) +
-                Math.pow(inst.position.y - currentPos.y, 2) +
-                Math.pow(inst.position.z - currentPos.z, 2),
-            );
-            if (dist < closestDist) {
-              closestDist = dist;
-              closestInst = inst;
-            }
-          }
-        }
-      }
-
-      if (closestInst && closestDist < 10) {
-        clickTarget = {
-          name: closestInst.name || closestInst.domain,
-          instanceData: closestInst,
-        };
-      }
-    }
-  } else {
-    clickTarget = fediverseInteraction.intersected;
+  var clickTarget = fediverseInteraction.intersected;
+  if (!clickTarget && isZoomedInClose) {
+    clickTarget = fediverseInteraction.lastHoveredInstance;
   }
+
 
   if (!clickTarget) {
     return;

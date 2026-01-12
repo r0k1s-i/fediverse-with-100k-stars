@@ -84,6 +84,8 @@ export function attachLegacyMarker( text, obj, size, visibleRange ){
 			this.setVisible( true );
 		else
 			this.setVisible( false );
+            
+        this.style.pointerEvents = "none";
 	};	
 
 	legacyMarkers.push( marker );
