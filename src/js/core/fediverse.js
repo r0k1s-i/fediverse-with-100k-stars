@@ -535,7 +535,7 @@ export function generateFediverseInstances() {
 
   var rippleUniforms = {
     time: { value: 0 },
-    color: { value: new THREE.Color(0x4488ff) },
+    color: { value: new THREE.Color(0x113344) }, // 暗青色，避免太亮
     opacity: { value: 0 }
   };
 
@@ -565,7 +565,7 @@ export function generateFediverseInstances() {
       var targetOpacity = constrain(
         (camera.position.z - 300.0) * 0.001,
         0,
-        0.8,
+        0.5,
       );
       rippleUniforms.opacity.value = targetOpacity;
     } else {
