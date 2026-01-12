@@ -530,6 +530,24 @@ div.tip > div {
     bottom: 20px;
     margin-left: -2px;
 }
+#minimap #grid-view {
+    position: absolute;
+    font-family: var(--font-mono);
+    font-size: 20px;
+    width: 24px;
+    line-height: 24px;
+    text-align: center;
+    height: 24px;
+    transition: all var(--transition-normal);
+    cursor: pointer;
+    bottom: 55px;
+    margin-left: -2px;
+    opacity: 0.7;
+}
+#minimap #grid-view:hover {
+    opacity: 1;
+    text-shadow: var(--text-shadow-hover);
+}
 #minimap #volume {
     cursor: pointer;
     width: 24px;
