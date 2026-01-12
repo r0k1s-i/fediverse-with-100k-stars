@@ -106,13 +106,13 @@ export function goToGridView() {
     var camera = window.camera;
     var updateMinimap = window.updateMinimap;
 
-    // targetZ = 3000: 位于三主星分布半径上，提供更紧凑的观察视角
-    var targetZ = 3000;
+    // targetZ = 1800: 拉近距离，让主星看得很清楚
+    var targetZ = 1800;
     
     // 关键修正：
-    // 1. rotateY = 0: 正对 XY 平面（三主星所在平面）
-    // 2. rotateX = PI/3 (~60度): 大角度俯视，使垂直的 XY 平面在视觉上呈现为"向后倾斜的地面"，形成水平波纹效果
-    var targetRotateX = Math.PI / 3;
+    // 1. rotateY = 0: 正对 XY 平面
+    // 2. rotateX = -PI/3 (-60度): 负角度让平面向后倒，形成"俯视"效果（正角度是向前倒/仰视）
+    var targetRotateX = -Math.PI / 3;
     var targetRotateY = 0;
 
     var translating = window.translating;
