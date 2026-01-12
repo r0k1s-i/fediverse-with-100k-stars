@@ -488,43 +488,82 @@ export function generateFediverseInstances() {
   );
   pSystem.add(lineMesh);
 
-  var glowSpanTexture = window.glowSpanTexture;
-  var gridMaterial = new THREE.MeshBasicMaterial({
-    map: glowSpanTexture,
-    blending: THREE.AdditiveBlending,
+  var rippleVertexShader = `
+    varying vec2 vUv;
+    void main() {
+      vUv = uv;
+      gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+    }
+  `;
+
+  var rippleFragmentShader = `
+    uniform float time;
+    uniform vec3 color;
+    uniform float opacity;
+    varying vec2 vUv;
+
+    void main() {
+      float dist = distance(vUv, vec2(0.5));
+      // Concentric circles expanding outward
+      float rings = fract(dist * 40.0 - time * 0.5); 
+      
+      // Thin lines
+      float line = step(0.8, rings);
+      
+      // Circular mask fade out
+      float edgeFade = 1.0 - smoothstep(0.45, 0.5, dist);
+      
+      // Inner fade to avoid dense center aliasing
+      float centerFade = smoothstep(0.0, 0.1, dist);
+
+      float finalAlpha = line * opacity * edgeFade * centerFade;
+      
+      if (finalAlpha < 0.01) discard;
+      
+      gl_FragColor = vec4(color, finalAlpha);
+    }
+  `;
+
+  var rippleUniforms = {
+    time: { value: 0 },
+    color: { value: new THREE.Color(0x4488ff) },
+    opacity: { value: 0 }
+  };
+
+  var gridMaterial = new THREE.ShaderMaterial({
+    uniforms: rippleUniforms,
+    vertexShader: rippleVertexShader,
+    fragmentShader: rippleFragmentShader,
     transparent: true,
     depthTest: false,
     depthWrite: false,
-    wireframe: true,
-    opacity: 0,
+    blending: THREE.AdditiveBlending,
   });
+
   var gridPlane = new THREE.Mesh(
-    new THREE.PlaneGeometry(20000, 20000, 60, 60),
+    new THREE.PlaneGeometry(20000, 20000),
     gridMaterial,
   );
   gridPlane.visible = false;
-  gridPlane.material.map.wrapS = THREE.RepeatWrapping;
-  gridPlane.material.map.wrapT = THREE.RepeatWrapping;
-  gridPlane.material.map.repeat.set(8, 8);
-  gridPlane.material.map.needsUpdate = true;
-  gridPlane.material.map.onUpdate = function () {
-    this.offset.y -= 0.0002;
-    this.needsUpdate = true;
-  };
+
   gridPlane.update = function () {
+    rippleUniforms.time.value += 0.01;
+
     // 可见上限调整为 1900:
     // - Grid View (1800) 下可见
     // - 初始视距 (2000) 下不可见
     if (camera.position.z < 1900) {
-      this.material.opacity = constrain(
+      var targetOpacity = constrain(
         (camera.position.z - 300.0) * 0.001,
         0,
-        0.6,
+        0.8,
       );
+      rippleUniforms.opacity.value = targetOpacity;
     } else {
-      this.material.opacity += (0.0 - this.material.opacity) * 0.05;
+      rippleUniforms.opacity.value += (0.0 - rippleUniforms.opacity.value) * 0.05;
     }
-    if (this.material.opacity <= 0) this.visible = false;
+    
+    if (rippleUniforms.opacity.value <= 0.01) this.visible = false;
     else this.visible = true;
   };
   pSystem.add(gridPlane);
