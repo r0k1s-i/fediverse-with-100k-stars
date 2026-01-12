@@ -640,19 +640,39 @@ export function generateFediverseInstances() {
   };
 
   lineMesh.update = function () {
+    var rotationX = window.rotateX || 0;
+    var viewAngle = Math.abs(rotationX);
+    
+    var fadeProgress = constrain((viewAngle - 0.1) / (0.4 - 0.1), 0, 1);
+    var angleFade = fadeProgress * fadeProgress * (3 - 2 * fadeProgress);
+
     if (camera.position.z < 1900) {
-      this.material.opacity = constrain(
+      var distFade = constrain(
         (camera.position.z - 300.0) * 0.002,
         0,
         1,
       );
+      this.material.opacity = distFade * angleFade;
     } else {
       this.material.opacity += (0.0 - this.material.opacity) * 0.1;
     }
 
-    if (camera.position.z < 250) this.visible = false;
-    else this.visible = true;
+    if (camera.position.z < 250 || this.material.opacity < 0.01) {
+        this.visible = false;
+    } else {
+        this.visible = true;
+    }
   };
+
+  function smoothstep(min, max, value) {
+    var x = Math.max(0, Math.min(1, (value - min) / (max - min)));
+    return x * x * (3 - 2 * x);
+  }
+
+  function smoothstep(min, max, value) {
+    var x = Math.max(0, Math.min(1, (value - min) / (max - min)));
+    return x * x * (3 - 2 * x);
+  }
 
   window.fediverseMeshes = fediverseMeshes;
   
