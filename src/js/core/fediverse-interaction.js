@@ -45,7 +45,6 @@ export function goToFediverseCenter() {
   var translating = window.translating;
   var camera = window.camera;
   var updateMinimap = window.updateMinimap;
-  var hideSunButton = window.hideSunButton;
 
   if (typeof translating !== "undefined") {
     translating.targetPosition.set(
@@ -59,9 +58,6 @@ export function goToFediverseCenter() {
   }
   if (typeof updateMinimap === "function") {
     updateMinimap();
-  }
-  if (typeof hideSunButton === "function") {
-    hideSunButton();
   }
 
   var starNameEl = $("#star-name");
@@ -301,8 +297,6 @@ function onFediverseClick(event) {
   var markerThreshold = window.markerThreshold;
   var translating = window.translating;
   var fediverseInstances = window.fediverseInstances;
-  var showSunButton = window.showSunButton;
-  var hideSunButton = window.hideSunButton;
   var setMinimap = window.setMinimap;
   var starModel = window.starModel;
   var enableStarModel = window.enableStarModel;
@@ -379,16 +373,6 @@ function onFediverseClick(event) {
     data.position.y,
     data.position.z,
   );
-
-  if (position.length() > 0.001) {
-    if (typeof showSunButton === "function") {
-      showSunButton();
-    }
-  } else {
-    if (typeof hideSunButton === "function") {
-      hideSunButton();
-    }
-  }
 
   if (typeof setMinimap === "function") {
     setMinimap(true);

@@ -125,15 +125,6 @@ export function attachMarker(obj, size) {
     });
 
     var markerClick = function (e) {
-      var vec = marker.absPosition.clone();
-
-      if (vec.length() !== 0) {
-        console.log("show sun button");
-        window.showSunButton();
-      } else {
-        window.hideSunButton();
-      }
-
       window.setMinimap(true);
 
       var spanEl = find(starNameEl, 'span');

@@ -58,10 +58,7 @@ export function zoomOut(v) {
 	if(updateMinimap) updateMinimap();
 }
 
-export function centerOnSun() {
-    var markers = window.markers;
-	if(markers && markers[0]) markers[0].select();
-}
+
 
 export function EquatorialToGalactic( ra, dec ){
 	var g_psi = 0.57477043300;
@@ -171,6 +168,6 @@ window.centerOn = centerOn;
 window.snapTo = snapTo;
 window.zoomIn = zoomIn;
 window.zoomOut = zoomOut;
-window.centerOnSun = centerOnSun;
+
 window.EquatorialToGalactic = EquatorialToGalactic;
 window.goToGridView = goToGridView;
