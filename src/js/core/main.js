@@ -274,6 +274,12 @@ function initScene() {
   masterContainer.addEventListener("mousewheel", onMouseWheel, {
     passive: false,
   });
+  masterContainer.addEventListener("DOMMouseScroll", onMouseWheel, {
+    passive: false,
+  });
+  masterContainer.addEventListener("wheel", onMouseWheel, {
+    passive: false,
+  });
   masterContainer.addEventListener("keydown", onKeyDown, false);
 
   masterContainer.addEventListener("touchstart", touchStart, {

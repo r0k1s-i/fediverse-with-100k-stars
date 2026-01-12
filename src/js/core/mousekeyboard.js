@@ -94,7 +94,14 @@ export function onMouseWheel( event ){
 
 	if (event.wheelDelta) { 
 	        delta = event.wheelDelta/120;
-	} 
+	}
+	else if (event.deltaY !== undefined) {
+		// wheel event (standard)
+		// deltaY direction is opposite to wheelDelta
+		// deltaMode: 0=pixel, 1=line, 2=page
+		var factor = event.deltaMode === 1 ? 3 : 100;
+		delta = -event.deltaY / factor;
+	}
 	else if( event.detail ){
 		delta = -event.detail/3;
 	}
@@ -102,7 +109,8 @@ export function onMouseWheel( event ){
 	if (delta)
 	    handleMWheel(delta);
 
-	event.returnValue = false;			
+	event.returnValue = false;
+	if (event.preventDefault) event.preventDefault();
 }	
 
 export function onDocumentResize(e){
