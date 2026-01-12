@@ -5,7 +5,7 @@ var textureLoader = new THREE.TextureLoader();
 var blackholeMesh;
 var blackholeMaterial;
 
-var BLACKHOLE_SHOW_THRESHOLD = 30000;
+var BLACKHOLE_SHOW_THRESHOLD = 79990;
 var BLACKHOLE_FULL_OPACITY_THRESHOLD = 80000;
 
 var blackholeVertexShader = `
@@ -63,6 +63,9 @@ export function createBlackhole() {
     blackholeMesh = new THREE.Mesh(geometry, blackholeMaterial);
     blackholeMesh.position.set(0, 0, -300000);
     blackholeMesh.renderOrder = -1000;
+    
+    // 平滑过渡用的当前透明度值
+    var currentOpacity = 0;
 
     blackholeMesh.update = function() {
         var camera = window.camera;
@@ -70,15 +73,26 @@ export function createBlackhole() {
         if (!camera) return;
 
         var cameraZ = camera.position.z;
+        var targetOpacity = 0;
 
-        if (cameraZ < BLACKHOLE_SHOW_THRESHOLD) {
+        // 计算目标透明度
+        if (cameraZ >= BLACKHOLE_SHOW_THRESHOLD) {
+            var fadeRange = BLACKHOLE_FULL_OPACITY_THRESHOLD - BLACKHOLE_SHOW_THRESHOLD;
+            var fadeProgress = (cameraZ - BLACKHOLE_SHOW_THRESHOLD) / fadeRange;
+            targetOpacity = constrain(fadeProgress, 0, 0.5);
+        }
+
+        // 简单的线性插值平滑 (Lerp)
+        // 0.05 的系数意味着每帧只接近目标值的 5%，产生柔和的滞后感
+        currentOpacity += (targetOpacity - currentOpacity) * 0.05;
+
+        // 只有当实际透明度极低时才完全隐藏，避免突然消失
+        if (currentOpacity < 0.001) {
             blackholeUniforms.opacity.value = 0;
             blackholeMesh.visible = false;
         } else {
             blackholeMesh.visible = true;
-            var fadeRange = BLACKHOLE_FULL_OPACITY_THRESHOLD - BLACKHOLE_SHOW_THRESHOLD;
-            var fadeProgress = (cameraZ - BLACKHOLE_SHOW_THRESHOLD) / fadeRange;
-            blackholeUniforms.opacity.value = constrain(fadeProgress, 0, 1);
+            blackholeUniforms.opacity.value = currentOpacity;
 
             if (rotating) {
                 blackholeMesh.rotation.x = -rotating.rotation.x;

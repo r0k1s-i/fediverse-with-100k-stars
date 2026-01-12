@@ -18,9 +18,6 @@ void main() {
 
 	float finalSize = scale * size / length( mvPosition.xyz );
 
-	//gl_PointSize = clamp( scaledSize , 0., 4000.);
-	//gl_PointSize = size * ( scale / length( mvPosition.xyz ));
-
 	gl_PointSize = finalSize;
 
 	gl_Position = projectionMatrix * mvPosition;
