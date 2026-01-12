@@ -1,7 +1,7 @@
 # Fediverse 联邦宇宙可视化 - 实施计划
 
 **更新日期**: 2026-01-11
-**项目**: 100k-Star-Challenge → Fediverse Universe Visualization
+**项目**: fedi-night-with-100k-stars → Fediverse Visualization
 **状态**: ✅ 核心功能完成
 
 ---
@@ -26,7 +26,7 @@
 ## 🏗️ 项目结构（已重构）
 
 ```
-100k-Star-Challenge/
+fedi-night-with-100k-stars/
 ├── index.html                      # 主入口
 ├── src/
 │   ├── js/
