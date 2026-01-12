@@ -504,16 +504,25 @@ export function generateFediverseInstances() {
 
     void main() {
       float dist = distance(vUv, vec2(0.5));
-      // 增加密度到 150.0 (更多圈)
-      float rings = fract(dist * 150.0 - time * 0.2); 
       
-      // 极细的线：只在周期最后 2% 的部分发光，并使用 smoothstep 做一点点柔边防锯齿
-      float line = smoothstep(0.96, 0.98, rings);
+      // 使用标准导数实现屏幕空间固定线宽 (类似 wireframe)
+      float density = 200.0;
+      float grid = dist * density - time * 0.2;
+      
+      // 计算距离最近线条中心的距离 (0.0 到 0.5)
+      float f = abs(fract(grid + 0.5) - 0.5);
+      
+      // fwidth(grid) 给出当前像素覆盖的 grid 值的变化范围
+      // 这允许我们绘制正好 1.0 像素宽的线条，无论距离远近
+      float df = fwidth(grid);
+      
+      // 绘制约 1.2 像素宽的抗锯齿线
+      float line = 1.0 - smoothstep(0.0, df * 1.2, f);
       
       // Circular mask fade out
       float edgeFade = 1.0 - smoothstep(0.4, 0.5, dist);
       
-      // Inner fade to avoid dense center aliasing
+      // Inner fade
       float centerFade = smoothstep(0.0, 0.05, dist);
 
       float finalAlpha = line * opacity * edgeFade * centerFade;
