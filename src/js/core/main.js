@@ -580,7 +580,7 @@ function animate() {
   ) {
     fadeIn(starNameEl);
   } else if (
-    !isFediverseHover &&
+    (detailDisplay !== "none" || !isFediverseHover) &&
     (isZoomedToSolarSystem || detailDisplay !== "none") &&
     (starNameOpacity === 1.0 || starNameOpacity === "")
   ) {

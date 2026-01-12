@@ -471,6 +471,9 @@ function onFediverseClick(event) {
 }
 
 function showInstanceDetails(data) {
+  var starNameEl = $("#star-name");
+  if (starNameEl) hide(starNameEl);
+
   var titleEl = $("#detailTitle span");
   var bodyEl = $("#detailBody");
   var numberWithCommas = window.numberWithCommas;
