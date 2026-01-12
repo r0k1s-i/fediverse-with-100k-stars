@@ -1,6 +1,8 @@
 # fedi-night-with-100k-stars
 
-An interactive 3D visualization of the Fediverse universe, showing instances as stars in a galaxy. Based on Chrome Experiments' "100,000 Stars".
+An interactive 3D visualization of the Fediverse universe, showing instances as stars in a galaxy. 
+
+Forked from [Jude-Clarke/100k-Star-Challenge](https://github.com/Jude-Clarke/100k-Star-Challenge), which is based on Chrome Experiments' "100,000 Stars".
 
 ## Documentation
 
