@@ -511,7 +511,7 @@ export function generateFediverseInstances() {
     this.needsUpdate = true;
   };
   gridPlane.update = function () {
-    if (camera.position.z < 1500) {
+    if (camera.position.z < 10000) {
       this.material.opacity = constrain(
         (camera.position.z - 300.0) * 0.001,
         0,
