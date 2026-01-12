@@ -420,7 +420,20 @@ function initScene() {
   var playPromise = document.getElementById("bgmusicA").play();
   if (playPromise !== undefined) {
     playPromise.catch(function (error) {
-      console.log("Autoplay prevented by browser policy.");
+      var startAudioOnInteraction = function() {
+        if (localStorage && localStorage.getItem("sound") == 0) {
+          return;
+        }
+        
+        document.getElementById("bgmusicA").play();
+        document.removeEventListener("click", startAudioOnInteraction);
+        document.removeEventListener("touchstart", startAudioOnInteraction);
+        document.removeEventListener("keydown", startAudioOnInteraction);
+      };
+      
+      document.addEventListener("click", startAudioOnInteraction, { once: true });
+      document.addEventListener("touchstart", startAudioOnInteraction, { once: true });
+      document.addEventListener("keydown", startAudioOnInteraction, { once: true });
     });
   }
 
