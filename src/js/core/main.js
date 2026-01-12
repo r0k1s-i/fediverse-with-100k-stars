@@ -17,7 +17,7 @@ import '../utils/app.js';
 import { shaderList, loadShaders } from './shaders.js';
 
 import './skybox.js';
-import { createSpacePlane } from './plane.js';
+import './plane.js';
 import './guides.js';
 import { generateDust } from './dust.js';
 import { addLensFlare } from './lensflare.js';
@@ -52,7 +52,6 @@ var enableSkybox = true;
 var enableGalaxy = true;
 var enableDust = false;
 var enableSolarSystem = true;
-var enableSpacePlane = true;
 var enableStarModel = true;
 var enableDirector = true;
 
@@ -88,7 +87,6 @@ var pSystem;
 var pGalacticSystem;
 var pDustSystem;
 var earth;
-var spacePlane;
 var starModel;
 
 var screenWhalf, screenHhalf;
@@ -469,11 +467,6 @@ function sceneSetup() {
   if (enableSolarSystem) {
     var fediverseSystem = makeFediverseSystem();
     translating.add(fediverseSystem);
-  }
-
-  if (enableSpacePlane) {
-    spacePlane = createSpacePlane();
-    translating.add(spacePlane);
   }
 
   if (enableSkybox) {
