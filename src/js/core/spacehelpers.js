@@ -109,8 +109,9 @@ export function goToGridView() {
     // gridPlane 在 z=300-1500 可见，800 为最佳观察距离
     var targetZ = 800;
     
-    // 俯视角度约 80 度 (接近垂直向下看)，以清晰看到水平网格
-    var targetRotateX = Math.PI * 0.4;
+    // 三主星在 XY 平面(z=0)，斜角观察：rotateX 约 18 度
+    var targetRotateX = Math.PI * 0.1;
+    var targetRotateY = Math.PI / 2;
 
     var translating = window.translating;
     if (translating) {
@@ -135,17 +136,17 @@ export function goToGridView() {
     camera.position.target.pz = camera.position.z;
     camera.position.target.z = targetZ;
 
-    // 旋转动画：直接修改 window.rotateX，用 requestAnimationFrame 来驱动
     var currentRotateX = window.rotateX || 0;
+    var currentRotateY = window.rotateY || 0;
     var startTime = Date.now();
     var duration = 2000;
     
     function animateRotation() {
         var elapsed = Date.now() - startTime;
         var progress = Math.min(elapsed / duration, 1);
-        // easeInOutSine
         var eased = -(Math.cos(Math.PI * progress) - 1) / 2;
         window.rotateX = currentRotateX + (targetRotateX - currentRotateX) * eased;
+        window.rotateY = currentRotateY + (targetRotateY - currentRotateY) * eased;
         
         if (progress < 1) {
             requestAnimationFrame(animateRotation);
