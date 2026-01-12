@@ -265,7 +265,7 @@ export function css(el, styles) {
 |------|--------------|
 | main.js | 高 (10+ 处) |
 | mousekeyboard.js | 高 |
-| tour.js | 中 |
+
 | infocallout.js | 中 |
 | minimap.js | 低 |
 | helphud.js | 低 |
@@ -409,8 +409,7 @@ async function init() {
     
     // 非关键模块延迟加载
     requestIdleCallback(async () => {
-        const { Tour } = await import('./core/tour.js');
-        new Tour();
+        // 延迟加载非关键功能模块
     });
 }
 ```
@@ -462,7 +461,7 @@ loader.load('texture.ktx2', (texture) => { ... });
 - [ ] 所有现有功能正常工作
 - [ ] 40k+ 实例渲染正常
 - [ ] 交互系统响应正常
-- [ ] Tour 功能正常
+
 
 ### 性能验收
 - [ ] 首屏加载 < 3s (良好网络)
@@ -527,7 +526,7 @@ git checkout v2.0-phase1
 ### 2026-01-12
 - ✅ **Phase 3 完成**: 移除 jQuery 依赖
   - 创建 `src/js/utils/dom.js` 原生 DOM 工具库
-  - 迁移 6 个核心文件 (main.js, fediverse-interaction.js, minimap.js, tour.js, marker.js, legacymarkers.js)
+  - 迁移 5 个核心文件 (main.js, fediverse-interaction.js, minimap.js, marker.js, legacymarkers.js)
   - 移除 jQuery 库文件 (jquery-1.7.1.min.js, jquery.mousewheel.js, jquery.preventMacBackScroll.js, jquery.tooltip.js)
   - 更新 index.html 移除 jQuery 引用
   - 减少约 100KB 外部依赖

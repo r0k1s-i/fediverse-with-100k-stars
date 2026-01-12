@@ -34,7 +34,6 @@ export const globals = {
     enableSolarSystem: true,
     enableSpacePlane: true,
     enableStarModel: true,
-    enableTour: true,
     enableDirector: true,
 };
 
