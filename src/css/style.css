@@ -528,7 +528,8 @@ div.tip > div {
     font-weight: bold;
     cursor: pointer;
     bottom: 20px;
-    margin-left: -2px;
+    left: 50%;
+    margin-left: -12px;
 }
 #minimap #grid-view {
     position: absolute;
@@ -541,7 +542,8 @@ div.tip > div {
     transition: all var(--transition-normal);
     cursor: pointer;
     bottom: 60px;
-    margin-left: -2px;
+    left: 50%;
+    margin-left: -12px;
     opacity: 0.7;
 }
 #minimap #grid-view:hover {
@@ -552,6 +554,7 @@ div.tip > div {
     cursor: pointer;
     width: 24px;
     height: 24px;
+    margin: 0 auto;
 }
 
 #minimap #heatvision {
