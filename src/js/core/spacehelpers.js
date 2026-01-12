@@ -106,8 +106,8 @@ export function goToGridView() {
     var camera = window.camera;
     var updateMinimap = window.updateMinimap;
 
-    // targetZ = 6000: 足以覆盖三主星（分布半径~3000）的观察距离
-    var targetZ = 6000;
+    // targetZ = 3000: 位于三主星分布半径上，提供更紧凑的观察视角
+    var targetZ = 3000;
     
     // 关键修正：
     // 1. rotateY = 0: 正对 XY 平面（三主星所在平面）
