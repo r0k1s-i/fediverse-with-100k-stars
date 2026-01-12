@@ -1,50 +1,66 @@
-import { $, css, fadeIn, fadeOut, trigger, find } from '../utils/dom.js';
-import { constrain } from '../utils/math.js';
-import * as THREE from 'three';
-import { TWEEN } from '../lib/tween.js';
+import { $, css, fadeIn, fadeOut, trigger, find } from "../utils/dom.js";
+import { constrain } from "../utils/math.js";
+import * as THREE from "three";
+import { TWEEN } from "../lib/tween.js";
 
 window.THREE = THREE;
 window.TWEEN = TWEEN;
 
-import './globals.js';
+import "./globals.js";
 
+import "./config.js";
+import "../utils/misc.js";
+import "../utils/three-helpers.js";
+import "../utils/app.js";
 
-import './config.js';
-import '../utils/misc.js';
-import '../utils/three-helpers.js';
-import '../utils/app.js';
+import { shaderList, loadShaders } from "./shaders.js";
 
-import { shaderList, loadShaders } from './shaders.js';
+import "./skybox.js";
+import "./plane.js";
+import "./guides.js";
+import { generateDust } from "./dust.js";
+import { addLensFlare } from "./lensflare.js";
+import { attachLegacyMarker } from "./legacymarkers.js";
+import "./marker.js";
+import "./mousekeyboard.js";
+import "../core/urlArgs.js";
 
-import './skybox.js';
-import './plane.js';
-import './guides.js';
-import { generateDust } from './dust.js';
-import { addLensFlare } from './lensflare.js';
-import { attachLegacyMarker } from './legacymarkers.js';
-import './marker.js';
-import './mousekeyboard.js';
-import '../core/urlArgs.js';
+import "./infocallout.js";
+import "./starsystems.js";
+import { makeStarModels } from "./starmodel.js";
+import { initCSS3D, setCSSWorld, setCSSCamera } from "./css3worldspace.js";
+import "./helphud.js";
+import "./spacehelpers.js";
+import { loadFediverseData, generateFediverseInstances } from "./fediverse.js";
+import "./interaction-math.js";
+import {
+  initFediverseInteraction,
+  isAtFediverseCenter,
+  shouldShowFediverseSystem,
+  goToFediverseCenter,
+} from "./fediverse-interaction.js";
+import "./label-layout.js";
+import {
+  initFediverseLabels,
+  updateFediverseLabels,
+} from "./fediverse-labels.js";
+import { generateGalaxy } from "./galaxy.js";
+import "./solarsystem.js";
+import { makeFediverseSystem } from "./fediverse-solarsystem.js";
+import "./sun.js";
 
-import './infocallout.js';
-import './starsystems.js';
-import { makeStarModels } from './starmodel.js';
-import { initCSS3D, setCSSWorld, setCSSCamera } from './css3worldspace.js';
-import './helphud.js';
-import './spacehelpers.js';
-import { loadFediverseData, generateFediverseInstances } from './fediverse.js';
-import './interaction-math.js';
-import { initFediverseInteraction, isAtFediverseCenter, shouldShowFediverseSystem, goToFediverseCenter } from './fediverse-interaction.js';
-import './label-layout.js';
-import { initFediverseLabels, updateFediverseLabels } from './fediverse-labels.js';
-import { generateGalaxy } from './galaxy.js';
-import './solarsystem.js';
-import { makeFediverseSystem } from './fediverse-solarsystem.js';
-import './sun.js';
-
-import { updateMinimap, initializeMinimap, setMinimap, activateMinimap } from './minimap.js';
+import {
+  updateMinimap,
+  initializeMinimap,
+  setMinimap,
+  activateMinimap,
+} from "./minimap.js";
+import { initDebugTools } from "../utils/debug-tools.js";
 
 var masterContainer = document.getElementById("visualization");
+
+// Debug tools instance (initialized after scene setup)
+var debugTools = null;
 
 var maxAniso = 1;
 var enableDataStar = true;
@@ -189,28 +205,7 @@ var controllers = {
   },
 };
 
-var gui;
-var c;
-
 function buildGUI() {
-  gui = new dat.GUI();
-  gui.domElement.style.display = "none";
-
-  c = gui.add(controllers, "viewSize", 0.01, 4.0);
-  c.onChange(function (v) {
-    camera.scale.z = v;
-  });
-
-  c = gui.add(controllers, "datastarSize", 0.01, 10.0);
-  c = gui.add(controllers, "sceneSize", 1, 50000);
-
-  c = gui.add(controllers, "sol");
-  c = gui.add(controllers, "solarsystem");
-  c = gui.add(controllers, "fediverse");
-  c = gui.add(controllers, "milkyway");
-
-  window.gui = gui;
-
   if (initializeMinimap) initializeMinimap();
 }
 
@@ -333,6 +328,10 @@ function initScene() {
 
   sceneSetup();
 
+  // Initialize debug tools (Press 'D' to toggle)
+  debugTools = initDebugTools(scene, camera, renderer);
+  window.debugTools = debugTools;
+
   initCSS3D();
   if (initFediverseLabels) initFediverseLabels();
 
@@ -385,8 +384,6 @@ function initScene() {
     if (firstTime) {
       if (localStorage) localStorage.setItem("first", 0);
     }
-
-
   }, 500);
 
   document.getElementById("bgmusicA").addEventListener(
@@ -417,26 +414,37 @@ function initScene() {
 
   var playPromise = document.getElementById("bgmusicA").play();
   if (playPromise !== undefined) {
-    playPromise.then(function() {
-      if (activateMinimap) activateMinimap();
-    }).catch(function (error) {
-      var startAudioOnInteraction = function() {
+    playPromise
+      .then(function () {
         if (activateMinimap) activateMinimap();
+      })
+      .catch(function (error) {
+        var startAudioOnInteraction = function () {
+          if (activateMinimap) activateMinimap();
 
-        if (localStorage && localStorage.getItem("sound") == 0) {
-          return;
-        }
-        
-        document.getElementById("bgmusicA").play();
-        document.removeEventListener("click", startAudioOnInteraction);
-        document.removeEventListener("touchstart", startAudioOnInteraction);
-        document.removeEventListener("keydown", startAudioOnInteraction);
-      };
-      
-      document.addEventListener("click", startAudioOnInteraction, { once: true, capture: true });
-      document.addEventListener("touchstart", startAudioOnInteraction, { once: true, capture: true });
-      document.addEventListener("keydown", startAudioOnInteraction, { once: true, capture: true });
-    });
+          if (localStorage && localStorage.getItem("sound") == 0) {
+            return;
+          }
+
+          document.getElementById("bgmusicA").play();
+          document.removeEventListener("click", startAudioOnInteraction);
+          document.removeEventListener("touchstart", startAudioOnInteraction);
+          document.removeEventListener("keydown", startAudioOnInteraction);
+        };
+
+        document.addEventListener("click", startAudioOnInteraction, {
+          once: true,
+          capture: true,
+        });
+        document.addEventListener("touchstart", startAudioOnInteraction, {
+          once: true,
+          capture: true,
+        });
+        document.addEventListener("keydown", startAudioOnInteraction, {
+          once: true,
+          capture: true,
+        });
+      });
   }
 
   if (localStorage && localStorage.getItem("sound") == 0) {
@@ -538,9 +546,13 @@ function animate() {
   var atFediverseCenter =
     typeof isAtFediverseCenter === "function" && isAtFediverseCenter();
 
-  var detailDisplay = detailContainerEl ? detailContainerEl.style.display : "none";
+  var detailDisplay = detailContainerEl
+    ? detailContainerEl.style.display
+    : "none";
   var starNameDisplay = starNameEl ? starNameEl.style.display : "none";
-  var starNameOpacity = starNameEl ? parseFloat(starNameEl.style.opacity || 0) : 0;
+  var starNameOpacity = starNameEl
+    ? parseFloat(starNameEl.style.opacity || 0)
+    : 0;
   var cssDisplay = cssContainerEl ? cssContainerEl.style.display : "block";
 
   if (
@@ -576,8 +588,7 @@ function animate() {
   if (detailDisplay === "none") {
     camera.position.x *= 0.95;
   } else {
-    camera.position.x +=
-      (camera.position.target.x - camera.position.x) * 0.95;
+    camera.position.x += (camera.position.target.x - camera.position.x) * 0.95;
   }
 
   var targetFov = constrain(
@@ -620,6 +631,11 @@ function animate() {
   window.rotateVX = rotateVX;
   window.rotateVY = rotateVY;
 
+  // Update debug tools
+  if (debugTools) {
+    debugTools.update();
+  }
+
   requestAnimationFrame(animate);
 
   if (camera.easeZooming || translating.easePanning) {
@@ -652,8 +668,6 @@ function unmuteSound() {
   if (localStorage) localStorage.setItem("sound", 1);
 }
 
-
-
 window.start = start;
 window.starNameEl = starNameEl;
 window.detailContainerEl = detailContainerEl;
@@ -664,4 +678,4 @@ window.unmuteSound = unmuteSound;
 window.firstTime = firstTime;
 window.markerThreshold = markerThreshold;
 
-window.addEventListener('load', start);
+window.addEventListener("load", start);
