@@ -503,30 +503,36 @@ export function generateFediverseInstances() {
     varying vec2 vUv;
 
     void main() {
-      float dist = distance(vUv, vec2(0.5));
+      vec2 centeredUv = vUv - 0.5;
+      float dist = length(centeredUv);
+      float angle = atan(centeredUv.y, centeredUv.x);
       
+      // --- 1. 同心圆 (Rings) ---
       // 使用标准导数实现屏幕空间固定线宽 (类似 wireframe)
       float density = 200.0;
-      float grid = dist * density - time * 0.2;
+      float gridR = dist * density - time * 0.2;
       
-      // 计算距离最近线条中心的距离 (0.0 到 0.5)
-      float f = abs(fract(grid + 0.5) - 0.5);
+      float fR = abs(fract(gridR + 0.5) - 0.5);
+      float dfR = fwidth(gridR);
+      float rings = 1.0 - smoothstep(0.0, dfR * 2.0, fR);
       
-      // fwidth(grid) 给出当前像素覆盖的 grid 值的变化范围
-      // 这允许我们绘制正好 1.0 像素宽的线条，无论距离远近
-      float df = fwidth(grid);
+      // --- 2. 放射线 (Spokes) ---
+      float spokeCount = 24.0; // 放射线数量
+      float gridA = angle / 6.2831853 * spokeCount;
+      float fA = abs(fract(gridA + 0.5) - 0.5);
+      float dfA = fwidth(gridA);
+      float spokes = 1.0 - smoothstep(0.0, dfA * 2.0, fA);
       
-      // 绘制约 2.0 像素宽的抗锯齿线，增加可见度
-      float line = 1.0 - smoothstep(0.0, df * 2.0, f);
+      // 组合图案
+      float pattern = max(rings, spokes);
       
       // Circular mask fade out
       float edgeFade = 1.0 - smoothstep(0.4, 0.5, dist);
       
-      // Inner fade
+      // Inner fade (掩盖圆心处放射线过于密集的问题)
       float centerFade = smoothstep(0.0, 0.05, dist);
 
-      // 提高基础透明度，因为颜色较暗
-      float finalAlpha = line * opacity * edgeFade * centerFade;
+      float finalAlpha = pattern * opacity * edgeFade * centerFade;
       
       if (finalAlpha < 0.01) discard;
       
