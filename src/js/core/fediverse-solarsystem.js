@@ -71,6 +71,12 @@ function createSoftwareRing(radius, color, softwareName, instanceCount) {
   var mesh = new THREE.Points(geometry, particleMaterial);
 
   mesh.update = function () {
+    var shouldShow = window.shouldShowFediverseSystem;
+    if (shouldShow && !shouldShow()) {
+      this.visible = false;
+      return;
+    }
+
     if (camera.position.z < 2.0) {
       this.visible = false;
     } else if (camera.position.z < 800) {
@@ -155,6 +161,12 @@ function createCentralTriangle(triangleRadius) {
   });
 
   container.update = function () {
+    var shouldShow = window.shouldShowFediverseSystem;
+    if (shouldShow && !shouldShow()) {
+      this.visible = false;
+      return;
+    }
+
     if (camera.position.z < 1.5) {
       this.visible = false;
     } else if (camera.position.z < 100) {
@@ -202,6 +214,12 @@ function createInnerCircle(radius) {
   mesh.rotation.x = Math.PI / 2;
 
   mesh.update = function () {
+    var shouldShow = window.shouldShowFediverseSystem;
+    if (shouldShow && !shouldShow()) {
+      this.visible = false;
+      return;
+    }
+
     if (camera.position.z < 1.5) {
       this.visible = false;
     } else if (camera.position.z < 100) {
@@ -245,6 +263,12 @@ export function makeFediverseSystem() {
   );
   measurement.position.y = 0.08;
   measurement.update = function () {
+    var shouldShow = window.shouldShowFediverseSystem;
+    if (shouldShow && !shouldShow()) {
+      this.visible = false;
+      return;
+    }
+
     if (camera.position.z > 120 && camera.position.z < 400) {
       this.visible = true;
     } else {
