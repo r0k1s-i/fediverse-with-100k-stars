@@ -2,7 +2,7 @@ import { map, constrain } from '../utils/math.js';
 import { $, css, addClass, fadeIn, fadeOut, find, html, on, ajax } from '../utils/dom.js';
 
 var border_width = 1;
-var padding = 60;
+var padding = 80;
 
 var ready = false;
 var active = false;
@@ -67,9 +67,9 @@ window.addEventListener('resize', function() {
     return;
   }
 
-  var volumeHeight = volumeEl ? volumeEl.offsetHeight : 0;
-  var aboutHeight = aboutEl ? aboutEl.offsetHeight : 0;
-  var gridViewHeight = gridViewEl ? gridViewEl.offsetHeight : 0;
+  var volumeHeight = volumeEl ? (volumeEl.offsetHeight || 24) : 24;
+  var aboutHeight = aboutEl ? (aboutEl.offsetHeight || 24) : 24;
+  var gridViewHeight = gridViewEl ? (gridViewEl.offsetHeight || 24) : 24;
   var offset = volumeHeight + aboutHeight + gridViewHeight + padding;
   var h = domElement ? domElement.offsetHeight - offset : 0;
 
