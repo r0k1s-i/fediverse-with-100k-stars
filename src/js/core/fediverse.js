@@ -496,12 +496,13 @@ export function generateFediverseInstances() {
     depthTest: false,
     depthWrite: false,
     wireframe: true,
-    opacity: 0.6,
+    opacity: 0,
   });
   var gridPlane = new THREE.Mesh(
     new THREE.PlaneGeometry(20000, 20000, 60, 60),
     gridMaterial,
   );
+  gridPlane.visible = false;
   gridPlane.material.map.wrapS = THREE.RepeatWrapping;
   gridPlane.material.map.wrapT = THREE.RepeatWrapping;
   gridPlane.material.map.repeat.set(8, 8);
