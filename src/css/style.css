@@ -346,6 +346,17 @@ a:hover {
     cursor: pointer;
 }
 
+#detailTitle {
+    padding-right: 160px;
+}
+
+#detailTitle span {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 /**
  * Detail Panel
  */

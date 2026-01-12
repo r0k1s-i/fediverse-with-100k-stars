@@ -463,7 +463,12 @@ function showInstanceDetails(data) {
   var bodyEl = $("#detailBody");
   var numberWithCommas = window.numberWithCommas;
 
-  if (titleEl) titleEl.textContent = data.name || data.domain;
+  if (titleEl) {
+    var name = data.name || data.domain;
+    titleEl.textContent = name;
+    titleEl.title = name;
+  }
+
 
   var html = '<div style="margin-top: 20px;">';
 
