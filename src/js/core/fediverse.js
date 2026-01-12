@@ -511,8 +511,10 @@ export function generateFediverseInstances() {
     this.needsUpdate = true;
   };
   gridPlane.update = function () {
-    // 可见上限调整为 2200 (略大于观察距离 1800)，拉远后自动隐藏
-    if (camera.position.z < 2200) {
+    // 可见上限调整为 1900:
+    // - Grid View (1800) 下可见
+    // - 初始视距 (2000) 下不可见
+    if (camera.position.z < 1900) {
       this.material.opacity = constrain(
         (camera.position.z - 300.0) * 0.001,
         0,
