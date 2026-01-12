@@ -526,13 +526,26 @@ export function generateFediverseInstances() {
       // 组合图案
       float pattern = max(rings, spokes);
       
+      // --- 3. 水波律动 (Flow) ---
+      // 创建向外扩散的正弦波光环
+      // dist * 10.0 控制波的密度（波长），time * 1.5 控制扩散速度
+      float flow = sin(dist * 10.0 - time * 2.0);
+      
+      // 将正弦波映射到 [0.2, 1.0] 区间：
+      // 0.2 是基础亮度（暗处不完全消失），1.0 是波峰亮度
+      float pulse = smoothstep(-1.0, 1.0, flow) * 0.8 + 0.2;
+      
+      // 让波峰更锐利一点，更有"光波"的感觉
+      pulse = pow(pulse, 2.0);
+
       // Circular mask fade out
       float edgeFade = 1.0 - smoothstep(0.4, 0.5, dist);
       
-      // Inner fade (掩盖圆心处放射线过于密集的问题)
+      // Inner fade
       float centerFade = smoothstep(0.0, 0.05, dist);
 
-      float finalAlpha = pattern * opacity * edgeFade * centerFade;
+      // 组合：图案 * 律动光波 * 基础透明度 * 边缘遮罩
+      float finalAlpha = pattern * pulse * opacity * edgeFade * centerFade;
       
       if (finalAlpha < 0.01) discard;
       
