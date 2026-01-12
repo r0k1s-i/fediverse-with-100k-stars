@@ -10,11 +10,8 @@ var fediverseLabels = {
 };
 
 export function initFediverseLabels() {
-  var enableFediverse = window.enableFediverse;
   var fediverseInstances = window.fediverseInstances;
   var LabelLayout = window.LabelLayout;
-
-  if (!enableFediverse) return;
 
   if (typeof fediverseInstances === "undefined") {
     setTimeout(initFediverseLabels, 500);

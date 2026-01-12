@@ -32,7 +32,6 @@ import { makeStarModels } from './starmodel.js';
 import { initCSS3D, setCSSWorld, setCSSCamera } from './css3worldspace.js';
 import './helphud.js';
 import './spacehelpers.js';
-import { generateHipparcosStars, loadStarData } from './hipparcos.js';
 import { loadFediverseData, generateFediverseInstances } from './fediverse.js';
 import './interaction-math.js';
 import { initFediverseInteraction, isAtFediverseCenter, shouldShowFediverseSystem, goToFediverseCenter } from './fediverse-interaction.js';
@@ -116,8 +115,8 @@ var rt;
 var antialias = gup("antialias") == 1 ? true : false;
 
 var markerThreshold = {
-  min: window.enableFediverse ? 200 : 400,
-  max: window.enableFediverse ? 45000 : 1500,
+  min: 200,
+  max: 45000,
 };
 
 function start(e) {
@@ -170,23 +169,11 @@ var postStarGradientLoaded = function () {
 };
 
 var postShadersLoaded = function () {
-  if (window.enableFediverse) {
-    loadFediverseData(window.fediverseDataPath, function (loadedData) {
-      window.fediverseInstances = loadedData;
-      initScene();
-      animate();
-    });
-  } else if (enableDataStar) {
-    loadStarData("data/stars_all.json", function (loadedData) {
-      starData = loadedData.stars;
-      window.starData = starData;
-      initScene();
-      animate();
-    });
-  } else {
+  loadFediverseData(window.fediverseDataPath, function (loadedData) {
+    window.fediverseInstances = loadedData;
     initScene();
     animate();
-  }
+  });
 };
 
 var controllers = {
@@ -199,7 +186,7 @@ var controllers = {
   solarsystem: function () {
     camera.position.z = 18;
   },
-  hipparcos: function () {
+  fediverse: function () {
     camera.position.z = 1840;
   },
   milkyway: function () {
@@ -224,7 +211,7 @@ function buildGUI() {
 
   c = gui.add(controllers, "sol");
   c = gui.add(controllers, "solarsystem");
-  c = gui.add(controllers, "hipparcos");
+  c = gui.add(controllers, "fediverse");
   c = gui.add(controllers, "milkyway");
 
   window.gui = gui;
@@ -312,7 +299,7 @@ function initScene() {
     0.5,
     10000000,
   );
-  camera.position.z = window.enableFediverse ? 500 : 2000;
+  camera.position.z = 500;
   camera.rotation.vx = 0;
   camera.rotation.vy = 0;
   camera.position.target = {
@@ -416,8 +403,7 @@ function initScene() {
       }, 500);
     }
 
-    if (window.markers && window.markers.length > 0 && !window.enableFediverse)
-      window.markers[0].select();
+
   }, 500);
 
   document.getElementById("bgmusicA").addEventListener(
@@ -468,13 +454,8 @@ function sceneSetup() {
     window.enableStarModel = enableStarModel;
   }
 
-  if (window.enableFediverse) {
-    pSystem = generateFediverseInstances();
-    translating.add(pSystem);
-  } else if (enableDataStar) {
-    pSystem = generateHipparcosStars();
-    translating.add(pSystem);
-  }
+  pSystem = generateFediverseInstances();
+  translating.add(pSystem);
   window.pSystem = pSystem;
 
   if (enableGalaxy) {
@@ -681,41 +662,22 @@ function unmuteSound() {
 function displayIntroMessage() {
   Tour.meta.style.display = "block";
   Tour.meta.style.opacity = "1";
-  if (window.enableFediverse) {
-    tour
-      .showMessage("Welcome to the Fediverse Universe.", 5000)
-      .showMessage(
-        "This is a visualization of Fediverse instances as stars.",
-        5000,
-      )
-      .showMessage("Scroll and zoom to explore.", 4000, function () {
-        firstTime = false;
-        window.firstTime = false;
-        trigger(window, "resize");
-        var tourButton = find(iconNavEl, "#tour-button");
-        if (tourButton) {
-          tourButton.dispatchEvent(new MouseEvent("mouseover", { bubbles: true }));
-        }
-      })
-      .endMessages();
-  } else {
-    tour
-      .showMessage("Welcome to the stellar neighborhood.", 5000)
-      .showMessage(
-        "This is a visualization of over 100,000 nearby stars.",
-        5000,
-      )
-      .showMessage("Scroll and zoom to explore.", 4000, function () {
-        firstTime = false;
-        window.firstTime = false;
-        trigger(window, "resize");
-        var tourButton = find(iconNavEl, "#tour-button");
-        if (tourButton) {
-          tourButton.dispatchEvent(new MouseEvent("mouseover", { bubbles: true }));
-        }
-      })
-      .endMessages();
-  }
+  tour
+    .showMessage("Welcome to the Fediverse Universe.", 5000)
+    .showMessage(
+      "This is a visualization of Fediverse instances as stars.",
+      5000,
+    )
+    .showMessage("Scroll and zoom to explore.", 4000, function () {
+      firstTime = false;
+      window.firstTime = false;
+      trigger(window, "resize");
+      var tourButton = find(iconNavEl, "#tour-button");
+      if (tourButton) {
+        tourButton.dispatchEvent(new MouseEvent("mouseover", { bubbles: true }));
+      }
+    })
+    .endMessages();
 }
 
 window.start = start;
