@@ -640,9 +640,9 @@ export function generateFediverseInstances() {
   };
 
   lineMesh.update = function () {
-    if (camera.position.z < 1500) {
+    if (camera.position.z < 1900) {
       this.material.opacity = constrain(
-        (camera.position.z - 400.0) * 0.002,
+        (camera.position.z - 300.0) * 0.002,
         0,
         1,
       );
