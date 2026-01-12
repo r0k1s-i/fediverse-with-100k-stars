@@ -127,52 +127,18 @@ export function generateGalaxy(){
 
 	pGalacticSystem.add( addLensFlare(0,0,0) );
 
-	var galacticTopTexture = textureLoader.load('src/assets/textures/galactictop.png', undefined, undefined, onTextureError);
-
-	var galacticTopVertexShader = `
-		varying vec2 vUv;
-		void main() {
-			vUv = uv;
-			gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-		}
-	`;
-
-	var galacticTopFragmentShader = `
-		uniform sampler2D map;
-		uniform float opacity;
-		varying vec2 vUv;
-		void main() {
-			vec4 texColor = texture2D(map, vUv);
-			vec2 center = vec2(0.5, 0.5);
-			float dist = distance(vUv, center);
-			float edgeFade = 1.0 - smoothstep(0.35, 0.5, dist);
-			gl_FragColor = vec4(texColor.rgb * opacity, texColor.a * opacity * edgeFade);
-		}
-	`;
-
-	var galacticTopUniforms = {
-		map: { value: galacticTopTexture },
-		opacity: { value: 1.0 }
-	};
-
-	var galacticTopMaterial = new THREE.ShaderMaterial({
-		uniforms: galacticTopUniforms,
-		vertexShader: galacticTopVertexShader,
-		fragmentShader: galacticTopFragmentShader,
-		blending: THREE.AdditiveBlending,
-		depthTest: false,
-		depthWrite: false,
-		transparent: true,
+	var galacticTopMaterial = new THREE.MeshBasicMaterial({
+		map: textureLoader.load('src/assets/textures/galactictop.png', undefined, undefined, onTextureError),
+    blending: THREE.AdditiveBlending,
+    depthTest: false,
+    depthWrite: false,
+    transparent: true,
 	});
 
 	var plane = new THREE.Mesh( new THREE.PlaneGeometry(150000,150000, 30, 30), galacticTopMaterial );
 	plane.rotation.x = Math.PI/2;
-	galacticTopTexture.anisotropy = maxAniso;
+	plane.material.map.anisotropy = maxAniso;
 	pGalacticSystem.add( plane );
-
-	plane.updateOpacity = function(value) {
-		galacticTopUniforms.opacity.value = value;
-	};
 
 	var measurement = createDistanceMeasurement( new THREE.Vector3( 0,0,-55000 ), new THREE.Vector3( 0,0,55000 ) );
 	measurement.position.y = -1000;
@@ -227,7 +193,7 @@ export function generateGalaxy(){
 
 		galacticUniforms.scale.value = Math.sqrt(areaOfWindow) * 1.5;
 
-		galacticTopUniforms.opacity.value = galacticShaderMaterial.opacity;
+		galacticTopMaterial.opacity = galacticShaderMaterial.opacity;
 
 		if( pSystem ){
 			var mat = pSystem.shaderMaterial || pSystem.material;
@@ -235,7 +201,7 @@ export function generateGalaxy(){
 				var heatVisionValue = mat.uniforms.heatVision.value;
 
 				if( heatVisionValue > 0 ){
-					galacticTopUniforms.opacity.value = 1.0 - heatVisionValue;
+					galacticTopMaterial.opacity = 1.0 - heatVisionValue;
 				}
 
 				galacticUniforms.heatVision.value = heatVisionValue;
@@ -266,7 +232,7 @@ export function generateGalaxy(){
 		else{
 			pGalacticSystem.visible = true;
 			// 只有当贴图透明度大于 0.01 时才显示，避免热图模式下的残留
-			plane.visible = galacticTopUniforms.opacity.value > 0.01;
+			plane.visible = galacticTopMaterial.opacity > 0.01;
 		}
 
 		var targetLerp = constrain( Math.pow(camera.position.z / 80000,3 ), 0.0, 1.0 );
