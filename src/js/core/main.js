@@ -55,12 +55,11 @@ import {
   setMinimap,
   activateMinimap,
 } from "./minimap.js";
-import { initDebugTools } from "../utils/debug-tools.js";
+
 
 var masterContainer = document.getElementById("visualization");
 
-// Debug tools instance (initialized after scene setup)
-var debugTools = null;
+
 
 var maxAniso = 1;
 var enableDataStar = true;
@@ -328,9 +327,7 @@ function initScene() {
 
   sceneSetup();
 
-  // Initialize debug tools (Press 'D' to toggle)
-  debugTools = initDebugTools(scene, camera, renderer);
-  window.debugTools = debugTools;
+
 
   initCSS3D();
   if (initFediverseLabels) initFediverseLabels();
@@ -631,10 +628,7 @@ function animate() {
   window.rotateVX = rotateVX;
   window.rotateVY = rotateVY;
 
-  // Update debug tools
-  if (debugTools) {
-    debugTools.update();
-  }
+
 
   requestAnimationFrame(animate);
 
