@@ -112,17 +112,7 @@ export function setMinimap(b) {
   dragged = !!b;
 }
 
-export function showSunButton() {
-  if (homeEl) {
-    css(homeEl, { opacity: '1.0', display: 'inline' });
-  }
-}
 
-export function hideSunButton() {
-  if (homeEl) {
-    fadeOut(homeEl);
-  }
-}
 
 if (minimapEl) {
   minimapEl.addEventListener('mousedown', onElementMouseDown);
@@ -241,35 +231,6 @@ function loadHeatVisionIcon() {
         });
         if (iconNavEl) iconNavEl.appendChild(heatvisionEl);
 
-        loadHomeIcon();
-      }
-    });
-}
-
-function loadHomeIcon() {
-  fetch('src/assets/icons/center-sun.svg')
-    .then(function(response) { return response.text(); })
-    .then(function(resp) {
-      var iconNavEl = window.iconNavEl || $('#icon-nav');
-
-      var parser = new DOMParser();
-      var doc = parser.parseFromString(resp, 'image/svg+xml');
-      homeEl = doc.querySelector('svg');
-      if (homeEl) {
-        addClass(homeEl, 'icon');
-        homeEl.setAttribute('data-tip', 'Center camera position to the Sun.');
-        homeEl.addEventListener('mouseenter', function(e) {
-          if (tourEl) tourEl.dispatchEvent(new MouseEvent('mouseleave', { bubbles: true }));
-        });
-        homeEl.addEventListener('mouseleave', function(e) {
-          if (tourEl) tourEl.dispatchEvent(new MouseEvent('mouseenter', { bubbles: true }));
-        });
-        homeEl.addEventListener('click', function(e) {
-          e.preventDefault();
-          unfocus(true);
-        });
-        css(homeEl, { display: 'none' });
-        if (iconNavEl) iconNavEl.appendChild(homeEl);
       }
     });
 }
@@ -339,7 +300,6 @@ function cmap(v, i1, i2, o1, o2) {
 }
 
 function unfocus(home) {
-  var centerOnSun = window.centerOnSun;
   var zoomOut = window.zoomOut;
   var shouldShowFediverseSystem = window.shouldShowFediverseSystem;
   var goToFediverseCenter = window.goToFediverseCenter;
@@ -354,8 +314,6 @@ function unfocus(home) {
         fediverseInteraction.lastViewedInstance = null;
       }
     } else {
-      if (centerOnSun) centerOnSun();
-      setTimeout(hideSunButton, 500);
       if (zoomOut) zoomOut(555);
     }
   }
@@ -373,5 +331,3 @@ window.initializeMinimap = initializeMinimap;
 window.updateMinimap = updateMinimap;
 window.setScrollPositionFromTouch = setScrollPositionFromTouch;
 window.setMinimap = setMinimap;
-window.showSunButton = showSunButton;
-window.hideSunButton = hideSunButton;
