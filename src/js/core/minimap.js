@@ -15,6 +15,7 @@ var domElement = $('#minimap');
 var minimapEl = find(domElement, '#zoom-levels');
 var volumeEl = find(domElement, '#volume');
 var aboutEl = find(domElement, '#about');
+var gridViewEl = find(domElement, '#grid-view');
 var cursorEl = find(domElement, '#zoom-cursor');
 
 var POWER = 3;
@@ -154,6 +155,14 @@ if (aboutEl) {
       css(detailContainerEl, { paddingTop: line_height * 3 + 'px' });
       fadeIn(detailContainerEl);
     }
+  });
+}
+
+if (gridViewEl) {
+  gridViewEl.addEventListener('click', function(e) {
+    e.preventDefault();
+    var goToGridView = window.goToGridView;
+    if (goToGridView) goToGridView();
   });
 }
 
