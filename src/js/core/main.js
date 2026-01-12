@@ -45,6 +45,7 @@ import {
   updateFediverseLabels,
 } from "./fediverse-labels.js";
 import { generateGalaxy } from "./galaxy.js";
+import { createBlackhole } from "./blackhole.js";
 import "./solarsystem.js";
 import { makeFediverseSystem } from "./fediverse-solarsystem.js";
 import "./sun.js";
@@ -486,6 +487,10 @@ function sceneSetup() {
   if (enableGalaxy) {
     pGalacticSystem = generateGalaxy();
     translating.add(pGalacticSystem);
+
+    var blackhole = createBlackhole();
+    rotating.add(blackhole);
+
     if (enableDust) {
       pDustSystem = generateDust();
       pGalacticSystem.add(pDustSystem);
