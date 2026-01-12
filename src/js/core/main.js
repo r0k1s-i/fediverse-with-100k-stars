@@ -294,7 +294,7 @@ function initScene() {
     0.5,
     10000000,
   );
-  camera.position.z = 500;
+  camera.position.z = 2500;
   camera.rotation.vx = 0;
   camera.rotation.vy = 0;
   camera.position.target = {
