@@ -277,31 +277,79 @@ function handleHover(object) {
       fediverseInteraction.lastHoveredInstance = object;
     }
 
-
-    if (object) {
-      html(starNameEl, "<span>" + object.name + "</span>");
-      css(starNameEl, {
-        opacity: "1.0",
-        position: "fixed",
-        bottom: "auto",
-        margin: "0",
-      });
-      show(starNameEl);
-      document.body.style.cursor = "pointer";
+    if (!isZoomedInClose) {
+      if (object) {
+        html(starNameEl, "<span>" + object.name + "</span>");
+        css(starNameEl, {
+          opacity: "1.0",
+          position: "fixed",
+          bottom: "auto",
+          margin: "0",
+        });
+        show(starNameEl);
+        document.body.style.cursor = "pointer";
+      } else {
+        hide(starNameEl);
+        css(starNameEl, {
+          position: "",
+          left: "",
+          top: "",
+          bottom: "",
+          margin: "",
+        });
+        document.body.style.cursor = "default";
+      }
     } else {
-      hide(starNameEl);
-      css(starNameEl, {
-        position: "",
-        left: "",
-        top: "",
-        bottom: "",
-        margin: "",
-      });
-      document.body.style.cursor = "default";
+      if (starNameEl.style.bottom === "auto") {
+        hide(starNameEl);
+        css(starNameEl, {
+          position: "",
+          left: "",
+          top: "",
+          bottom: "",
+          margin: "",
+        });
+      }
     }
   }
 
-  if (object && starNameEl && starNameEl.style.display !== "none") {
+  if (object && starNameEl && starNameEl.style.display !== "none" && !isZoomedInClose) {
+    css(starNameEl, {
+
+          opacity: "1.0",
+          position: "fixed",
+          bottom: "auto",
+          margin: "0",
+        });
+        show(starNameEl);
+        document.body.style.cursor = "pointer";
+      } else {
+        hide(starNameEl);
+        css(starNameEl, {
+          position: "",
+          left: "",
+          top: "",
+          bottom: "",
+          margin: "",
+        });
+        document.body.style.cursor = "default";
+      }
+    } else {
+      // 近视距时，如果仍显示着跟随鼠标的 tooltip，则隐藏并重置
+      if (starNameEl.style.bottom === "auto") {
+        hide(starNameEl);
+        css(starNameEl, {
+          position: "",
+          left: "",
+          top: "",
+          bottom: "",
+          margin: "",
+        });
+      }
+    }
+  }
+
+  if (object && starNameEl && starNameEl.style.display !== "none" && !isZoomedInClose) {
     css(starNameEl, {
       left:
         ((fediverseInteraction.mouse.x + 1) / 2) * window.innerWidth +

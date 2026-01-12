@@ -337,6 +337,19 @@ function initScene() {
     e.preventDefault();
     e.stopPropagation();
     fadeOut(detailContainerEl);
+
+    var titleEl = find($("#detailTitle"), "span");
+    if (titleEl && titleEl.textContent && starNameEl) {
+      starNameEl.innerHTML = "<span>" + titleEl.textContent + "</span>";
+      css(starNameEl, {
+        position: "",
+        left: "",
+        top: "",
+        bottom: "",
+        margin: "",
+      });
+    }
+
     css(cssContainerEl, { display: "block" });
     if (detailContainerEl.classList.contains("about")) {
       detailContainerEl.classList.remove("about");
