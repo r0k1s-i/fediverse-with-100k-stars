@@ -106,15 +106,12 @@ export function goToGridView() {
     var camera = window.camera;
     var updateMinimap = window.updateMinimap;
 
-    // 最佳网格可见距离：gridPlane 在 z=300-1500 之间可见，800 左右最佳
+    // gridPlane 在 z=300-1500 可见，800 为最佳观察距离
     var targetZ = 800;
     
-    // 目标旋转角度：使网格平面呈现为水平视角
-    // rotateX 控制俯仰角，设为约 0.5 rad (~30度) 可以看到网格平面
-    var targetRotateX = Math.PI * 0.15;  // 约 27 度俯视角
-    var targetRotateY = window.rotateY || Math.PI / 2;  // 保持当前水平旋转
+    // 俯视角度约 80 度 (接近垂直向下看)，以清晰看到水平网格
+    var targetRotateX = Math.PI * 0.4;
 
-    // 首先重置位置到中心
     var translating = window.translating;
     if (translating) {
         translating.easePanning = new TWEEN.Tween(translating.position)
@@ -127,7 +124,6 @@ export function goToGridView() {
         translating.targetPosition.set(0, 0, 0);
     }
 
-    // Zoom 到目标距离
     camera.easeZooming = new TWEEN.Tween(camera.position)
         .to({ z: targetZ }, 2000)
         .easing(TWEEN.Easing.Sinusoidal.InOut)
@@ -139,19 +135,24 @@ export function goToGridView() {
     camera.position.target.pz = camera.position.z;
     camera.position.target.z = targetZ;
 
-    // 同时旋转到俯视角度
+    // 旋转动画：直接修改 window.rotateX，用 requestAnimationFrame 来驱动
     var currentRotateX = window.rotateX || 0;
-    var rotateObj = { x: currentRotateX };
+    var startTime = Date.now();
+    var duration = 2000;
     
-    new TWEEN.Tween(rotateObj)
-        .to({ x: targetRotateX }, 2000)
-        .easing(TWEEN.Easing.Sinusoidal.InOut)
-        .onUpdate(function() {
-            window.rotateX = rotateObj.x;
-        })
-        .start();
+    function animateRotation() {
+        var elapsed = Date.now() - startTime;
+        var progress = Math.min(elapsed / duration, 1);
+        // easeInOutSine
+        var eased = -(Math.cos(Math.PI * progress) - 1) / 2;
+        window.rotateX = currentRotateX + (targetRotateX - currentRotateX) * eased;
+        
+        if (progress < 1) {
+            requestAnimationFrame(animateRotation);
+        }
+    }
+    animateRotation();
 
-    // 停止自动旋转
     window.initialAutoRotate = false;
 
     if (updateMinimap) updateMinimap();

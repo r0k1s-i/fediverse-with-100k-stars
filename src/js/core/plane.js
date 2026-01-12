@@ -8,7 +8,7 @@ function onTextureError(err) {
 }
 
 export var glowSpanTexture = textureLoader.load(
-  "src/assets/textures/transparent.png",
+  "src/assets/textures/glowspan.png",
   undefined,
   undefined,
   onTextureError,
