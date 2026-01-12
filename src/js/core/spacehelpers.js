@@ -109,8 +109,8 @@ export function goToGridView() {
     // gridPlane 在 z=300-1500 可见，800 为最佳观察距离
     var targetZ = 800;
     
-    // 三主星在 XY 平面(z=0)，斜角观察：rotateX 约 18 度
-    var targetRotateX = Math.PI * 0.1;
+    // 三主星在 z=0 的 XY 平面，rotateX=0 为正面观察，0.3 为斜视约 17 度
+    var targetRotateX = 0.3;
     var targetRotateY = Math.PI / 2;
 
     var translating = window.translating;
