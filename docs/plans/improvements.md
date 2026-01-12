@@ -392,10 +392,10 @@ src/js/core/main.js                # Integrated debug tools
 
 ### Related Documentation
 
-- [Postmortem Reports](./postmortem/README.md) - Root cause analysis
-- [Executive Summary](./postmortem/EXECUTIVE-SUMMARY.md) - High-level overview
-- [Coordinate Systems](./docs/coordinate-systems.md) - Detailed reference
-- [Constants Reference](./src/js/core/constants.js) - Constant definitions
+- [Postmortem Reports](../postmortem/README.md) - Root cause analysis
+- [Executive Summary](../postmortem/EXECUTIVE-SUMMARY.md) - High-level overview
+- [Coordinate Systems](../coordinate-systems.md) - Detailed reference
+- [Constants Reference](../../src/js/core/constants.js) - Constant definitions
 
 ---
 

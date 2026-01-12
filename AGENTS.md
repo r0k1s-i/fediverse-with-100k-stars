@@ -80,7 +80,7 @@
 
 ## Project Overview
 
-**100k-Star-Challenge** is a fork of Chrome Experiments' "100,000 Stars" - an interactive 3D WebGL visualization of the stellar neighborhood showing over 100,000 nearby stars. Built with Three.js (r58-era), jQuery, and vanilla JavaScript.
+**fedi-night-with-100k-stars** is a fork of Chrome Experiments' "100,000 Stars" - an interactive 3D WebGL visualization of the stellar neighborhood showing over 100,000 nearby stars. Built with Three.js (r58-era), jQuery, and vanilla JavaScript.
 
 **Live original**: https://stars.chromeexperiments.com
 
@@ -115,7 +115,7 @@ npx http-server .
 ## Project Structure
 
 ```
-100k-Star-Challenge/
+fedi-night-with-100k-stars/
 ├── index.html          # Main entry point (loads all scripts)
 ├── index.css           # Minimal root styles (used by index.js)
 ├── index.js            # Custom application wrapper (namespace pattern)
@@ -350,7 +350,7 @@ Edit `camera.update()` in `main.js` - handles zoom easing and position updates.
 ## Agent Workflow Rules
 
 ### Documentation Updates
-1. **Update plan document** (`FEDIVERSE_IMPLEMENTATION_PLAN.md`) on every new discussion or technical decision change
+1. **Update plan document** (`docs/plans/fediverse-implementation.md`) on every new discussion or technical decision change
 2. **Update plan document** after completing code modifications or implementations
 3. **Update "当前状态" section** in plan document after each task completion:
    - Mark completed phases with `[x]`
