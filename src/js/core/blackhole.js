@@ -70,13 +70,26 @@ export function createBlackhole() {
     blackholeMesh.update = function() {
         var camera = window.camera;
         var rotating = window.rotating;
+        var pSystem = window.pSystem;
+
         if (!camera) return;
 
         var cameraZ = camera.position.z;
         var targetOpacity = 0;
 
+        // 获取 heat vision 状态
+        // 只有在 heat vision 开启 (value > 0) 时才允许显示
+        var isHeatVision = false;
+        if (pSystem) {
+            var mat = pSystem.shaderMaterial || pSystem.material;
+            if (mat && mat.uniforms && mat.uniforms.heatVision) {
+                isHeatVision = mat.uniforms.heatVision.value > 0.01;
+            }
+        }
+
         // 计算目标透明度
-        if (cameraZ >= BLACKHOLE_SHOW_THRESHOLD) {
+        // 条件：距离足够远 AND 开启了 Heat Vision
+        if (cameraZ >= BLACKHOLE_SHOW_THRESHOLD && isHeatVision) {
             var fadeRange = BLACKHOLE_FULL_OPACITY_THRESHOLD - BLACKHOLE_SHOW_THRESHOLD;
             var fadeProgress = (cameraZ - BLACKHOLE_SHOW_THRESHOLD) / fadeRange;
             targetOpacity = constrain(fadeProgress, 0, 0.5);
@@ -97,7 +110,9 @@ export function createBlackhole() {
             if (rotating) {
                 blackholeMesh.rotation.x = -rotating.rotation.x;
                 blackholeMesh.rotation.y = -rotating.rotation.y;
-                blackholeMesh.rotation.z = -rotating.rotation.z;
+                // 叠加一个极慢的自转 (基于时间)，产生动态感
+                var selfRotation = Date.now() * 0.00002;
+                blackholeMesh.rotation.z = -rotating.rotation.z + selfRotation;
             }
         }
     };
