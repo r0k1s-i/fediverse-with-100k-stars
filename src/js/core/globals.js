@@ -13,7 +13,6 @@ export const globals = {
     pGalacticSystem: null,
     pDustSystem: null,
     earth: null,
-    spacePlane: null,
     
     screenWidth: 0,
     screenHeight: 0,
@@ -32,7 +31,6 @@ export const globals = {
     enableGalaxy: true,
     enableDust: false,
     enableSolarSystem: true,
-    enableSpacePlane: true,
     enableStarModel: true,
     enableDirector: true,
 };
