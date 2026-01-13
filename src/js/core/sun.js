@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { constrain, map } from "../utils/math.js";
 import { Gyroscope } from "./Gyroscope.js";
+import { AssetManager } from './asset-manager.js';
 
 var sunTexture;
 var sunColorLookupTexture;
@@ -9,7 +10,7 @@ var sunHaloTexture;
 var sunHaloColorTexture;
 var sunCoronaTexture;
 
-var textureLoader = new THREE.TextureLoader();
+var textureLoader = AssetManager.getInstance();
 
 function onTextureError(err) {
   console.error("Error loading texture:", err);
@@ -18,7 +19,7 @@ function onTextureError(err) {
 function loadStarSurfaceTextures() {
   if (sunTexture === undefined) {
     setLoadMessage("Igniting solar plasma");
-    sunTexture = textureLoader.load(
+    sunTexture = textureLoader.loadTexture(
       "src/assets/textures/sun_surface.png",
       undefined,
       undefined,
@@ -29,7 +30,7 @@ function loadStarSurfaceTextures() {
   }
 
   if (sunColorLookupTexture === undefined) {
-    sunColorLookupTexture = textureLoader.load(
+    sunColorLookupTexture = textureLoader.loadTexture(
       "src/assets/textures/star_colorshift.png",
       undefined,
       undefined,
@@ -39,7 +40,7 @@ function loadStarSurfaceTextures() {
 
   if (solarflareTexture === undefined) {
     setLoadMessage("Distributing solar flares");
-    solarflareTexture = textureLoader.load(
+    solarflareTexture = textureLoader.loadTexture(
       "src/assets/textures/solarflare.png",
       undefined,
       undefined,
@@ -49,7 +50,7 @@ function loadStarSurfaceTextures() {
 
   if (sunHaloTexture === undefined) {
     setLoadMessage("Calculating coronal mass");
-    sunHaloTexture = textureLoader.load(
+    sunHaloTexture = textureLoader.loadTexture(
       "src/assets/textures/sun_halo.png",
       undefined,
       undefined,
@@ -58,7 +59,7 @@ function loadStarSurfaceTextures() {
   }
 
   if (sunHaloColorTexture === undefined) {
-    sunHaloColorTexture = textureLoader.load(
+    sunHaloColorTexture = textureLoader.loadTexture(
       "src/assets/textures/halo_colorshift.png",
       undefined,
       undefined,
@@ -68,7 +69,7 @@ function loadStarSurfaceTextures() {
 
   if (sunCoronaTexture === undefined) {
     setLoadMessage("Projecting coronal ejecta");
-    sunCoronaTexture = textureLoader.load(
+    sunCoronaTexture = textureLoader.loadTexture(
       "src/assets/textures/corona.png",
       undefined,
       undefined,

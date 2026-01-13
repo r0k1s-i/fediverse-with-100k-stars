@@ -1,14 +1,15 @@
 import * as THREE from 'three';
 import { constrain, random } from '../utils/math.js';
+import { AssetManager } from './asset-manager.js';
 
-var textureLoader = new THREE.TextureLoader();
+var textureLoader = AssetManager.getInstance();
 
 function onTextureError(err) {
   console.error("Error loading texture:", err);
 }
 
-var galacticTexture0 = textureLoader.load( "src/assets/textures/galactic_sharp.png", undefined, undefined, onTextureError );
-var galacticTexture1 = textureLoader.load( "src/assets/textures/galactic_blur.png", undefined, undefined, onTextureError );
+var galacticTexture0 = textureLoader.loadTexture( "src/assets/textures/galactic_sharp.png", undefined, undefined, onTextureError );
+var galacticTexture1 = textureLoader.loadTexture( "src/assets/textures/galactic_blur.png", undefined, undefined, onTextureError );
 
 var galacticUniforms = {
 	color:     { value: new THREE.Color( 0xffffff ) },
@@ -128,7 +129,7 @@ export function generateGalaxy(){
 	pGalacticSystem.add( addLensFlare(0,0,0) );
 
 	var galacticTopMaterial = new THREE.MeshBasicMaterial({
-		map: textureLoader.load('src/assets/textures/galactictop.png', undefined, undefined, onTextureError),
+		map: textureLoader.loadTexture('src/assets/textures/galactictop.png', undefined, undefined, onTextureError),
     blending: THREE.AdditiveBlending,
     depthTest: false,
     depthWrite: false,

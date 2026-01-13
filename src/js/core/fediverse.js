@@ -2,26 +2,27 @@ import * as THREE from 'three';
 import { constrain, pickRandomIndices } from '../utils/math.js';
 import { addClass, removeClass, fadeIn, fadeOut } from '../utils/dom.js';
 import { Gyroscope } from './Gyroscope.js';
+import { AssetManager } from './asset-manager.js';
 
-var textureLoader = new THREE.TextureLoader();
+var textureLoader = AssetManager.getInstance();
 
 function onTextureError(err) {
   console.error("Error loading texture:", err);
 }
 
-var fediverseTexture0 = textureLoader.load(
+var fediverseTexture0 = textureLoader.loadTexture(
   "src/assets/textures/p_0.png",
   undefined,
   undefined,
   onTextureError
 );
-var fediverseTexture1 = textureLoader.load(
+var fediverseTexture1 = textureLoader.loadTexture(
   "src/assets/textures/p_2.png",
   undefined,
   undefined,
   onTextureError
 );
-var fediverseHeatVisionTexture = textureLoader.load(
+var fediverseHeatVisionTexture = textureLoader.loadTexture(
   "src/assets/textures/sharppoint.png",
   undefined,
   undefined,
@@ -29,65 +30,26 @@ var fediverseHeatVisionTexture = textureLoader.load(
 );
 
 setLoadMessage("Focusing optics");
-var instancePreviewTexture = textureLoader.load(
+var instancePreviewTexture = textureLoader.loadTexture(
   "src/assets/textures/star_preview.png",
   undefined,
   undefined,
   onTextureError
 );
-var fediverseColorGraph = textureLoader.load(
+var fediverseColorGraph = textureLoader.loadTexture(
   "src/assets/textures/star_color_modified.png",
   undefined,
   undefined,
   onTextureError
 );
 
-var instanceSunHaloTexture = textureLoader.load(
+var instanceSunHaloTexture = textureLoader.loadTexture(
   "src/assets/textures/sun_halo.png",
   undefined,
   undefined,
   onTextureError
 );
-var instanceCoronaTexture = textureLoader.load(
-  "src/assets/textures/corona.png",
-  undefined,
-  undefined,
-  onTextureError
-);
-var fediverseTexture1 = textureLoader.load(
-  "src/assets/textures/p_2.png",
-  undefined,
-  undefined,
-  onTextureError
-);
-var fediverseHeatVisionTexture = textureLoader.load(
-  "src/assets/textures/sharppoint.png",
-  undefined,
-  undefined,
-  onTextureError
-);
-
-setLoadMessage("Focusing optics");
-var instancePreviewTexture = textureLoader.load(
-  "src/assets/textures/star_preview.png",
-  undefined,
-  undefined,
-  onTextureError
-);
-var fediverseColorGraph = textureLoader.load(
-  "src/assets/textures/star_color_modified.png",
-  undefined,
-  undefined,
-  onTextureError
-);
-
-var instanceSunHaloTexture = textureLoader.load(
-  "src/assets/textures/sun_halo.png",
-  undefined,
-  undefined,
-  onTextureError
-);
-var instanceCoronaTexture = textureLoader.load(
+var instanceCoronaTexture = textureLoader.loadTexture(
   "src/assets/textures/corona.png",
   undefined,
   undefined,
