@@ -21,17 +21,17 @@ export function initSkybox(highres) {
   setLoadMessage("Loading internal stars");
   var r = "src/assets/textures/";
 
-  // highres uses .png files, lowres uses s_*.jpg files
+  // highres uses .jpg files (optimized from png), lowres uses s_*.jpg files
 
   var urls;
   if (highres) {
     urls = [
-      r + "px.png",
-      r + "nx.png",
-      r + "py.png",
-      r + "ny.png",
-      r + "pz.png",
-      r + "nz.png",
+      r + "px.jpg",
+      r + "nx.jpg",
+      r + "py.jpg",
+      r + "ny.jpg",
+      r + "pz.jpg",
+      r + "nz.jpg",
     ];
   } else {
     urls = [
