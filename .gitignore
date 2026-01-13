@@ -5,3 +5,7 @@ scripts/fediverse-processor/fediverse-processor
 
 # Temp data processing directory
 scripts/temp/
+
+# Data directory
+data/
+
