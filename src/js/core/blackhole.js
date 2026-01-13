@@ -4,6 +4,8 @@ import { constrain } from '../utils/math.js';
 var textureLoader = new THREE.TextureLoader();
 var blackholeMesh;
 var blackholeMaterial;
+var blackholeTexture = null;
+var textureLoading = false;
 
 var BLACKHOLE_SHOW_THRESHOLD = 79990;
 var BLACKHOLE_FULL_OPACITY_THRESHOLD = 80000;
@@ -32,16 +34,28 @@ void main() {
 }
 `;
 
-export function createBlackhole() {
-    var texture = textureLoader.load(
+function loadBlackholeTexture(callback) {
+    if (blackholeTexture) {
+        callback(blackholeTexture);
+        return;
+    }
+    if (textureLoading) return;
+    
+    textureLoading = true;
+    textureLoader.load(
         'src/assets/textures/images.steamusercontent.jpeg',
-        undefined,
+        function(texture) {
+            blackholeTexture = texture;
+            callback(texture);
+        },
         undefined,
         function(err) { console.error("Error loading blackhole texture:", err); }
     );
+}
 
+export function createBlackhole() {
     var blackholeUniforms = {
-        map: { value: texture },
+        map: { value: null },
         opacity: { value: 0 }
     };
 
@@ -64,7 +78,6 @@ export function createBlackhole() {
     blackholeMesh.position.set(0, 0, -300000);
     blackholeMesh.renderOrder = -1000;
     
-    // 平滑过渡用的当前透明度值
     var currentOpacity = 0;
 
     blackholeMesh.update = function() {
@@ -77,8 +90,6 @@ export function createBlackhole() {
         var cameraZ = camera.position.z;
         var targetOpacity = 0;
 
-        // 获取 heat vision 状态
-        // 只有在 heat vision 开启 (value > 0) 时才允许显示
         var isHeatVision = false;
         if (pSystem) {
             var mat = pSystem.shaderMaterial || pSystem.material;
@@ -87,19 +98,20 @@ export function createBlackhole() {
             }
         }
 
-        // 计算目标透明度
-        // 条件：距离足够远 AND 开启了 Heat Vision
         if (cameraZ >= BLACKHOLE_SHOW_THRESHOLD && isHeatVision) {
             var fadeRange = BLACKHOLE_FULL_OPACITY_THRESHOLD - BLACKHOLE_SHOW_THRESHOLD;
             var fadeProgress = (cameraZ - BLACKHOLE_SHOW_THRESHOLD) / fadeRange;
             targetOpacity = constrain(fadeProgress, 0, 0.5);
+            
+            if (!blackholeTexture && !textureLoading) {
+                loadBlackholeTexture(function(texture) {
+                    blackholeUniforms.map.value = texture;
+                });
+            }
         }
 
-        // 简单的线性插值平滑 (Lerp)
-        // 0.05 的系数意味着每帧只接近目标值的 5%，产生柔和的滞后感
         currentOpacity += (targetOpacity - currentOpacity) * 0.05;
 
-        // 只有当实际透明度极低时才完全隐藏，避免突然消失
         if (currentOpacity < 0.001) {
             blackholeUniforms.opacity.value = 0;
             blackholeMesh.visible = false;
@@ -110,7 +122,6 @@ export function createBlackhole() {
             if (rotating) {
                 blackholeMesh.rotation.x = -rotating.rotation.x;
                 blackholeMesh.rotation.y = -rotating.rotation.y;
-                // 叠加一个极慢的自转 (基于时间)，产生动态感
                 var selfRotation = Date.now() * 0.00002;
                 blackholeMesh.rotation.z = -rotating.rotation.z + selfRotation;
             }
