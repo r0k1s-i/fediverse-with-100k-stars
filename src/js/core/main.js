@@ -304,7 +304,7 @@ function initScene() {
 
   if (enableSkybox) {
     setupSkyboxScene();
-    initSkybox(false);
+    initSkybox(true);
   }
 
   camera.update = function () {
