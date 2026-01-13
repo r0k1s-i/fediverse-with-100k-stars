@@ -57,10 +57,7 @@ import {
   activateMinimap,
 } from "./minimap.js";
 
-
 var masterContainer = document.getElementById("visualization");
-
-
 
 var maxAniso = 1;
 var enableDataStar = true;
@@ -333,8 +330,6 @@ function initScene() {
   buildGUI();
 
   sceneSetup();
-
-
 
   initCSS3D();
   if (initFediverseLabels) initFediverseLabels();
@@ -657,8 +652,6 @@ function animate() {
   window.rotateY = rotateY;
   window.rotateVX = rotateVX;
   window.rotateVY = rotateVY;
-
-
 
   requestAnimationFrame(animate);
 

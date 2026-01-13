@@ -1,4 +1,4 @@
-import * as THREE from 'three';
+import * as THREE from "three";
 import { constrain } from "../utils/math.js";
 
 var skybox;
@@ -21,25 +21,44 @@ export function initSkybox(highres) {
   setLoadMessage("Loading internal stars");
   var r = "src/assets/textures/";
 
-  if (highres == false) r += "s_";
+  // highres uses .png files, lowres uses s_*.jpg files
 
-  var urls = [
-    r + "px.jpg",
-    r + "nx.jpg",
-    r + "py.jpg",
-    r + "ny.jpg",
-    r + "pz.jpg",
-    r + "nz.jpg",
-  ];
+  var urls;
+  if (highres) {
+    urls = [
+      r + "px.png",
+      r + "nx.png",
+      r + "py.png",
+      r + "ny.png",
+      r + "pz.png",
+      r + "nz.png",
+    ];
+  } else {
+    urls = [
+      r + "s_px.jpg",
+      r + "s_nx.jpg",
+      r + "s_py.jpg",
+      r + "s_ny.jpg",
+      r + "s_pz.jpg",
+      r + "s_nz.jpg",
+    ];
+  }
 
   setLoadMessage("Loading interstellar bodies");
   var textureCube = new THREE.CubeTextureLoader().load(
     urls,
     undefined,
     undefined,
-    function(err) { console.error("Error loading skybox:", err); }
+    function (err) {
+      console.error("Error loading skybox:", err);
+    },
   );
   textureCube.anisotropy = window.maxAniso || 1;
+  // Use LinearFilter to ensure high quality and prevent blurriness from mipmaps
+  textureCube.magFilter = THREE.LinearFilter;
+  textureCube.minFilter = THREE.LinearFilter;
+  textureCube.generateMipmaps = false;
+
   var shader = THREE.ShaderLib["cube"];
   shader.uniforms["tCube"].value = textureCube;
   shader.uniforms["opacity"] = { value: 1.0, type: "f" };
