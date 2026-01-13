@@ -69,7 +69,7 @@ EXAMPLES:
   # Custom configuration
   fediverse-processor -config config.yaml -input data/raw.json
 
-For more information, visit: https://github.com/r0k1s-i/fedi-night-with-100k-stars
+For more information, visit: https://github.com/r0k1s-i/fediverse-with-100k-stars
 `)
 	}
 

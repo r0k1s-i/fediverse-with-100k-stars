@@ -1,4 +1,4 @@
-# fedi-night-with-100k-stars
+# fediverse-with-100k-stars
 
 An interactive 3D visualization of the Fediverse, showing instances as stars in a galaxy.
 

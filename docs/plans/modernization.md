@@ -1,7 +1,7 @@
 # 项目现代化升级计划
 
 **创建日期**: 2026-01-11  
-**项目**: fedi-night-with-100k-stars / Fediverse  
+**项目**: fediverse-with-100k-stars / Fediverse  
 **目标**: 保持简洁优雅的前提下，获得更优性能和现代开发体验
 
 ---

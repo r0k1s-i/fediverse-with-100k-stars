@@ -80,7 +80,7 @@
 
 ## Project Overview
 
-**fedi-night-with-100k-stars** is a fork of Chrome Experiments' "100,000 Stars" - an interactive 3D WebGL visualization of the stellar neighborhood showing over 100,000 nearby stars. Built with Three.js (r58-era), jQuery, and vanilla JavaScript.
+**fediverse-with-100k-stars** is a fork of Chrome Experiments' "100,000 Stars" - an interactive 3D WebGL visualization of the stellar neighborhood showing over 100,000 nearby stars. Built with Three.js (r58-era), jQuery, and vanilla JavaScript.
 
 **Live original**: https://stars.chromeexperiments.com
 
@@ -115,7 +115,7 @@ npx http-server .
 ## Project Structure
 
 ```
-fedi-night-with-100k-stars/
+fediverse-with-100k-stars/
 ├── index.html          # Main entry point (loads all scripts)
 ├── index.css           # Minimal root styles (used by index.js)
 ├── index.js            # Custom application wrapper (namespace pattern)

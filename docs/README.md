@@ -1,6 +1,6 @@
 # 📚 Documentation Index
 
-Welcome to the fedi-night-with-100k-stars / Fediverse documentation hub.
+Welcome to the fediverse-with-100k-stars / Fediverse documentation hub.
 
 ---
 
