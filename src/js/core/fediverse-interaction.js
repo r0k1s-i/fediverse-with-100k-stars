@@ -264,11 +264,13 @@ function handleHover(object) {
 
 
 
-  if (!isZoomedInClose) {
-    if (fediverseInteraction.intersected && !object) {
-      fediverseInteraction.intersected = null;
-      document.body.style.cursor = "default";
-    }
+  if (fediverseInteraction.intersected && !object) {
+    fediverseInteraction.intersected = null;
+    document.body.style.cursor = "default";
+  }
+  
+  if (isZoomedInClose) {
+    document.body.style.cursor = "default";
   }
 
   if (fediverseInteraction.intersected !== object) {
@@ -388,12 +390,22 @@ function onFediverseClick(event) {
     typeof markerThreshold !== "undefined" &&
     camera.position.z < markerThreshold.min;
 
-  var clickTarget = fediverseInteraction.intersected;
-  if (!clickTarget && isZoomedInClose) {
-    clickTarget = fediverseInteraction.lastHoveredInstance;
+  var starNameEl = window.starNameEl || $("#star-name");
+  var isClickOnStarName = starNameEl && (
+    event.target === starNameEl || 
+    starNameEl.contains(event.target)
+  );
+  
+  var clickTarget = null;
+  
+  if (isZoomedInClose) {
+    if (isClickOnStarName) {
+      clickTarget = fediverseInteraction.intersected || fediverseInteraction.lastHoveredInstance;
+    }
+  } else {
+    clickTarget = fediverseInteraction.intersected;
   }
-
-
+  
   if (!clickTarget) {
     return;
   }
