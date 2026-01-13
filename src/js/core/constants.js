@@ -292,9 +292,11 @@ export const AUDIO = {
 // DATA PATHS
 // ============================================================================
 
+export const GITHUB_REPO = 'r0k1s-i/fediverse-with-100k-stars';
+
 export const DATA_PATHS = {
   HIPPARCOS: 'data/hygdata_v3.csv',
-  FEDIVERSE: 'data/fediverse_final.json',
+  FEDIVERSE: `https://cdn.jsdelivr.net/gh/${GITHUB_REPO}@data/fediverse_final.json`,
   SPECTRAL_TEXTURE: 'src/assets/textures/star_color_modified.png'
 };
 
