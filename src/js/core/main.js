@@ -239,6 +239,30 @@ function initScene() {
   window.translating = translating;
   window.galacticCentering = galacticCentering;
 
+  var planetScene = new THREE.Scene();
+  var localRoot = new THREE.Object3D();
+  localRoot.name = 'localRoot';
+  planetScene.add(localRoot);
+
+  var planetCamera = new THREE.PerspectiveCamera(
+    45, 
+    screenWidth / screenHeight,
+    1e-6, 
+    10.0
+  );
+  planetCamera.position.set(0, 0, 3);
+
+  const planetLight = new THREE.DirectionalLight(0xffffff, 2.0);
+  planetLight.position.set(1, 1, 1);
+  planetScene.add(planetLight);
+
+  const planetAmbient = new THREE.AmbientLight(0xffffff, 0.5);
+  planetScene.add(planetAmbient);
+
+  window.planetScene = planetScene;
+  window.localRoot = localRoot;
+  window.planetCamera = planetCamera;
+
   screenWidth = window.innerWidth;
   screenHeight = window.innerHeight;
   screenWhalf = window.innerWidth / 2;
@@ -511,7 +535,6 @@ function sceneSetup() {
     starModel.setSpectralIndex(0.9);
     starModel.setScale(1.0);
     starModel.visible = false;
-    translating.add(starModel);
     window.starModel = starModel;
     window.enableStarModel = enableStarModel;
   }
@@ -704,8 +727,6 @@ function animate() {
 }
 
 function render() {
-  // Scheme H: Relative Coordinate Rendering (The "Scale Hack")
-  // 1. Render Background (Layer 0)
   if (enableSkybox) {
     renderSkybox();
   }
@@ -719,19 +740,24 @@ function render() {
   
   renderer.render(scene, camera);
   
-  // 2. Render Planet (Layer 1)
-  // Simple Overlay Rendering: Just clear depth and render planet on top.
-  // We rely on the planet model being scaled up significantly in planet-model.js
   var planet = window.starModel;
   
   if (planet && planet.visible) {
+    syncPlanetCamera();
     renderer.clearDepth();
-    camera.layers.set(1);
-    renderer.render(scene, camera);
-    camera.layers.enableAll();
+    renderer.render(window.planetScene, window.planetCamera);
   }
   
+  camera.layers.enableAll();
   renderer.autoClear = true;
+}
+
+function syncPlanetCamera() {
+  var planetCamera = window.planetCamera;
+  if (!planetCamera) return;
+
+  planetCamera.position.set(0, 0, 3);
+  planetCamera.lookAt(0, 0, 0);
 }
 
 function muteSound() {

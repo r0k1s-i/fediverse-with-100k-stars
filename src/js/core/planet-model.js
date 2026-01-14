@@ -104,15 +104,6 @@ export function createPlanetModel() {
   const root = new THREE.Object3D();
   root.name = "planetModelRoot";
 
-  const light = new THREE.DirectionalLight(0xffffff, 2.0);
-  light.position.set(1, 1, 1);
-  light.name = "planetLight";
-  root.add(light);
-
-  const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-  ambientLight.name = "planetAmbient";
-  root.add(ambientLight);
-
   const placeholderGeo = new THREE.SphereGeometry(7.35144e-8, 32, 16);
   const placeholderMat = new THREE.MeshStandardMaterial({
     color: 0x888888,
@@ -140,13 +131,7 @@ export function createPlanetModel() {
     planetInstance.traverse((obj) => {
       if (obj.isMesh) {
         instanceMeshCounter++;
-        obj.renderOrder = 100 + instanceMeshCounter;
         
-        // Set to Layer 1 ONLY (remove from Layer 0) for separate rendering pass
-        // This effectively isolates it from the z-fighting of the main scene
-        obj.layers.set(1);
-        
-        // Disable frustum culling to prevent accidental clipping during scale hacks
         obj.frustumCulled = false;
         
         const name = (obj.name || "").toLowerCase();
@@ -163,13 +148,6 @@ export function createPlanetModel() {
       }
     });
     
-    // Also set layer 1 for lights attached to root so they affect the planet
-    root.traverse((obj) => {
-      if (obj.isLight) {
-        obj.layers.set(1);
-      }
-    });
-
     meshesToRemove.forEach((mesh) => {
       if (mesh.parent) mesh.parent.remove(mesh);
     });

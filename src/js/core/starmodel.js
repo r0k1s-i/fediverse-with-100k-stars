@@ -29,10 +29,19 @@ function hideAllSubStars() {
 
 export function setStarModel(position, name) {
     var starModel = window.starModel;
-    if (!starModel) return;
+    var localRoot = window.localRoot;
+    if (!starModel || !localRoot) return;
 
     hideAllSubStars();
-    starModel.position.copy(position);
+    
+    if (starModel.parent !== localRoot) {
+        if (starModel.parent) starModel.parent.remove(starModel);
+        localRoot.add(starModel);
+    }
+    
+    starModel.position.set(0, 0, 0);
+    starModel.userData.galaxyPosition = position.clone();
+    
     starModel.setSpectralIndex(0.5);
     starModel.setScale(1.0);
 }

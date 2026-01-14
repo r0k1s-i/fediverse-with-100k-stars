@@ -132,7 +132,11 @@ export function updateFediverseInteraction() {
       
       if (closestInst && typeof starModel !== "undefined" && enableStarModel) {
           if (!starModel.visible || starModel.position.distanceTo(closestInst.position) > 0.1) {
-              starModel.position.copy(closestInst.position);
+              if (window.setStarModel) {
+                  window.setStarModel(closestInst.position, closestInst.name);
+              } else {
+                  starModel.position.copy(closestInst.position);
+              }
               
               var userCount = closestInst.stats ? closestInst.stats.user_count : 1;
               var instanceSize = Math.max(15.0, Math.log(userCount + 1) * 8);
@@ -446,7 +450,11 @@ function onFediverseClick(event) {
     enableStarModel
   ) {
     // 星球模型放置在实例的位置
-    starModel.position.copy(position);
+    if (window.setStarModel) {
+        window.setStarModel(position, data.name);
+    } else {
+        starModel.position.copy(position);
+    }
 
     var spectralIndex = 0.5;
     if (data.color && data.color.hsl) {
