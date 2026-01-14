@@ -30,6 +30,7 @@ function hideAllSubStars() {
 export function setStarModel(position, name) {
     var starModel = window.starModel;
     var localRoot = window.localRoot;
+    
     if (!starModel || !localRoot) return;
 
     hideAllSubStars();
@@ -44,6 +45,11 @@ export function setStarModel(position, name) {
     
     starModel.setSpectralIndex(0.5);
     starModel.setScale(1.0);
+    
+    // Force matrix update immediately to ensure rendering is correct on first frame
+    starModel.updateMatrix();
+    starModel.updateMatrixWorld(true);
+    if (localRoot) localRoot.updateMatrixWorld(true);
 }
 
 window.makeStarModels = makeStarModels;

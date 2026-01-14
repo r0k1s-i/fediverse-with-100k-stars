@@ -63,8 +63,16 @@ export function preloadPlanetModel() {
                     mat.polygonOffset = false;
                     mat.depthTest = true;
                     mat.depthWrite = true;
+                    
+                    // Add slight emissive to ensure visibility even if lighting is tricky
+                    if (mat.emissive) {
+                        mat.emissive.setHex(0x222222);
+                    }
                   });
                 }
+                
+                // Ensure no leftover material debug
+                // obj.material = new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true });
               }
             });
             console.log("Planet GLB loaded successfully:", PLANET_GLB_PATH);
@@ -160,14 +168,28 @@ export function createPlanetModel() {
     // Target size 1.0 (in light years) provides a good balance: visible but not overwhelming
     const targetSize = 1.0; 
     const normalizeScale = targetSize / maxDim;
-    planetInstance.scale.set(normalizeScale, normalizeScale, normalizeScale);
+    // Apply a base scale multiplier to ensure it's visible in the 3-unit camera distance
+    // If camera is at z=3, a 1-unit object fits well in FOV 45
+    // Adjusted back to reasonable scale
+    const baseScaleMultiplier = 2.0; // Slightly larger than 1.0 to ensure visibility
+    const finalNormScale = normalizeScale * baseScaleMultiplier;
+    
+    planetInstance.scale.set(finalNormScale, finalNormScale, finalNormScale);
 
     const center = box.getCenter(new THREE.Vector3());
-    planetInstance.position.sub(center.multiplyScalar(normalizeScale));
+    planetInstance.position.sub(center.multiplyScalar(finalNormScale));
 
     root.add(planetInstance);
     root._planetMesh = planetInstance;
-    root._baseScale = normalizeScale;
+    root._baseScale = finalNormScale;
+
+    // Apply current scale if set before load
+    if (root._currentScale !== undefined) {
+      root.setScale(root._currentScale);
+    }
+    
+    // Ensure visibility matches root
+    planetInstance.visible = root.visible;
 
     console.log("Planet mesh attached to root");
   });
@@ -188,6 +210,10 @@ export function createPlanetModel() {
       this._planetMesh.scale.set(finalScale, finalScale, finalScale);
     }
 
+    // Force update matrix
+    this.updateMatrix();
+    this.updateMatrixWorld(true);
+
     const placeholder = this.getObjectByName("planetPlaceholder");
     if (placeholder) {
       placeholder.scale.set(scale, scale, scale);
@@ -198,6 +224,9 @@ export function createPlanetModel() {
 
   root.update = function () {
     this.rotation.y += 0.002;
+    if (this._planetMesh && this._planetMesh.visible !== this.visible) {
+      this._planetMesh.visible = this.visible;
+    }
   };
 
   root.substars = [];
@@ -207,6 +236,9 @@ export function createPlanetModel() {
   return root;
 }
 
+// Alias for compatibility with main.js expectation
+export const makeStarModels = createPlanetModel;
+
 window.preloadPlanetModel = preloadPlanetModel;
 window.createPlanetModel = createPlanetModel;
 window.isPlanetModelLoaded = isPlanetModelLoaded;
@@ -214,16 +246,34 @@ window.isPlanetModelLoaded = isPlanetModelLoaded;
 // Debug function - call from console: debugPlanetZFighting()
 window.debugPlanetZFighting = function () {
   const cam = window.camera;
+  const planetCam = window.planetCamera;
   const rend = window.renderer;
   const star = window.starModel;
 
-  console.log("=== Z-Fighting Debug Info ===");
-  console.log("Camera:", {
+  console.log("=== Dual Scene Debug Info ===");
+  
+  console.log("Main Camera:", {
     positionZ: cam?.position?.z,
     near: cam?.near,
     far: cam?.far,
-    ratio: cam?.far / cam?.near,
   });
+
+  console.log("Planet Camera:", {
+    position: planetCam?.position,
+    near: planetCam?.near,
+    far: planetCam?.far,
+    ratio: planetCam?.far / planetCam?.near,
+  });
+
+  console.log("Star Model:", {
+    position: star?.position,
+    parent: star?.parent?.name,
+    visible: star?.visible,
+    scale: star?.scale, // Shows Vector3 values
+    baseScale: star?._baseScale,
+    currentScale: star?._currentScale
+  });
+
   console.log("Renderer:", {
     logarithmicDepthBuffer: rend?.capabilities?.logarithmicDepthBuffer,
     precision: rend?.capabilities?.precision,
@@ -235,22 +285,11 @@ window.debugPlanetZFighting = function () {
         const mat = obj.material;
         console.log("Mesh:", obj.name, {
           visible: obj.visible,
-          renderOrder: obj.renderOrder,
           frustumCulled: obj.frustumCulled,
           material: {
             depthWrite: mat?.depthWrite,
             depthTest: mat?.depthTest,
             polygonOffset: mat?.polygonOffset,
-            polygonOffsetFactor: mat?.polygonOffsetFactor,
-            transparent: mat?.transparent,
-            opacity: mat?.opacity,
-            side: mat?.side,
-            sideLabel:
-              mat?.side === 0
-                ? "FrontSide"
-                : mat?.side === 1
-                  ? "BackSide"
-                  : "DoubleSide",
           },
         });
       }

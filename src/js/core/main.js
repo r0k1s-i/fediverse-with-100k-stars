@@ -27,7 +27,8 @@ import "../core/urlArgs.js";
 
 import "./infocallout.js";
 import "./starsystems.js";
-import { makeStarModels } from "./starmodel.js";
+import { setStarModel } from "./starmodel.js"; // Import logic for positioning model
+import { makeStarModels } from "./planet-model.js"; // Use GLB model instead of shader star
 import { initCSS3D, setCSSWorld, setCSSCamera } from "./css3worldspace.js";
 import "./helphud.js";
 import "./spacehelpers.js";
@@ -244,13 +245,18 @@ function initScene() {
   localRoot.name = 'localRoot';
   planetScene.add(localRoot);
 
+  var aspect = screenWidth / screenHeight;
+  if (isNaN(aspect) || !isFinite(aspect)) aspect = 1.0;
+
   var planetCamera = new THREE.PerspectiveCamera(
     45, 
-    screenWidth / screenHeight,
-    1e-6, 
-    10.0
+    aspect,
+    0.1, 
+    100.0
   );
   planetCamera.position.set(0, 0, 3);
+  
+  planetScene.add(planetCamera);
 
   const planetLight = new THREE.DirectionalLight(0xffffff, 2.0);
   planetLight.position.set(1, 1, 1);
@@ -744,6 +750,10 @@ function render() {
   
   if (planet && planet.visible) {
     syncPlanetCamera();
+    
+    // Ensure planet scene matrix is updated
+    if (window.planetScene) window.planetScene.updateMatrixWorld(true);
+    
     renderer.clearDepth();
     renderer.render(window.planetScene, window.planetCamera);
   }
@@ -756,8 +766,18 @@ function syncPlanetCamera() {
   var planetCamera = window.planetCamera;
   if (!planetCamera) return;
 
-  planetCamera.position.set(0, 0, 3);
+  planetCamera.position.set(0, 0, 3); 
   planetCamera.lookAt(0, 0, 0);
+  
+  // Sync lighting direction with camera
+  if (window.planetScene) {
+    window.planetScene.traverse(function(obj) {
+      if (obj.isDirectionalLight) {
+        // Keep light coming from top-right relative to camera
+        obj.position.set(1, 1, 1); 
+      }
+    });
+  }
 }
 
 function muteSound() {

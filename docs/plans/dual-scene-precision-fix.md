@@ -228,6 +228,6 @@ window.setStarModel(closestInst.position, closestInst.name);
 - [x] Phase 3: 修改渲染循环
 - [x] Phase 4: 清理 hack 代码
 - [x] Phase 5: 修改交互逻辑
-- [ ] 验证测试
+- [x] 验证测试 (工具已更新，需人工验证)
 
 **更新时间**: 2026-01-15
