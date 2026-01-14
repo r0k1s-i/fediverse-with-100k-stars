@@ -5,6 +5,7 @@
  * Now uses GLB planet models instead of shader-based star/sun.
  */
 
+import * as THREE from 'three';
 import { AUToLY } from '../utils/app.js';
 import { preloadPlanetModel, createPlanetModel } from './planet-model.js';
 
@@ -41,12 +42,15 @@ export function setStarModel(position, name) {
     }
     
     starModel.position.set(0, 0, 0);
-    starModel.userData.galaxyPosition = position.clone();
+    
+    var galaxyPos = position instanceof THREE.Vector3 
+        ? position.clone() 
+        : new THREE.Vector3(position.x, position.y, position.z);
+    starModel.userData.galaxyPosition = galaxyPos;
     
     starModel.setSpectralIndex(0.5);
     starModel.setScale(1.0);
     
-    // Force matrix update immediately to ensure rendering is correct on first frame
     starModel.updateMatrix();
     starModel.updateMatrixWorld(true);
     if (localRoot) localRoot.updateMatrixWorld(true);

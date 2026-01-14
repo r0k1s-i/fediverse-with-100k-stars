@@ -751,7 +751,10 @@ function render() {
   if (planet && planet.visible) {
     syncPlanetCamera();
     
-    // Ensure planet scene matrix is updated
+    if (planet.update) {
+      planet.update();
+    }
+    
     if (window.planetScene) window.planetScene.updateMatrixWorld(true);
     
     renderer.clearDepth();
@@ -764,16 +767,52 @@ function render() {
 
 function syncPlanetCamera() {
   var planetCamera = window.planetCamera;
-  if (!planetCamera) return;
+  var mainCamera = window.camera;
+  var starModel = window.starModel;
+  if (!planetCamera || !mainCamera) return;
 
-  planetCamera.position.set(0, 0, 3); 
+  var mainZ = mainCamera.position.z;
+  var markerMin = window.markerThreshold ? window.markerThreshold.min : 200;
+  
+  var modelScale = starModel && starModel._currentScale ? starModel._currentScale : 1.0;
+  var scaleCompensation = Math.max(1.0, modelScale * 0.5);
+  
+  var fadeStart = markerMin * 0.6;
+  var fadeEnd = markerMin;
+  
+  var planetCamZ;
+  var opacity = 1.0;
+  
+  if (mainZ < fadeStart) {
+    var t = mainZ / fadeStart;
+    planetCamZ = (3.0 + t * 2.0) * scaleCompensation;
+  } else if (mainZ < fadeEnd) {
+    var fadeT = (mainZ - fadeStart) / (fadeEnd - fadeStart);
+    planetCamZ = (5.0 + fadeT * 15.0) * scaleCompensation;
+    opacity = 1.0 - fadeT;
+  } else {
+    planetCamZ = 20.0 * scaleCompensation;
+    opacity = 0.0;
+  }
+  
+  planetCamera.position.set(0, 0, planetCamZ);
   planetCamera.lookAt(0, 0, 0);
   
-  // Sync lighting direction with camera
+  if (starModel && starModel._planetMesh) {
+    starModel._planetMesh.traverse(function(obj) {
+      if (obj.isMesh && obj.material) {
+        var mats = Array.isArray(obj.material) ? obj.material : [obj.material];
+        mats.forEach(function(mat) {
+          mat.transparent = true;
+          mat.opacity = opacity;
+        });
+      }
+    });
+  }
+  
   if (window.planetScene) {
     window.planetScene.traverse(function(obj) {
       if (obj.isDirectionalLight) {
-        // Keep light coming from top-right relative to camera
         obj.position.set(1, 1, 1); 
       }
     });

@@ -126,12 +126,16 @@ export function updateFediverseInteraction() {
   var starModel = window.starModel;
   var enableStarModel = window.enableStarModel;
 
-  // Only render starModel for the currently hovered/intersected instance
   if (isZoomedInClose && fediverseInteraction.intersected) {
       var closestInst = fediverseInteraction.intersected.instanceData;
       
       if (closestInst && typeof starModel !== "undefined" && enableStarModel) {
-          if (!starModel.visible || starModel.position.distanceTo(closestInst.position) > 0.1) {
+          var trackedGalaxyPosition = starModel.userData && starModel.userData.galaxyPosition;
+          var isNewInstance = !trackedGalaxyPosition || 
+              trackedGalaxyPosition.distanceTo(closestInst.position) > 0.1;
+          var needsUpdate = !starModel.visible || isNewInstance;
+          
+          if (needsUpdate) {
               if (window.setStarModel) {
                   window.setStarModel(closestInst.position, closestInst.name);
               } else {
@@ -601,6 +605,7 @@ function showInstanceDetails(data) {
 
 window.fediverseInteraction = fediverseInteraction;
 window.initFediverseInteraction = initFediverseInteraction;
+window.updateFediverseInteraction = updateFediverseInteraction;
 window.shouldShowFediverseSystem = shouldShowFediverseSystem;
 window.goToFediverseCenter = goToFediverseCenter;
 window.isAtFediverseCenter = isAtFediverseCenter;

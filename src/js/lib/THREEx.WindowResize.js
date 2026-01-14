@@ -47,6 +47,12 @@ THREEx.WindowResize	= function(renderer, camera){
 		// update the camera
 		camera.aspect	= w / h;
 		camera.updateProjectionMatrix();
+		
+		if (window.planetCamera) {
+			window.planetCamera.aspect = w / h;
+			window.planetCamera.updateProjectionMatrix();
+		}
+		
 		initCSS3D();
 	}
 	// bind the resize event

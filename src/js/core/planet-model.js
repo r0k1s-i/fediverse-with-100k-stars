@@ -133,7 +133,6 @@ export function createPlanetModel() {
 
     const meshesToRemove = [];
     
-    // We traverse again to remove unwanted meshes and set renderOrder
     let instanceMeshCounter = 0;
     
     planetInstance.traverse((obj) => {
@@ -164,14 +163,9 @@ export function createPlanetModel() {
     const size = box.getSize(new THREE.Vector3());
     const maxDim = Math.max(size.x, size.y, size.z);
 
-    // Increase base scale to ensure visibility
-    // Target size 1.0 (in light years) provides a good balance: visible but not overwhelming
     const targetSize = 1.0; 
     const normalizeScale = targetSize / maxDim;
-    // Apply a base scale multiplier to ensure it's visible in the 3-unit camera distance
-    // If camera is at z=3, a 1-unit object fits well in FOV 45
-    // Adjusted back to reasonable scale
-    const baseScaleMultiplier = 2.0; // Slightly larger than 1.0 to ensure visibility
+    const baseScaleMultiplier = 0.8;
     const finalNormScale = normalizeScale * baseScaleMultiplier;
     
     planetInstance.scale.set(finalNormScale, finalNormScale, finalNormScale);
@@ -183,15 +177,11 @@ export function createPlanetModel() {
     root._planetMesh = planetInstance;
     root._baseScale = finalNormScale;
 
-    // Apply current scale if set before load
     if (root._currentScale !== undefined) {
       root.setScale(root._currentScale);
     }
     
-    // Ensure visibility matches root
     planetInstance.visible = root.visible;
-
-    console.log("Planet mesh attached to root");
   });
 
   root._currentSpectralIndex = 0.5;
