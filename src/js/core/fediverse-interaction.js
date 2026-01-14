@@ -123,10 +123,11 @@ export function updateFediverseInteraction() {
     typeof markerThreshold !== "undefined" &&
     camera.position.z < markerThreshold.min;
 
+  var starModel = window.starModel;
+  var enableStarModel = window.enableStarModel;
+
   // Only render starModel for the currently hovered/intersected instance
   if (isZoomedInClose && fediverseInteraction.intersected) {
-      var starModel = window.starModel;
-      var enableStarModel = window.enableStarModel;
       var closestInst = fediverseInteraction.intersected.instanceData;
       
       if (closestInst && typeof starModel !== "undefined" && enableStarModel) {
@@ -148,6 +149,10 @@ export function updateFediverseInteraction() {
               starModel.randomizeSolarFlare();
               starModel.visible = true;
           }
+      }
+  } else {
+      if (starModel) {
+          starModel.visible = false;
       }
   }
 }

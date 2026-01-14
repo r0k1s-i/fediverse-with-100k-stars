@@ -49,6 +49,7 @@ import { createBlackhole } from "./blackhole.js";
 import "./solarsystem.js";
 import { makeFediverseSystem } from "./fediverse-solarsystem.js";
 import "./sun.js";
+import { preloadPlanetModel } from "./planet-model.js";
 
 import {
   updateMinimap,
@@ -177,6 +178,8 @@ var postStarGradientLoaded = function () {
 };
 
 var postShadersLoaded = function () {
+  preloadPlanetModel();
+
   loadFediverseData(window.fediverseDataPath, function (loadedData) {
     window.fediverseInstances = loadedData;
     initScene();
@@ -244,8 +247,16 @@ function initScene() {
   window.screenWidth = screenWidth;
   window.screenHeight = screenHeight;
 
-  renderer = new THREE.WebGLRenderer({ antialias: antialias });
+  renderer = new THREE.WebGLRenderer({
+    antialias: antialias,
+    logarithmicDepthBuffer: true,
+  });
   window.renderer = renderer;
+  console.log("[DEBUG] Renderer created:", {
+    logarithmicDepthBuffer: renderer.capabilities.logarithmicDepthBuffer,
+    maxPrecision: renderer.capabilities.precision,
+    antialias: antialias,
+  });
 
   var devicePixelRatio = window.devicePixelRatio || 1;
 
@@ -308,9 +319,39 @@ function initScene() {
   }
 
   camera.update = function () {
-    if (this.easeZooming) return;
+    if (!this.easeZooming) {
+      camera.position.z +=
+        (camera.position.target.z - camera.position.z) * 0.125;
+    }
 
-    camera.position.z += (camera.position.target.z - camera.position.z) * 0.125;
+    // Dynamically adjust near/far planes based on zoom level to prevent z-fighting
+    // Always update near/far, even during easeZooming
+    // Use continuous scaling instead of discrete steps to avoid jumps
+    var z = Math.abs(camera.position.z);
+    var newNear, newFar;
+
+    // Continuous near/far calculation based on camera distance
+    // This avoids sudden jumps at threshold boundaries
+    // Improved: Ensure near plane never gets too small to prevent z-fighting
+    if (z < 1) {
+      newNear = Math.max(0.0001, z * 0.001); // Increased from 0.000001 to 0.0001
+      newFar = Math.max(1, z * 100); // Increased multiplier for better range
+    } else if (z < 100) {
+      newNear = Math.max(0.001, z * 0.01); // More conservative near plane
+      newFar = z * 100; // Increased from 50 to 100
+    } else {
+      newNear = z * 0.001;
+      newFar = Math.min(10000000, z * 1000);
+    }
+
+    // Only update if change is significant (>5%) to reduce projection matrix updates
+    var nearDiff = Math.abs(camera.near - newNear) / camera.near;
+    var farDiff = Math.abs(camera.far - newFar) / camera.far;
+    if (nearDiff > 0.05 || farDiff > 0.05) {
+      camera.near = newNear;
+      camera.far = newFar;
+      camera.updateProjectionMatrix();
+    }
   };
 
   camera.position.y = 0;
@@ -663,14 +704,34 @@ function animate() {
 }
 
 function render() {
+  // Scheme H: Relative Coordinate Rendering (The "Scale Hack")
+  // 1. Render Background (Layer 0)
   if (enableSkybox) {
     renderSkybox();
-    renderer.autoClear = false;
-    renderer.render(scene, camera);
-    renderer.autoClear = true;
-  } else {
-    renderer.render(scene, camera);
   }
+  
+  renderer.autoClear = false;
+  camera.layers.set(0);
+  
+  if (enableSkybox) {
+    renderer.clearDepth(); 
+  }
+  
+  renderer.render(scene, camera);
+  
+  // 2. Render Planet (Layer 1)
+  // Simple Overlay Rendering: Just clear depth and render planet on top.
+  // We rely on the planet model being scaled up significantly in planet-model.js
+  var planet = window.starModel;
+  
+  if (planet && planet.visible) {
+    renderer.clearDepth();
+    camera.layers.set(1);
+    renderer.render(scene, camera);
+    camera.layers.enableAll();
+  }
+  
+  renderer.autoClear = true;
 }
 
 function muteSound() {

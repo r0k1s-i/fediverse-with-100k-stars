@@ -101,6 +101,16 @@ function createMajorInstancePreview(color) {
 
   container.update = function () {
     var zoomFactor = camera.position.z;
+    
+    // 近视距时（GLB模型可见时）完全隐藏光晕
+    // 避免光晕穿透GLB模型造成白点
+    if (zoomFactor < 50) {
+      this.visible = false;
+      haloMaterial.opacity = 0;
+      coronaMaterial.opacity = 0;
+      return;
+    }
+    
     var opacity = constrain(Math.pow(zoomFactor * 0.002, 2), 0, 1);
     if (opacity < 0.1) opacity = 0.0;
 
@@ -415,6 +425,15 @@ export function generateFediverseInstances() {
   window.toggleHeatVision = container.toggleHeatVision;
 
   var pSystem = new THREE.Points(geometry, shaderMaterial);
+
+  // 近视距时隐藏粒子系统，避免穿透 GLB 模型造成白点
+  pSystem.update = function() {
+    if (camera.position.z < 50) {
+      this.visible = false;
+    } else {
+      this.visible = true;
+    }
+  };
 
   if (iconPositions.length > 0) {
       var iconGeometry = new THREE.BufferGeometry();
