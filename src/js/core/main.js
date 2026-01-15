@@ -258,12 +258,27 @@ function initScene() {
   
   planetScene.add(planetCamera);
 
-  const planetLight = new THREE.DirectionalLight(0xffffff, 2.0);
-  planetLight.position.set(1, 1, 1);
+  const planetLight = new THREE.DirectionalLight(0xffffff, 2.0); // Standard intensity
+  planetLight.position.set(3, 10, 5); // Typical 45-degree angle studio light
+  planetLight.castShadow = true; // Enable shadows
+  planetLight.shadow.mapSize.width = 1024;
+  planetLight.shadow.mapSize.height = 1024;
+  planetLight.shadow.camera.near = 0.1;
+  planetLight.shadow.camera.far = 20;
   planetScene.add(planetLight);
 
-  const planetAmbient = new THREE.AmbientLight(0xffffff, 0.5);
+  const planetAmbient = new THREE.AmbientLight(0xffffff, 0.2); // Soft ambient
   planetScene.add(planetAmbient);
+
+  // Fill light
+  const fillLight = new THREE.DirectionalLight(0xffffff, 0.8);
+  fillLight.position.set(-3, 0, 2);
+  planetScene.add(fillLight);
+
+  // Rim light
+  const rimLight = new THREE.DirectionalLight(0xffffff, 1.0);
+  rimLight.position.set(0, 5, -5);
+  planetScene.add(rimLight);
 
   window.planetScene = planetScene;
   window.localRoot = localRoot;
@@ -281,6 +296,13 @@ function initScene() {
     antialias: antialias,
     logarithmicDepthBuffer: true,
   });
+  // Enable modern color management and tone mapping
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.0;
+  renderer.shadowMap.enabled = true; // Enable shadow maps
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap; // Soft shadows
+  
   window.renderer = renderer;
   console.log("[DEBUG] Renderer created:", {
     logarithmicDepthBuffer: renderer.capabilities.logarithmicDepthBuffer,
@@ -346,6 +368,8 @@ function initScene() {
   if (enableSkybox) {
     setupSkyboxScene();
     initSkybox(true);
+    // Note: Environment map for PBR is now set asynchronously in skybox.js 
+    // via PMREMGenerator when the cubemap loads
   }
 
   camera.update = function () {

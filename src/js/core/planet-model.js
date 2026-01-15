@@ -50,7 +50,7 @@ export function preloadPlanetModel() {
                 (gltf) => {
                     const scene = gltf.scene || gltf.scenes[0];
                     if (scene) {
-                        processLoadedScene(scene);
+                        processLoadedScene(scene, path); // Pass path to identify model
                         resolve(scene);
                     } else {
                         resolve(null);
@@ -74,23 +74,142 @@ export function preloadPlanetModel() {
   return loadPromise;
 }
 
-function processLoadedScene(scene) {
+/**
+ * Process a loaded scene with optional model-specific overrides
+ * @param {THREE.Object3D} scene 
+ * @param {string} modelName 
+ */
+function processLoadedScene(scene, modelName) {
     scene.traverse((obj) => {
         if (obj.isMesh) {
+            // Ensure smooth normals - compute if missing or flat
+            if (obj.geometry) {
+                // Check if normals need recomputation (for smoother shading)
+                const hasNormals = obj.geometry.attributes.normal !== undefined;
+                if (!hasNormals) {
+                    obj.geometry.computeVertexNormals();
+                    console.log(`[Planet] Computed normals for: ${obj.name}`);
+                }
+            }
+            
             if (obj.material) {
                 const mats = Array.isArray(obj.material) ? obj.material : [obj.material];
                 mats.forEach((mat) => {
-                    if (mat.map) {
-                        mat.map.anisotropy = 16;
-                        mat.map.minFilter = THREE.LinearMipmapLinearFilter;
-                        mat.map.magFilter = THREE.LinearFilter;
-                        mat.map.needsUpdate = true;
-                    }
+                    // Keep original GLB material parameters - only adjust texture filtering and environment
+                    ['map', 'roughnessMap', 'metalnessMap', 'normalMap', 'emissiveMap', 'aoMap'].forEach(mapType => {
+                        if (mat[mapType]) {
+                            mat[mapType].anisotropy = 16;
+                            mat[mapType].minFilter = THREE.LinearMipmapLinearFilter;
+                            mat[mapType].magFilter = THREE.LinearFilter;
+                            mat[mapType].needsUpdate = true;
+                        }
+                    });
+                    
                     mat.polygonOffset = false;
                     mat.depthTest = true;
-                    mat.depthWrite = true;
-                    if (mat.emissive) {
-                        mat.emissive.setHex(0x222222);
+                    mat.depthWrite = !mat.transparent; // Preserve transparency settings
+                    mat.flatShading = false;
+                    
+                    if (mat.isMeshStandardMaterial) {
+                        // Reduce star field reflection to avoid moiré - original GLB was lit by studio lighting
+                        mat.envMapIntensity = 0.3; 
+                    }
+                    mat.needsUpdate = true;
+
+                    // Special overrides for "The Lamplighter" (planet_329_lamplighter.glb)
+                    if (modelName && modelName.includes("planet_329_lamplighter")) {
+                        const matName = (mat.name || "").toLowerCase();
+                        const objName = (obj.name || "").toLowerCase();
+                        
+                        console.log(`[Lamplighter Debug] Mesh: ${objName}, Mat: ${matName}`);
+
+                        // Detect parts by material/object name
+                        // mat0_box_mat0_box = glass panels (the 4 sides)
+                        // mat1_box, mat2_box = gold frame bars
+                        const isBox = matName.includes("box");
+                        const isBoxFrame = matName.includes("mat1_box") || matName.includes("mat2_box");
+                        const isBoxGlass = isBox && !isBoxFrame; // mat0_box_mat0_box = glass
+                        const isTube = matName.includes("tube");
+                        const isPole = matName.includes("pole");
+                        const isTop = matName.includes("top");
+                        const isBase = matName.includes("base");
+                        const isSphere = matName.includes("sphere");
+                        // mat1_sphere = glowing orb, mat0_sphere = planet surface
+                        const isGlowingOrb = matName.includes("mat1_sphere") || matName.includes("mat0_sphere_mat1");
+                        const isPlanetSphere = isSphere && !isGlowingOrb;
+
+                        // Re-enable environment map for this model
+                        mat.envMapIntensity = 0.5;
+
+                        if (isBoxGlass) {
+                            // Lamp glass panels - transparent with warm glow
+                            console.log(`[Lamplighter] -> LAMP GLASS PANEL`);
+                            mat.map = null;
+                            mat.roughnessMap = null;
+                            mat.metalnessMap = null;
+                            mat.envMap = null;
+                            mat.envMapIntensity = 0;
+                            mat.roughness = 0.1;
+                            mat.metalness = 0.0;
+                            if (mat.emissive) mat.emissive.setHex(0xFFDD88);
+                            else mat.emissive = new THREE.Color(0xFFDD88);
+                            mat.emissiveIntensity = 1.5;
+                            if (mat.color) mat.color.setHex(0xFFFFEE);
+                            mat.transparent = true;
+                            mat.opacity = 0.6;
+                            mat.side = THREE.DoubleSide;
+                            mat.depthWrite = false;
+                        } else if (isBoxFrame) {
+                            // Gold lamp frame
+                            console.log(`[Lamplighter] -> LAMP FRAME`);
+                            mat.roughness = 0.4;
+                            mat.metalness = 0.7;
+                            if (mat.emissive) mat.emissive.setHex(0x000000);
+                            mat.emissiveIntensity = 0.0;
+                        } else if (isGlowingOrb) {
+                            // Small glowing orb (the lantern the lamplighter carries)
+                            console.log(`[Lamplighter] -> GLOWING ORB`);
+                            mat.map = null;
+                            mat.envMapIntensity = 0;
+                            mat.roughness = 1.0;
+                            mat.metalness = 0.0;
+                            if (mat.emissive) mat.emissive.setHex(0xFFEE88);
+                            else mat.emissive = new THREE.Color(0xFFEE88);
+                            mat.emissiveIntensity = 2.5;
+                            if (mat.color) mat.color.setHex(0xFFFFCC);
+                            mat.toneMapped = false;
+                        } else if (isPole) {
+                            // Lamp pole - dark green metal
+                            console.log(`[Lamplighter] -> POLE`);
+                            mat.roughness = 0.6;
+                            mat.metalness = 0.4;
+                            if (mat.emissive) mat.emissive.setHex(0x000000);
+                            mat.emissiveIntensity = 0.0;
+                        } else if (isTube) {
+                            // Curved road/path - brown/tan color, no glow
+                            console.log(`[Lamplighter] -> ROAD/PATH`);
+                            mat.roughness = 0.8;
+                            mat.metalness = 0.1;
+                            if (mat.emissive) mat.emissive.setHex(0x000000);
+                            mat.emissiveIntensity = 0.0;
+                        } else if (isPlanetSphere) {
+                            // Planet surface - soft matte pinkish-gray
+                            console.log(`[Lamplighter] -> PLANET`);
+                            mat.roughness = 0.85;
+                            mat.metalness = 0.05;
+                            if (mat.color) mat.color.setHex(0xD8D0D0);
+                            if (mat.emissive) mat.emissive.setHex(0x000000);
+                            mat.envMapIntensity = 0.1;
+                            mat.emissiveIntensity = 0.0;
+                        } else {
+                            // Other parts (roof, base, etc)
+                            console.log(`[Lamplighter] -> OTHER: ${objName}`);
+                            mat.roughness = 0.5;
+                            mat.metalness = 0.6;
+                            if (mat.emissive) mat.emissive.setHex(0x000000);
+                            mat.emissiveIntensity = 0.0;
+                        }
+                        mat.needsUpdate = true;
                     }
                 });
             }
@@ -117,8 +236,8 @@ export function createPlanetModel() {
   const placeholderGeo = new THREE.SphereGeometry(7.35144e-8, 32, 16);
   const placeholderMat = new THREE.MeshStandardMaterial({
     color: 0x888888,
-    roughness: 0.7,
-    metalness: 0.3,
+    roughness: 0.2, // Reduced for shinier look
+    metalness: 0.8, // Increased for metallic look
   });
   const placeholderMesh = new THREE.Mesh(placeholderGeo, placeholderMat);
   placeholderMesh.name = "planetPlaceholder";
@@ -128,7 +247,7 @@ export function createPlanetModel() {
   root.setPlanetMesh = function(baseScene) {
       if (!baseScene) return;
 
-      // Remove existing mesh if any
+      // Clear previous mesh
       if (this._planetMesh) {
           this.remove(this._planetMesh);
           this._planetMesh = null;
@@ -147,6 +266,8 @@ export function createPlanetModel() {
       planetInstance.traverse((obj) => {
         if (obj.isMesh) {
           obj.frustumCulled = false;
+          obj.castShadow = true; // Enable shadows casting
+          obj.receiveShadow = true; // Enable shadows receiving
           const name = (obj.name || "").toLowerCase();
           if (
             name.includes("ring") ||
