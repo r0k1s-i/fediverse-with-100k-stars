@@ -161,6 +161,26 @@ go test -v
   - **解决方案**: 将模型缩放至 `1.0` 光年，确保足够的深度缓冲精度
   - 实现 Layer 分离渲染 (Layer 1)，通过 `renderer.clearDepth()` 确保行星始终渲染在最上层
 - ♻️ **重构**: 优化 `main.js` 渲染循环，支持双层渲染架构
+- 💄 **视觉**: 优化行星模型材质质感
+  - **问题**: GLB 模型默认渲染呈"塑料感"，缺乏金属光泽
+  - **方案**:
+    - 将星空盒 (Skybox) 纹理应用为 `planetScene` 的环境贴图 (Environment Map)
+    - 调整材质参数：降低粗糙度 (roughness 0.4)，提升金属度 (metalness 0.6)
+    - 确保 PBR 材质正确反射环境光，呈现"闪亮"效果
+  - **高级渲染升级**:
+    - 启用 `ACESFilmicToneMapping` 色调映射，提升动态范围，消除过曝
+    - 设置 `SRGBColorSpace` 输出，确保颜色准确还原
+    - 优化灯光布局：主光增强 (2.5) + 环境光减弱 (0.2) + 新增边缘光 (Rim Light, 1.5)
+    - 增强环境贴图强度 (envMapIntensity 2.0)
+    - 效果：大幅接近 Sketchfab 官方渲染效果，具有电影级质感
+  - **材质保真修复**:
+    - **回滚破坏性修改**: 移除对 `roughness` 和 `metalness` 的强制覆写
+    - **原因**: 之前的强制赋值破坏了 GLB 模型自带的高精度 PBR 贴图（Roughness Map / Metalness Map）
+    - **优化**: 仅对所有贴图类型（normal, ao, roughness 等）应用高质量过滤 (Anisotropy 16x)
+    - **阴影系统**: 启用 PCFSoftShadowMap 软阴影，并为所有行星模型网格开启投影和接收阴影
+    - **特定模型优化 (Lamplighter)**: 针对"点灯人"模型 (planet_329_lamplighter) 进行特殊材质调优：
+      - 星球表面：粗糙度 0.08，金属度 0.2（模拟聚光灯反射和菲涅尔效应）
+      - 灯泡：Emissive #FFFFAA, 强度 8.0（模拟过曝发光效果）
 
 ### 2026-01-13
 - 🐛 **修复**: 优化星空盒（Skybox）纹理过滤设置，解决高分屏下的模糊问题

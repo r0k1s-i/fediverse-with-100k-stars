@@ -47,17 +47,34 @@ export function initSkybox(highres) {
   setLoadMessage("Loading interstellar bodies");
   var textureCube = new THREE.CubeTextureLoader().load(
     urls,
-    undefined,
+    function (loadedTexture) {
+      // Generate prefiltered environment map for PBR (IBL)
+      // PMREMGenerator creates proper mipmap chain for smooth reflections
+      if (window.renderer) {
+        var pmremGenerator = new THREE.PMREMGenerator(window.renderer);
+        pmremGenerator.compileEquirectangularShader();
+        var envMap = pmremGenerator.fromCubemap(loadedTexture).texture;
+        window.skyboxEnvMap = envMap; // Prefiltered for PBR
+        
+        // Apply to planetScene if it exists
+        if (window.planetScene) {
+          window.planetScene.environment = envMap;
+        }
+        pmremGenerator.dispose();
+        console.log("[Skybox] PMREM environment map generated for PBR");
+      }
+    },
     undefined,
     function (err) {
       console.error("Error loading skybox:", err);
     },
   );
+  window.skyboxTexture = textureCube; // Expose for environment map (raw cubemap)
   textureCube.anisotropy = window.maxAniso || 1;
-  // Use LinearFilter to ensure high quality and prevent blurriness from mipmaps
+  // Enable mipmaps for better filtering
   textureCube.magFilter = THREE.LinearFilter;
-  textureCube.minFilter = THREE.LinearFilter;
-  textureCube.generateMipmaps = false;
+  textureCube.minFilter = THREE.LinearMipmapLinearFilter;
+  textureCube.generateMipmaps = true;
 
   var shader = THREE.ShaderLib["cube"];
   shader.uniforms["tCube"].value = textureCube;
