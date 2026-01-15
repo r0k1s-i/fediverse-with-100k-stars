@@ -73,8 +73,18 @@ export function onKeyDown( event ){
 
 function handleMWheel( delta ) {
     var camera = window.camera;
+    
+    // 如果正在执行缩放动画，中断动画并接管控制
+    if (camera.easeZooming) {
+        camera.easeZooming.stop();
+        camera.easeZooming = undefined;
+        // 同步 target 到当前位置
+        camera.position.target.z = camera.position.z;
+        camera.position.target.pz = camera.position.z;
+    }
+    
 	camera.position.target.z += delta * camera.position.target.z * 0.01;
-	camera.position.target.z = constrain( camera.position.target.z, 0.8, 80000 );
+	camera.position.target.z = constrain( camera.position.target.z, 0.5, 80000 );
   	camera.position.target.pz = camera.position.target.z;
 	
 	camera.rotation.vx += (-0.0001 + Math.random() * 0.0002) * camera.position.z / 1000;

@@ -101,8 +101,8 @@ export function updateSkybox(override) {
   cameraCube.updateProjectionMatrix();
 
   // 星空背景亮度控制
-  // 只在极近距离（< 10）时显示，其他距离按原公式衰减
-  var skyboxBrightness = constrain(1.4 / camera.position.z, 0.0, 1.0);
+  // 提高基础亮度，让默认视距下星空更明显
+  var skyboxBrightness = constrain(4.0 / camera.position.z, 0.0, 1.0);
   skyboxUniforms["opacity"].value = skyboxBrightness;
 }
 

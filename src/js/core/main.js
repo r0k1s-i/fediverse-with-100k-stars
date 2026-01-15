@@ -777,21 +777,48 @@ function syncPlanetCamera() {
   var modelScale = starModel && starModel._currentScale ? starModel._currentScale : 1.0;
   var scaleCompensation = Math.max(1.0, modelScale * 0.5);
   
-  var fadeStart = markerMin * 0.6;
-  var fadeEnd = markerMin;
+  var fadeStart = markerMin * 0.5;
+  var fadeEnd = markerMin * 1.2;
   
   var planetCamZ;
   var opacity = 1.0;
   
+  // 平滑缓动函数 (smoothstep)
+  function smoothstep(t) {
+    t = Math.max(0, Math.min(1, t));
+    return t * t * (3 - 2 * t);
+  }
+  
+  // 近距离区域：直接用 mainZ 线性映射到 planetCamZ
+  // mainZ 越小，planetCamZ 越小，星球越大
   if (mainZ < fadeStart) {
-    var t = mainZ / fadeStart;
-    planetCamZ = (3.0 + t * 2.0) * scaleCompensation;
+    // mainZ: 0.5 ~ 10 是主要缩放区间
+    // planetCamZ: 1.5 ~ 6.0 对应星球从大到小
+    var minMainZ = 0.5;
+    var maxMainZ = 10.0;
+    var minPlanetZ = 1.5;  // 最近（最大星球）
+    var maxPlanetZ = 6.0;  // 默认视距（星球更小）
+    
+    if (mainZ <= maxMainZ) {
+      // 主要缩放区间：线性映射
+      var t = (mainZ - minMainZ) / (maxMainZ - minMainZ);
+      t = Math.max(0, Math.min(1, t));
+      planetCamZ = (minPlanetZ + t * (maxPlanetZ - minPlanetZ)) * scaleCompensation;
+    } else {
+      // mainZ > 10: 从默认逐渐过渡到淡出区
+      var t = (mainZ - maxMainZ) / (fadeStart - maxMainZ);
+      t = smoothstep(Math.max(0, Math.min(1, t)));
+      planetCamZ = (maxPlanetZ + t * 14.0) * scaleCompensation;  // 6 -> 20
+    }
   } else if (mainZ < fadeEnd) {
+    // 过渡区域：星球缩小的同时淡出
     var fadeT = (mainZ - fadeStart) / (fadeEnd - fadeStart);
-    planetCamZ = (5.0 + fadeT * 15.0) * scaleCompensation;
-    opacity = 1.0 - fadeT;
+    var smoothT = smoothstep(fadeT);
+    // 从 20 缩小到 60，让星球变得很小再消失
+    planetCamZ = (20.0 + smoothT * 40.0) * scaleCompensation;
+    opacity = 1.0 - smoothT * smoothT;  // 用平方让淡出更晚开始
   } else {
-    planetCamZ = 20.0 * scaleCompensation;
+    planetCamZ = 60.0 * scaleCompensation;
     opacity = 0.0;
   }
   

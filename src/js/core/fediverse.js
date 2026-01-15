@@ -102,28 +102,45 @@ function createMajorInstancePreview(color) {
   container.update = function () {
     var zoomFactor = camera.position.z;
     
-    // 近视距时（GLB模型可见时）完全隐藏光晕
-    // 避免光晕穿透GLB模型造成白点
-    if (zoomFactor < 50) {
+    // 平滑缓动函数
+    function smoothstep(edge0, edge1, x) {
+      var t = Math.max(0, Math.min(1, (x - edge0) / (edge1 - edge0)));
+      return t * t * (3 - 2 * t);
+    }
+    
+    // 近视距渐变区域：30-80 之间平滑过渡
+    var fadeOutStart = 30;
+    var fadeOutEnd = 80;
+    
+    if (zoomFactor < fadeOutStart) {
       this.visible = false;
       haloMaterial.opacity = 0;
       coronaMaterial.opacity = 0;
       return;
     }
     
-    var opacity = constrain(Math.pow(zoomFactor * 0.002, 2), 0, 1);
-    if (opacity < 0.1) opacity = 0.0;
+    // 在 fadeOutStart 到 fadeOutEnd 之间使用 smoothstep 渐变
+    var proximityFade = smoothstep(fadeOutStart, fadeOutEnd, zoomFactor);
+    
+    // 基础透明度计算，使用更平滑的曲线
+    var baseOpacity = constrain(Math.pow(zoomFactor * 0.0018, 1.5), 0, 1);
+    var opacity = baseOpacity * proximityFade;
+    
+    // 更平滑的阈值过渡
+    if (opacity < 0.05) opacity = opacity * (opacity / 0.05);
 
     haloMaterial.opacity = opacity;
-    coronaMaterial.opacity = opacity * 0.6;
+    coronaMaterial.opacity = opacity * 0.5;
 
-    if (opacity <= 0.0) {
+    if (opacity <= 0.01) {
       this.visible = false;
     } else {
       this.visible = true;
     }
 
-    var scale = constrain(Math.pow(zoomFactor * 0.001, 2), 0.1, 1.5);
+    // 缩放使用更自然的对数曲线
+    var baseScale = Math.log(zoomFactor + 1) * 0.15;
+    var scale = constrain(baseScale * proximityFade, 0.05, 1.5);
     this.scale.setLength(scale);
   };
 

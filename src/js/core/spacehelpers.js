@@ -35,18 +35,26 @@ export function zoomIn(v) {
     var camera = window.camera;
     var updateMinimap = window.updateMinimap;
 
+	camera.position.target.pz = camera.position.z;
+	camera.position.target.z = v;
+
 	camera.easeZooming = new TWEEN.Tween(camera.position)
       .to({
         z: v
       }, 3000)
       .easing(TWEEN.Easing.Sinusoidal.InOut)
       .start()
+      .onUpdate(function() {
+        // 同步 target.z 以便滚轮缩放时能正确计算
+        camera.position.target.z = camera.position.z;
+      })
       .onComplete(function() {
       	camera.easeZooming = undefined;
+        // 确保动画结束后 target 和实际位置同步
+        camera.position.target.z = camera.position.z;
+        camera.position.target.pz = camera.position.z;
       });
 
-	camera.position.target.pz = camera.position.z;
-	camera.position.target.z = v;
 	if(updateMinimap) updateMinimap();
 }
 
