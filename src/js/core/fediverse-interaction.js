@@ -154,7 +154,22 @@ export function updateFediverseInteraction() {
               
               starModel.setSpectralIndex(spectralIndex);
               starModel.setScale(modelScale);
-              starModel.randomizeSolarFlare();
+              
+              if (typeof starModel.randomizeSolarFlare === 'function') {
+                  starModel.randomizeSolarFlare();
+              }
+              
+              // Only randomize properties if it's a new instance to prevent flickering
+              if (isNewInstance) {
+                  if (typeof starModel.randomizeRotationSpeed === 'function') {
+                      starModel.randomizeRotationSpeed();
+                  }
+                  
+                  if (typeof starModel.pickRandomModel === 'function') {
+                      starModel.pickRandomModel();
+                  }
+              }
+              
               starModel.visible = true;
           }
       }
@@ -468,7 +483,20 @@ function onFediverseClick(event) {
     }
     starModel.setSpectralIndex(spectralIndex);
     starModel.setScale(modelScale);
-    starModel.randomizeSolarFlare();
+    
+    // Check if function exists before calling (GLB model might not have this)
+    if (typeof starModel.randomizeSolarFlare === 'function') {
+        starModel.randomizeSolarFlare();
+    }
+    
+    // Randomize rotation speed and model choice if available (GLB features)
+    if (typeof starModel.randomizeRotationSpeed === 'function') {
+        starModel.randomizeRotationSpeed();
+    }
+    
+    if (typeof starModel.pickRandomModel === 'function') {
+        starModel.pickRandomModel();
+    }
 
     // 确保星球模型可见
     starModel.visible = true;

@@ -8,11 +8,20 @@ import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { DRACOLoader } from "three/addons/loaders/DRACOLoader.js";
 
-const PLANET_GLB_PATH = "src/assets/textures/kamistar.glb";
+const PLANET_GLB_PATHS = [
+  "src/assets/textures/kamistar.glb",
+  "src/assets/textures/planet_330_the_geographer.glb",
+  "src/assets/textures/le_petit_prince.glb",
+  "src/assets/textures/floating_fox.glb",
+  "src/assets/textures/my_planet_christina_li.glb",
+  "src/assets/textures/planet_325_the_king.glb",
+  "src/assets/textures/planet_328_the_businessman.glb",
+  "src/assets/textures/planet_329_lamplighter.glb"
+];
 
 let loader;
 let dracoLoader;
-let planetBaseScene = null;
+let planetBaseScenes = []; // Array of loaded scenes
 let loadPromise = null;
 
 function getLoader() {
@@ -29,79 +38,72 @@ function getLoader() {
 }
 
 /**
- * Preload the planet GLB model.
- * Call this early to avoid loading delay on first click.
- * @returns {Promise<THREE.Object3D|null>} The loaded scene or null on error
+ * Preload all planet GLB models.
+ * @returns {Promise<Array<THREE.Object3D>>} The loaded scenes
  */
 export function preloadPlanetModel() {
   if (!loadPromise) {
-    loadPromise = new Promise((resolve, reject) => {
-      getLoader().load(
-        PLANET_GLB_PATH,
-        (gltf) => {
-          planetBaseScene = gltf.scene || gltf.scenes[0];
-          if (planetBaseScene) {
-            planetBaseScene.traverse((obj) => {
-              if (obj.isMesh) {
-                // We don't remove meshes here, we do it on instantiation
-                // just so we don't destructively modify the cached asset too much
-                
-                if (obj.material) {
-                  const mats = Array.isArray(obj.material)
-                    ? obj.material
-                    : [obj.material];
-                  
-                  mats.forEach((mat) => {
-                    if (mat.map) {
-                      mat.map.anisotropy = 16;
-                      mat.map.minFilter = THREE.LinearMipmapLinearFilter;
-                      mat.map.magFilter = THREE.LinearFilter;
-                      mat.map.needsUpdate = true;
+    const promises = PLANET_GLB_PATHS.map(path => {
+        return new Promise((resolve, reject) => {
+            getLoader().load(
+                path,
+                (gltf) => {
+                    const scene = gltf.scene || gltf.scenes[0];
+                    if (scene) {
+                        processLoadedScene(scene);
+                        resolve(scene);
+                    } else {
+                        resolve(null);
                     }
-                    // Standard depth settings are sufficient now that we use
-                    // relative coordinate rendering in main.js
-                    mat.polygonOffset = false;
-                    mat.depthTest = true;
-                    mat.depthWrite = true;
-                    
-                    // Add slight emissive to ensure visibility even if lighting is tricky
-                    if (mat.emissive) {
-                        mat.emissive.setHex(0x222222);
-                    }
-                  });
+                },
+                undefined,
+                (err) => {
+                    console.error("Error loading planet GLB:", path, err);
+                    resolve(null); // Resolve null to avoid failing entire Promise.all
                 }
-                
-                // Ensure no leftover material debug
-                // obj.material = new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true });
-              }
-            });
-            console.log("Planet GLB loaded successfully:", PLANET_GLB_PATH);
-          }
-          resolve(planetBaseScene);
-        },
-        (progress) => {
-          if (progress.lengthComputable) {
-            const percent = ((progress.loaded / progress.total) * 100).toFixed(1);
-            console.log(`Loading planet model: ${percent}%`);
-          }
-        },
-        (err) => {
-          console.error("Error loading planet GLB:", PLANET_GLB_PATH, err);
-          planetBaseScene = null;
-          resolve(null);
-        }
-      );
+            );
+        });
+    });
+
+    loadPromise = Promise.all(promises).then(scenes => {
+        planetBaseScenes = scenes.filter(s => s !== null);
+        console.log(`Loaded ${planetBaseScenes.length} planet models.`);
+        return planetBaseScenes;
     });
   }
   return loadPromise;
 }
 
+function processLoadedScene(scene) {
+    scene.traverse((obj) => {
+        if (obj.isMesh) {
+            if (obj.material) {
+                const mats = Array.isArray(obj.material) ? obj.material : [obj.material];
+                mats.forEach((mat) => {
+                    if (mat.map) {
+                        mat.map.anisotropy = 16;
+                        mat.map.minFilter = THREE.LinearMipmapLinearFilter;
+                        mat.map.magFilter = THREE.LinearFilter;
+                        mat.map.needsUpdate = true;
+                    }
+                    mat.polygonOffset = false;
+                    mat.depthTest = true;
+                    mat.depthWrite = true;
+                    if (mat.emissive) {
+                        mat.emissive.setHex(0x222222);
+                    }
+                });
+            }
+        }
+    });
+}
+
 /**
- * Check if the planet model is loaded
+ * Check if at least one planet model is loaded
  * @returns {boolean}
  */
 export function isPlanetModelLoaded() {
-  return planetBaseScene !== null;
+  return planetBaseScenes.length > 0;
 }
 
 /**
@@ -122,70 +124,86 @@ export function createPlanetModel() {
   placeholderMesh.name = "planetPlaceholder";
   root.add(placeholderMesh);
 
-  preloadPlanetModel().then((base) => {
-    if (!base) return;
+  // Helper to process and add a specific base model
+  root.setPlanetMesh = function(baseScene) {
+      if (!baseScene) return;
 
-    const existing = root.getObjectByName("planetPlaceholder");
-    if (existing) root.remove(existing);
-
-    const planetInstance = base.clone(true);
-    planetInstance.name = "planetMesh";
-
-    const meshesToRemove = [];
-    
-    let instanceMeshCounter = 0;
-    
-    planetInstance.traverse((obj) => {
-      if (obj.isMesh) {
-        instanceMeshCounter++;
-        
-        obj.frustumCulled = false;
-        
-        const name = (obj.name || "").toLowerCase();
-        if (
-          name.includes("ring") ||
-          name.includes("orbit") ||
-          name.includes("circle") ||
-          name.includes("halo") ||
-          name.includes("chair") ||
-          name.includes("throne")
-        ) {
-          meshesToRemove.push(obj);
-        }
+      // Remove existing mesh if any
+      if (this._planetMesh) {
+          this.remove(this._planetMesh);
+          this._planetMesh = null;
       }
-    });
-    
-    meshesToRemove.forEach((mesh) => {
-      if (mesh.parent) mesh.parent.remove(mesh);
-    });
+      
+      const existingPlaceholder = this.getObjectByName("planetPlaceholder");
+      if (existingPlaceholder) this.remove(existingPlaceholder);
 
-    const box = new THREE.Box3().setFromObject(planetInstance);
-    const size = box.getSize(new THREE.Vector3());
-    const maxDim = Math.max(size.x, size.y, size.z);
+      const planetInstance = baseScene.clone(true);
+      planetInstance.name = "planetMesh";
+      
+      // Reset rotation to ensure clean state
+      planetInstance.rotation.set(0, 0, 0);
 
-    const targetSize = 1.0; 
-    const normalizeScale = targetSize / maxDim;
-    const baseScaleMultiplier = 0.8;
-    const finalNormScale = normalizeScale * baseScaleMultiplier;
-    
-    planetInstance.scale.set(finalNormScale, finalNormScale, finalNormScale);
+      const meshesToRemove = [];
+      planetInstance.traverse((obj) => {
+        if (obj.isMesh) {
+          obj.frustumCulled = false;
+          const name = (obj.name || "").toLowerCase();
+          if (
+            name.includes("ring") ||
+            name.includes("orbit") ||
+            name.includes("circle") ||
+            name.includes("halo") ||
+            name.includes("chair") ||
+            name.includes("throne")
+          ) {
+            meshesToRemove.push(obj);
+          }
+        }
+      });
+      
+      meshesToRemove.forEach((mesh) => {
+        if (mesh.parent) mesh.parent.remove(mesh);
+      });
 
-    const center = box.getCenter(new THREE.Vector3());
-    planetInstance.position.sub(center.multiplyScalar(finalNormScale));
+      const box = new THREE.Box3().setFromObject(planetInstance);
+      const size = box.getSize(new THREE.Vector3());
+      const maxDim = Math.max(size.x, size.y, size.z);
 
-    root.add(planetInstance);
-    root._planetMesh = planetInstance;
-    root._baseScale = finalNormScale;
+      const targetSize = 1.0; 
+      const normalizeScale = targetSize / (maxDim || 1); // Avoid div by zero
+      const baseScaleMultiplier = 0.8;
+      const finalNormScale = normalizeScale * baseScaleMultiplier;
+      
+      planetInstance.scale.set(finalNormScale, finalNormScale, finalNormScale);
 
-    if (root._currentScale !== undefined) {
-      root.setScale(root._currentScale);
-    }
-    
-    planetInstance.visible = root.visible;
+      const center = box.getCenter(new THREE.Vector3());
+      planetInstance.position.sub(center.multiplyScalar(finalNormScale));
+
+      this.add(planetInstance);
+      this._planetMesh = planetInstance;
+      this._baseScale = finalNormScale;
+
+      if (this._currentScale !== undefined) {
+        this.setScale(this._currentScale);
+      }
+      
+      planetInstance.visible = this.visible;
+  };
+
+  root.pickRandomModel = function() {
+      if (planetBaseScenes.length === 0) return;
+      const randomIndex = Math.floor(Math.random() * planetBaseScenes.length);
+      this.setPlanetMesh(planetBaseScenes[randomIndex]);
+  };
+
+  preloadPlanetModel().then((scenes) => {
+      // Initialize with a random model once loaded
+      root.pickRandomModel();
   });
 
   root._currentSpectralIndex = 0.5;
   root._currentScale = 1.0;
+  root._rotationSpeed = 0.0005;
 
   root.setSpectralIndex = function (index) {
     this._currentSpectralIndex = index;
@@ -209,10 +227,6 @@ export function createPlanetModel() {
       placeholder.scale.set(scale, scale, scale);
     }
   };
-
-  root.randomizeSolarFlare = function () {};
-
-  root._rotationSpeed = 0.0005;
 
   root.randomizeRotationSpeed = function () {
     // Random speed between 0.0010 and 0.0030

@@ -51,8 +51,12 @@ export function setStarModel(position, name) {
     starModel.setSpectralIndex(0.5);
     starModel.setScale(1.0);
     
-    if (starModel.randomizeRotationSpeed) {
+    if (typeof starModel.randomizeRotationSpeed === 'function') {
         starModel.randomizeRotationSpeed();
+    }
+    
+    if (typeof starModel.pickRandomModel === 'function') {
+        starModel.pickRandomModel();
     }
     
     starModel.updateMatrix();
