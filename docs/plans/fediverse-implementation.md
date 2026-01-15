@@ -1,6 +1,6 @@
 # Fediverse 联邦宇宙可视化 - 实施计划
 
-**更新日期**: 2026-01-15
+**更新日期**: 2026-01-16
 **项目**: fediverse-with-100k-stars → Fediverse Visualization
 **状态**: ✅ 核心功能完成
 
@@ -20,6 +20,17 @@
 | 6 | Canvas标签 | ✅ 完成 | 智能避让算法 |
 | 7 | 目录重构 | ✅ 完成 | 现代前端最佳实践 |
 | 8 | 现代化升级 | ✅ 完成 | 升级至 Three.js r158, ES Modules |
+
+---
+
+## 当前状态
+
+- **更新时间**: 2026-01-16
+- **当前阶段**: GLB 行星模型渲染一致性校验（Sketchfab 对齐）
+- **下一步行动**:
+  - [ ] 复查 `scene.background` 与 `scene.environment` 分离策略
+  - [ ] 验证 `toneMappingExposure` 与环境贴图强度匹配
+  - [ ] 仅在需要时对 emissive 做最小化覆盖
 
 ---
 
@@ -178,9 +189,14 @@ go test -v
     - **原因**: 之前的强制赋值破坏了 GLB 模型自带的高精度 PBR 贴图（Roughness Map / Metalness Map）
     - **优化**: 仅对所有贴图类型（normal, ao, roughness 等）应用高质量过滤 (Anisotropy 16x)
     - **阴影系统**: 启用 PCFSoftShadowMap 软阴影，并为所有行星模型网格开启投影和接收阴影
-    - **特定模型优化 (Lamplighter)**: 针对"点灯人"模型 (planet_329_lamplighter) 进行特殊材质调优：
+  - **特定模型优化 (Lamplighter)**: 针对"点灯人"模型 (planet_329_lamplighter) 进行特殊材质调优：
       - 星球表面：粗糙度 0.08，金属度 0.2（模拟聚光灯反射和菲涅尔效应）
       - 灯泡：Emissive #FFFFAA, 强度 8.0（模拟过曝发光效果）
+
+### 2026-01-16
+- 📝 **讨论**: 对比 Sketchfab 与项目渲染差异，优先排查环境光与材质覆盖问题
+  - 结论：优先使用独立的 PBR 环境贴图，避免星空背景作为反射源
+  - 要点：保留 GLB 原始材质参数，仅做纹理过滤与必要的 emissive 最小覆盖
 
 ### 2026-01-13
 - 🐛 **修复**: 优化星空盒（Skybox）纹理过滤设置，解决高分屏下的模糊问题
