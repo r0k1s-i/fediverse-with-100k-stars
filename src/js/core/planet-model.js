@@ -212,10 +212,25 @@ export function createPlanetModel() {
 
   root.randomizeSolarFlare = function () {};
 
+  root._rotationSpeed = 0.0005;
+
+  root.randomizeRotationSpeed = function () {
+    // Random speed between 0.0010 and 0.0030
+    // Includes random direction (50% chance for negative rotation)
+    var speed = 0.0010 + Math.random() * 0.0020;
+    var direction = Math.random() > 0.5 ? 1 : -1;
+    this._rotationSpeed = speed * direction;
+  };
+
   root.update = function () {
-    this.rotation.y += 0.002;
-    if (this._planetMesh && this._planetMesh.visible !== this.visible) {
-      this._planetMesh.visible = this.visible;
+    // Rotation logic moved to inner mesh to persist across frames
+    // because root.rotation is overwritten by main.js in animate()
+    if (this._planetMesh) {
+      this._planetMesh.rotation.y += this._rotationSpeed;
+      
+      if (this._planetMesh.visible !== this.visible) {
+        this._planetMesh.visible = this.visible;
+      }
     }
   };
 
