@@ -51,6 +51,14 @@ import "./solarsystem.js";
 import { makeFediverseSystem } from "./fediverse-solarsystem.js";
 import "./sun.js";
 import { preloadPlanetModel } from "./planet-model.js";
+import {
+  applyPlanetRenderConfig,
+  createPlanetSpotlight,
+  getPlanetRenderConfig,
+  restorePlanetRenderConfig,
+  shouldUsePlanetSpotlight,
+  updatePlanetSpotlightTransform,
+} from "../lib/planet-render-config.mjs";
 
 import {
   updateMinimap,
@@ -113,6 +121,7 @@ var screenHeight;
 
 var gradientImage;
 var gradientCanvas;
+var planetRenderConfig = getPlanetRenderConfig();
 
 var rtparam = {
   minFilter: THREE.LinearFilter,
@@ -242,20 +251,15 @@ function initScene() {
 
   var planetScene = new THREE.Scene();
   var localRoot = new THREE.Object3D();
-  localRoot.name = 'localRoot';
+  localRoot.name = "localRoot";
   planetScene.add(localRoot);
 
   var aspect = screenWidth / screenHeight;
   if (isNaN(aspect) || !isFinite(aspect)) aspect = 1.0;
 
-  var planetCamera = new THREE.PerspectiveCamera(
-    45, 
-    aspect,
-    0.1, 
-    100.0
-  );
+  var planetCamera = new THREE.PerspectiveCamera(45, aspect, 0.1, 100.0);
   planetCamera.position.set(0, 0, 3);
-  
+
   planetScene.add(planetCamera);
 
   const planetLight = new THREE.DirectionalLight(0xffffff, 2.0); // Standard intensity
@@ -280,6 +284,13 @@ function initScene() {
   rimLight.position.set(0, 5, -5);
   planetScene.add(rimLight);
 
+  const planetSpotlight = createPlanetSpotlight(THREE, planetRenderConfig);
+  if (planetSpotlight) {
+    planetScene.add(planetSpotlight);
+    planetScene.add(planetSpotlight.target);
+    window.planetSpotlight = planetSpotlight;
+  }
+
   window.planetScene = planetScene;
   window.localRoot = localRoot;
   window.planetCamera = planetCamera;
@@ -302,7 +313,7 @@ function initScene() {
   renderer.toneMappingExposure = 1.0;
   renderer.shadowMap.enabled = true; // Enable shadow maps
   renderer.shadowMap.type = THREE.PCFSoftShadowMap; // Soft shadows
-  
+
   window.renderer = renderer;
   console.log("[DEBUG] Renderer created:", {
     logarithmicDepthBuffer: renderer.capabilities.logarithmicDepthBuffer,
@@ -368,7 +379,7 @@ function initScene() {
   if (enableSkybox) {
     setupSkyboxScene();
     initSkybox(true);
-    // Note: Environment map for PBR is now set asynchronously in skybox.js 
+    // Note: Environment map for PBR is now set asynchronously in skybox.js
     // via PMREMGenerator when the cubemap loads
   }
 
@@ -697,7 +708,8 @@ function animate() {
     isZoomedToSolarSystem &&
     detailDisplay !== "none" &&
     !detailContainerEl.classList.contains("about") &&
-    (!window.fediverseInteraction || !window.fediverseInteraction.lastViewedInstance)
+    (!window.fediverseInteraction ||
+      !window.fediverseInteraction.lastViewedInstance)
   ) {
     fadeOut(detailContainerEl);
   }
@@ -761,31 +773,54 @@ function render() {
   if (enableSkybox) {
     renderSkybox();
   }
-  
+
   renderer.autoClear = false;
   camera.layers.set(0);
-  
+
   if (enableSkybox) {
-    renderer.clearDepth(); 
+    renderer.clearDepth();
   }
-  
+
   renderer.render(scene, camera);
-  
+
   var planet = window.starModel;
-  
+
   if (planet && planet.visible) {
     syncPlanetCamera();
-    
+
     if (planet.update) {
       planet.update();
     }
-    
+
+    const planetMesh = planet._planetMesh;
+    const useSpotlight = shouldUsePlanetSpotlight(
+      planetMesh,
+      planetRenderConfig,
+    );
+    if (window.planetSpotlight) {
+      window.planetSpotlight.visible = useSpotlight;
+    }
+    if (useSpotlight) {
+      planet.updateMatrixWorld(true);
+      updatePlanetSpotlightTransform(
+        window.planetSpotlight,
+        planet,
+        planetRenderConfig,
+      );
+    }
+
     if (window.planetScene) window.planetScene.updateMatrixWorld(true);
-    
+
+    const prevRendererState = applyPlanetRenderConfig(
+      renderer,
+      THREE,
+      planetRenderConfig,
+    );
     renderer.clearDepth();
     renderer.render(window.planetScene, window.planetCamera);
+    restorePlanetRenderConfig(renderer, prevRendererState);
   }
-  
+
   camera.layers.enableAll();
   renderer.autoClear = true;
 }
@@ -798,22 +833,23 @@ function syncPlanetCamera() {
 
   var mainZ = mainCamera.position.z;
   var markerMin = window.markerThreshold ? window.markerThreshold.min : 200;
-  
-  var modelScale = starModel && starModel._currentScale ? starModel._currentScale : 1.0;
+
+  var modelScale =
+    starModel && starModel._currentScale ? starModel._currentScale : 1.0;
   var scaleCompensation = Math.max(1.0, modelScale * 0.5);
-  
+
   var fadeStart = markerMin * 0.5;
   var fadeEnd = markerMin * 1.2;
-  
+
   var planetCamZ;
   var opacity = 1.0;
-  
+
   // 平滑缓动函数 (smoothstep)
   function smoothstep(t) {
     t = Math.max(0, Math.min(1, t));
     return t * t * (3 - 2 * t);
   }
-  
+
   // 近距离区域：直接用 mainZ 线性映射到 planetCamZ
   // mainZ 越小，planetCamZ 越小，星球越大
   if (mainZ < fadeStart) {
@@ -821,19 +857,20 @@ function syncPlanetCamera() {
     // planetCamZ: 1.5 ~ 6.0 对应星球从大到小
     var minMainZ = 0.5;
     var maxMainZ = 10.0;
-    var minPlanetZ = 1.5;  // 最近（最大星球）
-    var maxPlanetZ = 6.0;  // 默认视距（星球更小）
-    
+    var minPlanetZ = 1.5; // 最近（最大星球）
+    var maxPlanetZ = 6.0; // 默认视距（星球更小）
+
     if (mainZ <= maxMainZ) {
       // 主要缩放区间：线性映射
       var t = (mainZ - minMainZ) / (maxMainZ - minMainZ);
       t = Math.max(0, Math.min(1, t));
-      planetCamZ = (minPlanetZ + t * (maxPlanetZ - minPlanetZ)) * scaleCompensation;
+      planetCamZ =
+        (minPlanetZ + t * (maxPlanetZ - minPlanetZ)) * scaleCompensation;
     } else {
       // mainZ > 10: 从默认逐渐过渡到淡出区
       var t = (mainZ - maxMainZ) / (fadeStart - maxMainZ);
       t = smoothstep(Math.max(0, Math.min(1, t)));
-      planetCamZ = (maxPlanetZ + t * 14.0) * scaleCompensation;  // 6 -> 20
+      planetCamZ = (maxPlanetZ + t * 14.0) * scaleCompensation; // 6 -> 20
     }
   } else if (mainZ < fadeEnd) {
     // 过渡区域：星球缩小的同时淡出
@@ -841,31 +878,31 @@ function syncPlanetCamera() {
     var smoothT = smoothstep(fadeT);
     // 从 20 缩小到 60，让星球变得很小再消失
     planetCamZ = (20.0 + smoothT * 40.0) * scaleCompensation;
-    opacity = 1.0 - smoothT * smoothT;  // 用平方让淡出更晚开始
+    opacity = 1.0 - smoothT * smoothT; // 用平方让淡出更晚开始
   } else {
     planetCamZ = 60.0 * scaleCompensation;
     opacity = 0.0;
   }
-  
+
   planetCamera.position.set(0, 0, planetCamZ);
   planetCamera.lookAt(0, 0, 0);
-  
+
   if (starModel && starModel._planetMesh) {
-    starModel._planetMesh.traverse(function(obj) {
+    starModel._planetMesh.traverse(function (obj) {
       if (obj.isMesh && obj.material) {
         var mats = Array.isArray(obj.material) ? obj.material : [obj.material];
-        mats.forEach(function(mat) {
+        mats.forEach(function (mat) {
           mat.transparent = true;
           mat.opacity = opacity;
         });
       }
     });
   }
-  
+
   if (window.planetScene) {
-    window.planetScene.traverse(function(obj) {
+    window.planetScene.traverse(function (obj) {
       if (obj.isDirectionalLight) {
-        obj.position.set(1, 1, 1); 
+        obj.position.set(1, 1, 1);
       }
     });
   }
