@@ -94,10 +94,9 @@ export function attachMarker(obj, size) {
             link.setAttribute("target", "blank");
           });
 
-          var titleEl = $("#detailTitle");
+          var footEl = $("#detailFooter");
           var titleSpan = find(titleEl, 'span');
           if (titleSpan) html(titleSpan, title);
-          var footEl = $("#detailFooter");
 
           fadeIn($("#detailContainer"));
           css($("#css-container"), { display: "none" });
@@ -110,6 +109,19 @@ export function attachMarker(obj, size) {
                 "px",
             });
           }, 0);
+        })
+        .catch(function(err) {
+            console.error("Failed to load details:", err);
+            // Fallback: show simple details if fetch fails
+            var bodyEl = $("#detailBody");
+            html(bodyEl, "<p>No detailed information available for this star.</p>");
+            
+            var titleEl = $("#detailTitle");
+            var titleSpan = find(titleEl, 'span');
+            if (titleSpan) html(titleSpan, title);
+            
+            fadeIn($("#detailContainer"));
+            css($("#css-container"), { display: "none" });
         });
     };
 

@@ -672,7 +672,8 @@ function animate() {
   if (
     isZoomedToSolarSystem &&
     detailDisplay !== "none" &&
-    !detailContainerEl.classList.contains("about")
+    !detailContainerEl.classList.contains("about") &&
+    (!window.fediverseInteraction || !window.fediverseInteraction.lastViewedInstance)
   ) {
     fadeOut(detailContainerEl);
   }

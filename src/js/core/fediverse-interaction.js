@@ -601,7 +601,30 @@ function showInstanceDetails(data) {
   }
 
   var detailContainerEl = $("#detailContainer");
-  fadeIn(detailContainerEl);
+  
+  // 确保先显示再淡入，强制覆盖之前的状态
+  if (detailContainerEl) {
+    // 居中逻辑 (参考 marker.js)
+    setTimeout(function() {
+      var titleContainer = $("#detailTitle");
+      var footEl = $("#detailFooter");
+      
+      // 使用 titleContainer 而不是 span 以包含 padding/margin
+      var titleH = titleContainer ? titleContainer.offsetHeight : (titleEl ? titleEl.offsetHeight : 60);
+      var bodyH = bodyEl ? bodyEl.offsetHeight : 0;
+      var footH = footEl ? footEl.offsetHeight : 0;
+      
+      var offset = titleH + bodyH + footH;
+      var line_height = 20;
+      
+      css(detailContainerEl, {
+        paddingTop: Math.max((window.innerHeight - offset) / 2, line_height * 3) + "px"
+      });
+    }, 0);
+    
+    fadeIn(detailContainerEl);
+  }
+  
   css($("#css-container"), { display: "none" });
 }
 
