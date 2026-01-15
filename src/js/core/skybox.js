@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import { RGBELoader } from "three/addons/loaders/RGBELoader.js";
 import { constrain } from "../utils/math.js";
 
 var skybox;
@@ -48,28 +49,17 @@ export function initSkybox(highres) {
   var textureCube = new THREE.CubeTextureLoader().load(
     urls,
     function (loadedTexture) {
-      // Generate prefiltered environment map for PBR (IBL)
-      // PMREMGenerator creates proper mipmap chain for smooth reflections
-      if (window.renderer) {
-        var pmremGenerator = new THREE.PMREMGenerator(window.renderer);
-        pmremGenerator.compileEquirectangularShader();
-        var envMap = pmremGenerator.fromCubemap(loadedTexture).texture;
-        window.skyboxEnvMap = envMap; // Prefiltered for PBR
-        
-        // Apply to planetScene if it exists
-        if (window.planetScene) {
-          window.planetScene.environment = envMap;
-        }
-        pmremGenerator.dispose();
-        console.log("[Skybox] PMREM environment map generated for PBR");
-      }
+      console.log("[Skybox] Starfield cubemap loaded");
     },
     undefined,
     function (err) {
       console.error("Error loading skybox:", err);
     },
   );
-  window.skyboxTexture = textureCube; // Expose for environment map (raw cubemap)
+  window.skyboxTexture = textureCube; // For visual background only
+  
+  // Load studio HDR for PBR reflections (separate from starfield background)
+  loadStudioEnvironment();
   textureCube.anisotropy = window.maxAniso || 1;
   // Enable mipmaps for better filtering
   textureCube.magFilter = THREE.LinearFilter;
@@ -129,7 +119,51 @@ export function renderSkybox() {
   }
 }
 
+/**
+ * Load studio HDR environment for PBR reflections.
+ * This is separate from the starfield background - used only for lighting GLB models.
+ */
+function loadStudioEnvironment() {
+  if (!window.renderer) {
+    console.warn("[Skybox] Renderer not ready, deferring studio environment load");
+    return;
+  }
+  
+  const rgbeLoader = new RGBELoader();
+  rgbeLoader.load(
+    "src/assets/textures/studio_small_1k.hdr",
+    function (texture) {
+      texture.mapping = THREE.EquirectangularReflectionMapping;
+      
+      const pmremGenerator = new THREE.PMREMGenerator(window.renderer);
+      pmremGenerator.compileEquirectangularShader();
+      const envMap = pmremGenerator.fromEquirectangular(texture).texture;
+      
+      window.studioEnvMap = envMap;
+      
+      // Apply to planetScene for PBR model reflections
+      if (window.planetScene) {
+        window.planetScene.environment = envMap;
+        console.log("[Skybox] Studio HDR environment applied to planetScene");
+      }
+      
+      // Reduce exposure to avoid overexposure with bright HDR
+      if (window.renderer) {
+        window.renderer.toneMappingExposure = 0.35;
+      }
+      
+      texture.dispose();
+      pmremGenerator.dispose();
+    },
+    undefined,
+    function (err) {
+      console.error("[Skybox] Error loading studio HDR:", err);
+    }
+  );
+}
+
 window.setupSkyboxScene = setupSkyboxScene;
 window.initSkybox = initSkybox;
 window.updateSkybox = updateSkybox;
 window.renderSkybox = renderSkybox;
+window.loadStudioEnvironment = loadStudioEnvironment;
