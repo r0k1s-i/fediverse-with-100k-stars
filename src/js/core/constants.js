@@ -27,11 +27,11 @@ export const CAMERA = {
   POSITION: {
     INITIAL_X: 0,
     INITIAL_Y: 0,
-    INITIAL_Z: 2500, // Default starting position
+    INITIAL_Z: 2000, // Default starting position
 
     // Preset zoom levels
     CLOSE_UP_Z: 300,
-    NORMAL_Z: 2500,
+    NORMAL_Z: 2000,
     GRID_VIEW_Z: 1800,
     FAR_VIEW_Z: 5000,
     GALAXY_VIEW_Z: 40000,
@@ -103,18 +103,14 @@ export const VISIBILITY = {
     // Label visibility zoom range
     LABEL_MIN_ZOOM: 0.2, // 20%
     LABEL_MAX_ZOOM: 0.9, // 90%
-    
+
     // Limits
     TARGET_PARTICLE_COUNT: 100000,
     TARGET_LINE_COUNT: 50,
     MIN_USERS_FOR_HTML_LABEL: 999999999, // Effectively disabled by default
   },
 
-  MAJOR_FEDIVERSE_DOMAINS: [
-    "mastodon.social",
-    "misskey.io",
-    "pixelfed.social",
-  ],
+  MAJOR_FEDIVERSE_DOMAINS: ["mastodon.social", "misskey.io", "pixelfed.social"],
 
   MAJOR_INSTANCE_COLORS: {
     "mastodon.social": 0xffffff,
