@@ -375,7 +375,7 @@ Edit `camera.update()` in `main.js` - handles zoom easing and position updates.
 1. **Auto-commit** code changes after completing each task
 2. **Commit message format**: Follow [gitmoji](https://gitmoji.dev/) convention
 3. **No-commit during live debug unless approved**: When actively debugging with the user, do not create any commit without explicit user confirmation, even if changes are complete.
-4. **Temporary scripts are not tracked**: Any agent-created test or temporary scripts must live in a temporary directory and must not be committed or tracked by git.
+4. 🛑 **CRITICAL: DO NOT TRACK TEMPORARY SCRIPTS** 🛑: Any agent-created test or temporary scripts MUST live in a temporary directory and MUST NOT be committed or tracked by git. Double check `git status` before adding files.
 
 ```
 <emoji> <type>: <short description>
