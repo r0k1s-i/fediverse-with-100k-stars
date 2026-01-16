@@ -10,10 +10,27 @@ export function ensureCameraTarget(camera, fallbackZ = 0) {
   if (!hasTarget) {
     var initialZ =
       typeof camera.position.z === "number" ? camera.position.z : fallbackZ;
-    camera.position.target = { z: initialZ, pz: initialZ };
+    var initialX =
+      typeof camera.position.x === "number" ? camera.position.x : 0;
+    var initialY =
+      typeof camera.position.y === "number" ? camera.position.y : 0;
+    camera.position.target = {
+      x: initialX,
+      y: initialY,
+      z: initialZ,
+      pz: initialZ,
+    };
     return;
   }
 
+  if (typeof camera.position.target.x !== "number") {
+    camera.position.target.x =
+      typeof camera.position.x === "number" ? camera.position.x : 0;
+  }
+  if (typeof camera.position.target.y !== "number") {
+    camera.position.target.y =
+      typeof camera.position.y === "number" ? camera.position.y : 0;
+  }
   if (typeof camera.position.target.z !== "number") {
     camera.position.target.z =
       typeof camera.position.z === "number" ? camera.position.z : fallbackZ;

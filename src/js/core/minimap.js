@@ -1,5 +1,6 @@
 import { map, constrain } from '../utils/math.js';
 import { $, css, addClass, fadeIn, fadeOut, find, html, on, ajax } from '../utils/dom.js';
+import { ensureCameraTarget } from "../utils/app.js";
 
 import { state } from './state.js';
 
@@ -103,6 +104,8 @@ export function updateMinimap() {
   if (!camera) {
     return;
   }
+  
+  ensureCameraTarget(camera);
 
   // Ensure camera.position.target exists, otherwise fallback to camera.position
   var targetZ = (camera.position.target && camera.position.target.z) 
@@ -303,6 +306,7 @@ function updateCameraPosition() {
   var camera = state.camera;
 
   if (camera) {
+    ensureCameraTarget(camera);
     var normal = position / 100;
     camera.position.target.z = cmap(curve_inverse(normal), 0, 1, 1.1, 40000);
     camera.position.target.pz = camera.position.target.z;

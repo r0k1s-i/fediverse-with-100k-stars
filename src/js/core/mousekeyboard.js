@@ -1,5 +1,6 @@
 import { constrain } from "../utils/math.js";
 import { CAMERA } from "./constants.js";
+import { ensureCameraTarget } from "../utils/app.js";
 
 var mouseX = 0,
   mouseY = 0,
@@ -75,6 +76,8 @@ export function onKeyDown(event) {}
 
 function handleMWheel(delta) {
   var camera = window.camera;
+  if (!camera) return;
+  ensureCameraTarget(camera, CAMERA.POSITION.INITIAL_Z);
 
   // 如果正在执行缩放动画，中断动画并接管控制
   if (camera.easeZooming) {
