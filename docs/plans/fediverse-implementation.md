@@ -25,8 +25,8 @@
 
 ## 当前状态
 
-- **更新时间**: 2026-01-16
-- **当前阶段**: 清理点击调试日志
+- **更新时间**: 2026-01-17
+- **当前阶段**: 点击缩放回拉问题持续观察
 - **下一步行动**:
   - [x] 新增代码深度分析与优化整改计划
   - [x] 补充代码质量评估与改进建议（codebase-optimization-review.md）
@@ -51,6 +51,15 @@
   - [x] 修复相同实例点击不缩放（TDD）
   - [x] 点击缩放期间短暂忽略滚轮输入（TDD）
   - [x] 清理点击交互调试日志
+  - [x] 通过 TWEEN.add 探针定位 “拉远 tween” 来源
+  - [x] 发现 target.z 写入来自 zoomIn onUpdate（tween.update → onUpdate）
+  - [x] 决定仅在 onComplete 同步 target.z（避免动画过程覆盖目标）
+  - [x] 新增 zoomIn 动画期间不覆盖 target.z 的单元测试（TDD）
+  - [x] 修正 zoomIn 测试全局变量泄漏（TDD）
+  - [x] 移除 zoomIn 的 onUpdate target 同步（TDD）
+  - [x] 记录本轮复现尝试与未复现现象
+  - [x] 清理缩放追踪临时日志
+  - [ ] 验证是否存在 wrap 之前创建的相机 tween（goToGridView/旧 tween）
   - [ ] 评估是否需要进一步降低 planetScene 灯光强度
   - [ ] 如仍偏平，考虑适度增强 AO/法线对比度
   - [x] 调整默认视距与初始交互体验
@@ -190,6 +199,16 @@ go test -v
 ---
 
 ## 📝 更新日志
+
+### 2026-01-17
+- 🔍 **排查**: 点击缩放回拉中视距问题
+  - **探针**: 通过 wrap `TWEEN.Tween` + `TWEEN.add` 捕获新建 tween，确认 `zoomIn` tween 仅负责拉近
+  - **发现**: `target.z` 写入来自 `zoomIn` 的 `onUpdate` 同步，导致动画过程覆盖目标值
+  - **修复**: 移除 `zoomIn` 的 `onUpdate` 同步，仅在 `onComplete` 同步 target
+  - **测试**: 新增 `zoomIn` 单元测试，断言动画过程中不覆盖 `target.z`
+  - **日志**: 增加 `window.__zoomDebug` 开关，覆盖 `zoomIn`/滚轮/minimap 追踪
+  - **现象**: 以上改动后未能稳定复现“回拉到中视距”问题，进入观察期
+  - **清理**: 移除临时缩放追踪日志，保留测试与修复
 
 ### 2026-01-15
 - ✨ **功能**: 添加 GLB 行星模型渲染系统
