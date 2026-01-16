@@ -8,6 +8,7 @@ export class AssetManager {
 
         this.loader = new THREE.TextureLoader();
         this.cache = new Map();
+        this.refs = new Map(); // Reference counting
         this.maxCacheSize = 50; // Max number of textures to keep in memory
         
         AssetManager.instance = this;
@@ -18,6 +19,33 @@ export class AssetManager {
             new AssetManager();
         }
         return AssetManager.instance;
+    }
+
+    /**
+     * Increment reference count for a texture
+     * @param {string} url 
+     */
+    retain(url) {
+        const count = (this.refs.get(url) || 0) + 1;
+        this.refs.set(url, count);
+        // console.debug(`[AssetManager] Retain ${url}: ${count}`);
+    }
+
+    /**
+     * Decrement reference count. If 0 and not in cache, dispose.
+     * @param {string} url 
+     */
+    release(url) {
+        const count = (this.refs.get(url) || 0) - 1;
+        this.refs.set(url, Math.max(0, count));
+        // console.debug(`[AssetManager] Release ${url}: ${Math.max(0, count)}`);
+
+        if (count <= 0) {
+            this.refs.delete(url);
+            if (!this.cache.has(url)) {
+                this.dispose(url);
+            }
+        }
     }
 
     loadTexture(url, onLoad, onProgress, onError) {
@@ -36,10 +64,12 @@ export class AssetManager {
         // Enforce Cache Limit
         if (this.cache.size >= this.maxCacheSize) {
             const oldestKey = this.cache.keys().next().value;
-            // Evict from cache BUT DO NOT DISPOSE. 
-            // Disposal is unsafe as texture might still be in use by active materials.
-            // Explicit disposal should be called via disposeAll() during scene teardown.
             this.cache.delete(oldestKey);
+            
+            // If no references, safe to dispose
+            if (!this.refs.has(oldestKey) || this.refs.get(oldestKey) <= 0) {
+                this.dispose(oldestKey);
+            }
         }
 
         const texture = this.loader.load(

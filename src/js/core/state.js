@@ -1,4 +1,12 @@
-
+/**
+ * Central State Module
+ * 
+ * Usage:
+ * import { state } from "./state.js";
+ * 
+ * Note: window.state and window.globals are exposed for legacy compatibility 
+ * and debugging only. Do not rely on them for new code.
+ */
 export const state = {
     scene: null,
     camera: null,
@@ -39,5 +47,17 @@ export const state = {
     markerThreshold: null,
 };
 
-window.state = state;
-window.globals = state; // Legacy support during migration
+// Harden legacy aliases to prevent accidental reassignment
+if (typeof window !== 'undefined') {
+    Object.defineProperty(window, 'state', {
+        get: () => state,
+        configurable: false,
+        enumerable: true
+    });
+    
+    Object.defineProperty(window, 'globals', {
+        get: () => state,
+        configurable: false,
+        enumerable: true
+    });
+}

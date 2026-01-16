@@ -1,9 +1,9 @@
 
 export class LabelLayout {
-    constructor() {
+    constructor(options = {}) {
         this.placed = [];
         this.grid = {};
-        this.cellSize = 100; // Tunable parameter
+        this.cellSize = options.cellSize || 100;
     }
 
     process(items) {

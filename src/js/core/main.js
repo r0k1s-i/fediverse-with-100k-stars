@@ -12,7 +12,7 @@ import "./state.js";
 import "./config.js";
 import "../utils/misc.js";
 import "../utils/three-helpers.js";
-import "../utils/app.js";
+import { ensureCameraTarget } from "../utils/app.js";
 
 import { shaderList, loadShaders } from "./shaders.js";
 
@@ -386,6 +386,8 @@ function initScene() {
   camera = state.camera;
 
   window.camera = camera;
+  camera.position.z = CAMERA.POSITION.INITIAL_Z;
+  ensureCameraTarget(camera, CAMERA.POSITION.INITIAL_Z);
 
   if (enableSkybox) {
     setupSkyboxScene();
@@ -395,6 +397,7 @@ function initScene() {
   }
 
   camera.update = function () {
+    ensureCameraTarget(camera, CAMERA.POSITION.INITIAL_Z);
     if (!this.easeZooming) {
       camera.position.z +=
         (camera.position.target.z - camera.position.z) * 0.125;
@@ -786,8 +789,6 @@ function animate() {
 
 function render() {
   if (perfMonitor) perfMonitor.update(renderer, scene);
-  renderer.render(scene, camera);
-}
 
   renderer.autoClear = false;
   camera.layers.set(0);
