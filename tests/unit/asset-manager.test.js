@@ -66,7 +66,8 @@ describe('AssetManager', () => {
         // Load tex3 (should evict tex2, which is now oldest)
         manager.loadTexture('tex3');
 
-        expect(disposedCount).to.equal(1);
+        // Updated expectation: Should NOT auto-dispose on eviction
+        expect(disposedCount).to.equal(0);
         expect(manager.cache.has('tex1')).to.be.true;
         expect(manager.cache.has('tex3')).to.be.true;
         expect(manager.cache.has('tex2')).to.be.false;

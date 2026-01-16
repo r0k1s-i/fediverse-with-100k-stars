@@ -36,7 +36,10 @@ export class AssetManager {
         // Enforce Cache Limit
         if (this.cache.size >= this.maxCacheSize) {
             const oldestKey = this.cache.keys().next().value;
-            this.dispose(oldestKey);
+            // Evict from cache BUT DO NOT DISPOSE. 
+            // Disposal is unsafe as texture might still be in use by active materials.
+            // Explicit disposal should be called via disposeAll() during scene teardown.
+            this.cache.delete(oldestKey);
         }
 
         const texture = this.loader.load(
