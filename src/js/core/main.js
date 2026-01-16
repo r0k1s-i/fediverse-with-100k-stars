@@ -7,7 +7,7 @@ import { CAMERA, VISIBILITY } from "./constants.js";
 window.THREE = THREE;
 window.TWEEN = TWEEN;
 
-import "./globals.js";
+import "./state.js";
 
 import "./config.js";
 import "../utils/misc.js";
@@ -139,6 +139,8 @@ var markerThreshold = {
   min: VISIBILITY.MARKER.MIN_Z,
   max: VISIBILITY.MARKER.MAX_Z,
 };
+state.markerThreshold = markerThreshold;
+window.markerThreshold = markerThreshold;
 
 function start(e) {
   if (!Detector.webgl) {
@@ -185,6 +187,7 @@ var postStarGradientLoaded = function () {
 
   loadShaders(shaderList, function (e) {
     window.shaderList = e;
+    state.shaderList = e;
     postShadersLoaded();
   });
 };
@@ -194,6 +197,7 @@ var postShadersLoaded = function () {
 
   loadFediverseData(window.fediverseDataPath, function (loadedData) {
     window.fediverseInstances = loadedData;
+    state.fediverseInstances = loadedData;
     initScene();
     animate();
   });
@@ -221,16 +225,26 @@ function buildGUI() {
   if (initializeMinimap) initializeMinimap();
 }
 
+import { PerformanceMonitor } from "../utils/perf-monitor.js";
+import { state } from "./state.js";
+
+var perfMonitor;
+
 function initScene() {
-  scene = new THREE.Scene();
+  perfMonitor = new PerformanceMonitor();
+  state.scene = new THREE.Scene();
+  scene = state.scene;
 
   scene.add(new THREE.AmbientLight(0x505050));
 
-  rotating = new THREE.Object3D();
+  state.rotating = new THREE.Object3D();
+  rotating = state.rotating;
 
-  galacticCentering = new THREE.Object3D();
+  state.galacticCentering = new THREE.Object3D();
+  galacticCentering = state.galacticCentering;
 
-  translating = new THREE.Object3D();
+  state.translating = new THREE.Object3D();
+  translating = state.translating;
 
   galacticCentering.add(translating);
   rotating.add(galacticCentering);
@@ -305,10 +319,11 @@ function initScene() {
   window.screenWidth = screenWidth;
   window.screenHeight = screenHeight;
 
-  renderer = new THREE.WebGLRenderer({
+  state.renderer = new THREE.WebGLRenderer({
     antialias: antialias,
     logarithmicDepthBuffer: true,
   });
+  renderer = state.renderer;
   // Enable modern color management and tone mapping
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -362,20 +377,14 @@ function initScene() {
   window.addEventListener("touchend", touchEnd, false);
   window.addEventListener("touchmove", touchMove, { passive: false });
 
-  camera = new THREE.PerspectiveCamera(
-    CAMERA.FOV,
-    window.innerWidth / window.innerHeight,
+  state.camera = new THREE.PerspectiveCamera(
+    fovValue,
+    screenWidth / screenHeight,
     CAMERA.NEAR_CLIP,
     CAMERA.FAR_CLIP,
   );
-  camera.position.z = CAMERA.POSITION.INITIAL_Z;
-  camera.rotation.vx = 0;
-  camera.rotation.vy = 0;
-  camera.position.target = {
-    x: 0,
-    z: 2000,
-    pz: 2000,
-  };
+  camera = state.camera;
+
   window.camera = camera;
 
   if (enableSkybox) {
@@ -574,7 +583,8 @@ function initScene() {
 
 function sceneSetup() {
   if (enableStarModel) {
-    starModel = makeStarModels();
+    state.starModel = makeStarModels();
+    starModel = state.starModel;
     starModel.setSpectralIndex(0.9);
     starModel.setScale(1.0);
     starModel.visible = false;
@@ -582,19 +592,22 @@ function sceneSetup() {
     window.enableStarModel = enableStarModel;
   }
 
-  pSystem = generateFediverseInstances();
+  state.pSystem = generateFediverseInstances();
+  pSystem = state.pSystem;
   translating.add(pSystem);
   window.pSystem = pSystem;
 
   if (enableGalaxy) {
-    pGalacticSystem = generateGalaxy();
+    state.pGalacticSystem = generateGalaxy();
+    pGalacticSystem = state.pGalacticSystem;
     translating.add(pGalacticSystem);
 
     var blackhole = createBlackhole();
     rotating.add(blackhole);
 
     if (enableDust) {
-      pDustSystem = generateDust();
+      state.pDustSystem = generateDust();
+      pDustSystem = state.pDustSystem;
       pGalacticSystem.add(pDustSystem);
       window.pDustSystem = pDustSystem;
     }
@@ -772,9 +785,9 @@ function animate() {
 }
 
 function render() {
-  if (enableSkybox) {
-    renderSkybox();
-  }
+  if (perfMonitor) perfMonitor.update(renderer, scene);
+  renderer.render(scene, camera);
+}
 
   renderer.autoClear = false;
   camera.layers.set(0);

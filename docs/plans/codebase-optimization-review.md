@@ -101,14 +101,34 @@
   - 扩展单元测试 `tests/unit/interaction-math.test.js`
 
 ### 阶段 B（3-5 天）
-- [ ] LabelLayout 网格分桶实现与性能对比
-- [ ] `fediverse_final.json` Worker 解析
+- [x] LabelLayout 网格分桶实现与性能对比 ✅ (2026-01-16)
+  - 实现 Spatial Hashing (Grid Size 100)
+  - 性能提升 >10x (20k items: 185ms -> 16ms)
+  - 添加基准测试 `tests/unit/label-layout.test.js`
+- [x] `fediverse_final.json` Worker 解析 ✅ (2026-01-16)
+  - 创建 `src/js/workers/data-loader.worker.js`
+  - 修改 `fediverse.js` 使用 Worker 并包含回退机制
+  - 避免主线程解析 JSON 阻塞 UI
 - [ ] `AssetManager` 增加缓存回收
+- [x] `AssetManager` 增加缓存回收 ✅ (2026-01-16)
+  - 实现 LRU 缓存策略 (默认 Max 50)
+  - 自动调用 `texture.dispose()` 释放 GPU 内存
+  - 更新单元测试 `tests/unit/asset-manager.test.js` 覆盖淘汰逻辑
 
 ### 阶段 C（1 周）
-- [ ] 状态管理收敛（引入 `state` 或 `context`）
-- [ ] 性能观测工具接入
-- [ ] 完善测试与回归基线
+- [x] 全局状态依赖的显式化 (部分完成) ✅ (2026-01-16)
+  - 创建 `src/js/core/state.js` 替代 `globals.js`
+  - 重构 `main.js` 初始化并填充 `state`
+  - 重构 `fediverse-interaction.js` 和 `fediverse.js` 使用 `state`
+  - 减少隐式耦合，保留 `window.state` 用于调试
+- [x] 性能观测工具接入 ✅ (2026-01-16)
+  - 创建 `src/js/utils/perf-monitor.js`
+  - 显示 FPS, 内存使用 (Chrome), Draw Calls, Geometry count
+  - 按 'P' 键切换显示
+- [x] 完善测试与回归基线 ✅ (2026-01-16)
+  - 增加 `tests/unit/data-loader.test.js` 验证 Worker/Fallback 逻辑
+  - 增加 `tests/unit/math.test.js` 覆盖核心数学工具函数
+  - 更新 `tests/runner.html` 注册所有新测试
 
 ---
 
