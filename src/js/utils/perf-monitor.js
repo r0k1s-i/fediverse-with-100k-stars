@@ -29,12 +29,20 @@ export class PerformanceMonitor {
         this.lastTime = performance.now();
         this.enabled = false;
         
-        // Listen for toggle key 'P'
-        window.addEventListener('keydown', (e) => {
+        this.handleKeydown = (e) => {
             if (e.key.toLowerCase() === 'p') {
                 this.toggle();
             }
-        });
+        };
+
+        window.addEventListener('keydown', this.handleKeydown);
+    }
+
+    destroy() {
+        if (this.container && this.container.parentNode) {
+            this.container.parentNode.removeChild(this.container);
+        }
+        window.removeEventListener('keydown', this.handleKeydown);
     }
 
     toggle() {

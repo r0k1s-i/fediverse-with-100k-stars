@@ -1,6 +1,8 @@
 import { map, constrain } from '../utils/math.js';
 import { $, css, addClass, fadeIn, fadeOut, find, html, on, ajax } from '../utils/dom.js';
 
+import { state } from './state.js';
+
 var border_width = 1;
 var padding = 80;
 
@@ -96,13 +98,18 @@ export function activateMinimap() {
 }
 
 export function updateMinimap() {
-  var camera = window.camera;
+  var camera = state.camera;
 
   if (!camera) {
     return;
   }
 
-  var normal = cmap(camera.position.target.z, 1.1, 40000, 0, 1);
+  // Ensure camera.position.target exists, otherwise fallback to camera.position
+  var targetZ = (camera.position.target && camera.position.target.z) 
+    ? camera.position.target.z 
+    : camera.position.z;
+
+  var normal = cmap(targetZ, 1.1, 40000, 0, 1);
   position = cmap(curve(normal), 0, 1, 0, 100);
   updateCursorPosition(true);
 }
@@ -293,7 +300,7 @@ function updateCursorPosition(silent) {
 }
 
 function updateCameraPosition() {
-  var camera = window.camera;
+  var camera = state.camera;
 
   if (camera) {
     var normal = position / 100;

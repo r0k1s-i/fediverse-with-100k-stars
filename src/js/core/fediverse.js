@@ -19,18 +19,23 @@ var fediverseTexture0 = textureLoader.loadTexture(
   undefined,
   onTextureError,
 );
+textureLoader.retain("src/assets/textures/p_0.png");
+
 var fediverseTexture1 = textureLoader.loadTexture(
   "src/assets/textures/p_2.png",
   undefined,
   undefined,
   onTextureError,
 );
+textureLoader.retain("src/assets/textures/p_2.png");
+
 var fediverseHeatVisionTexture = textureLoader.loadTexture(
   "src/assets/textures/sharppoint.png",
   undefined,
   undefined,
   onTextureError,
 );
+textureLoader.retain("src/assets/textures/sharppoint.png");
 
 setLoadMessage("Focusing optics");
 var instancePreviewTexture = textureLoader.loadTexture(
@@ -39,12 +44,15 @@ var instancePreviewTexture = textureLoader.loadTexture(
   undefined,
   onTextureError,
 );
+textureLoader.retain("src/assets/textures/star_preview.png");
+
 var fediverseColorGraph = textureLoader.loadTexture(
   "src/assets/textures/star_color_modified.png",
   undefined,
   undefined,
   onTextureError,
 );
+textureLoader.retain("src/assets/textures/star_color_modified.png");
 
 var instanceSunHaloTexture = textureLoader.loadTexture(
   "src/assets/textures/sun_halo.png",
@@ -52,12 +60,15 @@ var instanceSunHaloTexture = textureLoader.loadTexture(
   undefined,
   onTextureError,
 );
+textureLoader.retain("src/assets/textures/sun_halo.png");
+
 var instanceCoronaTexture = textureLoader.loadTexture(
   "src/assets/textures/corona.png",
   undefined,
   undefined,
   onTextureError,
 );
+textureLoader.retain("src/assets/textures/corona.png");
 
 var MAJOR_INSTANCE_COLORS = {
   "mastodon.social": 0xffffff,

@@ -120,15 +120,20 @@
   - 创建 `src/js/core/state.js` 替代 `globals.js`
   - 重构 `main.js` 初始化并填充 `state`
   - 重构 `fediverse-interaction.js` 和 `fediverse.js` 使用 `state`
-  - 减少隐式耦合，保留 `window.state` 用于调试
+  - 使用 `Object.defineProperty` 锁定 `window.state` 别名，防止意外重写
 - [x] 性能观测工具接入 ✅ (2026-01-16)
   - 创建 `src/js/utils/perf-monitor.js`
   - 显示 FPS, 内存使用 (Chrome), Draw Calls, Geometry count
-  - 按 'P' 键切换显示
+  - 添加 `destroy()` 方法支持清理
 - [x] 完善测试与回归基线 ✅ (2026-01-16)
   - 增加 `tests/unit/data-loader.test.js` 验证 Worker/Fallback 逻辑
   - 增加 `tests/unit/math.test.js` 覆盖核心数学工具函数
   - 更新 `tests/runner.html` 注册所有新测试
+
+## 四、下一步建议 (Phase D)
+- [ ] AssetManager 引用计数 (Retain/Release) 机制
+- [ ] 纹理图集 (Texture Atlas) 优化小图标渲染
+- [ ] 迁移剩余的 `window.*` 依赖到 `state`
 
 ---
 
@@ -147,3 +152,50 @@
 - `docs/plans/improvements.md`
 - `docs/plans/modernization.md`
 
+---
+
+## 六、代码质量评估与改进点（Review）
+
+> 本节为对当前代码库的质量评估与改进建议，基于 `src/js/core/*`、`src/js/utils/*`、`src/js/workers/*`、`scripts/fediverse-processor/*` 的抽样审阅。
+
+### 综合评价
+- **整体质量**：中上（改动后模块边界更清晰、常量集中化、测试覆盖提升，但仍存在隐式依赖与生命周期管理不足）。
+- **可维护性**：中等（`state` 统一了部分入口，但仍混用 `window.*` 与局部状态）。
+- **稳定性**：中等偏上（Worker/Fallback 机制提升稳定性，但错误/数据校验不充分）。
+- **性能可控性**：良好（LabelLayout 网格化与 Worker 解析显著优化，但资源回收尚未彻底闭环）。
+
+### 主要问题（按严重度）
+1. **资源生命周期未闭环**
+   - `src/js/core/fediverse.js` 中多处 `retain()` 但缺少对应 `release()`，导致 `AssetManager` 的引用计数无法回收。
+   - `src/js/core/asset-manager.js` 虽有 LRU/引用计数，但调用方未形成统一释放策略，潜在 GPU 内存泄漏风险。
+
+2. **数据加载路径的健壮性不足**
+   - `src/js/workers/data-loader.worker.js` 假设数据为数组且含 `position`，缺少结构校验与异常上报细节。
+   - `src/js/core/fediverse.js` 的 Worker/Fallback 都重复内置 `SCALE_FACTOR = 5`，缺少统一常量来源，变更风险较高。
+
+3. **全局状态与模块边界仍混杂**
+   - `src/js/core/main.js`、`src/js/core/fediverse-interaction.js` 中仍访问 `window.*` 或隐式依赖 DOM/全局函数，影响可测试性与复用。
+   - 同一职责分散在多个模块（如交互阈值与可见性策略分散在 core/const、interaction、fediverse 内），维护成本偏高。
+
+4. **事件与状态清理缺乏统一策略**
+   - `initFediverseInteraction()` 为全局监听注册入口，但无对应解除机制，若未来需要热重载或重新初始化，会造成重复监听或泄漏。
+   - 一些动画/缓动对象缺少销毁逻辑（例如 `TWEEN` 全局推进与对象生命周期分离）。
+
+5. **可测试性仍存在盲区**
+   - 交互/渲染逻辑仍大量依赖 DOM 与 WebGL 环境，缺少对关键交互路径的纯函数测试替代层。
+   - Worker 解析、数据校验、异常分支等逻辑测试覆盖不足。
+
+### 建议改进（可落地项）
+- **资源回收闭环**：为各纹理/模型建立显式 `retain/release` 调用契约，并在场景切换或卸载时集中释放。
+- **常量与校验统一**：将 `SCALE_FACTOR`、交互阈值等核心数值集中至 `constants.js` 并在 Worker 与主线程复用。
+- **数据校验与错误日志**：Worker 返回时附带简单校验（数组/字段存在性），并记录异常输入示例以便复盘。
+- **清理接口标准化**：为输入监听、TWEEN/动画对象、LabelLayout 等提供 `dispose()` / `destroy()` 规范入口。
+- **测试分层完善**：为交互与数据路径新增纯函数层测试，并引入 Worker/fallback 分支覆盖。
+
+### 复盘与改进（流程层）
+- **问题**：本次 review 未能发现 `camera.position.target` 未初始化导致的运行时崩溃，说明审查过程缺少“最小启动路径”验证与关键初始化链路的检查。
+- **原因**：过度关注性能/结构问题，忽略了关键运行时依赖（`camera.position.target`）是否在主循环前完成初始化。
+- **改进动作**：
+  - 增加“启动自检清单”，包含：相机/场景/状态对象关键字段是否在 `animate()` 前完成初始化。
+  - 对核心循环增加轻量防御性检查（例如 `camera.position.target` 缺失时的兜底初始化）。
+  - 将“可运行性”验证提升为 review 的第一优先级，与性能、结构并列。

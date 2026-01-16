@@ -3,8 +3,9 @@
     <head>
         <meta charset="UTF-8" />
         <title>Fediverse Unit Tests</title>
+        <base href="/" />
         <!-- Test framework (mocha/chai) is local; Three.js requires network -->
-        <link rel="stylesheet" href="./lib/mocha.css" />
+        <link rel="stylesheet" href="/tests/lib/mocha.css" />
         <script type="importmap">
             {
                 "imports": {
@@ -17,8 +18,8 @@
     <body>
         <div id="mocha"></div>
         <!-- Local: mocha, chai | Remote: Three.js (CDN) -->
-        <script src="./lib/chai.js"></script>
-        <script src="./lib/mocha.js"></script>
+        <script src="/tests/lib/chai.js"></script>
+        <script src="/tests/lib/mocha.js"></script>
 
         <script class="mocha-init">
             mocha.setup("bdd");
@@ -27,12 +28,16 @@
         </script>
 
         <!-- Test Suites -->
-        <script type="module" src="./unit/asset-manager.test.js"></script>
-        <script type="module" src="./unit/draco-loader.test.js"></script>
-        <script type="module" src="./unit/interaction-math.test.js"></script>
-        <script type="module" src="./unit/label-layout.test.js"></script>
-        <script type="module" src="./unit/data-loader.test.js"></script>
-        <script type="module" src="./unit/math.test.js"></script>
+        <script type="module" src="/tests/unit/asset-manager.test.js"></script>
+        <script type="module" src="/tests/unit/camera-target.test.js"></script>
+        <script type="module" src="/tests/unit/draco-loader.test.js"></script>
+        <script
+            type="module"
+            src="/tests/unit/interaction-math.test.js"
+        ></script>
+        <script type="module" src="/tests/unit/label-layout.test.js"></script>
+        <script type="module" src="/tests/unit/data-loader.test.js"></script>
+        <script type="module" src="/tests/unit/math.test.js"></script>
 
         <script class="mocha-exec">
             // Wait for modules to load
