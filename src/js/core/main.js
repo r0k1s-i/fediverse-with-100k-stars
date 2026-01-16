@@ -300,16 +300,16 @@ function initScene() {
   applyPlanetShadowConfig(planetLight, planetShadowConfig);
   planetScene.add(planetLight);
 
-  const planetAmbient = new THREE.AmbientLight(0xffffff, 0.2); // Soft ambient
+  const planetAmbient = new THREE.AmbientLight(0xffffff, 0.05); // Softer ambient
   planetScene.add(planetAmbient);
 
   // Fill light
-  const fillLight = new THREE.DirectionalLight(0xffffff, 0.8);
+  const fillLight = new THREE.DirectionalLight(0xffffff, 0.01);
   fillLight.position.set(-3, 0, 2);
   planetScene.add(fillLight);
 
   // Rim light
-  const rimLight = new THREE.DirectionalLight(0xffffff, 1.0);
+  const rimLight = new THREE.DirectionalLight(0xffffff, 0.01);
   rimLight.position.set(0, 5, -5);
   planetScene.add(rimLight);
 

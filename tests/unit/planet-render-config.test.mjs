@@ -171,6 +171,90 @@ assert.ok(Math.abs(mockSpot.target.position.x - 0.1) < 1e-9);
 assert.equal(mockSpot.target.position.y, 2);
 assert.equal(mockSpot.target.position.z, 3);
 
+const scaledModel = {
+  matrixWorld: {
+    elements: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1],
+  },
+  _planetMesh: {
+    scale: { x: 2, y: 2, z: 2 },
+  },
+};
+const scaledSpot = {
+  distance: 10,
+  position: {
+    x: 0,
+    y: 0,
+    z: 0,
+    set(x, y, z) {
+      this.x = x;
+      this.y = y;
+      this.z = z;
+    },
+  },
+  target: {
+    position: {
+      x: 0,
+      y: 0,
+      z: 0,
+      set(x, y, z) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+      },
+    },
+  },
+};
+const scaledConfig = getPlanetRenderConfig({
+  spotlight: {
+    position: { x: 0, y: 1, z: 0 },
+    target: { x: 0, y: 0.9, z: 0 },
+    distance: 10,
+    scaleWithModel: true,
+  },
+});
+updatePlanetSpotlightTransform(scaledSpot, scaledModel, scaledConfig);
+assert.equal(scaledSpot.position.y, 2);
+assert.equal(scaledSpot.target.position.y, 1.8);
+assert.equal(scaledSpot.distance, 20);
+
+const unscaledSpot = {
+  distance: 10,
+  position: {
+    x: 0,
+    y: 0,
+    z: 0,
+    set(x, y, z) {
+      this.x = x;
+      this.y = y;
+      this.z = z;
+    },
+  },
+  target: {
+    position: {
+      x: 0,
+      y: 0,
+      z: 0,
+      set(x, y, z) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+      },
+    },
+  },
+};
+const unscaledConfig = getPlanetRenderConfig({
+  spotlight: {
+    position: { x: 0, y: 1, z: 0 },
+    target: { x: 0, y: 0.9, z: 0 },
+    distance: 10,
+    scaleWithModel: false,
+  },
+});
+updatePlanetSpotlightTransform(unscaledSpot, scaledModel, unscaledConfig);
+assert.equal(unscaledSpot.position.y, 1);
+assert.equal(unscaledSpot.target.position.y, 0.9);
+assert.equal(unscaledSpot.distance, 10);
+
 const matchingModel = { userData: { modelName: "planet_325_the_king.glb" } };
 const nonMatchingModel = {
   userData: { modelName: "planet_329_lamplighter.glb" },
