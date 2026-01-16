@@ -572,9 +572,20 @@ function showInstanceDetails(data) {
   var html = '<div style="margin-top: 20px;">';
 
   if (data.description) {
+    var safeDescription = window.DOMPurify
+      ? DOMPurify.sanitize(data.description)
+      : data.description;
+    var tempDiv = document.createElement("div");
+    tempDiv.innerHTML = safeDescription;
+    var textContent = tempDiv.textContent || tempDiv.innerText || "";
+    var maxLength = 200;
+    var truncated =
+      textContent.length > maxLength
+        ? textContent.substring(0, maxLength) + "…"
+        : textContent;
     html +=
       '<p style="font-style: italic; margin-bottom: 20px;">' +
-      data.description +
+      truncated +
       "</p>";
   }
 
