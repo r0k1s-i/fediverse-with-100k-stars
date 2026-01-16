@@ -74,9 +74,6 @@ export const COORDINATES = {
   // Grid system
   GRID_SIZE: 10000,
   GRID_DIVISIONS: 100,
-
-  // Data load scaling (fediverse_final.json normalization)
-  DATA_LOAD_SCALE: 5,
 };
 
 // ============================================================================
@@ -106,6 +103,23 @@ export const VISIBILITY = {
     // Label visibility zoom range
     LABEL_MIN_ZOOM: 0.2, // 20%
     LABEL_MAX_ZOOM: 0.9, // 90%
+    
+    // Limits
+    TARGET_PARTICLE_COUNT: 100000,
+    TARGET_LINE_COUNT: 50,
+    MIN_USERS_FOR_HTML_LABEL: 999999999, // Effectively disabled by default
+  },
+
+  MAJOR_FEDIVERSE_DOMAINS: [
+    "mastodon.social",
+    "misskey.io",
+    "pixelfed.social",
+  ],
+
+  MAJOR_INSTANCE_COLORS: {
+    "mastodon.social": 0xffffff,
+    "misskey.io": 0xffffff,
+    "pixelfed.social": 0xffffff,
   },
 
   // Galaxy and dust visibility (hide when zoomed in past initial view)

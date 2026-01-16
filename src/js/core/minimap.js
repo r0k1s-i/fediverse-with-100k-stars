@@ -53,9 +53,8 @@ function touchEvent(e) {
   unfocus();
 }
 
-window.addEventListener('click', clickEvent);
 
-window.addEventListener('resize', function() {
+function onResize() {
   var firstTime = window.firstTime;
   if (!ready) {
     if (timer) {
@@ -83,11 +82,28 @@ window.addEventListener('resize', function() {
   if (domElement && !domElement.classList.contains('ready') && active) {
     addClass(domElement, 'ready');
   }
-});
+}
 
+window.addEventListener('resize', onResize);
+
+window.addEventListener('click', clickEvent);
 window.addEventListener('mouseup', onWindowMouseUp);
 window.addEventListener('touchend', onWindowMouseUp);
 window.dispatchEvent(new Event('resize'));
+
+export function destroyMinimap() {
+  window.removeEventListener('resize', onResize);
+  window.removeEventListener('click', clickEvent);
+  window.removeEventListener('mouseup', onWindowMouseUp);
+  window.removeEventListener('touchend', onWindowMouseUp);
+  window.removeEventListener('mousemove', drag);
+  window.removeEventListener('touchmove', dragTouch);
+  
+  if (minimapEl) {
+    minimapEl.removeEventListener('mousedown', onElementMouseDown);
+    minimapEl.removeEventListener('touchstart', onElementTouchStart);
+  }
+}
 
 export function initializeMinimap() {
   updateMinimap();
@@ -350,3 +366,4 @@ window.activateMinimap = activateMinimap;
 window.updateMinimap = updateMinimap;
 window.setScrollPositionFromTouch = setScrollPositionFromTouch;
 window.setMinimap = setMinimap;
+window.destroyMinimap = destroyMinimap;

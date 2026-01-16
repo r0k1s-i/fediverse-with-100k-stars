@@ -91,7 +91,26 @@ export function attachLegacyMarker(text, obj, size, visibleRange) {
   };
 
   legacyMarkers.push(marker);
+  
+  // Attach reference to the object so it can be detached later
+  obj.marker = marker;
+}
+
+export function detachLegacyMarker(obj) {
+  if (obj && obj.marker) {
+    var index = legacyMarkers.indexOf(obj.marker);
+    if (index > -1) {
+      legacyMarkers.splice(index, 1);
+    }
+    
+    if (obj.marker.parentNode) {
+      obj.marker.parentNode.removeChild(obj.marker);
+    }
+    
+    obj.marker = null;
+  }
 }
 
 window.updateLegacyMarkers = updateLegacyMarkers;
 window.attachLegacyMarker = attachLegacyMarker;
+window.detachLegacyMarker = detachLegacyMarker;

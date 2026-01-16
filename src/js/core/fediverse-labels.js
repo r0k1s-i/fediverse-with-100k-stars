@@ -43,10 +43,29 @@ export function initFediverseLabels() {
       return usersB - usersA;
     });
 
-  window.addEventListener("resize", function () {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-  });
+  window.addEventListener("resize", onResize);
+}
+
+function onResize() {
+  if (fediverseLabels.canvas) {
+    fediverseLabels.canvas.width = window.innerWidth;
+    fediverseLabels.canvas.height = window.innerHeight;
+  }
+}
+
+export function destroyFediverseLabels() {
+  window.removeEventListener("resize", onResize);
+  
+  if (fediverseLabels.canvas) {
+    if (fediverseLabels.canvas.parentNode) {
+      fediverseLabels.canvas.parentNode.removeChild(fediverseLabels.canvas);
+    }
+    fediverseLabels.canvas = null;
+    fediverseLabels.ctx = null;
+  }
+  
+  fediverseLabels.sortedInstances = [];
+  fediverseLabels.layout = null;
 }
 
 export function updateFediverseLabels() {
@@ -63,3 +82,4 @@ export function updateFediverseLabels() {
 
 window.initFediverseLabels = initFediverseLabels;
 window.updateFediverseLabels = updateFediverseLabels;
+window.destroyFediverseLabels = destroyFediverseLabels;
