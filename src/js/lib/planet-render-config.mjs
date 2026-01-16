@@ -6,12 +6,13 @@ export const PLANET_RENDER_DEFAULTS = Object.freeze({
     name: "planetSpotKeyTop",
     modelMatch: "planet_325_the_king",
     color: 0xffe6cc,
-    intensity: 35,
+    intensity: 280,
     distance: 14,
     angle: Math.PI / 22,
     penumbra: 0.15,
     decay: 2,
-    position: Object.freeze({ x: 0, y: 1, z: 0 }),
+    scaleWithModel: true,
+    position: Object.freeze({ x: 0, y: 1.8, z: 0 }),
     target: Object.freeze({ x: 0, y: 0.9, z: 0 }),
   }),
 });
@@ -117,6 +118,27 @@ function applyMatrixWorldToPoint(matrixWorld, point) {
   };
 }
 
+function getUniformScaleFromMatrixWorld(matrixWorld) {
+  const e = matrixWorld.elements;
+  const scaleX = Math.sqrt(e[0] * e[0] + e[1] * e[1] + e[2] * e[2]);
+  const scaleY = Math.sqrt(e[4] * e[4] + e[5] * e[5] + e[6] * e[6]);
+  const scaleZ = Math.sqrt(e[8] * e[8] + e[9] * e[9] + e[10] * e[10]);
+  return (scaleX + scaleY + scaleZ) / 3 || 1;
+}
+
+function getModelScale(model) {
+  const meshScale = model && model._planetMesh && model._planetMesh.scale;
+  if (meshScale) {
+    const scaleX = Math.abs(meshScale.x || 0);
+    const scaleY = Math.abs(meshScale.y || 0);
+    const scaleZ = Math.abs(meshScale.z || 0);
+    const avgScale = (scaleX + scaleY + scaleZ) / 3;
+    return avgScale || 1;
+  }
+
+  return getUniformScaleFromMatrixWorld(model.matrixWorld);
+}
+
 export function updatePlanetSpotlightTransform(spotlight, model, config) {
   if (
     !spotlight ||
@@ -129,8 +151,19 @@ export function updatePlanetSpotlightTransform(spotlight, model, config) {
   }
 
   const s = config.spotlight;
-  const localPos = s.position || { x: 0, y: 0, z: 0 };
-  const localTarget = s.target || { x: 0, y: 0, z: 0 };
+  const baseLocalPos = s.position || { x: 0, y: 0, z: 0 };
+  const baseLocalTarget = s.target || { x: 0, y: 0, z: 0 };
+  const scale = s.scaleWithModel ? getModelScale(model) : 1;
+  const localPos = {
+    x: baseLocalPos.x * scale,
+    y: baseLocalPos.y * scale,
+    z: baseLocalPos.z * scale,
+  };
+  const localTarget = {
+    x: baseLocalTarget.x * scale,
+    y: baseLocalTarget.y * scale,
+    z: baseLocalTarget.z * scale,
+  };
   const worldPos = applyMatrixWorldToPoint(model.matrixWorld, localPos);
   const worldTarget = applyMatrixWorldToPoint(model.matrixWorld, localTarget);
 
@@ -143,6 +176,10 @@ export function updatePlanetSpotlightTransform(spotlight, model, config) {
     spotlight.target.position.set
   ) {
     spotlight.target.position.set(worldTarget.x, worldTarget.y, worldTarget.z);
+  }
+
+  if (typeof s.distance === "number" && s.scaleWithModel) {
+    spotlight.distance = s.distance * scale;
   }
 }
 
