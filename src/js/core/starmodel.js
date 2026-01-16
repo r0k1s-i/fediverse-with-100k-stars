@@ -7,11 +7,10 @@
 
 import * as THREE from "three";
 import { AUToLY } from "../utils/app.js";
-import { preloadPlanetModel, createPlanetModel } from "./planet-model.js";
+import { createPlanetModel } from "./planet-model.js";
 
 export function makeStarModels() {
-  preloadPlanetModel();
-
+  // Models are loaded on-demand when pickRandomModel is called
   const planet = createPlanetModel();
 
   planet.substars = [];

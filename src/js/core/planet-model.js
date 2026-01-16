@@ -33,6 +33,12 @@ let decoderPaths = [];
 let planetBaseScenes = []; // Array of loaded scenes
 let loadPromise = null;
 
+// Lazy loading state
+let decoderReady = false;
+let decoderInitPromise = null;
+const loadedModelCache = new Map(); // path -> scene
+const pendingLoads = new Map(); // path -> Promise
+
 /**
  * Initialize the GLTF loader with DRACOLoader (first call only)
  * @returns {GLTFLoader} Configured loader instance
@@ -133,24 +139,16 @@ function probeDecoder(probePath) {
 }
 
 /**
- * Preload all planet GLB models with fallback decoder support.
- *
- * Strategy:
- * 1. Probe with explicit Draco model to verify decoder
- * 2. If probe fails with Draco error, switch to fallback decoder and retry
- * 3. If probe still fails, short-circuit (decoder unavailable)
- * 4. Load remaining models in parallel (decoder path now stable)
- *
- * @returns {Promise<Array<THREE.Object3D>>} The loaded scenes
+ * Initialize the Draco decoder (probe once to verify it works).
+ * This is called lazily on first model request.
+ * @returns {Promise<boolean>} True if decoder is ready
  */
-export function preloadPlanetModel() {
-  if (!loadPromise) {
-    getLoader();
+async function ensureDecoderReady() {
+  if (decoderReady) return true;
 
-    loadPromise = (async () => {
-      const remainingPaths = PLANET_GLB_PATHS.filter(
-        (p) => p !== DRACO_PROBE_MODEL,
-      );
+  if (!decoderInitPromise) {
+    decoderInitPromise = (async () => {
+      getLoader();
 
       // Step 1: Probe with explicit Draco model to verify decoder
       let probeResult = await probeDecoder(DRACO_PROBE_MODEL);
@@ -165,29 +163,126 @@ export function preloadPlanetModel() {
         }
       }
 
-      // Step 3: Short-circuit if decoder unavailable (avoid noisy parallel failures)
+      // Step 3: Short-circuit if decoder unavailable
       if (!probeResult.success && probeResult.isDracoError) {
         console.error(
           "[Draco] All decoder paths failed. Cannot load Draco-compressed models.",
         );
-        planetBaseScenes = [];
-        return planetBaseScenes;
+        return false;
       }
 
-      // Step 4: Load remaining models in parallel (decoder path now stable)
-      const remainingPromises = remainingPaths.map((path) => loadGLB(path));
-      const remainingScenes = await Promise.all(remainingPromises);
+      // Cache the probe model
+      if (probeResult.scene) {
+        loadedModelCache.set(DRACO_PROBE_MODEL, probeResult.scene);
+        planetBaseScenes.push(probeResult.scene);
+      }
 
-      // Combine results
-      const allScenes = [probeResult.scene, ...remainingScenes].filter(
-        (s) => s !== null,
-      );
-      console.log(`Loaded ${allScenes.length} planet models.`);
-      planetBaseScenes = allScenes;
+      decoderReady = true;
+      return true;
+    })();
+  }
+
+  return decoderInitPromise;
+}
+
+/**
+ * Load a single model on-demand (lazy loading).
+ * @param {string} path - Path to the GLB file
+ * @returns {Promise<THREE.Object3D|null>} Loaded scene or null on failure
+ */
+export async function loadModelOnDemand(path) {
+  // Return cached model if already loaded
+  if (loadedModelCache.has(path)) {
+    return loadedModelCache.get(path);
+  }
+
+  // Return pending promise if already loading
+  if (pendingLoads.has(path)) {
+    return pendingLoads.get(path);
+  }
+
+  // Ensure decoder is ready first
+  const ready = await ensureDecoderReady();
+  if (!ready) return null;
+
+  // Start loading
+  const loadingPromise = loadGLB(path).then((scene) => {
+    if (scene) {
+      loadedModelCache.set(path, scene);
+      planetBaseScenes.push(scene);
+    }
+    pendingLoads.delete(path);
+    return scene;
+  });
+
+  pendingLoads.set(path, loadingPromise);
+  return loadingPromise;
+}
+
+/**
+ * Load a random model on-demand (for when user zooms in).
+ * @returns {Promise<THREE.Object3D|null>} Loaded scene or null
+ */
+export async function loadRandomModel() {
+  const ready = await ensureDecoderReady();
+  if (!ready) return null;
+
+  // If we have cached models, return one randomly
+  if (planetBaseScenes.length > 0) {
+    const randomIndex = Math.floor(Math.random() * planetBaseScenes.length);
+    return planetBaseScenes[randomIndex];
+  }
+
+  // Otherwise load a random model from the list
+  const availablePaths = PLANET_GLB_PATHS.filter(
+    (p) => !loadedModelCache.has(p),
+  );
+  if (availablePaths.length === 0) {
+    // All loaded, pick random from cache
+    const all = Array.from(loadedModelCache.values());
+    return all[Math.floor(Math.random() * all.length)];
+  }
+
+  const randomPath =
+    availablePaths[Math.floor(Math.random() * availablePaths.length)];
+  return loadModelOnDemand(randomPath);
+}
+
+/**
+ * Preload all planet GLB models with fallback decoder support.
+ * 
+ * NOTE: This function is kept for backward compatibility but now
+ * only initializes the decoder. Models are loaded on-demand.
+ * Call preloadAllModels() to eagerly load all models.
+ *
+ * @returns {Promise<Array<THREE.Object3D>>} The loaded scenes (initially just probe model)
+ */
+export function preloadPlanetModel() {
+  if (!loadPromise) {
+    loadPromise = (async () => {
+      const ready = await ensureDecoderReady();
+      if (!ready) {
+        planetBaseScenes = [];
+      }
       return planetBaseScenes;
     })();
   }
   return loadPromise;
+}
+
+/**
+ * Eagerly preload all planet models (optional, for better UX when user is idle).
+ * @returns {Promise<Array<THREE.Object3D>>} All loaded scenes
+ */
+export async function preloadAllModels() {
+  const ready = await ensureDecoderReady();
+  if (!ready) return [];
+
+  const loadPromises = PLANET_GLB_PATHS.map((path) => loadModelOnDemand(path));
+  await Promise.all(loadPromises);
+
+  console.log(`[Planet] Preloaded all ${planetBaseScenes.length} models.`);
+  return planetBaseScenes;
 }
 
 /**
@@ -373,15 +468,23 @@ export function createPlanetModel() {
   };
 
   root.pickRandomModel = function () {
-    if (planetBaseScenes.length === 0) return;
-    const randomIndex = Math.floor(Math.random() * planetBaseScenes.length);
-    this.setPlanetMesh(planetBaseScenes[randomIndex]);
+    // Use cached models if available
+    if (planetBaseScenes.length > 0) {
+      const randomIndex = Math.floor(Math.random() * planetBaseScenes.length);
+      this.setPlanetMesh(planetBaseScenes[randomIndex]);
+      return;
+    }
+
+    // Otherwise load on demand
+    const self = this;
+    loadRandomModel().then((scene) => {
+      if (scene) {
+        self.setPlanetMesh(scene);
+      }
+    });
   };
 
-  preloadPlanetModel().then((scenes) => {
-    // Initialize with a random model once loaded
-    root.pickRandomModel();
-  });
+  // No eager loading - models will be loaded on-demand when pickRandomModel is called
 
   root._currentSpectralIndex = 0.5;
   root._currentScale = 1.0;
@@ -441,6 +544,9 @@ export function createPlanetModel() {
 export const makeStarModels = createPlanetModel;
 
 window.preloadPlanetModel = preloadPlanetModel;
+window.preloadAllModels = preloadAllModels;
+window.loadRandomModel = loadRandomModel;
+window.loadModelOnDemand = loadModelOnDemand;
 window.createPlanetModel = createPlanetModel;
 window.isPlanetModelLoaded = isPlanetModelLoaded;
 

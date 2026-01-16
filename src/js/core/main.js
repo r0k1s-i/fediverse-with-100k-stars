@@ -58,7 +58,6 @@ import { createBlackhole } from "./blackhole.js";
 import "./solarsystem.js";
 import { makeFediverseSystem } from "./fediverse-solarsystem.js";
 import "./sun.js";
-import { preloadPlanetModel } from "./planet-model.js";
 import {
   applyPlanetRenderConfig,
   createPlanetSpotlight,
@@ -206,13 +205,25 @@ var postStarGradientLoaded = function () {
 };
 
 var postShadersLoaded = function () {
-  preloadPlanetModel();
+  // GLB models are loaded on-demand when user zooms in
+  // Remaining models preloaded during idle time
 
   loadFediverseData(window.fediverseDataPath, function (loadedData) {
     window.fediverseInstances = loadedData;
     state.fediverseInstances = loadedData;
     initScene();
     animate();
+
+    // Preload remaining GLB models during idle time
+    if (typeof requestIdleCallback === "function") {
+      requestIdleCallback(function () {
+        if (typeof preloadAllModels === "function") preloadAllModels();
+      });
+    } else {
+      setTimeout(function () {
+        if (typeof preloadAllModels === "function") preloadAllModels();
+      }, 3000);
+    }
   });
 };
 
