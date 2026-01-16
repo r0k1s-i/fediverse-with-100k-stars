@@ -9,6 +9,7 @@ import { attachPlanetModelName } from "../lib/planet-render-config.mjs";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { DRACOLoader } from "three/addons/loaders/DRACOLoader.js";
 import { getDracoDecoderPaths } from "./constants.js";
+import { state } from "./state.js";
 
 // Explicit Draco probe model - used to verify decoder before parallel loading
 const DRACO_PROBE_MODEL = "src/assets/textures/kamistar.glb";
@@ -445,10 +446,10 @@ window.isPlanetModelLoaded = isPlanetModelLoaded;
 
 // Debug function - call from console: debugPlanetZFighting()
 window.debugPlanetZFighting = function () {
-  const cam = window.camera;
+  const cam = state.camera;
   const planetCam = window.planetCamera;
-  const rend = window.renderer;
-  const star = window.starModel;
+  const rend = state.renderer;
+  const star = state.starModel;
 
   console.log("=== Dual Scene Debug Info ===");
 

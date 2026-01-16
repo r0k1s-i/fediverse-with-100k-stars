@@ -1,6 +1,9 @@
 import * as THREE from 'three';
 import { constrain, map } from "../utils/math.js";
 import { Gyroscope } from "./Gyroscope.js";
+import { state } from './state.js';
+import { addStarLensFlare } from './lensflare.js';
+import { glowSpanTexture } from './plane.js';
 import { AssetManager } from './asset-manager.js';
 
 var sunTexture;
@@ -17,6 +20,8 @@ function onTextureError(err) {
 }
 
 function loadStarSurfaceTextures() {
+  var maxAniso = state.renderer ? state.renderer.capabilities.getMaxAnisotropy() : 1;
+
   if (sunTexture === undefined) {
     setLoadMessage("Igniting solar plasma");
     sunTexture = textureLoader.loadTexture(
@@ -80,7 +85,7 @@ function loadStarSurfaceTextures() {
 
 var surfaceGeo = new THREE.SphereGeometry(7.35144e-8, 60, 30);
 function makeStarSurface(radius, uniforms) {
-  var shaderList = window.shaderList;
+  var shaderList = state.shaderList;
   var sunShaderMaterial = new THREE.ShaderMaterial({
     uniforms: uniforms,
     vertexShader: shaderList.starsurface.vertex,
@@ -93,7 +98,7 @@ function makeStarSurface(radius, uniforms) {
 
 var haloGeo = new THREE.PlaneGeometry(0.00000022, 0.00000022);
 function makeStarHalo(uniforms) {
-  var shaderList = window.shaderList;
+  var shaderList = state.shaderList;
   var sunHaloMaterial = new THREE.ShaderMaterial({
     uniforms: uniforms,
     vertexShader: shaderList.starhalo.vertex,
@@ -114,7 +119,7 @@ function makeStarHalo(uniforms) {
 
 var glowGeo = new THREE.PlaneGeometry(0.0000012, 0.0000012);
 function makeStarGlow(uniforms) {
-  var shaderList = window.shaderList;
+  var shaderList = state.shaderList;
   var sunGlowMaterial = new THREE.ShaderMaterial({
     uniforms: uniforms,
     blending: THREE.AdditiveBlending,
@@ -134,12 +139,9 @@ function makeStarGlow(uniforms) {
 }
 
 function makeStarLensflare(size, zextra, hueShift) {
-  var addStarLensFlare = window.addStarLensFlare;
-  var constrain = window.constrain;
-
   var sunLensFlare = addStarLensFlare(0, 0, zextra, size, undefined, hueShift);
   sunLensFlare.customUpdateCallback = function (object) {
-    var camera = window.camera;
+    var camera = state.camera;
     if (object.visible == false) return;
     var f,
       fl = this.lensFlares.length;
@@ -186,7 +188,7 @@ var solarflareGeometry = new THREE.TorusGeometry(
   0.15 + Math.PI,
 );
 function makeSolarflare(uniforms) {
-  var shaderList = window.shaderList;
+  var shaderList = state.shaderList;
   var solarflareMaterial = new THREE.ShaderMaterial({
     uniforms: uniforms,
     vertexShader: shaderList.starflare.vertex,
@@ -226,10 +228,9 @@ function makeSolarflare(uniforms) {
 }
 
 export function makeSun(options) {
-  var shaderList = window.shaderList;
+  var shaderList = state.shaderList;
   var starColorGraph = window.starColorGraph || window.fediverseColorGraph;
-  var glowSpanTexture = window.glowSpanTexture;
-  var camera = window.camera;
+  var camera = state.camera;
   var gui = window.gui;
 
   var radius = options.radius;

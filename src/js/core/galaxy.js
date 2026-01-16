@@ -2,6 +2,11 @@ import * as THREE from "three";
 import { constrain, random } from "../utils/math.js";
 import { AssetManager } from "./asset-manager.js";
 import { VISIBILITY } from "./constants.js";
+import { state } from "./state.js";
+import { addLensFlare } from "./lensflare.js";
+import { createDistanceMeasurement } from "./guides.js";
+import { attachLegacyMarker } from "./legacymarkers.js";
+import { glowSpanTexture } from "./plane.js";
 
 var textureLoader = AssetManager.getInstance();
 
@@ -37,16 +42,8 @@ var galacticUniforms = {
 };
 
 export function generateGalaxy() {
-  var shaderList = window.shaderList;
-  var addLensFlare = window.addLensFlare;
-  var createDistanceMeasurement = window.createDistanceMeasurement;
-  var attachLegacyMarker = window.attachLegacyMarker;
-  var glowSpanTexture = window.glowSpanTexture;
-  var camera = window.camera;
-  var galacticCentering = window.galacticCentering;
-  var pSystem = window.pSystem;
-  var pDustSystem = window.pDustSystem;
-  var maxAniso = window.maxAniso || 1;
+  var shaderList = state.shaderList;
+  var maxAniso = state.renderer ? state.renderer.capabilities.getMaxAnisotropy() : 1;
 
   setLoadMessage("Generating the galaxy");
 
@@ -205,6 +202,7 @@ export function generateGalaxy() {
   isoball.material.map.wrapT = THREE.RepeatWrapping;
   isoball.material.map.needsUpdate = true;
   isoball.update = function () {
+    var pSystem = state.pSystem;
     var mat = pSystem ? pSystem.shaderMaterial || pSystem.material : null;
     var heatVisionValue =
       mat && mat.uniforms ? mat.uniforms.heatVision.value : 0;
@@ -215,9 +213,10 @@ export function generateGalaxy() {
   };
 
   pGalacticSystem.update = function () {
-    camera = window.camera;
-    pSystem = window.pSystem;
-    pDustSystem = window.pDustSystem;
+    var camera = state.camera;
+    var pSystem = state.pSystem;
+    var pDustSystem = state.pDustSystem;
+    var galacticCentering = state.galacticCentering;
 
     galacticUniforms.zoomSize.value = 1.0 + 10000 / camera.position.z;
 
@@ -269,8 +268,10 @@ export function generateGalaxy() {
     );
     if (targetLerp < 0.00001) targetLerp = 0.0;
 
-    galacticCentering.position.set(0, 0, 0);
-    galacticCentering.position.lerp(this.position.clone().negate(), targetLerp);
+    if (galacticCentering) {
+        galacticCentering.position.set(0, 0, 0);
+        galacticCentering.position.lerp(this.position.clone().negate(), targetLerp);
+    }
   };
 
   pGalacticSystem.position.x = 11404;

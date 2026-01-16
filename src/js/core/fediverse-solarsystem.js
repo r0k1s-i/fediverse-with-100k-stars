@@ -1,5 +1,10 @@
 
 import * as THREE from 'three';
+import { state } from './state.js';
+import { guidePointTexture } from './guides.js';
+import { attachLegacyMarker } from './legacymarkers.js';
+import { shouldShowFediverseSystem } from './fediverse-interaction.js';
+import { createDistanceMeasurement } from './guides.js';
 
 var FEDIVERSE_SOFTWARE_RINGS = [
   { name: "Lemmy", instances: 312, radius: 0.00008 },
@@ -37,10 +42,6 @@ function getSoftwareBrandColor(name) {
 }
 
 function createSoftwareRing(radius, color, softwareName, instanceCount) {
-  var guidePointTexture = window.guidePointTexture;
-  var attachLegacyMarker = window.attachLegacyMarker;
-  var camera = window.camera;
-
   var resolution = 180;
   var twoPI = Math.PI * 2;
   var angPerRes = twoPI / resolution;
@@ -71,8 +72,8 @@ function createSoftwareRing(radius, color, softwareName, instanceCount) {
   var mesh = new THREE.Points(geometry, particleMaterial);
 
   mesh.update = function () {
-    var shouldShow = window.shouldShowFediverseSystem;
-    if (shouldShow && !shouldShow()) {
+    var camera = state.camera;
+    if (!shouldShowFediverseSystem()) {
       this.visible = false;
       return;
     }
@@ -101,9 +102,6 @@ function createSoftwareRing(radius, color, softwareName, instanceCount) {
 }
 
 function createCentralTriangle(triangleRadius) {
-  var attachLegacyMarker = window.attachLegacyMarker;
-  var camera = window.camera;
-
   var container = new THREE.Object3D();
 
   var positions = [];
@@ -161,8 +159,8 @@ function createCentralTriangle(triangleRadius) {
   });
 
   container.update = function () {
-    var shouldShow = window.shouldShowFediverseSystem;
-    if (shouldShow && !shouldShow()) {
+    var camera = state.camera;
+    if (!shouldShowFediverseSystem()) {
       this.visible = false;
       return;
     }
@@ -180,9 +178,6 @@ function createCentralTriangle(triangleRadius) {
 }
 
 function createInnerCircle(radius) {
-  var guidePointTexture = window.guidePointTexture;
-  var camera = window.camera;
-
   var resolution = 60;
   var twoPI = Math.PI * 2;
   var angPerRes = twoPI / resolution;
@@ -214,8 +209,8 @@ function createInnerCircle(radius) {
   mesh.rotation.x = Math.PI / 2;
 
   mesh.update = function () {
-    var shouldShow = window.shouldShowFediverseSystem;
-    if (shouldShow && !shouldShow()) {
+    var camera = state.camera;
+    if (!shouldShowFediverseSystem()) {
       this.visible = false;
       return;
     }
@@ -233,10 +228,6 @@ function createInnerCircle(radius) {
 }
 
 export function makeFediverseSystem() {
-  var createDistanceMeasurement = window.createDistanceMeasurement;
-  var attachLegacyMarker = window.attachLegacyMarker;
-  var camera = window.camera;
-
   var fediverseSystem = new THREE.Object3D();
 
   var triangleRadius = 0.00003;
@@ -263,8 +254,8 @@ export function makeFediverseSystem() {
   );
   measurement.position.y = 0.08;
   measurement.update = function () {
-    var shouldShow = window.shouldShowFediverseSystem;
-    if (shouldShow && !shouldShow()) {
+    var camera = state.camera;
+    if (!shouldShowFediverseSystem()) {
       this.visible = false;
       return;
     }
