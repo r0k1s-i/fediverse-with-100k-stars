@@ -12,6 +12,7 @@ var active = false;
 var count = 0;
 var timer = null;
 var dragged = false;
+var isDestroyed = false;
 
 var soundOnEl, soundOffEl, heatvisionEl, homeEl, tourEl;
 
@@ -84,6 +85,73 @@ function onResize() {
   }
 }
 
+function onAboutClick(e) {
+  var detailContainerEl = window.detailContainerEl || $('#detailContainer');
+
+  var line_height = 20;
+  e.preventDefault();
+
+  if (detailContainerEl) {
+    addClass(detailContainerEl, 'about');
+  }
+
+  css($('#css-container'), { display: 'none' });
+
+  fetch('detail/about.html')
+    .then(function(response) { return response.text(); })
+    .then(function(data) {
+      html($('#detailBody'), data);
+    });
+
+  var titleSpan = find($('#detailTitle'), 'span');
+  if (titleSpan) html(titleSpan, '100,000 Stars');
+
+  if (detailContainerEl) {
+    css(detailContainerEl, { paddingTop: line_height * 3 + 'px' });
+    fadeIn(detailContainerEl);
+  }
+}
+
+function onGridViewClick(e) {
+  e.preventDefault();
+  var goToGridView = window.goToGridView;
+  if (goToGridView) goToGridView();
+}
+
+function onSoundOnClick(e) {
+  e.preventDefault();
+  if (soundOnEl) css(soundOnEl, { display: 'none' });
+  var muteSound = window.muteSound;
+  if (muteSound) muteSound();
+  if (soundOffEl) {
+    css(soundOffEl, { display: 'inline-block' });
+  }
+}
+
+function onSoundOffClick(e) {
+  e.preventDefault();
+  if (soundOffEl) css(soundOffEl, { display: 'none' });
+  var unmuteSound = window.unmuteSound;
+  if (unmuteSound) unmuteSound();
+  if (soundOnEl) {
+    css(soundOnEl, { display: 'inline-block' });
+  }
+}
+
+function onHeatVisionClick(e) {
+  e.preventDefault();
+  var toggleHeatVision = window.toggleHeatVision;
+  if (toggleHeatVision) toggleHeatVision();
+}
+
+function onHeatVisionEnter(e) {
+  if (tourEl) tourEl.dispatchEvent(new MouseEvent('mouseleave', { bubbles: true }));
+}
+
+function onHeatVisionLeave(e) {
+  if (tourEl) tourEl.dispatchEvent(new MouseEvent('mouseenter', { bubbles: true }));
+}
+
 window.addEventListener('resize', onResize);
 
 window.addEventListener('click', clickEvent);
@@ -92,6 +160,7 @@ window.addEventListener('touchend', onWindowMouseUp);
 window.dispatchEvent(new Event('resize'));
 
 export function destroyMinimap() {
+  isDestroyed = true;
   window.removeEventListener('resize', onResize);
   window.removeEventListener('click', clickEvent);
   window.removeEventListener('mouseup', onWindowMouseUp);
@@ -102,6 +171,28 @@ export function destroyMinimap() {
   if (minimapEl) {
     minimapEl.removeEventListener('mousedown', onElementMouseDown);
     minimapEl.removeEventListener('touchstart', onElementTouchStart);
+  }
+
+  if (aboutEl) {
+    aboutEl.removeEventListener('click', onAboutClick);
+  }
+
+  if (gridViewEl) {
+    gridViewEl.removeEventListener('click', onGridViewClick);
+  }
+
+  if (soundOnEl) {
+    soundOnEl.removeEventListener('click', onSoundOnClick);
+  }
+
+  if (soundOffEl) {
+    soundOffEl.removeEventListener('click', onSoundOffClick);
+  }
+
+  if (heatvisionEl) {
+    heatvisionEl.removeEventListener('click', onHeatVisionClick);
+    heatvisionEl.removeEventListener('mouseenter', onHeatVisionEnter);
+    heatvisionEl.removeEventListener('mouseleave', onHeatVisionLeave);
   }
 }
 
@@ -153,40 +244,11 @@ if (minimapEl) {
 }
 
 if (aboutEl) {
-  aboutEl.addEventListener('click', function(e) {
-    var detailContainerEl = window.detailContainerEl || $('#detailContainer');
-
-    var line_height = 20;
-    e.preventDefault();
-
-    if (detailContainerEl) {
-      addClass(detailContainerEl, 'about');
-    }
-
-    css($('#css-container'), { display: 'none' });
-
-    fetch('detail/about.html')
-      .then(function(response) { return response.text(); })
-      .then(function(data) {
-        html($('#detailBody'), data);
-      });
-
-    var titleSpan = find($('#detailTitle'), 'span');
-    if (titleSpan) html(titleSpan, '100,000 Stars');
-
-    if (detailContainerEl) {
-      css(detailContainerEl, { paddingTop: line_height * 3 + 'px' });
-      fadeIn(detailContainerEl);
-    }
-  });
+  aboutEl.addEventListener('click', onAboutClick);
 }
 
 if (gridViewEl) {
-  gridViewEl.addEventListener('click', function(e) {
-    e.preventDefault();
-    var goToGridView = window.goToGridView;
-    if (goToGridView) goToGridView();
-  });
+  gridViewEl.addEventListener('click', onGridViewClick);
 }
 
 var muted = localStorage.getItem('sound') === '0';
@@ -197,18 +259,10 @@ fetch('src/assets/icons/sound-on.svg')
     var parser = new DOMParser();
     var doc = parser.parseFromString(resp, 'image/svg+xml');
     soundOnEl = doc.querySelector('svg');
-    if (soundOnEl) {
+    if (soundOnEl && !isDestroyed) {
       addClass(soundOnEl, 'icon');
       css(soundOnEl, { display: muted ? 'none' : 'block' });
-      soundOnEl.addEventListener('click', function(e) {
-        e.preventDefault();
-        css(soundOnEl, { display: 'none' });
-        var muteSound = window.muteSound;
-        if (muteSound) muteSound();
-        if (soundOffEl) {
-          css(soundOffEl, { display: 'inline-block' });
-        }
-      });
+      soundOnEl.addEventListener('click', onSoundOnClick);
       if (volumeEl) volumeEl.appendChild(soundOnEl);
       updateCount();
     }
@@ -220,18 +274,10 @@ fetch('src/assets/icons/sound-off.svg')
     var parser = new DOMParser();
     var doc = parser.parseFromString(resp, 'image/svg+xml');
     soundOffEl = doc.querySelector('svg');
-    if (soundOffEl) {
+    if (soundOffEl && !isDestroyed) {
       addClass(soundOffEl, 'icon');
       css(soundOffEl, { display: !muted ? 'none' : 'block' });
-      soundOffEl.addEventListener('click', function(e) {
-        e.preventDefault();
-        css(soundOffEl, { display: 'none' });
-        var unmuteSound = window.unmuteSound;
-        if (unmuteSound) unmuteSound();
-        if (soundOnEl) {
-          css(soundOnEl, { display: 'inline-block' });
-        }
-      });
+      soundOffEl.addEventListener('click', onSoundOffClick);
       if (volumeEl) volumeEl.appendChild(soundOffEl);
       updateCount();
     }
@@ -248,20 +294,12 @@ function loadHeatVisionIcon() {
       var parser = new DOMParser();
       var doc = parser.parseFromString(resp, 'image/svg+xml');
       heatvisionEl = doc.querySelector('svg');
-      if (heatvisionEl) {
+      if (heatvisionEl && !isDestroyed) {
         addClass(heatvisionEl, 'icon');
         heatvisionEl.setAttribute('data-tip', 'Toggle Spectral Index.');
-        heatvisionEl.addEventListener('click', function(e) {
-          e.preventDefault();
-          var toggleHeatVision = window.toggleHeatVision;
-          if (toggleHeatVision) toggleHeatVision();
-        });
-        heatvisionEl.addEventListener('mouseenter', function(e) {
-          if (tourEl) tourEl.dispatchEvent(new MouseEvent('mouseleave', { bubbles: true }));
-        });
-        heatvisionEl.addEventListener('mouseleave', function(e) {
-          if (tourEl) tourEl.dispatchEvent(new MouseEvent('mouseenter', { bubbles: true }));
-        });
+        heatvisionEl.addEventListener('click', onHeatVisionClick);
+        heatvisionEl.addEventListener('mouseenter', onHeatVisionEnter);
+        heatvisionEl.addEventListener('mouseleave', onHeatVisionLeave);
         if (iconNavEl) iconNavEl.appendChild(heatvisionEl);
 
       }
