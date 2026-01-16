@@ -1,3 +1,9 @@
+/**
+ * Fediverse Interaction - Mouse interaction handling for Fediverse instances
+ *
+ * Refactored to use unified InteractionMath for instance detection.
+ * @see docs/plans/codebase-optimization-review.md (P0-3)
+ */
 import * as THREE from "three";
 import {
   $,
@@ -11,13 +17,13 @@ import {
   on,
   ready,
 } from "../utils/dom.js";
+import { InteractionMath } from "./interaction-math.js";
 
 var fediverseInteraction = {
   mouse: new THREE.Vector2(),
   raycaster: new THREE.Raycaster(),
   intersected: null,
   lastHoveredInstance: null,
-  baseThreshold: 100.0,
   clickHandled: false,
   lastClickTime: 0,
   lastViewedInstance: null,
@@ -98,19 +104,16 @@ export function isAtFediverseCenter() {
   return true;
 }
 
+/**
+ * Get interaction threshold using unified InteractionMath
+ * @returns {number} Current threshold based on camera position
+ */
 function getInteractionThreshold() {
   var camera = window.camera;
   if (typeof camera === "undefined") {
-    return fediverseInteraction.baseThreshold;
+    return InteractionMath.getDynamicThreshold(null);
   }
-
-  var z = Math.abs(camera.position.z);
-
-  var dynamicThreshold = z * 0.025;
-
-  var MIN_THRESHOLD = 5.0;
-
-  return Math.max(MIN_THRESHOLD, dynamicThreshold);
+  return InteractionMath.getDynamicThreshold(camera.position.z);
 }
 
 export function updateFediverseInteraction() {
@@ -127,56 +130,58 @@ export function updateFediverseInteraction() {
   var enableStarModel = window.enableStarModel;
 
   if (isZoomedInClose && fediverseInteraction.intersected) {
-      var closestInst = fediverseInteraction.intersected.instanceData;
-      
-      if (closestInst && typeof starModel !== "undefined" && enableStarModel) {
-          var trackedGalaxyPosition = starModel.userData && starModel.userData.galaxyPosition;
-          var isNewInstance = !trackedGalaxyPosition || 
-              trackedGalaxyPosition.distanceTo(closestInst.position) > 0.1;
-          var needsUpdate = !starModel.visible || isNewInstance;
-          
-          if (needsUpdate) {
-              if (window.setStarModel) {
-                  window.setStarModel(closestInst.position, closestInst.name);
-              } else {
-                  starModel.position.copy(closestInst.position);
-              }
-              
-              var userCount = closestInst.stats ? closestInst.stats.user_count : 1;
-              var instanceSize = Math.max(15.0, Math.log(userCount + 1) * 8);
-              var MIN_STAR_SCALE = 1.5;
-              var modelScale = Math.max(MIN_STAR_SCALE, instanceSize * 0.1);
-              
-              var spectralIndex = 0.5;
-              if (closestInst.color && closestInst.color.hsl) {
-                  spectralIndex = closestInst.color.hsl.h / 360;
-              }
-              
-              starModel.setSpectralIndex(spectralIndex);
-              starModel.setScale(modelScale);
-              
-              if (typeof starModel.randomizeSolarFlare === 'function') {
-                  starModel.randomizeSolarFlare();
-              }
-              
-              // Only randomize properties if it's a new instance to prevent flickering
-              if (isNewInstance) {
-                  if (typeof starModel.randomizeRotationSpeed === 'function') {
-                      starModel.randomizeRotationSpeed();
-                  }
-                  
-                  if (typeof starModel.pickRandomModel === 'function') {
-                      starModel.pickRandomModel();
-                  }
-              }
-              
-              starModel.visible = true;
+    var closestInst = fediverseInteraction.intersected.instanceData;
+
+    if (closestInst && typeof starModel !== "undefined" && enableStarModel) {
+      var trackedGalaxyPosition =
+        starModel.userData && starModel.userData.galaxyPosition;
+      var isNewInstance =
+        !trackedGalaxyPosition ||
+        trackedGalaxyPosition.distanceTo(closestInst.position) > 0.1;
+      var needsUpdate = !starModel.visible || isNewInstance;
+
+      if (needsUpdate) {
+        if (window.setStarModel) {
+          window.setStarModel(closestInst.position, closestInst.name);
+        } else {
+          starModel.position.copy(closestInst.position);
+        }
+
+        var userCount = closestInst.stats ? closestInst.stats.user_count : 1;
+        var instanceSize = Math.max(15.0, Math.log(userCount + 1) * 8);
+        var MIN_STAR_SCALE = 1.5;
+        var modelScale = Math.max(MIN_STAR_SCALE, instanceSize * 0.1);
+
+        var spectralIndex = 0.5;
+        if (closestInst.color && closestInst.color.hsl) {
+          spectralIndex = closestInst.color.hsl.h / 360;
+        }
+
+        starModel.setSpectralIndex(spectralIndex);
+        starModel.setScale(modelScale);
+
+        if (typeof starModel.randomizeSolarFlare === "function") {
+          starModel.randomizeSolarFlare();
+        }
+
+        // Only randomize properties if it's a new instance to prevent flickering
+        if (isNewInstance) {
+          if (typeof starModel.randomizeRotationSpeed === "function") {
+            starModel.randomizeRotationSpeed();
           }
+
+          if (typeof starModel.pickRandomModel === "function") {
+            starModel.pickRandomModel();
+          }
+        }
+
+        starModel.visible = true;
       }
+    }
   } else {
-      if (starModel) {
-          starModel.visible = false;
-      }
+    if (starModel) {
+      starModel.visible = false;
+    }
   }
 }
 
@@ -189,30 +194,45 @@ export function initFediverseInteraction() {
 
   document.addEventListener("mousemove", onFediverseMouseMove, false);
   document.addEventListener("click", onFediverseClick, true);
-  
+
   var starNameEl = window.starNameEl || $("#star-name");
   if (starNameEl) {
-    starNameEl.addEventListener("click", function(event) {
-      if (fediverseInteraction.intersected || fediverseInteraction.lastHoveredInstance) {
-        onFediverseClick(event);
-      }
-    }, false);
+    starNameEl.addEventListener(
+      "click",
+      function (event) {
+        if (
+          fediverseInteraction.intersected ||
+          fediverseInteraction.lastHoveredInstance
+        ) {
+          onFediverseClick(event);
+        }
+      },
+      false,
+    );
   }
 }
 
+/**
+ * Handle mouse movement for instance detection
+ *
+ * Uses unified InteractionMath.findClosestInstance for all detection.
+ * Raycaster mesh detection has been removed to consolidate the interaction path.
+ *
+ * @param {MouseEvent} event - Mouse move event
+ */
 function onFediverseMouseMove(event) {
   var camera = window.camera;
-  var fediverseMeshes = window.fediverseMeshes;
   var fediverseInstances = window.fediverseInstances;
   var rotating = window.rotating;
   var translating = window.translating;
-  var InteractionMath = window.InteractionMath;
 
   if (typeof camera === "undefined") return;
 
+  // Update normalized device coordinates
   fediverseInteraction.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
   fediverseInteraction.mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
+  // Calculate ray from camera through mouse position
   var vector = new THREE.Vector3(
     fediverseInteraction.mouse.x,
     fediverseInteraction.mouse.y,
@@ -225,30 +245,18 @@ function onFediverseMouseMove(event) {
     vector.sub(camera.position).normalize(),
   );
 
-  var intersects = fediverseInteraction.raycaster.intersectObjects(
-    fediverseMeshes || [],
-    true,
-  );
-
-  if (intersects.length > 0) {
-    for (var i = 0; i < intersects.length; i++) {
-      if (intersects[i].object.visible) {
-        handleHover(intersects[i].object.parent);
-        return;
-      }
-    }
-  }
-
   var closestInstance = null;
 
+  // Use unified InteractionMath for instance detection
   if (
     typeof fediverseInstances !== "undefined" &&
-    typeof InteractionMath !== "undefined" &&
-    typeof rotating !== "undefined"
+    typeof rotating !== "undefined" &&
+    typeof translating !== "undefined"
   ) {
     rotating.updateMatrixWorld(true);
     translating.updateMatrixWorld(true);
 
+    // Transform ray to local space
     var worldMatrix = translating.matrixWorld.clone();
     var inverseMatrix = new THREE.Matrix4();
     inverseMatrix.copy(worldMatrix).invert();
@@ -287,16 +295,13 @@ function handleHover(object) {
 
   var isZoomedInClose =
     typeof camera !== "undefined" &&
-    typeof markerThreshold !== "undefined" &&
-    camera.position.z < markerThreshold.min;
-
-
+    InteractionMath.isZoomedInClose(camera.position.z, markerThreshold);
 
   if (fediverseInteraction.intersected && !object) {
     fediverseInteraction.intersected = null;
     document.body.style.cursor = "default";
   }
-  
+
   if (isZoomedInClose) {
     document.body.style.cursor = "default";
   }
@@ -343,7 +348,12 @@ function handleHover(object) {
     }
   }
 
-  if (object && starNameEl && starNameEl.style.display !== "none" && !isZoomedInClose) {
+  if (
+    object &&
+    starNameEl &&
+    starNameEl.style.display !== "none" &&
+    !isZoomedInClose
+  ) {
     css(starNameEl, {
       left:
         ((fediverseInteraction.mouse.x + 1) / 2) * window.innerWidth +
@@ -392,7 +402,6 @@ function isClickOnUI(event) {
 }
 
 function onFediverseClick(event) {
-
   var setMinimap = window.setMinimap;
   var starModel = window.starModel;
   var enableStarModel = window.enableStarModel;
@@ -419,21 +428,22 @@ function onFediverseClick(event) {
     camera.position.z < markerThreshold.min;
 
   var starNameEl = window.starNameEl || $("#star-name");
-  var isClickOnStarName = starNameEl && (
-    event.target === starNameEl || 
-    starNameEl.contains(event.target)
-  );
-  
+  var isClickOnStarName =
+    starNameEl &&
+    (event.target === starNameEl || starNameEl.contains(event.target));
+
   var clickTarget = null;
-  
+
   if (isZoomedInClose) {
     if (isClickOnStarName) {
-      clickTarget = fediverseInteraction.intersected || fediverseInteraction.lastHoveredInstance;
+      clickTarget =
+        fediverseInteraction.intersected ||
+        fediverseInteraction.lastHoveredInstance;
     }
   } else {
     clickTarget = fediverseInteraction.intersected;
   }
-  
+
   if (!clickTarget) {
     return;
   }
@@ -472,9 +482,9 @@ function onFediverseClick(event) {
   ) {
     // 星球模型放置在实例的位置
     if (window.setStarModel) {
-        window.setStarModel(position, data.name);
+      window.setStarModel(position, data.name);
     } else {
-        starModel.position.copy(position);
+      starModel.position.copy(position);
     }
 
     var spectralIndex = 0.5;
@@ -483,19 +493,19 @@ function onFediverseClick(event) {
     }
     starModel.setSpectralIndex(spectralIndex);
     starModel.setScale(modelScale);
-    
+
     // Check if function exists before calling (GLB model might not have this)
-    if (typeof starModel.randomizeSolarFlare === 'function') {
-        starModel.randomizeSolarFlare();
+    if (typeof starModel.randomizeSolarFlare === "function") {
+      starModel.randomizeSolarFlare();
     }
-    
+
     // Randomize rotation speed and model choice if available (GLB features)
-    if (typeof starModel.randomizeRotationSpeed === 'function') {
-        starModel.randomizeRotationSpeed();
+    if (typeof starModel.randomizeRotationSpeed === "function") {
+      starModel.randomizeRotationSpeed();
     }
-    
-    if (typeof starModel.pickRandomModel === 'function') {
-        starModel.pickRandomModel();
+
+    if (typeof starModel.pickRandomModel === "function") {
+      starModel.pickRandomModel();
     }
 
     // 确保星球模型可见
@@ -542,7 +552,6 @@ function showInstanceDetails(data) {
     titleEl.textContent = name;
     titleEl.title = name;
   }
-
 
   var html = '<div style="margin-top: 20px;">';
 
@@ -629,30 +638,35 @@ function showInstanceDetails(data) {
   }
 
   var detailContainerEl = $("#detailContainer");
-  
+
   // 确保先显示再淡入，强制覆盖之前的状态
   if (detailContainerEl) {
     // 居中逻辑 (参考 marker.js)
-    setTimeout(function() {
+    setTimeout(function () {
       var titleContainer = $("#detailTitle");
       var footEl = $("#detailFooter");
-      
+
       // 使用 titleContainer 而不是 span 以包含 padding/margin
-      var titleH = titleContainer ? titleContainer.offsetHeight : (titleEl ? titleEl.offsetHeight : 60);
+      var titleH = titleContainer
+        ? titleContainer.offsetHeight
+        : titleEl
+          ? titleEl.offsetHeight
+          : 60;
       var bodyH = bodyEl ? bodyEl.offsetHeight : 0;
       var footH = footEl ? footEl.offsetHeight : 0;
-      
+
       var offset = titleH + bodyH + footH;
       var line_height = 20;
-      
+
       css(detailContainerEl, {
-        paddingTop: Math.max((window.innerHeight - offset) / 2, line_height * 3) + "px"
+        paddingTop:
+          Math.max((window.innerHeight - offset) / 2, line_height * 3) + "px",
       });
     }, 0);
-    
+
     fadeIn(detailContainerEl);
   }
-  
+
   css($("#css-container"), { display: "none" });
 }
 

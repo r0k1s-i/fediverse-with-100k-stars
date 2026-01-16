@@ -1,4 +1,5 @@
-import { expect } from 'https://unpkg.com/chai/chai.js';
+// Use global expect from chai (loaded by runner.html)
+const { expect } = window;
 import { AssetManager } from '../../src/js/core/asset-manager.js';
 import * as THREE from 'three';
 

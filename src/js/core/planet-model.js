@@ -8,10 +8,14 @@ import * as THREE from "three";
 import { attachPlanetModelName } from "../lib/planet-render-config.mjs";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { DRACOLoader } from "three/addons/loaders/DRACOLoader.js";
-import { getDracoDecoderPath } from "./constants.js";
+import { getDracoDecoderPaths } from "./constants.js";
 
+// Explicit Draco probe model - used to verify decoder before parallel loading
+const DRACO_PROBE_MODEL = "src/assets/textures/kamistar.glb";
+
+// All models use KHR_draco_mesh_compression
 const PLANET_GLB_PATHS = [
-  "src/assets/textures/kamistar.glb",
+  DRACO_PROBE_MODEL,
   "src/assets/textures/planet_330_the_geographer.glb",
   "src/assets/textures/le_petit_prince.glb",
   "src/assets/textures/floating_fox.glb",
@@ -23,54 +27,164 @@ const PLANET_GLB_PATHS = [
 
 let loader;
 let dracoLoader;
+let currentDecoderPathIndex = 0;
+let decoderPaths = [];
 let planetBaseScenes = []; // Array of loaded scenes
 let loadPromise = null;
 
+/**
+ * Initialize the GLTF loader with DRACOLoader (first call only)
+ * @returns {GLTFLoader} Configured loader instance
+ */
 function getLoader() {
+  if (!decoderPaths.length) {
+    decoderPaths = getDracoDecoderPaths();
+  }
+
   if (!loader) {
     loader = new GLTFLoader();
-    // Configure DRACOLoader for compressed GLB models
-    // Uses local-first strategy to avoid network dependency (P0-1)
     dracoLoader = new DRACOLoader();
-    dracoLoader.setDecoderPath(getDracoDecoderPath());
     loader.setDRACOLoader(dracoLoader);
+    // Set initial decoder path
+    dracoLoader.setDecoderPath(decoderPaths[0]);
+    console.log(`[Draco] Using decoder path: ${decoderPaths[0]}`);
   }
+
   return loader;
 }
 
 /**
- * Preload all planet GLB models.
+ * Switch to fallback decoder path
+ * @returns {boolean} True if fallback is available, false if already on last path
+ */
+function switchToFallbackDecoder() {
+  if (!decoderPaths.length) {
+    decoderPaths = getDracoDecoderPaths();
+  }
+
+  if (currentDecoderPathIndex < decoderPaths.length - 1) {
+    currentDecoderPathIndex++;
+    const fallbackPath = decoderPaths[currentDecoderPathIndex];
+    dracoLoader.setDecoderPath(fallbackPath);
+    console.log(`[Draco] Switching to fallback decoder: ${fallbackPath}`);
+    return true;
+  }
+  return false;
+}
+
+/**
+ * Load a single GLB model (no fallback logic - decoder must be verified first)
+ * @param {string} path - Path to the GLB file
+ * @returns {Promise<THREE.Object3D|null>} Loaded scene or null on failure
+ */
+function loadGLB(path) {
+  return new Promise((resolve) => {
+    getLoader().load(
+      path,
+      (gltf) => {
+        const scene = gltf.scene || gltf.scenes[0];
+        if (scene) {
+          processLoadedScene(scene, path);
+          resolve(scene);
+        } else {
+          resolve(null);
+        }
+      },
+      undefined,
+      (err) => {
+        console.error("Error loading planet GLB:", path, err);
+        resolve(null);
+      },
+    );
+  });
+}
+
+/**
+ * Test if decoder works by loading a probe model
+ * @param {string} probePath - Path to test model (must use Draco compression)
+ * @returns {Promise<{success: boolean, scene: THREE.Object3D|null, isDracoError: boolean}>}
+ */
+function probeDecoder(probePath) {
+  return new Promise((resolve) => {
+    getLoader().load(
+      probePath,
+      (gltf) => {
+        const scene = gltf.scene || gltf.scenes[0];
+        if (scene) {
+          processLoadedScene(scene, probePath);
+          resolve({ success: true, scene, isDracoError: false });
+        } else {
+          resolve({ success: false, scene: null, isDracoError: false });
+        }
+      },
+      undefined,
+      (err) => {
+        // Detect Draco decoder failures (not 404 or other HTTP errors)
+        const msg = err?.message?.toLowerCase() || "";
+        const isDracoError =
+          msg.includes("draco") ||
+          msg.includes("decoder") ||
+          msg.includes("wasm");
+        resolve({ success: false, scene: null, isDracoError });
+      },
+    );
+  });
+}
+
+/**
+ * Preload all planet GLB models with fallback decoder support.
+ *
+ * Strategy:
+ * 1. Probe with explicit Draco model to verify decoder
+ * 2. If probe fails with Draco error, switch to fallback decoder and retry
+ * 3. If probe still fails, short-circuit (decoder unavailable)
+ * 4. Load remaining models in parallel (decoder path now stable)
+ *
  * @returns {Promise<Array<THREE.Object3D>>} The loaded scenes
  */
 export function preloadPlanetModel() {
   if (!loadPromise) {
-    const promises = PLANET_GLB_PATHS.map((path) => {
-      return new Promise((resolve, reject) => {
-        getLoader().load(
-          path,
-          (gltf) => {
-            const scene = gltf.scene || gltf.scenes[0];
-            if (scene) {
-              processLoadedScene(scene, path); // Pass path to identify model
-              resolve(scene);
-            } else {
-              resolve(null);
-            }
-          },
-          undefined,
-          (err) => {
-            console.error("Error loading planet GLB:", path, err);
-            resolve(null); // Resolve null to avoid failing entire Promise.all
-          },
-        );
-      });
-    });
+    getLoader();
 
-    loadPromise = Promise.all(promises).then((scenes) => {
-      planetBaseScenes = scenes.filter((s) => s !== null);
-      console.log(`Loaded ${planetBaseScenes.length} planet models.`);
+    loadPromise = (async () => {
+      const remainingPaths = PLANET_GLB_PATHS.filter(
+        (p) => p !== DRACO_PROBE_MODEL,
+      );
+
+      // Step 1: Probe with explicit Draco model to verify decoder
+      let probeResult = await probeDecoder(DRACO_PROBE_MODEL);
+
+      // Step 2: If probe failed with Draco error, try fallback decoder
+      if (!probeResult.success && probeResult.isDracoError) {
+        if (switchToFallbackDecoder()) {
+          console.warn(
+            "[Draco] Primary decoder failed, retrying with fallback...",
+          );
+          probeResult = await probeDecoder(DRACO_PROBE_MODEL);
+        }
+      }
+
+      // Step 3: Short-circuit if decoder unavailable (avoid noisy parallel failures)
+      if (!probeResult.success && probeResult.isDracoError) {
+        console.error(
+          "[Draco] All decoder paths failed. Cannot load Draco-compressed models.",
+        );
+        planetBaseScenes = [];
+        return planetBaseScenes;
+      }
+
+      // Step 4: Load remaining models in parallel (decoder path now stable)
+      const remainingPromises = remainingPaths.map((path) => loadGLB(path));
+      const remainingScenes = await Promise.all(remainingPromises);
+
+      // Combine results
+      const allScenes = [probeResult.scene, ...remainingScenes].filter(
+        (s) => s !== null,
+      );
+      console.log(`Loaded ${allScenes.length} planet models.`);
+      planetBaseScenes = allScenes;
       return planetBaseScenes;
-    });
+    })();
   }
   return loadPromise;
 }

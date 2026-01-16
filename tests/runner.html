@@ -3,7 +3,8 @@
     <head>
         <meta charset="UTF-8" />
         <title>Fediverse Unit Tests</title>
-        <link rel="stylesheet" href="https://unpkg.com/mocha/mocha.css" />
+        <!-- Test framework (mocha/chai) is local; Three.js requires network -->
+        <link rel="stylesheet" href="./lib/mocha.css" />
         <script type="importmap">
             {
                 "imports": {
@@ -15,8 +16,9 @@
     </head>
     <body>
         <div id="mocha"></div>
-        <script src="https://unpkg.com/chai/chai.js"></script>
-        <script src="https://unpkg.com/mocha/mocha.js"></script>
+        <!-- Local: mocha, chai | Remote: Three.js (CDN) -->
+        <script src="./lib/chai.js"></script>
+        <script src="./lib/mocha.js"></script>
 
         <script class="mocha-init">
             mocha.setup("bdd");
@@ -27,6 +29,7 @@
         <!-- Test Suites -->
         <script type="module" src="./unit/asset-manager.test.js"></script>
         <script type="module" src="./unit/draco-loader.test.js"></script>
+        <script type="module" src="./unit/interaction-math.test.js"></script>
 
         <script class="mocha-exec">
             // Wait for modules to load

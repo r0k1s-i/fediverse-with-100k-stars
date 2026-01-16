@@ -123,6 +123,18 @@ export const INTERACTION = {
     DEFAULT: 50, // Default raycast threshold
     CLOSE_UP: 10, // When zoomed in close (z < 500)
     CLOSE_UP_CAMERA_Z: 500, // Camera z for close-up threshold
+    BASE: 100.0, // Base threshold for instance detection
+    MIN: 5.0, // Minimum threshold regardless of zoom
+    DYNAMIC_FACTOR: 0.025, // Multiplier for dynamic threshold (z * factor)
+  },
+
+  // Ray-based instance detection
+  RAY_DETECTION: {
+    MIN_COS_ANGLE: 0.5, // Minimum cosine angle to consider instance
+    DISTANCE_DIVISOR: 1000, // Distance factor for threshold adjustment
+    MIN_SIZE_MULTIPLIER: 0.15, // Minimum size multiplier for user_count
+    MAX_SIZE_MULTIPLIER: 1.0, // Maximum size multiplier for user_count
+    DIRECTION_WEIGHT: 0.1, // Weight for direction distance in scoring
   },
 
   // Hover detection
@@ -312,11 +324,22 @@ export const DRACO = {
 };
 
 /**
- * Get the appropriate Draco decoder path based on configuration
- * @returns {string} The decoder path to use
+ * Get Draco decoder paths in priority order for fallback loading
+ * @returns {string[]} Array of paths: [primary, fallback]
+ */
+export function getDracoDecoderPaths() {
+  return DRACO.PREFER_LOCAL
+    ? [DRACO.LOCAL_PATH, DRACO.CDN_PATH]
+    : [DRACO.CDN_PATH, DRACO.LOCAL_PATH];
+}
+
+/**
+ * Get the primary Draco decoder path (legacy compatibility)
+ * @returns {string} The primary decoder path
+ * @deprecated Use getDracoDecoderPaths() for fallback support
  */
 export function getDracoDecoderPath() {
-  return DRACO.PREFER_LOCAL ? DRACO.LOCAL_PATH : DRACO.CDN_PATH;
+  return getDracoDecoderPaths()[0];
 }
 
 // ============================================================================
