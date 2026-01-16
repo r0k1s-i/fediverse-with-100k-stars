@@ -1,8 +1,9 @@
-import * as THREE from 'three';
-import { constrain, pickRandomIndices } from '../utils/math.js';
-import { addClass, removeClass, fadeIn, fadeOut } from '../utils/dom.js';
-import { Gyroscope } from './Gyroscope.js';
-import { AssetManager } from './asset-manager.js';
+import * as THREE from "three";
+import { constrain, pickRandomIndices } from "../utils/math.js";
+import { addClass, removeClass, fadeIn, fadeOut } from "../utils/dom.js";
+import { Gyroscope } from "./Gyroscope.js";
+import { AssetManager } from "./asset-manager.js";
+import { VISIBILITY } from "./constants.js";
 
 var textureLoader = AssetManager.getInstance();
 
@@ -14,19 +15,19 @@ var fediverseTexture0 = textureLoader.loadTexture(
   "src/assets/textures/p_0.png",
   undefined,
   undefined,
-  onTextureError
+  onTextureError,
 );
 var fediverseTexture1 = textureLoader.loadTexture(
   "src/assets/textures/p_2.png",
   undefined,
   undefined,
-  onTextureError
+  onTextureError,
 );
 var fediverseHeatVisionTexture = textureLoader.loadTexture(
   "src/assets/textures/sharppoint.png",
   undefined,
   undefined,
-  onTextureError
+  onTextureError,
 );
 
 setLoadMessage("Focusing optics");
@@ -34,26 +35,26 @@ var instancePreviewTexture = textureLoader.loadTexture(
   "src/assets/textures/star_preview.png",
   undefined,
   undefined,
-  onTextureError
+  onTextureError,
 );
 var fediverseColorGraph = textureLoader.loadTexture(
   "src/assets/textures/star_color_modified.png",
   undefined,
   undefined,
-  onTextureError
+  onTextureError,
 );
 
 var instanceSunHaloTexture = textureLoader.loadTexture(
   "src/assets/textures/sun_halo.png",
   undefined,
   undefined,
-  onTextureError
+  onTextureError,
 );
 var instanceCoronaTexture = textureLoader.loadTexture(
   "src/assets/textures/corona.png",
   undefined,
   undefined,
-  onTextureError
+  onTextureError,
 );
 
 var MAJOR_INSTANCE_COLORS = {
@@ -101,31 +102,31 @@ function createMajorInstancePreview(color) {
 
   container.update = function () {
     var zoomFactor = camera.position.z;
-    
+
     // 平滑缓动函数
     function smoothstep(edge0, edge1, x) {
       var t = Math.max(0, Math.min(1, (x - edge0) / (edge1 - edge0)));
       return t * t * (3 - 2 * t);
     }
-    
+
     // 近视距渐变区域：30-80 之间平滑过渡
     var fadeOutStart = 30;
     var fadeOutEnd = 80;
-    
+
     if (zoomFactor < fadeOutStart) {
       this.visible = false;
       haloMaterial.opacity = 0;
       coronaMaterial.opacity = 0;
       return;
     }
-    
+
     // 在 fadeOutStart 到 fadeOutEnd 之间使用 smoothstep 渐变
     var proximityFade = smoothstep(fadeOutStart, fadeOutEnd, zoomFactor);
-    
+
     // 基础透明度计算，使用更平滑的曲线
     var baseOpacity = constrain(Math.pow(zoomFactor * 0.0018, 1.5), 0, 1);
     var opacity = baseOpacity * proximityFade;
-    
+
     // 更平滑的阈值过渡
     if (opacity < 0.05) opacity = opacity * (opacity / 0.05);
 
@@ -231,7 +232,10 @@ function generateVirtualParticles(targetCount) {
         z: parentPos.z + offsetZ,
       },
       size: 8 + Math.random() * 10,
-      spectralLookup: Math.max(0.1, Math.min(0.9, baseSpectral + spectralVariation)),
+      spectralLookup: Math.max(
+        0.1,
+        Math.min(0.9, baseSpectral + spectralVariation),
+      ),
       brightness: 0.5 + Math.random() * 0.4,
       isVirtual: true,
     });
@@ -279,10 +283,10 @@ export function generateFediverseInstances() {
 
   var TARGET_PARTICLE_COUNT = 100000;
   var virtualParticles = generateVirtualParticles(TARGET_PARTICLE_COUNT);
-  
+
   var totalPoints = count + virtualParticles.length;
   var geometry = new THREE.BufferGeometry();
-  
+
   var positions = new Float32Array(totalPoints * 3);
   var colors = new Float32Array(totalPoints * 3);
   var sizes = new Float32Array(totalPoints);
@@ -295,7 +299,7 @@ export function generateFediverseInstances() {
   var iconPositions = [];
   var iconColors = [];
   var iconSizes = [];
-  
+
   var linePositions = [];
   var TARGET_LINE_COUNT = 50;
   var lineIndices = new Set(pickRandomIndices(count, TARGET_LINE_COUNT));
@@ -309,7 +313,7 @@ export function generateFediverseInstances() {
 
     var userCount = instance.stats ? instance.stats.user_count : 1;
     var size = Math.max(15.0, Math.log(userCount + 1) * 8);
-    
+
     var domainHash = 0;
     for (var j = 0; j < instance.domain.length; j++) {
       domainHash = (domainHash * 31 + instance.domain.charCodeAt(j)) % 1000;
@@ -322,18 +326,18 @@ export function generateFediverseInstances() {
     positions[i * 3] = x;
     positions[i * 3 + 1] = y;
     positions[i * 3 + 2] = z;
-    
+
     colors[i * 3] = 1.0;
     colors[i * 3 + 1] = 1.0;
     colors[i * 3 + 2] = 1.0;
-    
+
     sizes[i] = size;
     colorIndexes[i] = spectralLookup;
     isVirtuals[i] = isVirtual;
 
     if (lineIndices.has(i)) {
-        linePositions.push(x, y, z);
-        linePositions.push(x, y, 0);
+      linePositions.push(x, y, z);
+      linePositions.push(x, y, 0);
     }
 
     var MIN_USERS_FOR_HTML_LABEL = 999999999;
@@ -344,7 +348,6 @@ export function generateFediverseInstances() {
       instance.positionType === "galaxy_center" ||
       userCount > 1000
     ) {
-
       if (isMajorInstance(instance.domain)) {
         var gyroInstance = new Gyroscope();
         gyroInstance.position.set(x, y, z);
@@ -352,7 +355,7 @@ export function generateFediverseInstances() {
         var majorPreview = createMajorInstancePreview(majorColor);
         gyroInstance.add(majorPreview);
         instancePreviews.add(gyroInstance);
-        
+
         var g = new Gyroscope();
         container.add(g);
         g.name = instance.name || instance.domain;
@@ -363,12 +366,14 @@ export function generateFediverseInstances() {
         fediverseMeshes.push(g);
 
         if (showHTMLLabel) {
-            attachLegacyMarker(instance.domain, g, 1.0, { min: 0, max: 50000 });
+          attachLegacyMarker(instance.domain, g, 1.0, {
+            min: 0,
+            max: VISIBILITY.MARKER.MAX_Z,
+          });
         }
-
       } else {
         iconPositions.push(x, y, z);
-        iconColors.push(1.0, 1.0, 1.0); 
+        iconColors.push(1.0, 1.0, 1.0);
         iconSizes.push(40.0);
       }
     }
@@ -382,21 +387,24 @@ export function generateFediverseInstances() {
     positions[idx * 3] = vp.position.x;
     positions[idx * 3 + 1] = vp.position.y;
     positions[idx * 3 + 2] = vp.position.z;
-    
+
     colors[idx * 3] = 1.0;
     colors[idx * 3 + 1] = 1.0;
     colors[idx * 3 + 2] = 1.0;
-    
+
     sizes[idx] = vp.size;
     colorIndexes[idx] = vp.spectralLookup;
     isVirtuals[idx] = 1.0;
   }
-  
-  geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-  geometry.setAttribute('customColor', new THREE.BufferAttribute(colors, 3));
-  geometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
-  geometry.setAttribute('colorIndex', new THREE.BufferAttribute(colorIndexes, 1));
-  geometry.setAttribute('isVirtual', new THREE.BufferAttribute(isVirtuals, 1));
+
+  geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+  geometry.setAttribute("customColor", new THREE.BufferAttribute(colors, 3));
+  geometry.setAttribute("size", new THREE.BufferAttribute(sizes, 1));
+  geometry.setAttribute(
+    "colorIndex",
+    new THREE.BufferAttribute(colorIndexes, 1),
+  );
+  geometry.setAttribute("isVirtual", new THREE.BufferAttribute(isVirtuals, 1));
 
   var shaderMaterial = new THREE.ShaderMaterial({
     uniforms: fediverseUniforms,
@@ -444,7 +452,7 @@ export function generateFediverseInstances() {
   var pSystem = new THREE.Points(geometry, shaderMaterial);
 
   // 近视距时隐藏粒子系统，避免穿透 GLB 模型造成白点
-  pSystem.update = function() {
+  pSystem.update = function () {
     if (camera.position.z < 50) {
       this.visible = false;
     } else {
@@ -453,28 +461,40 @@ export function generateFediverseInstances() {
   };
 
   if (iconPositions.length > 0) {
-      var iconGeometry = new THREE.BufferGeometry();
-      iconGeometry.setAttribute('position', new THREE.Float32BufferAttribute(iconPositions, 3));
-      iconGeometry.setAttribute('customColor', new THREE.Float32BufferAttribute(iconColors, 3));
-      iconGeometry.setAttribute('size', new THREE.Float32BufferAttribute(iconSizes, 1));
-      
-      var iconMaterial = new THREE.ShaderMaterial({
-          uniforms: iconUniforms,
-          vertexShader: shaderList.icon.vertex,
-          fragmentShader: shaderList.icon.fragment,
-          blending: THREE.AdditiveBlending,
-          depthTest: false,
-          depthWrite: false,
-          transparent: true,
-      });
-      
-      var iconSystem = new THREE.Points(iconGeometry, iconMaterial);
-      container.add(iconSystem);
+    var iconGeometry = new THREE.BufferGeometry();
+    iconGeometry.setAttribute(
+      "position",
+      new THREE.Float32BufferAttribute(iconPositions, 3),
+    );
+    iconGeometry.setAttribute(
+      "customColor",
+      new THREE.Float32BufferAttribute(iconColors, 3),
+    );
+    iconGeometry.setAttribute(
+      "size",
+      new THREE.Float32BufferAttribute(iconSizes, 1),
+    );
+
+    var iconMaterial = new THREE.ShaderMaterial({
+      uniforms: iconUniforms,
+      vertexShader: shaderList.icon.vertex,
+      fragmentShader: shaderList.icon.fragment,
+      blending: THREE.AdditiveBlending,
+      depthTest: false,
+      depthWrite: false,
+      transparent: true,
+    });
+
+    var iconSystem = new THREE.Points(iconGeometry, iconMaterial);
+    container.add(iconSystem);
   }
 
   var lineGeometry = new THREE.BufferGeometry();
-  lineGeometry.setAttribute('position', new THREE.Float32BufferAttribute(linePositions, 3));
-  
+  lineGeometry.setAttribute(
+    "position",
+    new THREE.Float32BufferAttribute(linePositions, 3),
+  );
+
   var lineMesh = new THREE.LineSegments(
     lineGeometry,
     new THREE.LineBasicMaterial({
@@ -483,7 +503,7 @@ export function generateFediverseInstances() {
       depthTest: false,
       depthWrite: false,
       transparent: true,
-    })
+    }),
   );
   pSystem.add(lineMesh);
 
@@ -505,49 +525,49 @@ export function generateFediverseInstances() {
       vec2 centeredUv = vUv - 0.5;
       float dist = length(centeredUv);
       float angle = atan(centeredUv.y, centeredUv.x);
-      
+
       // --- 1. 同心圆 (Rings) ---
       // 使用标准导数实现屏幕空间固定线宽 (类似 wireframe)
       float density = 200.0;
       float gridR = dist * density - time * 0.2;
-      
+
       float fR = abs(fract(gridR + 0.5) - 0.5);
       float dfR = fwidth(gridR);
       float rings = 1.0 - smoothstep(0.0, dfR * 2.0, fR);
-      
+
       // --- 2. 放射线 (Spokes) ---
       float spokeCount = 24.0; // 放射线数量
       float gridA = angle / 6.2831853 * spokeCount;
       float fA = abs(fract(gridA + 0.5) - 0.5);
       float dfA = fwidth(gridA);
       float spokes = 1.0 - smoothstep(0.0, dfA * 2.0, fA);
-      
+
       // 组合图案
       float pattern = max(rings, spokes);
-      
+
       // --- 3. 水波律动 (Flow) ---
       // 创建向外扩散的正弦波光环
       // dist * 10.0 控制波的密度（波长），time * 1.5 控制扩散速度
       float flow = sin(dist * 10.0 - time * 2.0);
-      
+
       // 将正弦波映射到 [0.2, 1.0] 区间：
       // 0.2 是基础亮度（暗处不完全消失），1.0 是波峰亮度
       float pulse = smoothstep(-1.0, 1.0, flow) * 0.8 + 0.2;
-      
+
       // 让波峰更锐利一点，更有"光波"的感觉
       pulse = pow(pulse, 2.0);
 
       // Circular mask fade out
       float edgeFade = 1.0 - smoothstep(0.4, 0.5, dist);
-      
+
       // Inner fade
       float centerFade = smoothstep(0.0, 0.05, dist);
 
       // 组合：图案 * 律动光波 * 基础透明度 * 边缘遮罩
       float finalAlpha = pattern * pulse * opacity * edgeFade * centerFade;
-      
+
       if (finalAlpha < 0.01) discard;
-      
+
       gl_FragColor = vec4(color, finalAlpha);
     }
   `;
@@ -555,7 +575,7 @@ export function generateFediverseInstances() {
   var rippleUniforms = {
     time: { value: 0 },
     color: { value: new THREE.Color(0x336699) }, // 提亮颜色，保持冷色调
-    opacity: { value: 0 }
+    opacity: { value: 0 },
   };
 
   var gridMaterial = new THREE.ShaderMaterial({
@@ -577,10 +597,10 @@ export function generateFediverseInstances() {
   gridPlane.update = function () {
     rippleUniforms.time.value += 0.01;
 
-    // 可见上限调整为 1900:
+    // 可见上限调整为 GRID.MAX_Z:
     // - Grid View (1800) 下可见
     // - 初始视距 (2000) 下不可见
-    if (camera.position.z < 1900) {
+    if (camera.position.z < VISIBILITY.GRID.MAX_Z) {
       var targetOpacity = constrain(
         (camera.position.z - 300.0) * 0.001,
         0,
@@ -588,9 +608,10 @@ export function generateFediverseInstances() {
       );
       rippleUniforms.opacity.value = targetOpacity;
     } else {
-      rippleUniforms.opacity.value += (0.0 - rippleUniforms.opacity.value) * 0.05;
+      rippleUniforms.opacity.value +=
+        (0.0 - rippleUniforms.opacity.value) * 0.05;
     }
-    
+
     if (rippleUniforms.opacity.value <= 0.01) this.visible = false;
     else this.visible = true;
   };
@@ -599,8 +620,8 @@ export function generateFediverseInstances() {
   container.add(pSystem);
 
   container.update = function () {
-    camera = window.camera; 
-    
+    camera = window.camera;
+
     var blueshift = (camera.position.z + 5000.0) / 60000.0;
     blueshift = constrain(blueshift, 0.0, 0.2);
 
@@ -631,7 +652,7 @@ export function generateFediverseInstances() {
     fediverseUniforms.scale.value = Math.sqrt(areaOfWindow) * 1.5;
 
     fediverseUniforms.sceneSize.value = 10000;
-    
+
     iconUniforms.cameraZ.value = camera.position.z;
     iconUniforms.zoomSize.value = fediverseUniforms.zoomSize.value;
     iconUniforms.scale.value = fediverseUniforms.scale.value;
@@ -640,25 +661,24 @@ export function generateFediverseInstances() {
   lineMesh.update = function () {
     var rotationX = window.rotateX || 0;
     var viewAngle = Math.abs(rotationX);
-    
+
     var fadeProgress = constrain((viewAngle - 0.1) / (0.4 - 0.1), 0, 1);
     var angleFade = fadeProgress * fadeProgress * (3 - 2 * fadeProgress);
 
-    if (camera.position.z < 1900) {
-      var distFade = constrain(
-        (camera.position.z - 300.0) * 0.002,
-        0,
-        1,
-      );
+    if (camera.position.z < VISIBILITY.GRID.MAX_Z) {
+      var distFade = constrain((camera.position.z - 300.0) * 0.002, 0, 1);
       this.material.opacity = distFade * angleFade;
     } else {
       this.material.opacity += (0.0 - this.material.opacity) * 0.1;
     }
 
-    if (camera.position.z < 250 || this.material.opacity < 0.01) {
-        this.visible = false;
+    if (
+      camera.position.z < VISIBILITY.MARKER.MIN_Z + 50 ||
+      this.material.opacity < 0.01
+    ) {
+      this.visible = false;
     } else {
-        this.visible = true;
+      this.visible = true;
     }
   };
 
@@ -673,7 +693,7 @@ export function generateFediverseInstances() {
   }
 
   window.fediverseMeshes = fediverseMeshes;
-  
+
   return container;
 }
 

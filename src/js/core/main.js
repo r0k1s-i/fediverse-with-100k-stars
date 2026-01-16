@@ -2,6 +2,7 @@ import { $, css, fadeIn, fadeOut, trigger, find } from "../utils/dom.js";
 import { constrain } from "../utils/math.js";
 import * as THREE from "three";
 import { TWEEN } from "../lib/tween.js";
+import { CAMERA, VISIBILITY } from "./constants.js";
 
 window.THREE = THREE;
 window.TWEEN = TWEEN;
@@ -133,9 +134,10 @@ var rt;
 
 var antialias = gup("antialias") == 1 ? true : false;
 
+// Use centralized constants for marker visibility thresholds
 var markerThreshold = {
-  min: 200,
-  max: 45000,
+  min: VISIBILITY.MARKER.MIN_Z,
+  max: VISIBILITY.MARKER.MAX_Z,
 };
 
 function start(e) {
@@ -361,12 +363,12 @@ function initScene() {
   window.addEventListener("touchmove", touchMove, { passive: false });
 
   camera = new THREE.PerspectiveCamera(
-    30,
+    CAMERA.FOV,
     window.innerWidth / window.innerHeight,
-    0.5,
-    10000000,
+    CAMERA.NEAR_CLIP,
+    CAMERA.FAR_CLIP,
   );
-  camera.position.z = 2500;
+  camera.position.z = CAMERA.POSITION.INITIAL_Z;
   camera.rotation.vx = 0;
   camera.rotation.vy = 0;
   camera.position.target = {
@@ -406,7 +408,7 @@ function initScene() {
       newFar = z * 100; // Increased from 50 to 100
     } else {
       newNear = z * 0.001;
-      newFar = Math.min(10000000, z * 1000);
+      newFar = Math.min(CAMERA.FAR_CLIP, z * 1000);
     }
 
     // Only update if change is significant (>5%) to reduce projection matrix updates
@@ -832,7 +834,9 @@ function syncPlanetCamera() {
   if (!planetCamera || !mainCamera) return;
 
   var mainZ = mainCamera.position.z;
-  var markerMin = window.markerThreshold ? window.markerThreshold.min : 200;
+  var markerMin = window.markerThreshold
+    ? window.markerThreshold.min
+    : VISIBILITY.MARKER.MIN_Z;
 
   var modelScale =
     starModel && starModel._currentScale ? starModel._currentScale : 1.0;
