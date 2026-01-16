@@ -20,6 +20,9 @@ import {
 import { InteractionMath } from "./interaction-math.js";
 import { state } from "./state.js";
 import { VISIBILITY } from "./constants.js";
+import { logInteraction, LOG_LEVEL } from "../utils/interaction-logger.js";
+import { shouldZoomOnClick } from "../utils/interaction-zoom.js";
+import { activateWheelGuard } from "../utils/interaction-wheel-guard.js";
 
 var fediverseInteraction = {
   mouse: new THREE.Vector2(),
@@ -402,6 +405,27 @@ function isClickOnUI(event) {
   return false;
 }
 
+function getClickContext(event, camera, markerThreshold) {
+  var target = event.target || {};
+  var targetId = target.id || "";
+  var className = target.className;
+  var classStr =
+    typeof className === "string"
+      ? className
+      : className && className.baseVal
+        ? className.baseVal
+        : "";
+
+  return {
+    clientX: event.clientX,
+    clientY: event.clientY,
+    targetId: targetId,
+    targetClass: classStr,
+    cameraZ: camera ? camera.position.z : null,
+    markerMinZ: markerThreshold ? markerThreshold.min : null,
+  };
+}
+
 function onFediverseClick(event) {
   var setMinimap = window.setMinimap;
   var starModel = state.starModel;
@@ -410,23 +434,44 @@ function onFediverseClick(event) {
   var centerOn = window.centerOn;
   var zoomIn = window.zoomIn;
   var starNameEl = window.starNameEl || $("#star-name");
+  var camera = state.camera;
+  var markerThreshold = state.markerThreshold;
+  var clickContext = getClickContext(event, camera, markerThreshold);
+
+  logInteraction({
+    level: LOG_LEVEL.DEBUG,
+    category: "fediverse",
+    name: "click.start",
+    data: clickContext,
+  });
 
   if (isClickOnUI(event)) {
+    logInteraction({
+      level: LOG_LEVEL.DEBUG,
+      category: "fediverse",
+      name: "click.ignored.ui",
+      data: clickContext,
+    });
     return;
   }
 
   var now = Date.now();
   if (now - fediverseInteraction.lastClickTime < 300) {
+    logInteraction({
+      level: LOG_LEVEL.DEBUG,
+      category: "fediverse",
+      name: "click.ignored.throttle",
+      data: Object.assign({}, clickContext, {
+        deltaMs: now - fediverseInteraction.lastClickTime,
+      }),
+    });
     return;
   }
   fediverseInteraction.lastClickTime = now;
 
-  var camera = state.camera;
-  var markerThreshold = state.markerThreshold;
   var isZoomedInClose =
     camera && markerThreshold && camera.position.z < markerThreshold.min;
 
-  var starNameEl = window.starNameEl || $("#star-name");
   var isClickOnStarName =
     starNameEl &&
     (event.target === starNameEl || starNameEl.contains(event.target));
@@ -444,6 +489,17 @@ function onFediverseClick(event) {
   }
 
   if (!clickTarget) {
+    logInteraction({
+      level: LOG_LEVEL.DEBUG,
+      category: "fediverse",
+      name: "click.no-target",
+      data: Object.assign({}, clickContext, {
+        isZoomedInClose: isZoomedInClose,
+        isClickOnStarName: isClickOnStarName,
+        hasIntersected: Boolean(fediverseInteraction.intersected),
+        hasLastHovered: Boolean(fediverseInteraction.lastHoveredInstance),
+      }),
+    });
     return;
   }
 
@@ -451,7 +507,18 @@ function onFediverseClick(event) {
   event.preventDefault();
 
   var data = clickTarget.instanceData || clickTarget;
-  if (!data || !data.position) return;
+  if (!data || !data.position) {
+    logInteraction({
+      level: LOG_LEVEL.WARN,
+      category: "fediverse",
+      name: "click.invalid-data",
+      data: Object.assign({}, clickContext, {
+        hasData: Boolean(data),
+        hasPosition: Boolean(data && data.position),
+      }),
+    });
+    return;
+  }
 
   var position = new THREE.Vector3(
     data.position.x,
@@ -479,6 +546,20 @@ function onFediverseClick(event) {
   var modelScale = Math.max(MIN_STAR_SCALE, instanceSize * 0.08);
   // 跳转视距：默认跳到 mainZ=4-6，对应中等大小星球
   var zoomLevel = Math.min(6.0, Math.max(4.0, modelScale * 2.0));
+
+  logInteraction({
+    level: LOG_LEVEL.DEBUG,
+    category: "fediverse",
+    name: "click.target",
+    data: {
+      domain: data.domain || "",
+      name: data.name || "",
+      isNewInstance: isNewInstance,
+      isZoomedInClose: isZoomedInClose,
+      modelScale: modelScale,
+      zoomLevel: zoomLevel,
+    },
+  });
 
   if (
     typeof starModel !== "undefined" &&
@@ -509,11 +590,32 @@ function onFediverseClick(event) {
 
     // 确保星球模型可见
     starModel.visible = true;
+  } else {
+    logInteraction({
+      level: LOG_LEVEL.WARN,
+      category: "fediverse",
+      name: "click.star-model-disabled",
+      data: {
+        hasStarModel: Boolean(starModel),
+        enableStarModel: Boolean(enableStarModel),
+      },
+    });
   }
 
   // 只有切换到新实例时才执行缩放和居中，避免重复点击时视距跳变
   // 或者已经在近视距时也跳过（用户可能只是想重新打开详情页）
-  if (isNewInstance && !isZoomedInClose) {
+  var canZoom = shouldZoomOnClick({
+    isZoomedInClose: isZoomedInClose,
+    isNewInstance: isNewInstance,
+    currentZ: camera ? camera.position.z : null,
+    targetZ: camera && camera.position.target ? camera.position.target.z : null,
+    zoomLevel: zoomLevel,
+  });
+
+  if (canZoom) {
+    if (state.wheelGuard) {
+      activateWheelGuard(state.wheelGuard);
+    }
     var offset = new THREE.Vector3(0, 0, 0);
     if (typeof getOffsetByStarRadius === "function") {
       offset = getOffsetByStarRadius(modelScale);
@@ -527,6 +629,20 @@ function onFediverseClick(event) {
     if (typeof zoomIn === "function") {
       zoomIn(zoomLevel);
     }
+  } else {
+    logInteraction({
+      level: LOG_LEVEL.DEBUG,
+      category: "fediverse",
+      name: "click.skip-zoom",
+      data: {
+        isNewInstance: isNewInstance,
+        isZoomedInClose: isZoomedInClose,
+        currentZ: camera ? camera.position.z : null,
+        targetZ:
+          camera && camera.position.target ? camera.position.target.z : null,
+        zoomLevel: zoomLevel,
+      },
+    });
   }
 
   css(starNameEl, {
@@ -540,6 +656,17 @@ function onFediverseClick(event) {
   if (spanEl) html(spanEl, data.name || data.domain);
 
   showInstanceDetails(data);
+
+  logInteraction({
+    level: LOG_LEVEL.INFO,
+    category: "fediverse",
+    name: "click.handled",
+    data: {
+      domain: data.domain || "",
+      name: data.name || "",
+      isNewInstance: isNewInstance,
+    },
+  });
 }
 
 function showInstanceDetails(data) {

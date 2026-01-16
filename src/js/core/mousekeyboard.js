@@ -1,6 +1,8 @@
 import { constrain } from "../utils/math.js";
 import { CAMERA } from "./constants.js";
 import { ensureCameraTarget } from "../utils/app.js";
+import { shouldIgnoreWheel } from "../utils/interaction-wheel-guard.js";
+import { state } from "./state.js";
 
 var mouseX = 0,
   mouseY = 0,
@@ -111,6 +113,12 @@ function handleMWheel(delta) {
 }
 
 export function onMouseWheel(event) {
+  if (shouldIgnoreWheel(state.wheelGuard)) {
+    event.returnValue = false;
+    if (event.preventDefault) event.preventDefault();
+    return;
+  }
+
   var delta = 0;
 
   if (event.wheelDelta) {
