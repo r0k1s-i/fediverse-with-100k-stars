@@ -3,7 +3,7 @@ import { constrain, pickRandomIndices } from "../utils/math.js";
 import { addClass, removeClass, fadeIn, fadeOut } from "../utils/dom.js";
 import { Gyroscope } from "./Gyroscope.js";
 import { AssetManager } from "./asset-manager.js";
-import { VISIBILITY } from "./constants.js";
+import { VISIBILITY, COORDINATES } from "./constants.js";
 import { state } from "./state.js";
 import { attachLegacyMarker } from "./legacymarkers.js";
 
@@ -260,36 +260,40 @@ function generateVirtualParticles(targetCount) {
 function loadFediverseDataFallback(dataFile, callback) {
   var xhr = new XMLHttpRequest();
   setLoadMessage("Fetching Fediverse data (Main Thread)");
-  
-  xhr.addEventListener("load", function (event) {
-    if (xhr.status !== 200) {
+
+  xhr.addEventListener(
+    "load",
+    function (event) {
+      if (xhr.status !== 200) {
         console.error("Failed to load Fediverse data:", xhr.statusText);
         setLoadMessage("Error loading data");
         return;
-    }
-    
-    try {
-      var parsed = JSON.parse(xhr.responseText);
-      var SCALE_FACTOR = 5;
-      for (var i = 0; i < parsed.length; i++) {
-        if (parsed[i].position) {
-          parsed[i].position.x /= SCALE_FACTOR;
-          parsed[i].position.y /= SCALE_FACTOR;
-          parsed[i].position.z /= SCALE_FACTOR;
-        }
       }
-      if (callback) {
-        setLoadMessage("Parsing instance data");
-        fediverseInstances = parsed;
-        callback(parsed);
-      }
-    } catch (e) {
-      console.error("Error parsing Fediverse data:", e);
-      setLoadMessage("Error parsing data");
-    }
-  }, false);
 
-  xhr.addEventListener("error", function() {
+      try {
+        var parsed = JSON.parse(xhr.responseText);
+        var SCALE_FACTOR = COORDINATES.DATA_LOAD_SCALE;
+        for (var i = 0; i < parsed.length; i++) {
+          if (parsed[i].position) {
+            parsed[i].position.x /= SCALE_FACTOR;
+            parsed[i].position.y /= SCALE_FACTOR;
+            parsed[i].position.z /= SCALE_FACTOR;
+          }
+        }
+        if (callback) {
+          setLoadMessage("Parsing instance data");
+          fediverseInstances = parsed;
+          callback(parsed);
+        }
+      } catch (e) {
+        console.error("Error parsing Fediverse data:", e);
+        setLoadMessage("Error parsing data");
+      }
+    },
+    false,
+  );
+
+  xhr.addEventListener("error", function () {
     console.error("Network error loading Fediverse data");
     setLoadMessage("Network error");
   });
@@ -300,28 +304,31 @@ function loadFediverseDataFallback(dataFile, callback) {
     console.error("Timeout loading Fediverse data");
     setLoadMessage("Connection timeout");
   };
-  
+
   xhr.send(null);
 }
 
 export function loadFediverseData(dataFile, callback) {
+  // Resolve relative path to absolute URL to ensure Worker can find it
+  // regardless of where the script is located
+  var absoluteDataUrl = new URL(dataFile, window.location.href).href;
+
   if (window.Worker) {
     setLoadMessage("Fetching Fediverse data");
     var worker;
-    
-    try {
-        worker = new Worker("src/js/workers/data-loader.worker.js");
-    } catch (e) {
-        console.warn("Worker creation failed:", e);
-        loadFediverseDataFallback(dataFile, callback);
-        return;
-    }
 
+    try {
+      worker = new Worker("src/js/workers/data-loader.worker.js");
+    } catch (e) {
+      console.warn("Worker creation failed:", e);
+      loadFediverseDataFallback(dataFile, callback);
+      return;
+    }
     // Worker timeout (20s)
-    var workerTimeout = setTimeout(function() {
-        console.warn("Worker timed out, falling back");
-        worker.terminate();
-        loadFediverseDataFallback(dataFile, callback);
+    var workerTimeout = setTimeout(function () {
+      console.warn("Worker timed out, falling back");
+      worker.terminate();
+      loadFediverseDataFallback(dataFile, callback);
     }, 20000);
 
     worker.onmessage = function (e) {
@@ -331,7 +338,7 @@ export function loadFediverseData(dataFile, callback) {
         fediverseInstances = e.data.data;
         if (callback) callback(fediverseInstances);
       } else {
-        console.warn("Worker data load failed, falling back:", e.data.error);
+        console.warn("Worker data load failed, falling back:", e.data);
         loadFediverseDataFallback(dataFile, callback);
       }
       worker.terminate();
@@ -344,7 +351,10 @@ export function loadFediverseData(dataFile, callback) {
       worker.terminate();
     };
 
-    worker.postMessage({ url: dataFile });
+    worker.postMessage({
+      url: absoluteDataUrl,
+      scale: COORDINATES.DATA_LOAD_SCALE,
+    });
   } else {
     loadFediverseDataFallback(dataFile, callback);
   }

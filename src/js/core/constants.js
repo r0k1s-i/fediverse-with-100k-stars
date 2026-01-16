@@ -67,9 +67,16 @@ export const COORDINATES = {
   // Hipparcos catalog uses 1 unit = 1 parsec
   HIPPARCOS_SCALE: 1.0,
 
+  // Scale factor for raw Fediverse data loading
+  // Applied as divisor: position /= DATA_LOAD_SCALE
+  DATA_LOAD_SCALE: 5.0,
+
   // Grid system
   GRID_SIZE: 10000,
   GRID_DIVISIONS: 100,
+
+  // Data load scaling (fediverse_final.json normalization)
+  DATA_LOAD_SCALE: 5,
 };
 
 // ============================================================================
