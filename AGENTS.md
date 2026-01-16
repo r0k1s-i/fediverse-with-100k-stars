@@ -174,32 +174,39 @@ var postShadersLoaded = function() {
 };
 ```
 
-### Three.js Patterns (Legacy r58)
+### Three.js Patterns (Modern 0.158.0)
+
+**ES Module Import**:
+```javascript
+import * as THREE from 'three';
+window.THREE = THREE;  // Legacy compatibility
+```
 
 **Object Creation**:
 ```javascript
-// Geometry + Material + Mesh pattern
-var geometry = new THREE.PlaneGeometry(150000, 150000, 30, 30);
-var material = new THREE.MeshBasicMaterial({
-    map: THREE.ImageUtils.loadTexture('path/to/texture.png'),
+// Modern Geometry + Material + Mesh pattern
+const geometry = new THREE.PlaneGeometry(150000, 150000, 30, 30);
+const textureLoader = new THREE.TextureLoader();
+const material = new THREE.MeshBasicMaterial({
+    map: textureLoader.load('path/to/texture.png'),
     blending: THREE.AdditiveBlending,
     transparent: true,
     depthTest: false,
     depthWrite: false
 });
-var mesh = new THREE.Mesh(geometry, material);
+const mesh = new THREE.Mesh(geometry, material);
 ```
 
 **Shader Materials**:
 ```javascript
-var shaderMaterial = new THREE.ShaderMaterial({
+const shaderMaterial = new THREE.ShaderMaterial({
     uniforms: datastarUniforms,
-    attributes: datastarAttributes,  // Legacy API
     vertexShader: shaderList.datastars.vertex,
     fragmentShader: shaderList.datastars.fragment,
     blending: THREE.AdditiveBlending,
     transparent: true
 });
+// Note: attributes are now set via BufferGeometry.setAttribute()
 ```
 
 **Scene Hierarchy**:
@@ -299,10 +306,11 @@ if (mesh.update !== undefined) {
 
 | Library | Version | Purpose |
 |---------|---------|---------|
-| Three.js | r58 (legacy) | 3D WebGL rendering |
-| jQuery | 1.7.1 | DOM manipulation |
+| Three.js | 0.158.0 (ES module via CDN) | 3D WebGL rendering |
 | Underscore.js | 1.x | Utility functions |
 | Tween.js | - | Animation interpolation |
+
+**Note**: jQuery has been removed. The codebase uses ES modules with `import * as THREE from 'three'` (via importmap). Legacy compatibility is maintained via `window.THREE = THREE` in main.js.
 
 ---
 

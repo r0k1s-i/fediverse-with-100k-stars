@@ -18,6 +18,7 @@ import {
   ready,
 } from "../utils/dom.js";
 import { InteractionMath } from "./interaction-math.js";
+import { state } from "./state.js";
 
 var fediverseInteraction = {
   mouse: new THREE.Vector2(),
@@ -49,8 +50,8 @@ export function shouldShowFediverseSystem() {
 }
 
 export function goToFediverseCenter() {
-  var translating = window.translating;
-  var camera = window.camera;
+  var translating = state.translating;
+  var camera = state.camera;
   var updateMinimap = window.updateMinimap;
 
   if (typeof translating !== "undefined") {
@@ -89,9 +90,9 @@ export function goToFediverseCenter() {
 }
 
 export function isAtFediverseCenter() {
-  var translating = window.translating;
+  var translating = state.translating;
   if (!window._fediverseCenterMode) return false;
-  if (typeof translating === "undefined") return false;
+  if (!translating) return false;
 
   var pos = translating.targetPosition || translating.position;
   var distFromCenter = Math.sqrt(pos.x * pos.x + pos.y * pos.y + pos.z * pos.z);
@@ -109,25 +110,25 @@ export function isAtFediverseCenter() {
  * @returns {number} Current threshold based on camera position
  */
 function getInteractionThreshold() {
-  var camera = window.camera;
-  if (typeof camera === "undefined") {
+  var camera = state.camera;
+  if (!camera) {
     return InteractionMath.getDynamicThreshold(null);
   }
   return InteractionMath.getDynamicThreshold(camera.position.z);
 }
 
 export function updateFediverseInteraction() {
-  var camera = window.camera;
-  var markerThreshold = window.markerThreshold;
+  var camera = state.camera;
+  var markerThreshold = state.markerThreshold;
 
-  if (typeof camera === "undefined") return;
+  if (!camera) return;
 
   var isZoomedInClose =
-    typeof markerThreshold !== "undefined" &&
+    markerThreshold &&
     camera.position.z < markerThreshold.min;
 
-  var starModel = window.starModel;
-  var enableStarModel = window.enableStarModel;
+  var starModel = state.starModel;
+  var enableStarModel = state.enableStarModel;
 
   if (isZoomedInClose && fediverseInteraction.intersected) {
     var closestInst = fediverseInteraction.intersected.instanceData;
@@ -186,8 +187,8 @@ export function updateFediverseInteraction() {
 }
 
 export function initFediverseInteraction() {
-  var camera = window.camera;
-  if (typeof camera === "undefined") {
+  var camera = state.camera;
+  if (!camera) {
     setTimeout(initFediverseInteraction, 500);
     return;
   }
@@ -221,12 +222,12 @@ export function initFediverseInteraction() {
  * @param {MouseEvent} event - Mouse move event
  */
 function onFediverseMouseMove(event) {
-  var camera = window.camera;
-  var fediverseInstances = window.fediverseInstances;
-  var rotating = window.rotating;
-  var translating = window.translating;
+  var camera = state.camera;
+  var fediverseInstances = state.fediverseInstances;
+  var rotating = state.rotating;
+  var translating = state.translating;
 
-  if (typeof camera === "undefined") return;
+  if (!camera) return;
 
   // Update normalized device coordinates
   fediverseInteraction.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
@@ -249,9 +250,9 @@ function onFediverseMouseMove(event) {
 
   // Use unified InteractionMath for instance detection
   if (
-    typeof fediverseInstances !== "undefined" &&
-    typeof rotating !== "undefined" &&
-    typeof translating !== "undefined"
+    fediverseInstances &&
+    rotating &&
+    translating
   ) {
     rotating.updateMatrixWorld(true);
     translating.updateMatrixWorld(true);
@@ -289,12 +290,12 @@ function onFediverseMouseMove(event) {
 }
 
 function handleHover(object) {
-  var camera = window.camera;
-  var markerThreshold = window.markerThreshold;
+  var camera = state.camera;
+  var markerThreshold = state.markerThreshold;
   var starNameEl = window.starNameEl || $("#star-name");
 
   var isZoomedInClose =
-    typeof camera !== "undefined" &&
+    camera &&
     InteractionMath.isZoomedInClose(camera.position.z, markerThreshold);
 
   if (fediverseInteraction.intersected && !object) {
@@ -403,8 +404,8 @@ function isClickOnUI(event) {
 
 function onFediverseClick(event) {
   var setMinimap = window.setMinimap;
-  var starModel = window.starModel;
-  var enableStarModel = window.enableStarModel;
+  var starModel = state.starModel;
+  var enableStarModel = state.enableStarModel;
   var getOffsetByStarRadius = window.getOffsetByStarRadius;
   var centerOn = window.centerOn;
   var zoomIn = window.zoomIn;
@@ -420,11 +421,11 @@ function onFediverseClick(event) {
   }
   fediverseInteraction.lastClickTime = now;
 
-  var camera = window.camera;
-  var markerThreshold = window.markerThreshold;
+  var camera = state.camera;
+  var markerThreshold = state.markerThreshold;
   var isZoomedInClose =
-    typeof camera !== "undefined" &&
-    typeof markerThreshold !== "undefined" &&
+    camera &&
+    markerThreshold &&
     camera.position.z < markerThreshold.min;
 
   var starNameEl = window.starNameEl || $("#star-name");

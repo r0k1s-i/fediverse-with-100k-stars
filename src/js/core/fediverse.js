@@ -4,6 +4,8 @@ import { addClass, removeClass, fadeIn, fadeOut } from "../utils/dom.js";
 import { Gyroscope } from "./Gyroscope.js";
 import { AssetManager } from "./asset-manager.js";
 import { VISIBILITY } from "./constants.js";
+import { state } from "./state.js";
+import { attachLegacyMarker } from "./legacymarkers.js";
 
 var textureLoader = AssetManager.getInstance();
 
@@ -72,7 +74,7 @@ function getMajorInstanceColor(domain) {
 }
 
 function createMajorInstancePreview(color) {
-  var camera = window.camera;
+  var camera = state.camera;
   var container = new THREE.Object3D();
 
   var haloMaterial = new THREE.MeshBasicMaterial({
@@ -244,25 +246,29 @@ function generateVirtualParticles(targetCount) {
   return virtualParticles;
 }
 
-export function loadFediverseData(dataFile, callback) {
+function loadFediverseDataFallback(dataFile, callback) {
   var xhr = new XMLHttpRequest();
-  setLoadMessage("Fetching Fediverse data");
+  setLoadMessage("Fetching Fediverse data (Main Thread)");
   xhr.addEventListener(
     "load",
     function (event) {
-      var parsed = JSON.parse(xhr.responseText);
-      var SCALE_FACTOR = 5;
-      for (var i = 0; i < parsed.length; i++) {
-        if (parsed[i].position) {
-          parsed[i].position.x /= SCALE_FACTOR;
-          parsed[i].position.y /= SCALE_FACTOR;
-          parsed[i].position.z /= SCALE_FACTOR;
+      try {
+        var parsed = JSON.parse(xhr.responseText);
+        var SCALE_FACTOR = 5;
+        for (var i = 0; i < parsed.length; i++) {
+          if (parsed[i].position) {
+            parsed[i].position.x /= SCALE_FACTOR;
+            parsed[i].position.y /= SCALE_FACTOR;
+            parsed[i].position.z /= SCALE_FACTOR;
+          }
         }
-      }
-      if (callback) {
-        setLoadMessage("Parsing instance data");
-        fediverseInstances = parsed;
-        callback(parsed);
+        if (callback) {
+          setLoadMessage("Parsing instance data");
+          fediverseInstances = parsed;
+          callback(parsed);
+        }
+      } catch (e) {
+        console.error("Error parsing Fediverse data:", e);
       }
     },
     false,
@@ -271,10 +277,39 @@ export function loadFediverseData(dataFile, callback) {
   xhr.send(null);
 }
 
+export function loadFediverseData(dataFile, callback) {
+  if (window.Worker) {
+    setLoadMessage("Fetching Fediverse data");
+    var worker = new Worker("src/js/workers/data-loader.worker.js");
+    
+    worker.onmessage = function (e) {
+      if (e.data.status === "success") {
+        setLoadMessage("Processing complete");
+        fediverseInstances = e.data.data;
+        if (callback) callback(fediverseInstances);
+      } else {
+        console.warn("Worker data load failed, falling back:", e.data.error);
+        loadFediverseDataFallback(dataFile, callback);
+      }
+      worker.terminate();
+    };
+
+    worker.onerror = function (e) {
+      console.warn("Worker error, falling back:", e);
+      loadFediverseDataFallback(dataFile, callback);
+      worker.terminate();
+    };
+
+    worker.postMessage({ url: dataFile });
+  } else {
+    loadFediverseDataFallback(dataFile, callback);
+  }
+}
+
 export function generateFediverseInstances() {
-  var shaderList = window.shaderList;
-  var camera = window.camera;
-  var attachLegacyMarker = window.attachLegacyMarker;
+  var shaderList = state.shaderList;
+  var camera = state.camera;
+  // var attachLegacyMarker = window.attachLegacyMarker; // Imported directly
   var spectralGraphEl = window.spectralGraphEl;
   var iconNavEl = window.iconNavEl;
 
@@ -620,7 +655,7 @@ export function generateFediverseInstances() {
   container.add(pSystem);
 
   container.update = function () {
-    camera = window.camera;
+    camera = state.camera;
 
     var blueshift = (camera.position.z + 5000.0) / 60000.0;
     blueshift = constrain(blueshift, 0.0, 0.2);

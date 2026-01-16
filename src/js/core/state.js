@@ -1,5 +1,5 @@
 
-export const globals = {
+export const state = {
     scene: null,
     camera: null,
     renderer: null,
@@ -33,6 +33,11 @@ export const globals = {
     enableSolarSystem: true,
     enableStarModel: true,
     enableDirector: true,
+
+    // Data
+    fediverseInstances: null,
+    markerThreshold: null,
 };
 
-window.globals = globals;
+window.state = state;
+window.globals = state; // Legacy support during migration
