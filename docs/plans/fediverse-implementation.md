@@ -46,6 +46,8 @@
   - [ ] 如仍偏平，考虑适度增强 AO/法线对比度
   - [x] 调整默认视距与初始交互体验
   - [ ] 排查近视距模型摩尔纹/闪烁原因
+  - [ ] 排查切换星球后摩尔纹加重原因
+  - [x] 阴影/深度偏差调优（bias/normalBias）
   - [x] 修复近视距星空背景消失
   - [x] 确认 HDR 反射环境贴图应用时机
   - [ ] 在 debug 流程中需用户确认后再提交代码
@@ -223,12 +225,18 @@ go test -v
   - 关注：默认视距过远、近视距摩尔纹、星空背景消失、HDR 反射确认
   - 结论：默认视距改回 2000；HDR 反射需始终作用于 planetScene（曝光 0.35）
   - 参考：以提交 8b177cf 的视觉效果为基准
+- 📝 **讨论**: 切换星球后摩尔纹加重
+  - 现象：首次加载时正常，点击任意星球后摩尔纹加重并影响所有模型
+  - 状态：当前在 772beed 回滚版本仍可复现
 - 🛠️ **实现**: 恢复星空背景渲染与默认视距
   - 默认视距回调至 2000
   - 渲染阶段重新绘制 skybox
 - 🛠️ **实现**: 修复 HDR 反射加载时机
   - Skybox 初始化移动到 renderer 创建之后
   - HDR 环境贴图稳定应用到 planetScene
+- 🛠️ **实现**: 引入 planetShadowConfig 阴影调优
+  - 新增 planet-shadow-config 工具库与 CLI
+  - 设置 DirectionalLight 的 bias/normalBias/radius
 - 🛠️ **实现**: 为 planetScene 引入独立曝光/色调映射配置
   - 新增 `planet-render-config` 库与 CLI（JSON 输入/输出）
   - 渲染阶段应用并恢复 renderer 状态，避免影响主场景
