@@ -142,6 +142,13 @@
   - 实现 `destroyFediverseLabels()`: 移除 Label 画布与 Resize 监听
   - 实现 `destroyMinimap()`: 移除 Minimap 交互监听
   - 在 `pagehide` 事件中编排统一清理流程
+- [x] Minimap 深度清理与生命周期加固 ✅ (2026-01-16)
+  - 重构事件处理为具名函数，确保可移除
+  - 增加 `isDestroyed` 标志位，防止异步 fetch 回调在销毁后重新挂载监听器
+  - 扩展单元测试覆盖 window 级监听器移除验证
+- [x] 全局状态收敛 ✅ (2026-01-16)
+  - 完成核心模块 (`galaxy.js`, `fediverse-solarsystem.js`, `planet-model.js`, `sun.js`, `skybox.js`) 的 `window.*` -> `state.*` 迁移
+  - 修复 `sun.js` 中 `AssetManager` 和 `maxAniso` 的引用错误
 
 ## 四、下一步建议 (Phase E)
 - [ ] AssetManager 引用计数 (Retain/Release) 机制
@@ -195,8 +202,11 @@
    - 优化：增加 Worker/Fallback 行为一致性的单元测试。
 
 ### 建议改进（后续迭代）
-- **Minimap 深度清理**：当前 `destroyMinimap` 覆盖了主要监听器，但部分内部 DOM 元素（如 About/Sound 图标）的事件绑定仍使用匿名函数，建议后续重构为具名函数以支持更彻底的移除。
-- **全局状态进一步收敛**：继续将 `window.*` 依赖迁移至 `state` 对象。
+- **✅ Minimap 深度清理** (2026-01-16)
+   - 重构 `minimap.js` 使用具名函数处理事件监听。
+   - 更新 `destroyMinimap` 以正确移除所有相关监听器。
+   - 增加 `tests/unit/minimap.test.js` 验证清理逻辑。
+- **全局状态进一步收敛**：继续将 `window.*` 依赖迁移至 `state` 对象。 (2026-01-16: 已完成 core 核心模块 `galaxy.js`, `fediverse-solarsystem.js`, `planet-model.js`, `sun.js`, `skybox.js` 的迁移)
 
 ---
 
