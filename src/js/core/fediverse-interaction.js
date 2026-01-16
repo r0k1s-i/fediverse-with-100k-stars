@@ -121,8 +121,7 @@ export function updateFediverseInteraction() {
   if (!camera) return;
 
   var isZoomedInClose =
-    markerThreshold &&
-    camera.position.z < markerThreshold.min;
+    markerThreshold && camera.position.z < markerThreshold.min;
 
   var starModel = state.starModel;
   var enableStarModel = state.enableStarModel;
@@ -254,11 +253,7 @@ function onFediverseMouseMove(event) {
   var closestInstance = null;
 
   // Use unified InteractionMath for instance detection
-  if (
-    fediverseInstances &&
-    rotating &&
-    translating
-  ) {
+  if (fediverseInstances && rotating && translating) {
     rotating.updateMatrixWorld(true);
     translating.updateMatrixWorld(true);
 
@@ -429,9 +424,7 @@ function onFediverseClick(event) {
   var camera = state.camera;
   var markerThreshold = state.markerThreshold;
   var isZoomedInClose =
-    camera &&
-    markerThreshold &&
-    camera.position.z < markerThreshold.min;
+    camera && markerThreshold && camera.position.z < markerThreshold.min;
 
   var starNameEl = window.starNameEl || $("#star-name");
   var isClickOnStarName =
@@ -460,13 +453,19 @@ function onFediverseClick(event) {
   var data = clickTarget.instanceData || clickTarget;
   if (!data || !data.position) return;
 
-  fediverseInteraction.lastViewedInstance = data.domain || null;
-
   var position = new THREE.Vector3(
     data.position.x,
     data.position.y,
     data.position.z,
   );
+
+  // 检查是否为同一个实例
+  var trackedGalaxyPosition =
+    starModel && starModel.userData && starModel.userData.galaxyPosition;
+  var isNewInstance =
+    !trackedGalaxyPosition || trackedGalaxyPosition.distanceTo(position) > 0.1;
+
+  fediverseInteraction.lastViewedInstance = data.domain || null;
 
   if (typeof setMinimap === "function") {
     setMinimap(true);
@@ -486,50 +485,48 @@ function onFediverseClick(event) {
     typeof enableStarModel !== "undefined" &&
     enableStarModel
   ) {
-    // 星球模型放置在实例的位置
-    if (window.setStarModel) {
-      window.setStarModel(position, data.name);
-    } else {
-      starModel.position.copy(position);
-    }
+    // 只有切换到新实例时才重新设置星球模型，避免重复点击时跳变
+    if (isNewInstance) {
+      // 星球模型放置在实例的位置
+      if (window.setStarModel) {
+        window.setStarModel(position, data.name);
+      } else {
+        starModel.position.copy(position);
+      }
 
-    var spectralIndex = 0.5;
-    if (data.color && data.color.hsl) {
-      spectralIndex = data.color.hsl.h / 360;
-    }
-    starModel.setSpectralIndex(spectralIndex);
-    starModel.setScale(modelScale);
+      var spectralIndex = 0.5;
+      if (data.color && data.color.hsl) {
+        spectralIndex = data.color.hsl.h / 360;
+      }
+      starModel.setSpectralIndex(spectralIndex);
+      starModel.setScale(modelScale);
 
-    // Check if function exists before calling (GLB model might not have this)
-    if (typeof starModel.randomizeSolarFlare === "function") {
-      starModel.randomizeSolarFlare();
-    }
-
-    // Randomize rotation speed and model choice if available (GLB features)
-    if (typeof starModel.randomizeRotationSpeed === "function") {
-      starModel.randomizeRotationSpeed();
-    }
-
-    if (typeof starModel.pickRandomModel === "function") {
-      starModel.pickRandomModel();
+      // Check if function exists before calling (GLB model might not have this)
+      if (typeof starModel.randomizeSolarFlare === "function") {
+        starModel.randomizeSolarFlare();
+      }
     }
 
     // 确保星球模型可见
     starModel.visible = true;
   }
 
-  var offset = new THREE.Vector3(0, 0, 0);
-  if (typeof getOffsetByStarRadius === "function") {
-    offset = getOffsetByStarRadius(modelScale);
-  }
-  var targetPosition = position.clone().add(offset);
+  // 只有切换到新实例时才执行缩放和居中，避免重复点击时视距跳变
+  // 或者已经在近视距时也跳过（用户可能只是想重新打开详情页）
+  if (isNewInstance && !isZoomedInClose) {
+    var offset = new THREE.Vector3(0, 0, 0);
+    if (typeof getOffsetByStarRadius === "function") {
+      offset = getOffsetByStarRadius(modelScale);
+    }
+    var targetPosition = position.clone().add(offset);
 
-  if (typeof centerOn === "function") {
-    centerOn(targetPosition);
-  }
+    if (typeof centerOn === "function") {
+      centerOn(targetPosition);
+    }
 
-  if (typeof zoomIn === "function") {
-    zoomIn(zoomLevel);
+    if (typeof zoomIn === "function") {
+      zoomIn(zoomLevel);
+    }
   }
 
   css(starNameEl, {
