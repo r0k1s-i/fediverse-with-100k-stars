@@ -3,6 +3,7 @@ import { constrain } from "../utils/math.js";
 import * as THREE from "three";
 import { TWEEN } from "../lib/tween.js";
 import { CAMERA, VISIBILITY } from "./constants.js";
+import { createWheelGuard } from "../utils/interaction-wheel-guard.js";
 
 window.THREE = THREE;
 window.TWEEN = TWEEN;
@@ -408,6 +409,9 @@ function initScene() {
   window.camera = camera;
   camera.position.z = CAMERA.POSITION.INITIAL_Z;
   ensureCameraTarget(camera, CAMERA.POSITION.INITIAL_Z);
+  if (!state.wheelGuard) {
+    state.wheelGuard = createWheelGuard(300);
+  }
 
   camera.update = function () {
     ensureCameraTarget(camera, CAMERA.POSITION.INITIAL_Z);
