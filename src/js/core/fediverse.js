@@ -249,40 +249,72 @@ function generateVirtualParticles(targetCount) {
 function loadFediverseDataFallback(dataFile, callback) {
   var xhr = new XMLHttpRequest();
   setLoadMessage("Fetching Fediverse data (Main Thread)");
-  xhr.addEventListener(
-    "load",
-    function (event) {
-      try {
-        var parsed = JSON.parse(xhr.responseText);
-        var SCALE_FACTOR = 5;
-        for (var i = 0; i < parsed.length; i++) {
-          if (parsed[i].position) {
-            parsed[i].position.x /= SCALE_FACTOR;
-            parsed[i].position.y /= SCALE_FACTOR;
-            parsed[i].position.z /= SCALE_FACTOR;
-          }
+  
+  xhr.addEventListener("load", function (event) {
+    if (xhr.status !== 200) {
+        console.error("Failed to load Fediverse data:", xhr.statusText);
+        setLoadMessage("Error loading data");
+        return;
+    }
+    
+    try {
+      var parsed = JSON.parse(xhr.responseText);
+      var SCALE_FACTOR = 5;
+      for (var i = 0; i < parsed.length; i++) {
+        if (parsed[i].position) {
+          parsed[i].position.x /= SCALE_FACTOR;
+          parsed[i].position.y /= SCALE_FACTOR;
+          parsed[i].position.z /= SCALE_FACTOR;
         }
-        if (callback) {
-          setLoadMessage("Parsing instance data");
-          fediverseInstances = parsed;
-          callback(parsed);
-        }
-      } catch (e) {
-        console.error("Error parsing Fediverse data:", e);
       }
-    },
-    false,
-  );
+      if (callback) {
+        setLoadMessage("Parsing instance data");
+        fediverseInstances = parsed;
+        callback(parsed);
+      }
+    } catch (e) {
+      console.error("Error parsing Fediverse data:", e);
+      setLoadMessage("Error parsing data");
+    }
+  }, false);
+
+  xhr.addEventListener("error", function() {
+    console.error("Network error loading Fediverse data");
+    setLoadMessage("Network error");
+  });
+
   xhr.open("GET", dataFile, true);
+  xhr.timeout = 30000; // 30s timeout
+  xhr.ontimeout = function () {
+    console.error("Timeout loading Fediverse data");
+    setLoadMessage("Connection timeout");
+  };
+  
   xhr.send(null);
 }
 
 export function loadFediverseData(dataFile, callback) {
   if (window.Worker) {
     setLoadMessage("Fetching Fediverse data");
-    var worker = new Worker("src/js/workers/data-loader.worker.js");
+    var worker;
     
+    try {
+        worker = new Worker("src/js/workers/data-loader.worker.js");
+    } catch (e) {
+        console.warn("Worker creation failed:", e);
+        loadFediverseDataFallback(dataFile, callback);
+        return;
+    }
+
+    // Worker timeout (20s)
+    var workerTimeout = setTimeout(function() {
+        console.warn("Worker timed out, falling back");
+        worker.terminate();
+        loadFediverseDataFallback(dataFile, callback);
+    }, 20000);
+
     worker.onmessage = function (e) {
+      clearTimeout(workerTimeout);
       if (e.data.status === "success") {
         setLoadMessage("Processing complete");
         fediverseInstances = e.data.data;
@@ -295,6 +327,7 @@ export function loadFediverseData(dataFile, callback) {
     };
 
     worker.onerror = function (e) {
+      clearTimeout(workerTimeout);
       console.warn("Worker error, falling back:", e);
       loadFediverseDataFallback(dataFile, callback);
       worker.terminate();
