@@ -6,10 +6,13 @@
  *
  * @see docs/plans/codebase-optimization-review.md
  */
-import { expect } from "https://unpkg.com/chai/chai.js";
 
 // Import the configuration that should define DRACO paths
-import { DRACO, getDracoDecoderPath } from "../../src/js/core/constants.js";
+import {
+  DRACO,
+  getDracoDecoderPath,
+  getDracoDecoderPaths,
+} from "../../src/js/core/constants.js";
 
 describe("Draco Loader Configuration", () => {
   describe("DRACO constants", () => {
@@ -71,6 +74,47 @@ describe("Draco Loader Configuration", () => {
 
       // Restore original value
       DRACO.PREFER_LOCAL = originalPreferLocal;
+    });
+  });
+
+  describe("getDracoDecoderPaths function (fallback support)", () => {
+    it("should be exported from constants", () => {
+      expect(getDracoDecoderPaths).to.exist;
+      expect(getDracoDecoderPaths).to.be.a("function");
+    });
+
+    it("should return an array of paths", () => {
+      const paths = getDracoDecoderPaths();
+      expect(paths).to.be.an("array");
+      expect(paths.length).to.be.at.least(2);
+    });
+
+    it("should return [LOCAL, CDN] when PREFER_LOCAL is true", () => {
+      const originalPreferLocal = DRACO.PREFER_LOCAL;
+
+      DRACO.PREFER_LOCAL = true;
+      const paths = getDracoDecoderPaths();
+      expect(paths[0]).to.equal(DRACO.LOCAL_PATH);
+      expect(paths[1]).to.equal(DRACO.CDN_PATH);
+
+      DRACO.PREFER_LOCAL = originalPreferLocal;
+    });
+
+    it("should return [CDN, LOCAL] when PREFER_LOCAL is false", () => {
+      const originalPreferLocal = DRACO.PREFER_LOCAL;
+
+      DRACO.PREFER_LOCAL = false;
+      const paths = getDracoDecoderPaths();
+      expect(paths[0]).to.equal(DRACO.CDN_PATH);
+      expect(paths[1]).to.equal(DRACO.LOCAL_PATH);
+
+      DRACO.PREFER_LOCAL = originalPreferLocal;
+    });
+
+    it("getDracoDecoderPath should return first element of getDracoDecoderPaths", () => {
+      const paths = getDracoDecoderPaths();
+      const path = getDracoDecoderPath();
+      expect(path).to.equal(paths[0]);
     });
   });
 });

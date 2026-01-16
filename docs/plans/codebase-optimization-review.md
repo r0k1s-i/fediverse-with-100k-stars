@@ -1,8 +1,8 @@
 # 代码深度分析与优化整改计划
 
 **更新日期**: 2026-01-16
-**状态**: 🚧 进行中
-**当前阶段**: 阶段 A - P0-1, P0-2 已完成
+**状态**: ✅ 阶段 A 完成
+**当前阶段**: 阶段 B - 性能与资源优化
 **范围**: 渲染性能、交互稳定性、资源加载、可维护性与测试
 
 ---
@@ -79,13 +79,26 @@
   - 在 `constants.js` 添加 `DRACO` 配置和 `getDracoDecoderPath()` 函数
   - 修改 `planet-model.js` 使用本地优先加载策略
   - 添加单元测试 `tests/unit/draco-loader.test.js`
+  - **修复**: 实现真正的回退策略 - 新增 `getDracoDecoderPaths()` 返回路径数组
+  - **修复**: `loadGLBWithFallback()` 在 Draco 解码失败时自动切换到 CDN 重试
+- [x] 本地化测试依赖 ✅ (2026-01-16)
+  - 下载 mocha.js, mocha.css, chai.js 到 `tests/lib/`
+  - 更新 `tests/runner.html` 使用本地路径
+  - 测试文件使用全局 `window.expect` 代替 CDN 导入
+  - 注：Three.js 保持 CDN 加载，3D 相关测试仍需网络
 - [x] 整理常量：迁移重复数值至 `constants.js` ✅ (2026-01-16)
   - 统一 CAMERA (FOV, NEAR_CLIP, FAR_CLIP, ZOOM limits) 到 main.js, skybox.js, mousekeyboard.js
   - 统一 VISIBILITY.MARKER (MIN_Z, MAX_Z) 到 main.js, legacymarkers.js, fediverse.js
   - 统一 VISIBILITY.GRID.MAX_Z 到 fediverse.js
   - 新增 VISIBILITY.GALAXY.HIDE_Z 并应用到 galaxy.js, dust.js
   - 更新 ZOOM.MAX 从 50000 到 80000 以匹配实际使用
-- [ ] 交互判定路径合并
+- [x] 交互判定路径合并 ✅ (2026-01-16)
+  - 新增 `INTERACTION.THRESHOLD` 常量 (BASE, MIN, DYNAMIC_FACTOR)
+  - 新增 `INTERACTION.RAY_DETECTION` 常量 (MIN_COS_ANGLE, DISTANCE_DIVISOR, SIZE_MULTIPLIER等)
+  - 重构 `InteractionMath` 模块，添加 `getDynamicThreshold()` 和 `isZoomedInClose()`
+  - 移除 `fediverse-interaction.js` 中冗余的 Raycaster 网格检测逻辑
+  - 统一使用 `InteractionMath.findClosestInstance()` 作为唯一交互入口
+  - 扩展单元测试 `tests/unit/interaction-math.test.js`
 
 ### 阶段 B（3-5 天）
 - [ ] LabelLayout 网格分桶实现与性能对比
