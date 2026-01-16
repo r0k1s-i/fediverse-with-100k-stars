@@ -33,7 +33,11 @@ import { makeStarModels } from "./planet-model.js"; // Use GLB model instead of 
 import { initCSS3D, setCSSWorld, setCSSCamera } from "./css3worldspace.js";
 import "./helphud.js";
 import "./spacehelpers.js";
-import { loadFediverseData, generateFediverseInstances, disposeFediverse } from "./fediverse.js";
+import {
+  loadFediverseData,
+  generateFediverseInstances,
+  disposeFediverse,
+} from "./fediverse.js";
 import "./interaction-math.js";
 import {
   initFediverseInteraction,
@@ -341,6 +345,13 @@ function initScene() {
     antialias: antialias,
   });
 
+  if (enableSkybox) {
+    setupSkyboxScene();
+    initSkybox(true);
+    // Note: Environment map for PBR is now set asynchronously in skybox.js
+    // via PMREMGenerator when the cubemap loads
+  }
+
   var devicePixelRatio = window.devicePixelRatio || 1;
 
   renderer.setSize(
@@ -391,13 +402,6 @@ function initScene() {
   window.camera = camera;
   camera.position.z = CAMERA.POSITION.INITIAL_Z;
   ensureCameraTarget(camera, CAMERA.POSITION.INITIAL_Z);
-
-  if (enableSkybox) {
-    setupSkyboxScene();
-    initSkybox(true);
-    // Note: Environment map for PBR is now set asynchronously in skybox.js
-    // via PMREMGenerator when the cubemap loads
-  }
 
   camera.update = function () {
     ensureCameraTarget(camera, CAMERA.POSITION.INITIAL_Z);
@@ -793,6 +797,10 @@ function animate() {
 function render() {
   if (perfMonitor) perfMonitor.update(renderer, scene);
 
+  if (enableSkybox) {
+    renderSkybox();
+  }
+
   renderer.autoClear = false;
   camera.layers.set(0);
 
@@ -954,7 +962,7 @@ window.markerThreshold = markerThreshold;
 window.addEventListener("load", start);
 
 // Cleanup on page unload
-window.addEventListener("pagehide", function() {
+window.addEventListener("pagehide", function () {
   if (typeof disposeFediverse === "function") {
     disposeFediverse();
   }
