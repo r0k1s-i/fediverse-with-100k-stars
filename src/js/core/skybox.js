@@ -2,6 +2,7 @@ import * as THREE from "three";
 import { RGBELoader } from "three/addons/loaders/RGBELoader.js";
 import { constrain } from "../utils/math.js";
 import { CAMERA } from "./constants.js";
+import { state } from "./state.js";
 
 var skybox;
 var skyboxUniforms;
@@ -72,7 +73,7 @@ export function initSkybox(highres) {
   shader.uniforms["opacity"] = { value: 1.0, type: "f" };
   skyboxUniforms = shader.uniforms;
 
-  var shaderList = window.shaderList;
+  var shaderList = state.shaderList;
 
   var skyboxMat = new THREE.ShaderMaterial({
     fragmentShader: shaderList.cubemapcustom.fragment,
@@ -90,9 +91,9 @@ export function initSkybox(highres) {
 export function updateSkybox(override) {
   cameraCube.rotation.order = "YXZ";
 
-  var starModel = window.starModel;
-  var rotating = window.rotating;
-  var camera = window.camera;
+  var starModel = state.starModel;
+  var rotating = state.rotating;
+  var camera = state.camera;
 
   if (starModel) {
     var rot = starModel.rotation.clone();
@@ -115,8 +116,8 @@ export function updateSkybox(override) {
 }
 
 export function renderSkybox() {
-  if (window.renderer && sceneCube && cameraCube) {
-    window.renderer.render(sceneCube, cameraCube);
+  if (state.renderer && sceneCube && cameraCube) {
+    state.renderer.render(sceneCube, cameraCube);
   }
 }
 
@@ -125,7 +126,7 @@ export function renderSkybox() {
  * This is separate from the starfield background - used only for lighting GLB models.
  */
 function loadStudioEnvironment() {
-  if (!window.renderer) {
+  if (!state.renderer) {
     console.warn(
       "[Skybox] Renderer not ready, deferring studio environment load",
     );
@@ -138,7 +139,7 @@ function loadStudioEnvironment() {
     function (texture) {
       texture.mapping = THREE.EquirectangularReflectionMapping;
 
-      const pmremGenerator = new THREE.PMREMGenerator(window.renderer);
+      const pmremGenerator = new THREE.PMREMGenerator(state.renderer);
       pmremGenerator.compileEquirectangularShader();
       const envMap = pmremGenerator.fromEquirectangular(texture).texture;
 
@@ -151,8 +152,8 @@ function loadStudioEnvironment() {
       }
 
       // Reduce exposure to avoid overexposure with bright HDR
-      if (window.renderer) {
-        window.renderer.toneMappingExposure = 0.35;
+      if (state.renderer) {
+        state.renderer.toneMappingExposure = 0.35;
       }
 
       texture.dispose();
