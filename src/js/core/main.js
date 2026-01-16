@@ -66,6 +66,10 @@ import {
   shouldUsePlanetSpotlight,
   updatePlanetSpotlightTransform,
 } from "../lib/planet-render-config.mjs";
+import {
+  applyPlanetShadowConfig,
+  getPlanetShadowConfig,
+} from "../lib/planet-shadow-config.mjs";
 
 import {
   updateMinimap,
@@ -130,6 +134,7 @@ var screenHeight;
 var gradientImage;
 var gradientCanvas;
 var planetRenderConfig = getPlanetRenderConfig();
+var planetShadowConfig = getPlanetShadowConfig();
 
 var rtparam = {
   minFilter: THREE.LinearFilter,
@@ -292,6 +297,7 @@ function initScene() {
   planetLight.shadow.mapSize.height = 1024;
   planetLight.shadow.camera.near = 0.1;
   planetLight.shadow.camera.far = 20;
+  applyPlanetShadowConfig(planetLight, planetShadowConfig);
   planetScene.add(planetLight);
 
   const planetAmbient = new THREE.AmbientLight(0xffffff, 0.2); // Soft ambient
