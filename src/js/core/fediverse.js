@@ -5,7 +5,7 @@ import { Gyroscope } from "./Gyroscope.js";
 import { AssetManager } from "./asset-manager.js";
 import { VISIBILITY, COORDINATES } from "./constants.js";
 import { state } from "./state.js";
-import { attachLegacyMarker } from "./legacymarkers.js";
+import { attachLegacyMarker, detachLegacyMarker } from "./legacymarkers.js";
 
 var textureLoader = AssetManager.getInstance();
 
@@ -13,68 +13,125 @@ function onTextureError(err) {
   console.error("Error loading texture:", err);
 }
 
-var fediverseTexture0 = textureLoader.loadTexture(
+var textureUrls = [
   "src/assets/textures/p_0.png",
+  "src/assets/textures/p_2.png",
+  "src/assets/textures/sharppoint.png",
+  "src/assets/textures/star_preview.png",
+  "src/assets/textures/star_color_modified.png",
+  "src/assets/textures/sun_halo.png",
+  "src/assets/textures/corona.png"
+];
+
+var fediverseTexture0 = textureLoader.loadTexture(
+  textureUrls[0],
   undefined,
   undefined,
   onTextureError,
 );
-textureLoader.retain("src/assets/textures/p_0.png");
+textureLoader.retain(textureUrls[0]);
 
 var fediverseTexture1 = textureLoader.loadTexture(
-  "src/assets/textures/p_2.png",
+  textureUrls[1],
   undefined,
   undefined,
   onTextureError,
 );
-textureLoader.retain("src/assets/textures/p_2.png");
+textureLoader.retain(textureUrls[1]);
 
 var fediverseHeatVisionTexture = textureLoader.loadTexture(
-  "src/assets/textures/sharppoint.png",
+  textureUrls[2],
   undefined,
   undefined,
   onTextureError,
 );
-textureLoader.retain("src/assets/textures/sharppoint.png");
+textureLoader.retain(textureUrls[2]);
 
 setLoadMessage("Focusing optics");
 var instancePreviewTexture = textureLoader.loadTexture(
-  "src/assets/textures/star_preview.png",
+  textureUrls[3],
   undefined,
   undefined,
   onTextureError,
 );
-textureLoader.retain("src/assets/textures/star_preview.png");
+textureLoader.retain(textureUrls[3]);
 
 var fediverseColorGraph = textureLoader.loadTexture(
-  "src/assets/textures/star_color_modified.png",
+  textureUrls[4],
   undefined,
   undefined,
   onTextureError,
 );
-textureLoader.retain("src/assets/textures/star_color_modified.png");
+textureLoader.retain(textureUrls[4]);
 
 var instanceSunHaloTexture = textureLoader.loadTexture(
-  "src/assets/textures/sun_halo.png",
+  textureUrls[5],
   undefined,
   undefined,
   onTextureError,
 );
-textureLoader.retain("src/assets/textures/sun_halo.png");
+textureLoader.retain(textureUrls[5]);
 
 var instanceCoronaTexture = textureLoader.loadTexture(
-  "src/assets/textures/corona.png",
+  textureUrls[6],
   undefined,
   undefined,
   onTextureError,
 );
-textureLoader.retain("src/assets/textures/corona.png");
+textureLoader.retain(textureUrls[6]);
 
-var MAJOR_INSTANCE_COLORS = {
-  "mastodon.social": 0xffffff,
-  "misskey.io": 0xffffff,
-  "pixelfed.social": 0xffffff,
-};
+var fediverseContainer = null;
+
+export function disposeFediverse() {
+  textureUrls.forEach(function(url) {
+    textureLoader.release(url);
+  });
+
+  if (fediverseContainer) {
+    if (fediverseContainer.parent) {
+      fediverseContainer.parent.remove(fediverseContainer);
+    }
+    
+    fediverseContainer.traverse(function(object) {
+      if (object.geometry) {
+        object.geometry.dispose();
+      }
+      if (object.material) {
+        if (Array.isArray(object.material)) {
+          object.material.forEach(m => m.dispose());
+        } else {
+          object.material.dispose();
+        }
+      }
+    });
+
+    // Clear legacy markers for meshes
+    fediverseMeshes.forEach(mesh => {
+      if (mesh.marker) {
+        detachLegacyMarker(mesh);
+      }
+    });
+
+    fediverseContainer = null;
+  }
+
+  // Clear global references
+  window.toggleHeatVision = null;
+  window.fediverseMeshes = null;
+  window.fediverseInstances = null;
+  
+  if (state) {
+    state.fediverseInstances = null;
+    state.pSystem = null;
+  }
+  window.pSystem = null;
+
+  fediverseInstances = [];
+  fediverseMeshes = [];
+}
+
+
+var MAJOR_INSTANCE_COLORS = VISIBILITY.MAJOR_INSTANCE_COLORS;
 
 function isMajorInstance(domain) {
   return MAJOR_INSTANCE_COLORS.hasOwnProperty(domain);
@@ -272,18 +329,41 @@ function loadFediverseDataFallback(dataFile, callback) {
 
       try {
         var parsed = JSON.parse(xhr.responseText);
+        
+        if (!Array.isArray(parsed)) {
+            console.error("Data format error: expected array");
+            setLoadMessage("Error parsing data");
+            return;
+        }
+
         var SCALE_FACTOR = COORDINATES.DATA_LOAD_SCALE;
+        var validData = [];
+        
         for (var i = 0; i < parsed.length; i++) {
-          if (parsed[i].position) {
-            parsed[i].position.x /= SCALE_FACTOR;
-            parsed[i].position.y /= SCALE_FACTOR;
-            parsed[i].position.z /= SCALE_FACTOR;
+          var item = parsed[i];
+          if (item && item.position && 
+              typeof item.position.x === 'number' &&
+              typeof item.position.y === 'number' &&
+              typeof item.position.z === 'number' &&
+              typeof item.domain === 'string' && item.domain.length > 0) {
+            
+            item.position.x /= SCALE_FACTOR;
+            item.position.y /= SCALE_FACTOR;
+            item.position.z /= SCALE_FACTOR;
+            validData.push(item);
           }
         }
+
+        if (validData.length === 0) {
+            console.error("Data format error: No valid instances found");
+            setLoadMessage("Error parsing data");
+            return;
+        }
+        
         if (callback) {
           setLoadMessage("Parsing instance data");
-          fediverseInstances = parsed;
-          callback(parsed);
+          fediverseInstances = validData;
+          callback(validData);
         }
       } catch (e) {
         console.error("Error parsing Fediverse data:", e);
@@ -370,7 +450,7 @@ export function generateFediverseInstances() {
   var container = new THREE.Object3D();
   var count = fediverseInstances.length;
 
-  var TARGET_PARTICLE_COUNT = 100000;
+  var TARGET_PARTICLE_COUNT = VISIBILITY.FEDIVERSE.TARGET_PARTICLE_COUNT;
   var virtualParticles = generateVirtualParticles(TARGET_PARTICLE_COUNT);
 
   var totalPoints = count + virtualParticles.length;
@@ -390,7 +470,7 @@ export function generateFediverseInstances() {
   var iconSizes = [];
 
   var linePositions = [];
-  var TARGET_LINE_COUNT = 50;
+  var TARGET_LINE_COUNT = VISIBILITY.FEDIVERSE.TARGET_LINE_COUNT;
   var lineIndices = new Set(pickRandomIndices(count, TARGET_LINE_COUNT));
 
   for (var i = 0; i < count; i++) {
@@ -429,7 +509,7 @@ export function generateFediverseInstances() {
       linePositions.push(x, y, 0);
     }
 
-    var MIN_USERS_FOR_HTML_LABEL = 999999999;
+    var MIN_USERS_FOR_HTML_LABEL = VISIBILITY.FEDIVERSE.MIN_USERS_FOR_HTML_LABEL;
     var showHTMLLabel = userCount >= MIN_USERS_FOR_HTML_LABEL;
 
     if (
@@ -782,6 +862,7 @@ export function generateFediverseInstances() {
   }
 
   window.fediverseMeshes = fediverseMeshes;
+  fediverseContainer = container;
 
   return container;
 }
@@ -814,6 +895,7 @@ export function getSoftwareColor(softwareName) {
 window.loadFediverseData = loadFediverseData;
 window.generateFediverseInstances = generateFediverseInstances;
 window.getInstanceByDomain = getInstanceByDomain;
+window.disposeFediverse = disposeFediverse;
 window.getSoftwareColor = getSoftwareColor;
 window.fediverseInstances = fediverseInstances;
 window.fediverseColorGraph = fediverseColorGraph;

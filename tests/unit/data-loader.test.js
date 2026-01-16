@@ -23,7 +23,7 @@ describe('Data Loader (Worker)', () => {
     });
 
     it('should use Worker when available', (done) => {
-        const mockData = [{ position: { x: 10, y: 10, z: 10 }, name: 'Test' }];
+        const mockData = [{ position: { x: 10, y: 10, z: 10 }, name: 'Test', domain: 'example.com' }];
         
         // Mock Worker
         class MockWorker {
@@ -55,7 +55,7 @@ describe('Data Loader (Worker)', () => {
     });
 
     it('should fallback to XHR when Worker fails', (done) => {
-        const mockData = [{ position: { x: 10, y: 10, z: 10 }, name: 'Fallback' }];
+        const mockData = [{ position: { x: 10, y: 10, z: 10 }, name: 'Fallback', domain: 'fallback.com' }];
         
         // Mock Worker that fails
         class MockWorker {

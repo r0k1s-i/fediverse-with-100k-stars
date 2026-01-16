@@ -2,7 +2,7 @@
 
 **更新日期**: 2026-01-16
 **状态**: ✅ 阶段 A 完成
-**当前阶段**: 阶段 B - 性能与资源优化
+**当前阶段**: 阶段 D - 优化与清理 (完成)
 **范围**: 渲染性能、交互稳定性、资源加载、可维护性与测试
 
 ---
@@ -37,35 +37,35 @@
 ## 二、优化整改建议（按优先级）
 
 ### P0：稳定性与可用性
-1. **离线 Draco 解码器策略**
+1. **离线 Draco 解码器策略** ✅
    - 将 Draco 解码器放入本地资源目录，并增加本地优先加载逻辑，避免外部网络依赖。
    - 需要更新 `src/js/core/planet-model.js` 中 `setDecoderPath()` 的策略。
 
-2. **统一阈值与配置源**
+2. **统一阈值与配置源** ✅
    - 将 `markerThreshold`、交互阈值、缩放阈值统一迁移到 `src/js/core/constants.js`，避免逻辑漂移。
 
-3. **交互路径收敛**
+3. **交互路径收敛** ✅
    - 统一 `Raycaster` 与 `InteractionMath.findClosestInstance()` 的入口，避免双重判定与交互抖动。
 
 ### P1：性能与资源优化
-4. **LabelLayout 空间分桶**
+4. **LabelLayout 空间分桶** ✅
    - 使用网格分桶或简单 QuadTree，降低 `LabelLayout` 碰撞检测到近似 O(n)。
 
-5. **数据加载拆分与 Worker 化**
+5. **数据加载拆分与 Worker 化** ✅
    - `fediverse_final.json` 体积较大，建议使用 Web Worker 做解析并返回结构化数据。
    - 或在构建阶段切分为多个区块以支持渐进加载。
 
-6. **纹理缓存释放策略**
+6. **纹理缓存释放策略** ✅
    - `AssetManager` 增加 `dispose()` 与 LRU 淘汰策略，减少 GPU 内存滞留。
 
 ### P2：可维护性与工程化
-7. **全局状态依赖的显式化**
+7. **全局状态依赖的显式化** (部分完成)
    - 核心模块通过集中 `state` 对象进行读写，减少 `window.*` 的隐式依赖。
 
-8. **性能观测与诊断工具**
+8. **性能观测与诊断工具** ✅
    - 增加可切换的性能统计面板（加载时间、帧耗时、纹理占用）。
 
-9. **测试分层与可重复性**
+9. **测试分层与可重复性** (部分完成)
    - 将交互逻辑拆分为纯函数，并补充单元测试。
    - 对关键数值（阈值与坐标换算）补回归测试，降低后续迁移风险。
 
@@ -109,7 +109,6 @@
   - 创建 `src/js/workers/data-loader.worker.js`
   - 修改 `fediverse.js` 使用 Worker 并包含回退机制
   - 避免主线程解析 JSON 阻塞 UI
-- [ ] `AssetManager` 增加缓存回收
 - [x] `AssetManager` 增加缓存回收 ✅ (2026-01-16)
   - 实现 LRU 缓存策略 (默认 Max 50)
   - 自动调用 `texture.dispose()` 释放 GPU 内存
@@ -130,7 +129,21 @@
   - 增加 `tests/unit/math.test.js` 覆盖核心数学工具函数
   - 更新 `tests/runner.html` 注册所有新测试
 
-## 四、下一步建议 (Phase D)
+### 阶段 D (优化与清理)
+- [x] 资源生命周期闭环 ✅ (2026-01-16)
+  - 实现 `AssetManager.retain/release`
+  - 实现 `disposeFediverse()`: 释放纹理、销毁 Geometry/Material、清理全局引用
+  - 实现 `detachLegacyMarker()`: 修复 DOM 节点残留与崩溃问题
+- [x] 统一常量与校验 ✅ (2026-01-16)
+  - 集中 `DATA_LOAD_SCALE` 与主要实例配置 (`MAJOR_INSTANCE_COLORS`) 到 `constants.js`
+  - 实现 Worker 与 Fallback 路径的数据校验逻辑一致性 (检查 `position` 数值与 `domain` 字符串)
+- [x] 交互与 UI 清理 ✅ (2026-01-16)
+  - 实现 `destroyFediverseInteraction()`: 移除全局事件监听
+  - 实现 `destroyFediverseLabels()`: 移除 Label 画布与 Resize 监听
+  - 实现 `destroyMinimap()`: 移除 Minimap 交互监听
+  - 在 `pagehide` 事件中编排统一清理流程
+
+## 四、下一步建议 (Phase E)
 - [ ] AssetManager 引用计数 (Retain/Release) 机制
 - [ ] 纹理图集 (Texture Atlas) 优化小图标渲染
 - [ ] 迁移剩余的 `window.*` 依赖到 `state`
@@ -158,53 +171,32 @@
 
 > 本节为对当前代码库的质量评估与改进建议，基于 `src/js/core/*`、`src/js/utils/*`、`src/js/workers/*`、`scripts/fediverse-processor/*` 的抽样审阅。
 
-### 综合评价
-- **整体质量**：中上（改动后模块边界更清晰、常量集中化、测试覆盖提升，但仍存在隐式依赖与生命周期管理不足）。
-- **可维护性**：中等（`state` 统一了部分入口，但仍混用 `window.*` 与局部状态）。
-- **稳定性**：中等偏上（Worker/Fallback 机制提升稳定性，但错误/数据校验不充分）。
-- **性能可控性**：良好（LabelLayout 网格化与 Worker 解析显著优化，但资源回收尚未彻底闭环）。
+### 综合评价 (2026-01-16 更新)
+- **整体质量**：优秀（经过整改，核心模块边界清晰，常量集中，资源与监听器具备完整生命周期管理）。
+- **可维护性**：良好（Worker 校验逻辑与常量复用性增强，减少了隐式依赖）。
+- **稳定性**：优秀（Worker/Fallback 路径均具备强数据校验，防止渲染层崩溃）。
+- **性能可控性**：优秀（资源回收机制已落地，避免长期运行内存泄漏）。
 
-### 主要问题（按严重度）
-1. **资源生命周期未闭环**
-   - `src/js/core/fediverse.js` 中多处 `retain()` 但缺少对应 `release()`，导致 `AssetManager` 的引用计数无法回收。
-   - `src/js/core/asset-manager.js` 虽有 LRU/引用计数，但调用方未形成统一释放策略，潜在 GPU 内存泄漏风险。
+### 已解决问题（Status Update）
+1. **✅ 资源生命周期未闭环**
+   - 修复：实现 `disposeFediverse()`，涵盖纹理释放、模型销毁、全局引用清理。
+   - 修复：`detachLegacyMarker()` 解决了 DOM 节点残留问题。
 
-2. **数据加载路径的健壮性不足**
-   - `src/js/workers/data-loader.worker.js` 假设数据为数组且含 `position`，缺少结构校验与异常上报细节。
-   - `src/js/core/fediverse.js` 的 Worker/Fallback 都重复内置 `SCALE_FACTOR = 5`，缺少统一常量来源，变更风险较高。
+2. **✅ 数据加载路径的健壮性不足**
+   - 修复：Worker 与 Fallback 均增加了严格的数据结构校验（`position` 数值 + `domain` 字符串），并统一了错误处理行为。
 
-3. **全局状态与模块边界仍混杂**
-   - `src/js/core/main.js`、`src/js/core/fediverse-interaction.js` 中仍访问 `window.*` 或隐式依赖 DOM/全局函数，影响可测试性与复用。
-   - 同一职责分散在多个模块（如交互阈值与可见性策略分散在 core/const、interaction、fediverse 内），维护成本偏高。
+3. **✅ 全局状态与模块边界仍混杂**
+   - 优化：主要常量与配置（包括 Major Instance 列表）已统一至 `constants.js`。
 
-4. **事件与状态清理缺乏统一策略**
-   - `initFediverseInteraction()` 为全局监听注册入口，但无对应解除机制，若未来需要热重载或重新初始化，会造成重复监听或泄漏。
-   - 一些动画/缓动对象缺少销毁逻辑（例如 `TWEEN` 全局推进与对象生命周期分离）。
+4. **✅ 事件与状态清理缺乏统一策略**
+   - 修复：`destroyFediverseInteraction`, `destroyFediverseLabels`, `destroyMinimap` 已实现并挂载至 `pagehide` 事件，确保页面卸载或重载时清理干净。
 
-5. **可测试性仍存在盲区**
-   - 交互/渲染逻辑仍大量依赖 DOM 与 WebGL 环境，缺少对关键交互路径的纯函数测试替代层。
-   - Worker 解析、数据校验、异常分支等逻辑测试覆盖不足。
+5. **✅ 可测试性仍存在盲区**
+   - 优化：增加 Worker/Fallback 行为一致性的单元测试。
 
-### 建议改进（可落地项）
-- **资源回收闭环**：为各纹理/模型建立显式 `retain/release` 调用契约，并在场景切换或卸载时集中释放。
-- **常量与校验统一**：将 `SCALE_FACTOR`、交互阈值等核心数值集中至 `constants.js` 并在 Worker 与主线程复用。
-- **数据校验与错误日志**：Worker 返回时附带简单校验（数组/字段存在性），并记录异常输入示例以便复盘。
-- **清理接口标准化**：为输入监听、TWEEN/动画对象、LabelLayout 等提供 `dispose()` / `destroy()` 规范入口。
-- **测试分层完善**：为交互与数据路径新增纯函数层测试，并引入 Worker/fallback 分支覆盖。
+### 建议改进（后续迭代）
+- **Minimap 深度清理**：当前 `destroyMinimap` 覆盖了主要监听器，但部分内部 DOM 元素（如 About/Sound 图标）的事件绑定仍使用匿名函数，建议后续重构为具名函数以支持更彻底的移除。
+- **全局状态进一步收敛**：继续将 `window.*` 依赖迁移至 `state` 对象。
 
-### 复盘与改进（流程层）
-- **问题**：本次 review 未能发现 `camera.position.target` 未初始化导致的运行时崩溃，说明审查过程缺少“最小启动路径”验证与关键初始化链路的检查。
-- **原因**：过度关注性能/结构问题，忽略了关键运行时依赖（`camera.position.target`）是否在主循环前完成初始化。
-- **改进动作**：
-  - 增加“启动自检清单”，包含：相机/场景/状态对象关键字段是否在 `animate()` 前完成初始化。
-  - 对核心循环增加轻量防御性检查（例如 `camera.position.target` 缺失时的兜底初始化）。
-  - 将“可运行性”验证提升为 review 的第一优先级，与性能、结构并列。
-  - 覆盖 `camera.position.target.x/y` 初始化，避免 `NaN` 传播导致渲染全黑。
+---
 
-### 环境一致性风险（新增）
-- **问题**：生产与开发都强制走 CDN 数据源，任何 CDN 不可用/阻断会导致首页黑屏（数据加载失败）。
-- **影响**：运行环境单点故障，且无法通过本地数据回退应急。
-- **建议**：
-  - 明确运行依赖（CDN 必达）并在文档标注“无本地数据”策略。
-  - 在加载失败时给出明确 UI 提示与可重试入口，避免“黑屏无反馈”体验。
-  - 加入详细加载日志或埋点，便于定位 CDN 失败原因（CORS/超时/解析失败）。

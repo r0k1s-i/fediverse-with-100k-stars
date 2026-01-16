@@ -19,6 +19,7 @@ import {
 } from "../utils/dom.js";
 import { InteractionMath } from "./interaction-math.js";
 import { state } from "./state.js";
+import { VISIBILITY } from "./constants.js";
 
 var fediverseInteraction = {
   mouse: new THREE.Vector2(),
@@ -30,11 +31,7 @@ var fediverseInteraction = {
   lastViewedInstance: null,
 };
 
-var MAJOR_FEDIVERSE_DOMAINS = [
-  "mastodon.social",
-  "misskey.io",
-  "pixelfed.social",
-];
+var MAJOR_FEDIVERSE_DOMAINS = VISIBILITY.MAJOR_FEDIVERSE_DOMAINS;
 
 var FEDIVERSE_CENTER = { x: 0, y: 0, z: 0 };
 
@@ -198,18 +195,26 @@ export function initFediverseInteraction() {
 
   var starNameEl = window.starNameEl || $("#star-name");
   if (starNameEl) {
-    starNameEl.addEventListener(
-      "click",
-      function (event) {
-        if (
-          fediverseInteraction.intersected ||
-          fediverseInteraction.lastHoveredInstance
-        ) {
-          onFediverseClick(event);
-        }
-      },
-      false,
-    );
+    starNameEl.addEventListener("click", onStarNameClick, false);
+  }
+}
+
+function onStarNameClick(event) {
+  if (
+    fediverseInteraction.intersected ||
+    fediverseInteraction.lastHoveredInstance
+  ) {
+    onFediverseClick(event);
+  }
+}
+
+export function destroyFediverseInteraction() {
+  document.removeEventListener("mousemove", onFediverseMouseMove, false);
+  document.removeEventListener("click", onFediverseClick, true);
+
+  var starNameEl = window.starNameEl || $("#star-name");
+  if (starNameEl) {
+    starNameEl.removeEventListener("click", onStarNameClick, false);
   }
 }
 
@@ -673,6 +678,7 @@ function showInstanceDetails(data) {
 
 window.fediverseInteraction = fediverseInteraction;
 window.initFediverseInteraction = initFediverseInteraction;
+window.destroyFediverseInteraction = destroyFediverseInteraction;
 window.updateFediverseInteraction = updateFediverseInteraction;
 window.shouldShowFediverseSystem = shouldShowFediverseSystem;
 window.goToFediverseCenter = goToFediverseCenter;

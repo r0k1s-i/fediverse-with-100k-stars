@@ -33,10 +33,11 @@ import { makeStarModels } from "./planet-model.js"; // Use GLB model instead of 
 import { initCSS3D, setCSSWorld, setCSSCamera } from "./css3worldspace.js";
 import "./helphud.js";
 import "./spacehelpers.js";
-import { loadFediverseData, generateFediverseInstances } from "./fediverse.js";
+import { loadFediverseData, generateFediverseInstances, disposeFediverse } from "./fediverse.js";
 import "./interaction-math.js";
 import {
   initFediverseInteraction,
+  destroyFediverseInteraction,
   isAtFediverseCenter,
   shouldShowFediverseSystem,
   goToFediverseCenter,
@@ -45,6 +46,7 @@ import "./label-layout.js";
 import {
   initFediverseLabels,
   updateFediverseLabels,
+  destroyFediverseLabels,
 } from "./fediverse-labels.js";
 import { generateGalaxy } from "./galaxy.js";
 import { createBlackhole } from "./blackhole.js";
@@ -66,6 +68,7 @@ import {
   initializeMinimap,
   setMinimap,
   activateMinimap,
+  destroyMinimap,
 } from "./minimap.js";
 
 var masterContainer = document.getElementById("visualization");
@@ -949,3 +952,22 @@ window.firstTime = firstTime;
 window.markerThreshold = markerThreshold;
 
 window.addEventListener("load", start);
+
+// Cleanup on page unload
+window.addEventListener("pagehide", function() {
+  if (typeof disposeFediverse === "function") {
+    disposeFediverse();
+  }
+  if (typeof destroyFediverseInteraction === "function") {
+    destroyFediverseInteraction();
+  }
+  if (typeof destroyFediverseLabels === "function") {
+    destroyFediverseLabels();
+  }
+  if (typeof destroyMinimap === "function") {
+    destroyMinimap();
+  }
+  if (perfMonitor && typeof perfMonitor.destroy === "function") {
+    perfMonitor.destroy();
+  }
+});
