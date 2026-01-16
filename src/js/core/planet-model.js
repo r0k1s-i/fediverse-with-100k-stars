@@ -8,6 +8,7 @@ import * as THREE from "three";
 import { attachPlanetModelName } from "../lib/planet-render-config.mjs";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { DRACOLoader } from "three/addons/loaders/DRACOLoader.js";
+import { getDracoDecoderPath } from "./constants.js";
 
 const PLANET_GLB_PATHS = [
   "src/assets/textures/kamistar.glb",
@@ -29,10 +30,9 @@ function getLoader() {
   if (!loader) {
     loader = new GLTFLoader();
     // Configure DRACOLoader for compressed GLB models
+    // Uses local-first strategy to avoid network dependency (P0-1)
     dracoLoader = new DRACOLoader();
-    dracoLoader.setDecoderPath(
-      "https://www.gstatic.com/draco/versioned/decoders/1.5.6/",
-    );
+    dracoLoader.setDecoderPath(getDracoDecoderPath());
     loader.setDRACOLoader(dracoLoader);
   }
   return loader;

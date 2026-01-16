@@ -17,41 +17,41 @@
 
 export const CAMERA = {
   // Field of View
-  FOV: 30,  // degrees
+  FOV: 30, // degrees
 
   // Clipping planes
   NEAR_CLIP: 0.5,
-  FAR_CLIP: 10000000,  // 10 million units
+  FAR_CLIP: 10000000, // 10 million units
 
   // Position presets
   POSITION: {
     INITIAL_X: 0,
     INITIAL_Y: 0,
-    INITIAL_Z: 2500,  // Default starting position
+    INITIAL_Z: 2500, // Default starting position
 
     // Preset zoom levels
     CLOSE_UP_Z: 300,
     NORMAL_Z: 2500,
     GRID_VIEW_Z: 1800,
     FAR_VIEW_Z: 5000,
-    GALAXY_VIEW_Z: 40000
+    GALAXY_VIEW_Z: 40000,
   },
 
   // Rotation presets
   ROTATION: {
-    INITIAL_X: Math.PI * 0.05,  // Slight tilt
-    INITIAL_Y: Math.PI / 2,     // 90° horizontal
+    INITIAL_X: Math.PI * 0.05, // Slight tilt
+    INITIAL_Y: Math.PI / 2, // 90° horizontal
 
-    GRID_VIEW_X: -Math.PI / 3,  // -60° bird's-eye view
-    GRID_VIEW_Y: 0               // Face XY plane
+    GRID_VIEW_X: -Math.PI / 3, // -60° bird's-eye view
+    GRID_VIEW_Y: 0, // Face XY plane
   },
 
   // Zoom limits
   ZOOM: {
-    MIN: 0.5,           // Closest possible
-    MAX: 50000,         // Farthest possible
-    SPEED: 0.125        // Zoom interpolation speed
-  }
+    MIN: 0.5, // Closest possible
+    MAX: 50000, // Farthest possible
+    SPEED: 0.125, // Zoom interpolation speed
+  },
 };
 
 // ============================================================================
@@ -69,7 +69,7 @@ export const COORDINATES = {
 
   // Grid system
   GRID_SIZE: 10000,
-  GRID_DIVISIONS: 100
+  GRID_DIVISIONS: 100,
 };
 
 // ============================================================================
@@ -79,16 +79,16 @@ export const COORDINATES = {
 export const VISIBILITY = {
   // Grid plane visibility
   GRID: {
-    MIN_Z: 1500,   // Grid appears when z > this
-    MAX_Z: 1900,   // Grid disappears when z > this
+    MIN_Z: 1500, // Grid appears when z > this
+    MAX_Z: 1900, // Grid disappears when z > this
     OPACITY_MIN: 0,
-    OPACITY_MAX: 1
+    OPACITY_MAX: 1,
   },
 
   // Marker visibility thresholds
   MARKER: {
-    MIN_Z: 200,     // Too close - hide markers
-    MAX_Z: 45000    // Too far - hide markers
+    MIN_Z: 200, // Too close - hide markers
+    MAX_Z: 45000, // Too far - hide markers
   },
 
   // Fediverse system visibility
@@ -97,15 +97,15 @@ export const VISIBILITY = {
     CENTER_THRESHOLD: 100,
 
     // Label visibility zoom range
-    LABEL_MIN_ZOOM: 0.2,  // 20%
-    LABEL_MAX_ZOOM: 0.9   // 90%
+    LABEL_MIN_ZOOM: 0.2, // 20%
+    LABEL_MAX_ZOOM: 0.9, // 90%
   },
 
   // Star name tooltip
   STAR_NAME: {
-    FADE_IN_DELAY: 300,   // ms
-    FADE_OUT_DELAY: 100   // ms
-  }
+    FADE_IN_DELAY: 300, // ms
+    FADE_OUT_DELAY: 100, // ms
+  },
 };
 
 // ============================================================================
@@ -115,27 +115,27 @@ export const VISIBILITY = {
 export const INTERACTION = {
   // Click detection thresholds
   THRESHOLD: {
-    DEFAULT: 50,           // Default raycast threshold
-    CLOSE_UP: 10,          // When zoomed in close (z < 500)
-    CLOSE_UP_CAMERA_Z: 500 // Camera z for close-up threshold
+    DEFAULT: 50, // Default raycast threshold
+    CLOSE_UP: 10, // When zoomed in close (z < 500)
+    CLOSE_UP_CAMERA_Z: 500, // Camera z for close-up threshold
   },
 
   // Hover detection
   HOVER: {
-    DISABLE_CAMERA_Z: 300,  // Disable hover when z < this
-    TOOLTIP_OFFSET_X: 20,   // px
-    TOOLTIP_OFFSET_Y: -10   // px
+    DISABLE_CAMERA_Z: 300, // Disable hover when z < this
+    TOOLTIP_OFFSET_X: 20, // px
+    TOOLTIP_OFFSET_Y: -10, // px
   },
 
   // Pan/zoom animation
   ANIMATION: {
-    PAN_SPEED: 0.1,      // Lerp factor for panning
+    PAN_SPEED: 0.1, // Lerp factor for panning
     PAN_THRESHOLD: 0.01, // Stop panning when distance < this
 
-    ROTATION_SPEED: 0.0005,      // Auto-rotate speed
-    ROTATION_DAMPING: 0.9,       // Velocity damping
-    ROTATION_DRAG_DAMPING: 0.6   // Extra damping when dragging
-  }
+    ROTATION_SPEED: 0.0005, // Auto-rotate speed
+    ROTATION_DAMPING: 0.9, // Velocity damping
+    ROTATION_DRAG_DAMPING: 0.6, // Extra damping when dragging
+  },
 };
 
 // ============================================================================
@@ -147,29 +147,32 @@ export const SUPERGIANT = {
   TRIANGLE_SIDE: 500,
 
   // Individual positions (equilateral triangle)
-  BETELGEUSE: {  // mastodon.social
+  BETELGEUSE: {
+    // mastodon.social
     x: 0,
-    y: 500 * Math.sqrt(3) / 3,  // ~288.67
+    y: (500 * Math.sqrt(3)) / 3, // ~288.67
     z: 0,
-    name: 'mastodon.social',
-    spectralClass: 'M1-M2 Ia-ab'
+    name: "mastodon.social",
+    spectralClass: "M1-M2 Ia-ab",
   },
 
-  ANTARES: {  // mstdn.jp
+  ANTARES: {
+    // mstdn.jp
     x: -250,
-    y: -500 * Math.sqrt(3) / 6,  // ~-144.34
+    y: (-500 * Math.sqrt(3)) / 6, // ~-144.34
     z: 0,
-    name: 'mstdn.jp',
-    spectralClass: 'M1.5 Iab-b'
+    name: "mstdn.jp",
+    spectralClass: "M1.5 Iab-b",
   },
 
-  VV_CEPHEI_A: {  // Supercluster
+  VV_CEPHEI_A: {
+    // Supercluster
     x: 250,
-    y: -500 * Math.sqrt(3) / 6,  // ~-144.34
+    y: (-500 * Math.sqrt(3)) / 6, // ~-144.34
     z: 0,
-    name: 'VV Cephei A',
-    spectralClass: 'M2 Iab'
-  }
+    name: "VV Cephei A",
+    spectralClass: "M2 Iab",
+  },
 };
 
 // ============================================================================
@@ -180,24 +183,24 @@ export const SPECTRAL = {
   // Temperature range (Kelvin)
   // Based on Fediverse instance activity mapping
   TEMPERATURE: {
-    MIN: 3840,   // Inactive instances (coolest)
+    MIN: 3840, // Inactive instances (coolest)
     MEDIAN: 7300,
-    MAX: 42000   // Very active instances (hottest)
+    MAX: 42000, // Very active instances (hottest)
   },
 
   // Spectral classes
-  CLASSES: ['O', 'B', 'A', 'F', 'G', 'K', 'M'],
+  CLASSES: ["O", "B", "A", "F", "G", "K", "M"],
 
   // Color mapping (approximate)
   COLORS: {
-    O: 0x9bb0ff,  // Blue
-    B: 0xaabfff,  // Blue-white
-    A: 0xcad7ff,  // White
-    F: 0xf8f7ff,  // Yellow-white
-    G: 0xfff4ea,  // Yellow (like Sun)
-    K: 0xffd2a1,  // Orange
-    M: 0xffcc6f   // Red-orange
-  }
+    O: 0x9bb0ff, // Blue
+    B: 0xaabfff, // Blue-white
+    A: 0xcad7ff, // White
+    F: 0xf8f7ff, // Yellow-white
+    G: 0xfff4ea, // Yellow (like Sun)
+    K: 0xffd2a1, // Orange
+    M: 0xffcc6f, // Red-orange
+  },
 };
 
 // ============================================================================
@@ -206,24 +209,24 @@ export const SPECTRAL = {
 
 export const RENDERING = {
   // Anisotropic filtering
-  MAX_ANISOTROPY: 16,  // Will be clamped to GPU max
+  MAX_ANISOTROPY: 16, // Will be clamped to GPU max
 
   // Point sizes
   POINT_SIZE: {
     STAR_MIN: 0.1,
     STAR_MAX: 10.0,
     FEDIVERSE_MIN: 1.0,
-    FEDIVERSE_MAX: 50.0
+    FEDIVERSE_MAX: 50.0,
   },
 
   // Shader timing
-  SHADER_TIME_SCALE: 0.001,  // Convert ms to shader time
+  SHADER_TIME_SCALE: 0.001, // Convert ms to shader time
 
   // Performance targets
   PERFORMANCE: {
     TARGET_FPS: 60,
-    MIN_FPS: 30
-  }
+    MIN_FPS: 30,
+  },
 };
 
 // ============================================================================
@@ -233,26 +236,26 @@ export const RENDERING = {
 export const UI = {
   // Minimap positioning
   MINIMAP: {
-    BOTTOM_PADDING: 80,        // px from bottom
-    RIGHT_PADDING: 20,         // px from right
-    ICON_HEIGHT_FALLBACK: 24,  // px - when offsetHeight is 0
+    BOTTOM_PADDING: 80, // px from bottom
+    RIGHT_PADDING: 20, // px from right
+    ICON_HEIGHT_FALLBACK: 24, // px - when offsetHeight is 0
 
-    ZOOM_TRACK_HEIGHT: 200,    // px
-    ZOOM_CURSOR_SIZE: 20       // px
+    ZOOM_TRACK_HEIGHT: 200, // px
+    ZOOM_CURSOR_SIZE: 20, // px
   },
 
   // Detail panel
   DETAIL: {
-    FADE_IN_DURATION: 300,     // ms
-    FADE_OUT_DURATION: 200,    // ms
-    PADDING_TOP: '10%'
+    FADE_IN_DURATION: 300, // ms
+    FADE_OUT_DURATION: 200, // ms
+    PADDING_TOP: "10%",
   },
 
   // Icon sizes
   ICON: {
-    GRID_VIEW: 24,             // px
+    GRID_VIEW: 24, // px
     VOLUME: 24,
-    HELP: 24
+    HELP: 24,
   },
 
   // Z-index layers
@@ -262,8 +265,8 @@ export const UI = {
     MINIMAP: 90,
     DETAIL: 80,
     STAR_NAME: 70,
-    DEBUG_GUI: 10000
-  }
+    DEBUG_GUI: 10000,
+  },
 };
 
 // ============================================================================
@@ -275,29 +278,52 @@ export const AUDIO = {
   VOLUME: {
     DEFAULT: 0.3,
     MUTED: 0.0,
-    MAX: 1.0
+    MAX: 1.0,
   },
 
   // Crossfade
-  CROSSFADE_DURATION: 2000,  // ms
+  CROSSFADE_DURATION: 2000, // ms
 
   // Autoplay handling
   AUTOPLAY: {
-    RETRY_DELAY: 1000,         // ms
-    MAX_RETRIES: 3
-  }
+    RETRY_DELAY: 1000, // ms
+    MAX_RETRIES: 3,
+  },
 };
+
+// ============================================================================
+// DRACO DECODER CONFIGURATION
+// ============================================================================
+
+export const DRACO = {
+  // Local path for offline/local-first loading (P0-1 requirement)
+  LOCAL_PATH: "src/assets/draco/",
+
+  // CDN path as fallback
+  CDN_PATH: "https://www.gstatic.com/draco/versioned/decoders/1.5.6/",
+
+  // Prefer local decoder to avoid network dependency
+  PREFER_LOCAL: true,
+};
+
+/**
+ * Get the appropriate Draco decoder path based on configuration
+ * @returns {string} The decoder path to use
+ */
+export function getDracoDecoderPath() {
+  return DRACO.PREFER_LOCAL ? DRACO.LOCAL_PATH : DRACO.CDN_PATH;
+}
 
 // ============================================================================
 // DATA PATHS
 // ============================================================================
 
-export const GITHUB_REPO = 'r0k1s-i/fediverse-with-100k-stars';
+export const GITHUB_REPO = "r0k1s-i/fediverse-with-100k-stars";
 
 export const DATA_PATHS = {
-  HIPPARCOS: 'data/hygdata_v3.csv',
+  HIPPARCOS: "data/hygdata_v3.csv",
   FEDIVERSE: `https://cdn.jsdelivr.net/gh/${GITHUB_REPO}@data/fediverse_final.json`,
-  SPECTRAL_TEXTURE: 'src/assets/textures/star_color_modified.png'
+  SPECTRAL_TEXTURE: "src/assets/textures/star_color_modified.png",
 };
 
 // ============================================================================
@@ -307,21 +333,21 @@ export const DATA_PATHS = {
 export const ANIMATION = {
   // Navigation
   NAVIGATE_TO_STAR: {
-    DURATION: 2000,           // ms
-    EASING: 'easeInOutCubic'
+    DURATION: 2000, // ms
+    EASING: "easeInOutCubic",
   },
 
   GRID_VIEW: {
-    DURATION: 1000,           // ms
-    ROTATION_STEP: 0.1        // Interpolation factor
+    DURATION: 1000, // ms
+    ROTATION_STEP: 0.1, // Interpolation factor
   },
 
   // UI transitions
   FADE: {
-    FAST: 100,   // ms
+    FAST: 100, // ms
     NORMAL: 300,
-    SLOW: 500
-  }
+    SLOW: 500,
+  },
 };
 
 // ============================================================================
@@ -338,11 +364,11 @@ export const DEBUG = {
     ERROR: 1,
     WARN: 2,
     INFO: 3,
-    DEBUG: 4
+    DEBUG: 4,
   },
 
   // Current log level (set to NONE in production)
-  CURRENT_LOG_LEVEL: 3,  // INFO
+  CURRENT_LOG_LEVEL: 3, // INFO
 
   // Performance monitoring
   SHOW_FPS: false,
@@ -351,7 +377,7 @@ export const DEBUG = {
   // Visual helpers
   SHOW_AXES: false,
   SHOW_GRID: false,
-  SHOW_RAYCAST: false
+  SHOW_RAYCAST: false,
 };
 
 // ============================================================================
@@ -360,15 +386,15 @@ export const DEBUG = {
 
 export const PHYSICS = {
   // Orbital mechanics (if implemented)
-  GRAVITATIONAL_CONSTANT: 6.674e-11,  // N⋅m²/kg²
+  GRAVITATIONAL_CONSTANT: 6.674e-11, // N⋅m²/kg²
 
   // Rotation
-  EARTH_ROTATION_PERIOD: 24,  // hours
-  EARTH_ORBITAL_PERIOD: 365.25,  // days
+  EARTH_ROTATION_PERIOD: 24, // hours
+  EARTH_ORBITAL_PERIOD: 365.25, // days
 
   // Scale factors for simulation
   TIME_SCALE: 1.0,
-  DISTANCE_SCALE: 1.0
+  DISTANCE_SCALE: 1.0,
 };
 
 // ============================================================================
@@ -464,6 +490,7 @@ export default {
   RENDERING,
   UI,
   AUDIO,
+  DRACO,
   DATA_PATHS,
   ANIMATION,
   DEBUG,
@@ -476,5 +503,6 @@ export default {
   isAtFediverseCenter,
   getGridOpacity,
   validateCameraZ,
-  scaleFediverseCoordinate
+  scaleFediverseCoordinate,
+  getDracoDecoderPath,
 };
