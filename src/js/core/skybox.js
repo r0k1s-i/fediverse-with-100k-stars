@@ -1,6 +1,7 @@
 import * as THREE from "three";
 import { RGBELoader } from "three/addons/loaders/RGBELoader.js";
 import { constrain } from "../utils/math.js";
+import { CAMERA } from "./constants.js";
 
 var skybox;
 var skyboxUniforms;
@@ -12,7 +13,7 @@ export function setupSkyboxScene() {
     60,
     window.innerWidth / window.innerHeight,
     1,
-    10000000,
+    CAMERA.FAR_CLIP,
   );
   window.cameraCube = cameraCube;
   sceneCube = new THREE.Scene();
@@ -57,7 +58,7 @@ export function initSkybox(highres) {
     },
   );
   window.skyboxTexture = textureCube; // For visual background only
-  
+
   // Load studio HDR for PBR reflections (separate from starfield background)
   loadStudioEnvironment();
   textureCube.anisotropy = window.maxAniso || 1;
@@ -125,40 +126,42 @@ export function renderSkybox() {
  */
 function loadStudioEnvironment() {
   if (!window.renderer) {
-    console.warn("[Skybox] Renderer not ready, deferring studio environment load");
+    console.warn(
+      "[Skybox] Renderer not ready, deferring studio environment load",
+    );
     return;
   }
-  
+
   const rgbeLoader = new RGBELoader();
   rgbeLoader.load(
     "src/assets/textures/studio_small_1k.hdr",
     function (texture) {
       texture.mapping = THREE.EquirectangularReflectionMapping;
-      
+
       const pmremGenerator = new THREE.PMREMGenerator(window.renderer);
       pmremGenerator.compileEquirectangularShader();
       const envMap = pmremGenerator.fromEquirectangular(texture).texture;
-      
+
       window.studioEnvMap = envMap;
-      
+
       // Apply to planetScene for PBR model reflections
       if (window.planetScene) {
         window.planetScene.environment = envMap;
         console.log("[Skybox] Studio HDR environment applied to planetScene");
       }
-      
+
       // Reduce exposure to avoid overexposure with bright HDR
       if (window.renderer) {
         window.renderer.toneMappingExposure = 0.35;
       }
-      
+
       texture.dispose();
       pmremGenerator.dispose();
     },
     undefined,
     function (err) {
       console.error("[Skybox] Error loading studio HDR:", err);
-    }
+    },
   );
 }
 

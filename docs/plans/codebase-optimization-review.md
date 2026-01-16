@@ -2,7 +2,7 @@
 
 **更新日期**: 2026-01-16
 **状态**: 🚧 进行中
-**当前阶段**: 阶段 A - P0-1 已完成
+**当前阶段**: 阶段 A - P0-1, P0-2 已完成
 **范围**: 渲染性能、交互稳定性、资源加载、可维护性与测试
 
 ---
@@ -79,7 +79,12 @@
   - 在 `constants.js` 添加 `DRACO` 配置和 `getDracoDecoderPath()` 函数
   - 修改 `planet-model.js` 使用本地优先加载策略
   - 添加单元测试 `tests/unit/draco-loader.test.js`
-- [ ] 整理常量：迁移重复数值至 `constants.js`
+- [x] 整理常量：迁移重复数值至 `constants.js` ✅ (2026-01-16)
+  - 统一 CAMERA (FOV, NEAR_CLIP, FAR_CLIP, ZOOM limits) 到 main.js, skybox.js, mousekeyboard.js
+  - 统一 VISIBILITY.MARKER (MIN_Z, MAX_Z) 到 main.js, legacymarkers.js, fediverse.js
+  - 统一 VISIBILITY.GRID.MAX_Z 到 fediverse.js
+  - 新增 VISIBILITY.GALAXY.HIDE_Z 并应用到 galaxy.js, dust.js
+  - 更新 ZOOM.MAX 从 50000 到 80000 以匹配实际使用
 - [ ] 交互判定路径合并
 
 ### 阶段 B（3-5 天）

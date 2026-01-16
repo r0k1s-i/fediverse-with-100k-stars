@@ -49,7 +49,7 @@ export const CAMERA = {
   // Zoom limits
   ZOOM: {
     MIN: 0.5, // Closest possible
-    MAX: 50000, // Farthest possible
+    MAX: 80000, // Farthest possible (galaxy view range)
     SPEED: 0.125, // Zoom interpolation speed
   },
 };
@@ -99,6 +99,11 @@ export const VISIBILITY = {
     // Label visibility zoom range
     LABEL_MIN_ZOOM: 0.2, // 20%
     LABEL_MAX_ZOOM: 0.9, // 90%
+  },
+
+  // Galaxy and dust visibility (hide when zoomed in past initial view)
+  GALAXY: {
+    HIDE_Z: 2500, // Hide galaxy/dust when z < this (at initial zoom or closer)
   },
 
   // Star name tooltip
