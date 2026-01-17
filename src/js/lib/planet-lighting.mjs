@@ -1,4 +1,6 @@
-const TARGET_MODEL_TOKEN = "the_universe.glb";
+import { MODEL_TOKENS } from "./model-config.mjs";
+
+const TARGET_MODEL_TOKEN = MODEL_TOKENS.UNIVERSE;
 
 export const PLANET_INTERNAL_LIGHT_DEFAULTS = Object.freeze({
   color: 0xffffff,

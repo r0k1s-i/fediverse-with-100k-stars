@@ -1,5 +1,9 @@
-const TARGET_MODEL_TOKEN = "universe.glb";
-const UNIVERSE_SHELL_MATERIALS = new Set(["Mat_Nucleo", "Mat_Orb", "Mat_Orb2"]);
+import {
+  MODEL_TOKENS,
+  UNIVERSE_SHELL_MATERIALS,
+  isUniverseModel,
+  isUniverseShellMaterial,
+} from "./model-config.mjs";
 
 const BASE_OVERRIDES = Object.freeze({
   transparent: false,
@@ -27,27 +31,8 @@ const SHELL_OVERRIDES = Object.freeze({
   materialKind: "standard",
 });
 
-function isTargetModel(modelName) {
-  return (
-    typeof modelName === "string" &&
-    modelName.indexOf(TARGET_MODEL_TOKEN) !== -1
-  );
-}
-
-function isUniverseShellMaterial(material) {
-  if (!material || !material.name) return false;
-  const name = material.name;
-  for (const shellName of UNIVERSE_SHELL_MATERIALS) {
-    if (name === shellName || name.startsWith(shellName + ".")) {
-      return true;
-    }
-  }
-  return false;
-}
-
 export function getPlanetMaterialOverrides(modelName, material) {
-  // Disabled - shell materials are now handled directly in planet-model.js setPlanetMesh
-  // to avoid override conflicts
+  // Disabled - shell materials are now handled directly in planet-model.js processLoadedScene
   return null;
 }
 
