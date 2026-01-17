@@ -26,7 +26,7 @@
 ## 当前状态
 
 - **更新时间**: 2026-01-17
-- **当前阶段**: 点击缩放回拉问题持续观察
+- **当前阶段**: universe.glb 玻璃外壳可见性问题复盘与排查收敛
 - **下一步行动**:
   - [x] 新增代码深度分析与优化整改计划
   - [x] 补充代码质量评估与改进建议（codebase-optimization-review.md）
@@ -37,6 +37,15 @@
   - [x] 初始化 camera.position.target.x/y 防止 NaN 黑屏
   - [x] 为 planetScene 设置独立曝光/色调映射配置
   - [ ] 在项目中对比 Sketchfab 角度/曝光截图
+  - [ ] 验证 `renderer.sortObjects=false` 是否导致透明排序错误
+  - [ ] 验证强制透明时 `depthWrite` 是否仍为 true 造成遮挡
+  - [ ] 复核 `.001` 重复节点命名变化是否导致隐藏逻辑失效
+  - [x] 为 `Mat_Nucleo` / `Mat_Orb` 添加透明材质覆盖（TDD）
+  - [x] planet render pass 启用透明排序（TDD）
+  - [ ] 为 universe.glb 非壳体材质添加金属质感增强（TDD）
+  - [x] 调整壳体玻璃透明度与透射强度以提升可见性（TDD）
+  - [x] 为壳体增加轻度 emissive 提升玻璃可见性（TDD）
+  - [x] 输出本轮调试复盘与工具/思路沉淀（postmortem）
   - [x] 加入顶置聚光灯以模拟王座座面光束
   - [x] 聚光灯仅对王座模型生效，并随模型旋转
   - [x] 为克隆后的行星模型保留 `modelName` 以便灯光匹配
@@ -69,6 +78,15 @@
   - [x] 修复近视距星空背景消失
   - [x] 确认 HDR 反射环境贴图应用时机
   - [ ] 在 debug 流程中需用户确认后再提交代码
+  - [x] 为 the_universe.glb 添加透明材质覆盖（不影响其他模型）
+  - [x] 完成 the_universe 透明效果单元测试并等待审批
+  - [x] the_universe 材质升级为 Physical 以提升透射
+  - [x] the_universe 添加可见性护栏参数（提高不透明与自发光）
+  - [x] 增加 the_universe 模型加载/边界调试日志
+  - [x] 增加 the_universe 材质与可见性调试日志
+  - [x] 为 the_universe 添加内部点光源提升可见性
+  - [x] 提升 the_universe 内部点光源强度（高亮验证）
+  - [x] 增加 the_universe 材质统计调试日志（材质类型/贴图/顶点色）
 
 ---
 
@@ -209,6 +227,7 @@ go test -v
   - **日志**: 增加 `window.__zoomDebug` 开关，覆盖 `zoomIn`/滚轮/minimap 追踪
   - **现象**: 以上改动后未能稳定复现“回拉到中视距”问题，进入观察期
   - **清理**: 移除临时缩放追踪日志，保留测试与修复
+- 📝 **复盘**: 输出 `universe.glb` 玻璃外壳不可见/内部遮挡的调试事故分析报告
 
 ### 2026-01-15
 - ✨ **功能**: 添加 GLB 行星模型渲染系统
@@ -325,6 +344,128 @@ go test -v
 ### 之前
 - ✅ Phase 1-4 数据处理管线完成
 - ✅ 59个单元测试全部通过
+
+---
+
+## 🔬 universe.glb 渲染问题排查记录 (2026-01-17)
+
+### 问题描述
+mastodon.social 专属模型 (the_universe.glb → universe.glb) 无法正确渲染：
+- 最初显示**纯黑色**
+- 调整后显示**不透明巧克力色**
+- 无法看到模型内部结构
+- 无法看到旋转效果
+- 在 https://gltf-viewer.donmccurdy.com/ 中加载效果正确
+
+### ✅ 已确认的事实
+
+| 项目 | 结论 |
+|------|------|
+| 模型加载 | ✅ 成功，GLTFLoader 正常解析 |
+| 模型尺寸 | ✅ 正常 (maxDim ≈ 125-131) |
+| 模型可见性 | ✅ `visible: true` |
+| 材质类型 | ✅ MeshPhysicalMaterial (支持 clearcoat) |
+| 材质数量 | ✅ 23个材质被正确识别 |
+| 调试面板 | ✅ 材质修改生效 (`Applied to 23 materials`) |
+| 透明材质 | ✅ Mat_Nucleo (opacity=0.73), Mat_Orb (opacity=0.66) 正确设为 transparent |
+| GLB 扩展 | ✅ `KHR_materials_clearcoat` 扩展存在 |
+| planetScene 渲染 | ✅ `renderer.render(planetScene, planetCamera)` 被调用 |
+
+### ❌ 已排除的问题
+
+| 排查方向 | 结果 |
+|----------|------|
+| 光照不足 | ❌ 增加内部点光源无效 |
+| 材质类型错误 | ❌ 从 MeshBasic 换回 Standard/Physical 仍有问题 |
+| depthWrite 错误 | ❌ 修正为 `!transparent` 无效 |
+| planetCamera far 太小 | ❌ 从 100 改为 500 解决了相机裁剪问题 |
+| 纹理丢失 | ❌ 模型本身无纹理 (baseColorTexture: None) |
+| 环境贴图未加载 | ❌ HDR 环境贴图已应用 |
+| 色调映射曝光 | ❌ 调整 exposure 有视觉变化但不解决问题 |
+
+### ⚠️ 当前核心问题
+
+1. **GLB 包含两套模型**:
+   - 原始模型 (Node 0-23): 使用 material 0-4，包含 `alphaMode: BLEND` 透明材质
+   - 副本模型 (Node 28-40, 名称含 `.001`): 使用 material 5-10，全部 `alphaMode: OPAQUE`
+
+2. **Three.js 加载后名称变化**: 
+   - GLB 中 `pPipe2.001` → Three.js 中 `pPipe2001` (点号被移除)
+
+3. **隐藏副本尝试**:
+   - 代码已添加隐藏 `.001` 节点逻辑
+   - 日志显示 `Hidden duplicate objects: 25`
+   - 但**视觉上无变化**
+
+4. **强制透明尝试**:
+   - 代码修改 planetScene 所有 mesh 材质为 `transparent=true, opacity=0.3`
+   - 日志显示修改成功
+   - 但**视觉上无变化**
+5. **最新验证结论**:
+   - 仅开启 `renderer.sortObjects=true` 即出现正确透明层级
+   - `Mat_Nucleo` / `Mat_Orb` 需设为 `opacity<1` 且 `depthWrite=false` 才能看到内部
+
+### ✅ 关键发现 (最新)
+
+**Visibility 测试结果**:
+- `👻 Hide ALL Meshes` → 模型**完全消失** ✅
+- `👁️ Show ALL Meshes` → 模型**重新出现** ✅
+- 共 25 个 mesh 被正确识别和控制
+
+**结论**: 
+- `obj.visible = false` **确实生效**
+- 问题在于**隐藏了错误的对象**
+- 我们的隐藏逻辑 (`name.endsWith("001") && !name.includes("_")`) 匹配到了 25 个对象
+- 但这 25 个可能**不是**遮挡透明效果的对象
+
+**Mesh 命名分析**:
+```
+原始 mesh (应保留):    polySurface1_Mat_Aro_0, pSphere2_Mat_Nucleo_0 等
+副本 mesh (应隐藏):    polySurface1001, pSphere2001 等
+```
+
+### 🔍 下一步排查方向
+
+1. **验证隐藏逻辑命中的是哪些 mesh**:
+   - 打印被隐藏的 mesh 名称列表
+   - 确认是否真的是 `.001` 副本
+
+2. **检查原始/副本是否空间重叠**:
+   - 如果副本在原始后面，隐藏副本不会有视觉变化
+   - 需要检查两套模型的位置关系
+
+3. **强制只保留透明材质的 mesh**:
+   - 只显示 Mat_Nucleo 和 Mat_Orb 材质的 mesh
+   - 隐藏所有其他 mesh 看效果
+
+4. **检查 gltf-viewer 是否也加载了两套模型**:
+   - 在外部 viewer 中检查场景层级
+   - 对比 Three.js 加载结果
+5. **透明深度写入**:
+   - 强制透明时需同步设置 `depthWrite=false`
+   - 否则透明壳体仍会遮挡内部结构
+
+### 📁 本次修改的文件
+
+| 文件 | 修改内容 |
+|------|----------|
+| `planet-model.js` | 添加 universe.glb 重复节点隐藏逻辑、材质调试日志 |
+| `planet-material-overrides.mjs` | 禁用 universe.glb 材质覆盖、修复颜色赋值、保留纹理 |
+| `main.js` | 增加 planetCamera.far、添加渲染通道调试日志 |
+| `index.html` | 添加 lil-gui CDN 映射 |
+| `debug/planet-debug-gui.js` | 新建实时调试面板 (G键切换) |
+
+### 🛠️ 添加的调试工具
+
+- **lil-gui 调试面板** (按 G 键显示/隐藏):
+  - Renderer / HDR: 曝光、色调映射、环境贴图强度
+  - Lighting: 方向光、环境光参数
+  - Material Overrides: 金属度、粗糙度、透明度、自发光
+  - 🔮 Force All Transparent: 强制所有材质透明
+  - 🔍 Log All Materials: 输出所有材质详情
+  - 👻 Hide ALL Meshes: 隐藏所有 mesh (验证 visibility 生效)
+  - 👁️ Show ALL Meshes: 显示所有 mesh
+  - 📋 Export Config: 导出当前配置
 
 ---
 

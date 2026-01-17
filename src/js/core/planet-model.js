@@ -6,15 +6,25 @@
  */
 import * as THREE from "three";
 import { attachPlanetModelName } from "../lib/planet-render-config.mjs";
+import {
+  createPlanetInternalLight,
+  getPlanetInternalLightConfig,
+  shouldAttachPlanetInternalLight,
+} from "../lib/planet-lighting.mjs";
+import {
+  applyPlanetMaterialOverrides,
+  getPlanetMaterialOverrides,
+} from "../lib/planet-material-overrides.mjs";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { DRACOLoader } from "three/addons/loaders/DRACOLoader.js";
 import { getDracoDecoderPaths } from "./constants.js";
 import { state } from "./state.js";
+import { Gyroscope } from "./Gyroscope.js";
+import { AssetManager } from "./asset-manager.js";
 
 // Explicit Draco probe model - used to verify decoder before parallel loading
 const DRACO_PROBE_MODEL = "src/assets/textures/kamistar.glb";
 
-// All models use KHR_draco_mesh_compression
 const PLANET_GLB_PATHS = [
   DRACO_PROBE_MODEL,
   "src/assets/textures/planet_330_the_geographer.glb",
@@ -25,6 +35,12 @@ const PLANET_GLB_PATHS = [
   "src/assets/textures/planet_328_the_businessman.glb",
   "src/assets/textures/planet_329_lamplighter.glb",
 ];
+
+const SUPERGIANT_MODELS = {
+  "mastodon.social": "src/assets/textures/universe.glb",
+  "pixelfed.social": "src/assets/textures/disco_flux.glb",
+  "misskey.io": "src/assets/textures/disco_ball_with_colored_lights.glb",
+};
 
 let loader;
 let dracoLoader;
@@ -38,6 +54,11 @@ let decoderReady = false;
 let decoderInitPromise = null;
 const loadedModelCache = new Map(); // path -> scene
 const pendingLoads = new Map(); // path -> Promise
+
+// Glow textures (loaded once)
+let haloTexture = null;
+let coronaTexture = null;
+const textureLoader = AssetManager.getInstance();
 
 /**
  * Initialize the GLTF loader with DRACOLoader (first call only)
@@ -54,7 +75,6 @@ function getLoader() {
     loader.setDRACOLoader(dracoLoader);
     // Set initial decoder path
     dracoLoader.setDecoderPath(decoderPaths[0]);
-    console.log(`[Draco] Using decoder path: ${decoderPaths[0]}`);
   }
 
   return loader;
@@ -73,7 +93,6 @@ function switchToFallbackDecoder() {
     currentDecoderPathIndex++;
     const fallbackPath = decoderPaths[currentDecoderPathIndex];
     dracoLoader.setDecoderPath(fallbackPath);
-    console.log(`[Draco] Switching to fallback decoder: ${fallbackPath}`);
     return true;
   }
   return false;
@@ -250,7 +269,7 @@ export async function loadRandomModel() {
 
 /**
  * Preload all planet GLB models with fallback decoder support.
- * 
+ *
  * NOTE: This function is kept for backward compatibility but now
  * only initializes the decoder. Models are loaded on-demand.
  * Call preloadAllModels() to eagerly load all models.
@@ -281,7 +300,6 @@ export async function preloadAllModels() {
   const loadPromises = PLANET_GLB_PATHS.map((path) => loadModelOnDemand(path));
   await Promise.all(loadPromises);
 
-  console.log(`[Planet] Preloaded all ${planetBaseScenes.length} models.`);
   return planetBaseScenes;
 }
 
@@ -295,6 +313,46 @@ function processLoadedScene(scene, modelName) {
     scene.userData = scene.userData || {};
     scene.userData.modelName = modelName;
   }
+  if (!scene) {
+    console.warn("[Planet] Loaded scene is empty:", modelName);
+    return;
+  }
+  
+  // For universe.glb: hide duplicate .001 meshes that block the original transparent model
+  if (modelName && modelName.includes("universe")) {
+    let hiddenCount = 0;
+    
+    scene.traverse((obj) => {
+      const name = obj.name || "";
+      const matName = obj.isMesh && obj.material ? (obj.material.name || "") : "";
+      const isShellMaterial = matName.startsWith("Mat_Nucleo") || matName.startsWith("Mat_Orb") || matName.startsWith("Mat_Orb2");
+      
+      // GLTFLoader removes dots, so "pPipe2.001" becomes "pPipe2001"
+      // Match names ending with "001" that are duplicates (parent containers)
+      // BUT don't hide shell meshes
+      if (name.endsWith("001") && !name.includes("_") && !isShellMaterial) {
+        obj.visible = false;
+        hiddenCount++;
+      }
+      
+      // Also hide meshes using .001 materials (by checking material name)
+      // BUT keep shell materials (Mat_Nucleo, Mat_Orb) visible for glass effect
+      if (obj.isMesh && obj.material) {
+        if (matName.includes(".001") && !isShellMaterial) {
+          obj.visible = false;
+          hiddenCount++;
+        }
+      }
+    });
+    
+    // Set render order for transparent objects
+    scene.traverse((obj) => {
+      if (obj.isMesh && obj.material && obj.material.transparent) {
+        obj.renderOrder = 100; // Render transparent objects last
+      }
+    });
+  }
+  
   scene.traverse((obj) => {
     if (obj.isMesh) {
       // Ensure smooth normals - compute if missing or flat
@@ -303,7 +361,6 @@ function processLoadedScene(scene, modelName) {
         const hasNormals = obj.geometry.attributes.normal !== undefined;
         if (!hasNormals) {
           obj.geometry.computeVertexNormals();
-          console.log(`[Planet] Computed normals for: ${obj.name}`);
         }
       }
 
@@ -312,6 +369,17 @@ function processLoadedScene(scene, modelName) {
           ? obj.material
           : [obj.material];
         mats.forEach((mat) => {
+          
+          // Force upgrade to MeshPhysicalMaterial for universe.glb to support clearcoat
+          if (modelName && modelName.includes("universe") && mat.isMeshStandardMaterial && !mat.isMeshPhysicalMaterial) {
+            const physMat = new THREE.MeshPhysicalMaterial();
+            THREE.MeshStandardMaterial.prototype.copy.call(physMat, mat);
+            physMat.clearcoat = 1.0;
+            physMat.clearcoatRoughness = 0.0;
+            physMat.name = mat.name;
+            obj.material = physMat;
+          }
+          
           // Keep original GLB material parameters from Sketchfab
           // Only adjust texture filtering for quality
           [
@@ -347,7 +415,6 @@ function processLoadedScene(scene, modelName) {
             // Lamp glass panels (mat0_box_mat0_box)
             const isGlassPanel = matName.includes("mat0_box_mat0");
             if (isGlassPanel) {
-              console.log("[Lamplighter] Applying emissive to glass:", matName);
               mat.emissive = new THREE.Color(0xffdd88);
               mat.emissiveIntensity = 2.0;
               mat.transparent = true;
@@ -381,6 +448,98 @@ export function isPlanetModelLoaded() {
 }
 
 /**
+ * Load glow textures for planet halo effect
+ */
+function loadGlowTextures() {
+  if (!haloTexture) {
+    haloTexture = textureLoader.loadTexture("src/assets/textures/sun_halo.png");
+  }
+  if (!coronaTexture) {
+    coronaTexture = textureLoader.loadTexture("src/assets/textures/corona.png");
+  }
+}
+
+/**
+ * Create halo plane for glow effect around planet
+ * @param {Object} uniforms - Shader uniforms
+ * @returns {THREE.Mesh}
+ */
+function makePlanetHalo(uniforms) {
+  const shaderList = state.shaderList;
+  if (!shaderList || !shaderList.starhalo) {
+    // Fallback to basic material if shaders not loaded
+    const haloGeo = new THREE.PlaneGeometry(0.00000022, 0.00000022);
+    const haloMat = new THREE.MeshBasicMaterial({
+      map: haloTexture,
+      blending: THREE.AdditiveBlending,
+      transparent: true,
+      depthTest: false,
+      depthWrite: false,
+      opacity: 0.8,
+    });
+    return new THREE.Mesh(haloGeo, haloMat);
+  }
+
+  const haloGeo = new THREE.PlaneGeometry(0.00000022, 0.00000022);
+  const haloMaterial = new THREE.ShaderMaterial({
+    uniforms: uniforms,
+    vertexShader: shaderList.starhalo.vertex,
+    fragmentShader: shaderList.starhalo.fragment,
+    blending: THREE.AdditiveBlending,
+    depthTest: false,
+    depthWrite: false,
+    transparent: true,
+    polygonOffset: true,
+    polygonOffsetFactor: 1,
+    polygonOffsetUnits: 100,
+  });
+
+  const halo = new THREE.Mesh(haloGeo, haloMaterial);
+  halo.position.set(0, 0, 0);
+  return halo;
+}
+
+/**
+ * Create glow plane for corona effect around planet
+ * @param {Object} uniforms - Shader uniforms
+ * @returns {THREE.Mesh}
+ */
+function makePlanetGlow(uniforms) {
+  const shaderList = state.shaderList;
+  if (!shaderList || !shaderList.corona) {
+    // Fallback to basic material if shaders not loaded
+    const glowGeo = new THREE.PlaneGeometry(0.0000012, 0.0000012);
+    const glowMat = new THREE.MeshBasicMaterial({
+      map: coronaTexture,
+      blending: THREE.AdditiveBlending,
+      transparent: true,
+      depthTest: true,
+      depthWrite: false,
+      opacity: 0.6,
+    });
+    return new THREE.Mesh(glowGeo, glowMat);
+  }
+
+  const glowGeo = new THREE.PlaneGeometry(0.0000012, 0.0000012);
+  const glowMaterial = new THREE.ShaderMaterial({
+    uniforms: uniforms,
+    blending: THREE.AdditiveBlending,
+    fragmentShader: shaderList.corona.fragment,
+    vertexShader: shaderList.corona.vertex,
+    transparent: true,
+    polygonOffset: true,
+    polygonOffsetFactor: -1,
+    polygonOffsetUnits: 100,
+    depthTest: true,
+    depthWrite: true,
+  });
+
+  const glow = new THREE.Mesh(glowGeo, glowMaterial);
+  glow.position.set(0, 0, 0);
+  return glow;
+}
+
+/**
  * Create a planet model instance compatible with window.starModel API.
  * @returns {THREE.Object3D} Planet model with setScale, setSpectralIndex, etc.
  */
@@ -388,15 +547,64 @@ export function createPlanetModel() {
   const root = new THREE.Object3D();
   root.name = "planetModelRoot";
 
+  // Load glow textures
+  loadGlowTextures();
+
+  // Get color lookup texture for spectral coloring
+  const starColorGraph = window.starColorGraph || window.fediverseColorGraph;
+  const sunHaloColorTexture = textureLoader.loadTexture(
+    "src/assets/textures/halo_colorshift.png",
+  );
+
+  // Setup uniforms for halo and glow shaders
+  const haloUniforms = {
+    texturePrimary: { value: haloTexture },
+    textureColor: { value: sunHaloColorTexture },
+    time: { value: 0 },
+    textureSpectral: { value: starColorGraph },
+    spectralLookup: { value: 0.5 },
+  };
+
+  const coronaUniforms = {
+    texturePrimary: { value: coronaTexture },
+    textureSpectral: { value: starColorGraph },
+    spectralLookup: { value: 0.5 },
+  };
+
+  // Store uniforms on root for later updates
+  root.haloUniforms = haloUniforms;
+  root.coronaUniforms = coronaUniforms;
+
   const placeholderGeo = new THREE.SphereGeometry(7.35144e-8, 32, 16);
   const placeholderMat = new THREE.MeshStandardMaterial({
-    color: 0x888888,
-    roughness: 0.2, // Reduced for shinier look
-    metalness: 0.8, // Increased for metallic look
+    color: 0xffeedd,
+    roughness: 0.5,
+    metalness: 0.0,
+    transparent: true,
+    opacity: 0.4,
+    depthWrite: false,
+    side: THREE.DoubleSide,
+    emissive: new THREE.Color(0xffeedd),
+    emissiveIntensity: 0.8,
   });
   const placeholderMesh = new THREE.Mesh(placeholderGeo, placeholderMat);
   placeholderMesh.name = "planetPlaceholder";
   root.add(placeholderMesh);
+
+  // Create gyroscope for camera-facing glow elements
+  const gyro = new Gyroscope();
+  root.add(gyro);
+  root.gyro = gyro;
+
+  // Add halo effect
+  const planetHalo = makePlanetHalo(haloUniforms);
+  gyro.add(planetHalo);
+  root.planetHalo = planetHalo;
+
+  // Add glow/corona effect
+  const planetGlow = makePlanetGlow(coronaUniforms);
+  gyro.add(planetGlow);
+  root.planetGlow = planetGlow;
 
   // Helper to process and add a specific base model
   root.setPlanetMesh = function (baseScene) {
@@ -414,16 +622,64 @@ export function createPlanetModel() {
     const planetInstance = baseScene.clone(true);
     planetInstance.name = "planetMesh";
     attachPlanetModelName(planetInstance, baseScene);
+    const modelName = baseScene.userData ? baseScene.userData.modelName : "";
 
     // Reset rotation to ensure clean state
     planetInstance.rotation.set(0, 0, 0);
+    
+    // For universe.glb: hide duplicate meshes AND apply shell glass effect
+    if (modelName && modelName.includes("universe")) {
+      let hiddenCount = 0;
+      const shellNames = new Set(["Mat_Nucleo", "Mat_Orb"]);
+      
+      planetInstance.traverse((obj) => {
+        const name = obj.name || "";
+        const matName = obj.isMesh && obj.material ? (obj.material.name || "") : "";
+        const isShellMaterial = matName.startsWith("Mat_Nucleo") || matName.startsWith("Mat_Orb");
+        
+        // Hide .001 suffix duplicates (opaque copies blocking transparent originals)
+        // But keep shell materials visible
+        if (name.endsWith("001") && !name.includes("_") && !isShellMaterial) {
+          obj.visible = false;
+          hiddenCount++;
+        }
+        // Also hide by material name, but keep shell materials
+        if (obj.isMesh && obj.material && !isShellMaterial) {
+          if (matName.includes(".001")) {
+            obj.visible = false;
+            hiddenCount++;
+          }
+        }
+        
+
+      });
+    }
 
     const meshesToRemove = [];
     planetInstance.traverse((obj) => {
       if (obj.isMesh) {
+        if (!obj.geometry) {
+          console.warn("[Planet] Mesh missing geometry:", obj.name);
+        }
         obj.frustumCulled = false;
         obj.castShadow = true; // Enable shadows casting
         obj.receiveShadow = true; // Enable shadows receiving
+
+        if (obj.material) {
+          const mat = obj.material;
+          const overrides = getPlanetMaterialOverrides(modelName, mat);
+          if (overrides) {
+            const updated = applyPlanetMaterialOverrides(mat, overrides, THREE);
+            if (updated && updated !== mat) {
+              obj.material = updated;
+            }
+            // Set renderOrder on mesh for transparent sorting
+            if (overrides.renderOrder !== undefined) {
+              obj.renderOrder = overrides.renderOrder;
+            }
+          }
+        }
+
         const name = (obj.name || "").toLowerCase();
         if (
           name.includes("ring") ||
@@ -456,6 +712,17 @@ export function createPlanetModel() {
     const center = box.getCenter(new THREE.Vector3());
     planetInstance.position.sub(center.multiplyScalar(finalNormScale));
 
+    if (shouldAttachPlanetInternalLight(modelName)) {
+      const lightConfig = getPlanetInternalLightConfig({
+        position: { x: 0, y: 0, z: 0 },
+      });
+      const internalLight = createPlanetInternalLight(THREE, lightConfig);
+      if (internalLight) {
+        internalLight.name = "planetInternalLight";
+        planetInstance.add(internalLight);
+      }
+    }
+
     this.add(planetInstance);
     this._planetMesh = planetInstance;
     this._baseScale = finalNormScale;
@@ -465,6 +732,28 @@ export function createPlanetModel() {
     }
 
     planetInstance.visible = this.visible;
+    
+    // Apply universe.glb shell glass effect as FINAL step (same as working console script)
+    if (modelName && modelName.includes("universe")) {
+      const shellNames = new Set(["Mat_Nucleo", "Mat_Orb"]);
+      this._planetMesh.traverse((obj) => {
+        if (!obj.isMesh || !obj.material) return;
+        const mats = Array.isArray(obj.material) ? obj.material : [obj.material];
+        mats.forEach((m) => {
+          if (shellNames.has(m.name)) {
+            m.transparent = true;
+            m.opacity = 0.25;
+            m.depthWrite = false;
+            m.depthTest = true;
+            m.side = THREE.DoubleSide;
+            obj.renderOrder = 10;
+            if ("transmission" in m) m.transmission = 0.6;
+            if ("thickness" in m) m.thickness = 0.2;
+            m.needsUpdate = true;
+          }
+        });
+      });
+    }
   };
 
   root.pickRandomModel = function () {
@@ -484,6 +773,21 @@ export function createPlanetModel() {
     });
   };
 
+  root.setModelForDomain = function (domain) {
+    const modelPath = SUPERGIANT_MODELS[domain];
+    if (!modelPath) {
+      this.pickRandomModel();
+      return;
+    }
+
+    const self = this;
+    loadModelOnDemand(modelPath).then((scene) => {
+      if (scene) {
+        self.setPlanetMesh(scene);
+      }
+    });
+  };
+
   // No eager loading - models will be loaded on-demand when pickRandomModel is called
 
   root._currentSpectralIndex = 0.5;
@@ -492,6 +796,17 @@ export function createPlanetModel() {
 
   root.setSpectralIndex = function (index) {
     this._currentSpectralIndex = index;
+
+    // Constrain spectral value to 0-1 range
+    const spectralValue = Math.max(0, Math.min(1, (index + 0.3) / 1.82));
+
+    // Update halo and corona uniforms
+    if (this.haloUniforms) {
+      this.haloUniforms.spectralLookup.value = spectralValue;
+    }
+    if (this.coronaUniforms) {
+      this.coronaUniforms.spectralLookup.value = spectralValue;
+    }
   };
 
   root.setScale = function (scale) {
@@ -511,6 +826,11 @@ export function createPlanetModel() {
     if (placeholder) {
       placeholder.scale.set(scale, scale, scale);
     }
+
+    // Scale the gyro (halo and glow) proportionally
+    if (this.gyro) {
+      this.gyro.scale.set(scale, scale, scale);
+    }
   };
 
   root.randomizeRotationSpeed = function () {
@@ -522,6 +842,14 @@ export function createPlanetModel() {
   };
 
   root.update = function () {
+    // Update shader time uniforms
+    const shaderTiming = window.shaderTiming || 0;
+    const rotateYAccumulate = window.rotateYAccumulate || 0;
+
+    if (this.haloUniforms) {
+      this.haloUniforms.time.value = shaderTiming + rotateYAccumulate;
+    }
+
     // Rotation logic moved to inner mesh to persist across frames
     // because root.rotation is overwritten by main.js in animate()
     if (this._planetMesh) {
@@ -530,6 +858,11 @@ export function createPlanetModel() {
       if (this._planetMesh.visible !== this.visible) {
         this._planetMesh.visible = this.visible;
       }
+    }
+
+    // Sync gyro visibility with root
+    if (this.gyro) {
+      this.gyro.visible = this.visible;
     }
   };
 

@@ -8,6 +8,7 @@
 import * as THREE from "three";
 import { AUToLY } from "../utils/app.js";
 import { createPlanetModel } from "./planet-model.js";
+import { isMajorFediverseInstance } from "./fediverse-interaction.js";
 
 export function makeStarModels() {
   // Models are loaded on-demand when pickRandomModel is called
@@ -27,7 +28,7 @@ function hideAllSubStars() {
   }
 }
 
-export function setStarModel(position, name) {
+export function setStarModel(position, domain) {
   var starModel = window.starModel;
   var localRoot = window.localRoot;
 
@@ -47,24 +48,25 @@ export function setStarModel(position, name) {
       ? position.clone()
       : new THREE.Vector3(position.x, position.y, position.z);
 
-  // 检查是否为同一个实例，避免重复点击时模型随机变化
   var trackedGalaxyPosition =
     starModel.userData && starModel.userData.galaxyPosition;
   var isNewInstance =
     !trackedGalaxyPosition || trackedGalaxyPosition.distanceTo(galaxyPos) > 0.1;
 
   starModel.userData.galaxyPosition = galaxyPos;
+  starModel.userData.instanceDomain = domain;
 
   starModel.setSpectralIndex(0.5);
   starModel.setScale(1.0);
 
-  // 只有切换到新实例时才随机选择模型和旋转速度
   if (isNewInstance) {
     if (typeof starModel.randomizeRotationSpeed === "function") {
       starModel.randomizeRotationSpeed();
     }
 
-    if (typeof starModel.pickRandomModel === "function") {
+    if (isMajorFediverseInstance(domain) && typeof starModel.setModelForDomain === "function") {
+      starModel.setModelForDomain(domain);
+    } else if (typeof starModel.pickRandomModel === "function") {
       starModel.pickRandomModel();
     }
   }

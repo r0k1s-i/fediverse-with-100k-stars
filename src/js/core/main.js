@@ -70,6 +70,7 @@ import {
   applyPlanetShadowConfig,
   getPlanetShadowConfig,
 } from "../lib/planet-shadow-config.mjs";
+import { initPlanetDebugGUI } from "../debug/planet-debug-gui.js";
 
 import {
   updateMinimap,
@@ -297,7 +298,7 @@ function initScene() {
   var aspect = screenWidth / screenHeight;
   if (isNaN(aspect) || !isFinite(aspect)) aspect = 1.0;
 
-  var planetCamera = new THREE.PerspectiveCamera(45, aspect, 0.1, 100.0);
+  var planetCamera = new THREE.PerspectiveCamera(45, aspect, 0.1, 500.0);
   planetCamera.position.set(0, 0, 3);
 
   planetScene.add(planetCamera);
@@ -357,11 +358,6 @@ function initScene() {
   renderer.shadowMap.type = THREE.PCFSoftShadowMap; // Soft shadows
 
   window.renderer = renderer;
-  console.log("[DEBUG] Renderer created:", {
-    logarithmicDepthBuffer: renderer.capabilities.logarithmicDepthBuffer,
-    maxPrecision: renderer.capabilities.precision,
-    antialias: antialias,
-  });
 
   if (enableSkybox) {
     setupSkyboxScene();
@@ -380,7 +376,7 @@ function initScene() {
   renderer.domElement.style.height = screenHeight + "px";
 
   renderer.autoClear = false;
-  renderer.sortObjects = false;
+  renderer.sortObjects = true;
 
   maxAniso = renderer.capabilities.getMaxAnisotropy();
   window.maxAniso = maxAniso;
@@ -621,6 +617,9 @@ function sceneSetup() {
     starModel.visible = false;
     window.starModel = starModel;
     window.enableStarModel = enableStarModel;
+    
+    // Initialize debug GUI for planet materials/lighting
+    initPlanetDebugGUI();
   }
 
   state.pSystem = generateFediverseInstances();
@@ -864,6 +863,7 @@ function render() {
       THREE,
       planetRenderConfig,
     );
+    
     renderer.clearDepth();
     renderer.render(window.planetScene, window.planetCamera);
     restorePlanetRenderConfig(renderer, prevRendererState);

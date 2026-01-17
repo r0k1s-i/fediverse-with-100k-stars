@@ -52,6 +52,7 @@ const mockRenderer = {
   toneMapping: "legacy",
   toneMappingExposure: 1.0,
   outputColorSpace: "legacy",
+  sortObjects: false,
 };
 
 const mockThree = {
@@ -63,10 +64,12 @@ const prev = applyPlanetRenderConfig(mockRenderer, mockThree, defaults);
 assert.equal(mockRenderer.toneMapping, "aces");
 assert.equal(mockRenderer.outputColorSpace, "srgb");
 assert.equal(mockRenderer.toneMappingExposure, defaults.exposure);
+assert.equal(mockRenderer.sortObjects, true);
 assert.deepEqual(prev, {
   toneMapping: "legacy",
   toneMappingExposure: 1.0,
   outputColorSpace: "legacy",
+  sortObjects: false,
 });
 
 restorePlanetRenderConfig(mockRenderer, prev);
