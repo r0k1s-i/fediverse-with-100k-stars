@@ -2,6 +2,7 @@ export const PLANET_RENDER_DEFAULTS = Object.freeze({
   exposure: 0.35,
   toneMapping: "ACESFilmicToneMapping",
   outputColorSpace: "SRGBColorSpace",
+  sortObjects: true,
   spotlight: Object.freeze({
     name: "planetSpotKeyTop",
     modelMatch: "planet_325_the_king",
@@ -54,6 +55,7 @@ export function applyPlanetRenderConfig(renderer, three, config) {
     toneMapping: renderer.toneMapping,
     toneMappingExposure: renderer.toneMappingExposure,
     outputColorSpace: renderer.outputColorSpace,
+    sortObjects: renderer.sortObjects,
   };
 
   const resolved = getPlanetRenderConfig(config);
@@ -69,6 +71,9 @@ export function applyPlanetRenderConfig(renderer, three, config) {
   if (typeof resolved.exposure === "number") {
     renderer.toneMappingExposure = resolved.exposure;
   }
+  if (typeof resolved.sortObjects === "boolean") {
+    renderer.sortObjects = resolved.sortObjects;
+  }
 
   return prev;
 }
@@ -78,6 +83,7 @@ export function restorePlanetRenderConfig(renderer, prev) {
   renderer.toneMapping = prev.toneMapping;
   renderer.toneMappingExposure = prev.toneMappingExposure;
   renderer.outputColorSpace = prev.outputColorSpace;
+  renderer.sortObjects = prev.sortObjects;
 }
 
 export function createPlanetSpotlight(three, config) {

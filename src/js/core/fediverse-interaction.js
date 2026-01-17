@@ -141,7 +141,7 @@ export function updateFediverseInteraction() {
 
       if (needsUpdate) {
         if (window.setStarModel) {
-          window.setStarModel(closestInst.position, closestInst.name);
+          window.setStarModel(closestInst.position, closestInst.domain);
         } else {
           starModel.position.copy(closestInst.position);
         }
@@ -163,16 +163,18 @@ export function updateFediverseInteraction() {
           starModel.randomizeSolarFlare();
         }
 
-        // Only randomize properties if it's a new instance to prevent flickering
-        if (isNewInstance) {
-          if (typeof starModel.randomizeRotationSpeed === "function") {
-            starModel.randomizeRotationSpeed();
-          }
+          // Only randomize properties if it's a new instance to prevent flickering
+          if (isNewInstance) {
+            if (typeof starModel.randomizeRotationSpeed === "function") {
+              starModel.randomizeRotationSpeed();
+            }
 
-          if (typeof starModel.pickRandomModel === "function") {
-            starModel.pickRandomModel();
+            if (isMajorFediverseInstance(closestInst.domain) && typeof starModel.setModelForDomain === "function") {
+              starModel.setModelForDomain(closestInst.domain);
+            } else if (typeof starModel.pickRandomModel === "function") {
+              starModel.pickRandomModel();
+            }
           }
-        }
 
         starModel.visible = true;
       }
@@ -491,7 +493,7 @@ function onFediverseClick(event) {
     if (isNewInstance) {
       // 星球模型放置在实例的位置
       if (window.setStarModel) {
-        window.setStarModel(position, data.name);
+        window.setStarModel(position, data.domain);
       } else {
         starModel.position.copy(position);
       }

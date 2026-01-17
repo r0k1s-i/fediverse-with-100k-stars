@@ -9,3 +9,6 @@ scripts/temp/
 # Data directory
 data/
 
+# Node.js
+package-lock.json
+package.json
