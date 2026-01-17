@@ -6,18 +6,10 @@
  */
 
 import * as THREE from "three";
-import { AUToLY } from "../utils/app.js";
-import { createPlanetModel } from "./planet-model.js";
+import { makeStarModels } from "./planet-model.js";
 import { isMajorFediverseInstance } from "./fediverse-interaction.js";
 
-export function makeStarModels() {
-  // Models are loaded on-demand when pickRandomModel is called
-  const planet = createPlanetModel();
-
-  planet.substars = [];
-
-  return planet;
-}
+export { makeStarModels };
 
 function hideAllSubStars() {
   var starModel = window.starModel;
@@ -76,5 +68,4 @@ export function setStarModel(position, domain) {
   if (localRoot) localRoot.updateMatrixWorld(true);
 }
 
-window.makeStarModels = makeStarModels;
 window.setStarModel = setStarModel;

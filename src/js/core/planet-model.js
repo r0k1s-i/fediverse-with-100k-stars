@@ -12,9 +12,13 @@ import {
   shouldAttachPlanetInternalLight,
 } from "../lib/planet-lighting.mjs";
 import {
-  applyPlanetMaterialOverrides,
-  getPlanetMaterialOverrides,
-} from "../lib/planet-material-overrides.mjs";
+  isUniverseModel,
+  isLamplighterModel,
+  isUniverseShellMaterial,
+  hasUniverseShellMaterial,
+  isDuplicateMeshName,
+  isDuplicateMaterialName,
+} from "../lib/model-config.mjs";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { DRACOLoader } from "three/addons/loaders/DRACOLoader.js";
 import { getDracoDecoderPaths } from "./constants.js";
@@ -304,43 +308,48 @@ export async function preloadAllModels() {
 }
 
 /**
- * Process a loaded scene with optional model-specific overrides
+ * Process a loaded scene with model-specific overrides.
+ * This is the SINGLE processing pipeline for all model customizations.
+ * All model-specific logic (universe.glb, lamplighter, etc.) is handled here.
+ * 
  * @param {THREE.Object3D} scene
  * @param {string} modelName
  */
 function processLoadedScene(scene, modelName) {
-  if (scene && modelName) {
-    scene.userData = scene.userData || {};
-    scene.userData.modelName = modelName;
-  }
   if (!scene) {
     console.warn("[Planet] Loaded scene is empty:", modelName);
     return;
   }
   
-  // For universe.glb: hide duplicate .001 meshes that block the original transparent model
-  if (modelName && modelName.includes("universe")) {
-    let hiddenCount = 0;
-    
+  // Store model name in userData for later reference
+  scene.userData = scene.userData || {};
+  scene.userData.modelName = modelName;
+  
+  const isUniverse = isUniverseModel(modelName);
+  const isLamplighter = isLamplighterModel(modelName);
+  
+  // ===== UNIVERSE.GLB SPECIFIC: Hide duplicate .001 meshes =====
+  if (isUniverse) {
     scene.traverse((obj) => {
       const name = obj.name || "";
-      const matName = obj.isMesh && obj.material ? (obj.material.name || "") : "";
-      const isShellMaterial = matName.startsWith("Mat_Nucleo") || matName.startsWith("Mat_Orb") || matName.startsWith("Mat_Orb2");
       
-      // GLTFLoader removes dots, so "pPipe2.001" becomes "pPipe2001"
-      // Match names ending with "001" that are duplicates (parent containers)
-      // BUT don't hide shell meshes
-      if (name.endsWith("001") && !name.includes("_") && !isShellMaterial) {
+      // For meshes: check if any material is a shell material
+      // For non-meshes: no shell check needed (they're containers)
+      const isShell = obj.isMesh ? hasUniverseShellMaterial(obj.material) : false;
+      
+      // Hide .001 suffix duplicates (opaque copies blocking transparent originals)
+      // But keep shell materials visible for glass effect
+      if (isDuplicateMeshName(name) && !isShell) {
         obj.visible = false;
-        hiddenCount++;
+        return;
       }
       
-      // Also hide meshes using .001 materials (by checking material name)
-      // BUT keep shell materials (Mat_Nucleo, Mat_Orb) visible for glass effect
-      if (obj.isMesh && obj.material) {
-        if (matName.includes(".001") && !isShellMaterial) {
+      // Also hide by material name, but keep shell materials (meshes only)
+      if (obj.isMesh && obj.material && !isShell) {
+        const mats = Array.isArray(obj.material) ? obj.material : [obj.material];
+        const hasDuplicateMat = mats.some((m) => isDuplicateMaterialName(m.name || ""));
+        if (hasDuplicateMat) {
           obj.visible = false;
-          hiddenCount++;
         }
       }
     });
@@ -348,48 +357,56 @@ function processLoadedScene(scene, modelName) {
     // Set render order for transparent objects
     scene.traverse((obj) => {
       if (obj.isMesh && obj.material && obj.material.transparent) {
-        obj.renderOrder = 100; // Render transparent objects last
+        obj.renderOrder = 100;
       }
     });
   }
   
+  // ===== COMMON MESH PROCESSING =====
   scene.traverse((obj) => {
     if (obj.isMesh) {
-      // Ensure smooth normals - compute if missing or flat
-      if (obj.geometry) {
-        // Check if normals need recomputation (for smoother shading)
-        const hasNormals = obj.geometry.attributes.normal !== undefined;
-        if (!hasNormals) {
-          obj.geometry.computeVertexNormals();
-        }
+      // Compute normals if missing
+      if (obj.geometry && !obj.geometry.attributes.normal) {
+        obj.geometry.computeVertexNormals();
       }
 
       if (obj.material) {
-        const mats = Array.isArray(obj.material)
-          ? obj.material
-          : [obj.material];
-        mats.forEach((mat) => {
+        const mats = Array.isArray(obj.material) ? obj.material : [obj.material];
+        
+        mats.forEach((originalMat, idx) => {
+          let mat = originalMat;
           
-          // Force upgrade to MeshPhysicalMaterial for universe.glb to support clearcoat
-          if (modelName && modelName.includes("universe") && mat.isMeshStandardMaterial && !mat.isMeshPhysicalMaterial) {
+          // ===== UNIVERSE.GLB: Upgrade to MeshPhysicalMaterial for clearcoat =====
+          if (isUniverse && mat.isMeshStandardMaterial && !mat.isMeshPhysicalMaterial) {
             const physMat = new THREE.MeshPhysicalMaterial();
             THREE.MeshStandardMaterial.prototype.copy.call(physMat, mat);
             physMat.clearcoat = 1.0;
             physMat.clearcoatRoughness = 0.0;
             physMat.name = mat.name;
-            obj.material = physMat;
+            
+            if (Array.isArray(obj.material)) {
+              obj.material[idx] = physMat;
+            } else {
+              obj.material = physMat;
+            }
+            mat = physMat;
           }
           
-          // Keep original GLB material parameters from Sketchfab
-          // Only adjust texture filtering for quality
-          [
-            "map",
-            "roughnessMap",
-            "metalnessMap",
-            "normalMap",
-            "emissiveMap",
-            "aoMap",
-          ].forEach((mapType) => {
+          // ===== UNIVERSE.GLB: Apply shell glass effect =====
+          if (isUniverse && isUniverseShellMaterial(mat)) {
+            mat.transparent = true;
+            mat.opacity = 0.25;
+            mat.depthWrite = false;
+            mat.depthTest = true;
+            mat.side = THREE.DoubleSide;
+            obj.renderOrder = 10;
+            if ("transmission" in mat) mat.transmission = 0.6;
+            if ("thickness" in mat) mat.thickness = 0.2;
+            mat.needsUpdate = true;
+          }
+          
+          // Texture quality settings
+          ["map", "roughnessMap", "metalnessMap", "normalMap", "emissiveMap", "aoMap"].forEach((mapType) => {
             if (mat[mapType]) {
               mat[mapType].anisotropy = 16;
               mat[mapType].minFilter = THREE.LinearMipmapLinearFilter;
@@ -403,18 +420,16 @@ function processLoadedScene(scene, modelName) {
           mat.depthWrite = !mat.transparent;
           mat.flatShading = false;
 
-          // Use studio HDR environment for proper PBR lighting
           if (mat.isMeshStandardMaterial) {
             mat.envMapIntensity = 1.0;
           }
           mat.needsUpdate = true;
 
-          // Emissive overrides for Lamplighter model (GLB doesn't have emissive baked)
-          if (modelName && modelName.includes("planet_329_lamplighter")) {
+          // ===== LAMPLIGHTER: Emissive overrides =====
+          if (isLamplighter) {
             const matName = (mat.name || "").toLowerCase();
-            // Lamp glass panels (mat0_box_mat0_box)
-            const isGlassPanel = matName.includes("mat0_box_mat0");
-            if (isGlassPanel) {
+            // Lamp glass panels
+            if (matName.includes("mat0_box_mat0")) {
               mat.emissive = new THREE.Color(0xffdd88);
               mat.emissiveIntensity = 2.0;
               mat.transparent = true;
@@ -423,11 +438,8 @@ function processLoadedScene(scene, modelName) {
               mat.depthWrite = false;
               mat.needsUpdate = true;
             }
-            // Glowing orb (mat1_sphere)
-            if (
-              matName.includes("mat1_sphere") ||
-              matName.includes("mat0_sphere_mat1")
-            ) {
+            // Glowing orb
+            if (matName.includes("mat1_sphere") || matName.includes("mat0_sphere_mat1")) {
               mat.emissive = new THREE.Color(0xffee88);
               mat.emissiveIntensity = 2.5;
               mat.needsUpdate = true;
@@ -624,36 +636,18 @@ export function createPlanetModel() {
     attachPlanetModelName(planetInstance, baseScene);
     const modelName = baseScene.userData ? baseScene.userData.modelName : "";
 
-    // Reset rotation to ensure clean state
     planetInstance.rotation.set(0, 0, 0);
     
-    // For universe.glb: hide duplicate meshes AND apply shell glass effect
-    if (modelName && modelName.includes("universe")) {
-      let hiddenCount = 0;
-      const shellNames = new Set(["Mat_Nucleo", "Mat_Orb"]);
-      
-      planetInstance.traverse((obj) => {
-        const name = obj.name || "";
-        const matName = obj.isMesh && obj.material ? (obj.material.name || "") : "";
-        const isShellMaterial = matName.startsWith("Mat_Nucleo") || matName.startsWith("Mat_Orb");
-        
-        // Hide .001 suffix duplicates (opaque copies blocking transparent originals)
-        // But keep shell materials visible
-        if (name.endsWith("001") && !name.includes("_") && !isShellMaterial) {
-          obj.visible = false;
-          hiddenCount++;
+    // Deep-copy materials to prevent polluting the cached base scene
+    planetInstance.traverse((obj) => {
+      if (obj.isMesh && obj.material) {
+        if (Array.isArray(obj.material)) {
+          obj.material = obj.material.map((m) => m.clone());
+        } else {
+          obj.material = obj.material.clone();
         }
-        // Also hide by material name, but keep shell materials
-        if (obj.isMesh && obj.material && !isShellMaterial) {
-          if (matName.includes(".001")) {
-            obj.visible = false;
-            hiddenCount++;
-          }
-        }
-        
-
-      });
-    }
+      }
+    });
 
     const meshesToRemove = [];
     planetInstance.traverse((obj) => {
@@ -662,23 +656,8 @@ export function createPlanetModel() {
           console.warn("[Planet] Mesh missing geometry:", obj.name);
         }
         obj.frustumCulled = false;
-        obj.castShadow = true; // Enable shadows casting
-        obj.receiveShadow = true; // Enable shadows receiving
-
-        if (obj.material) {
-          const mat = obj.material;
-          const overrides = getPlanetMaterialOverrides(modelName, mat);
-          if (overrides) {
-            const updated = applyPlanetMaterialOverrides(mat, overrides, THREE);
-            if (updated && updated !== mat) {
-              obj.material = updated;
-            }
-            // Set renderOrder on mesh for transparent sorting
-            if (overrides.renderOrder !== undefined) {
-              obj.renderOrder = overrides.renderOrder;
-            }
-          }
-        }
+        obj.castShadow = true;
+        obj.receiveShadow = true;
 
         const name = (obj.name || "").toLowerCase();
         if (
@@ -703,7 +682,7 @@ export function createPlanetModel() {
     const maxDim = Math.max(size.x, size.y, size.z);
 
     const targetSize = 1.0;
-    const normalizeScale = targetSize / (maxDim || 1); // Avoid div by zero
+    const normalizeScale = targetSize / (maxDim || 1);
     const baseScaleMultiplier = 0.8;
     const finalNormScale = normalizeScale * baseScaleMultiplier;
 
@@ -732,28 +711,6 @@ export function createPlanetModel() {
     }
 
     planetInstance.visible = this.visible;
-    
-    // Apply universe.glb shell glass effect as FINAL step (same as working console script)
-    if (modelName && modelName.includes("universe")) {
-      const shellNames = new Set(["Mat_Nucleo", "Mat_Orb"]);
-      this._planetMesh.traverse((obj) => {
-        if (!obj.isMesh || !obj.material) return;
-        const mats = Array.isArray(obj.material) ? obj.material : [obj.material];
-        mats.forEach((m) => {
-          if (shellNames.has(m.name)) {
-            m.transparent = true;
-            m.opacity = 0.25;
-            m.depthWrite = false;
-            m.depthTest = true;
-            m.side = THREE.DoubleSide;
-            obj.renderOrder = 10;
-            if ("transmission" in m) m.transmission = 0.6;
-            if ("thickness" in m) m.thickness = 0.2;
-            m.needsUpdate = true;
-          }
-        });
-      });
-    }
   };
 
   root.pickRandomModel = function () {
@@ -882,6 +839,7 @@ window.loadRandomModel = loadRandomModel;
 window.loadModelOnDemand = loadModelOnDemand;
 window.createPlanetModel = createPlanetModel;
 window.isPlanetModelLoaded = isPlanetModelLoaded;
+window.makeStarModels = makeStarModels;
 
 // Debug function - call from console: debugPlanetZFighting()
 window.debugPlanetZFighting = function () {
