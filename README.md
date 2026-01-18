@@ -23,11 +23,10 @@ Open: `http://localhost:8000`
 
 ## Key Features
 
-- 40k+ Fediverse instances rendered as stars, clustered by software/ecosystem
+- Fediverse instances rendered as stars, clustered by software/ecosystem
 - Activity/age-driven color mapping with a temperature-style spectrum
 - Interactive stars (click/zoom/labels) plus close-range GLB planet preview
 - Minimap and grid view for navigation
-- Runtime CDN dependencies (Three.js and utilities)
 
 ## Data & Processing
 
