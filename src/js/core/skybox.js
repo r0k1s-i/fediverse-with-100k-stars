@@ -135,7 +135,7 @@ function loadStudioEnvironment() {
 
   const rgbeLoader = new RGBELoader();
   rgbeLoader.load(
-    "src/assets/textures/studio_small_1k.hdr",
+    "src/assets/textures/qwantani_night_puresky_1k.hdr",
     function (texture) {
       texture.mapping = THREE.EquirectangularReflectionMapping;
 
