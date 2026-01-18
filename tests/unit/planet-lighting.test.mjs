@@ -36,12 +36,12 @@ assert.equal(overrideConfig.position.z, 3);
 assert.equal(overrideConfig.color, PLANET_INTERNAL_LIGHT_DEFAULTS.color);
 
 assert.equal(
-  shouldAttachPlanetInternalLight("src/assets/textures/the_universe.glb"),
+  shouldAttachPlanetInternalLight("src/assets/models/supergiants/universe.glb"),
   true,
 );
 assert.equal(
   shouldAttachPlanetInternalLight(
-    "src/assets/textures/planet_325_the_king.glb",
+    "src/assets/models/planets/planet_325_the_king.glb",
   ),
   false,
 );

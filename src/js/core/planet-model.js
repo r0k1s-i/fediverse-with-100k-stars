@@ -26,24 +26,40 @@ import { state } from "./state.js";
 import { Gyroscope } from "./Gyroscope.js";
 import { AssetManager } from "./asset-manager.js";
 
-// Explicit Draco probe model - used to verify decoder before parallel loading
-const DRACO_PROBE_MODEL = "src/assets/textures/kamistar.glb";
+const DRACO_PROBE_MODEL = "src/assets/models/planets/kamistar.glb";
 
 const PLANET_GLB_PATHS = [
   DRACO_PROBE_MODEL,
-  "src/assets/textures/planet_330_the_geographer.glb",
-  "src/assets/textures/le_petit_prince.glb",
-  "src/assets/textures/floating_fox.glb",
-  "src/assets/textures/my_planet_christina_li.glb",
-  "src/assets/textures/planet_325_the_king.glb",
-  "src/assets/textures/planet_328_the_businessman.glb",
-  "src/assets/textures/planet_329_lamplighter.glb",
+  "src/assets/models/planets/planet_330_the_geographer.glb",
+  "src/assets/models/planets/le_petit_prince.glb",
+  "src/assets/models/planets/floating_fox.glb",
+  "src/assets/models/planets/my_planet_christina_li.glb",
+  "src/assets/models/planets/planet_325_the_king.glb",
+  "src/assets/models/planets/planet_328_the_businessman.glb",
+  "src/assets/models/planets/planet_329_lamplighter.glb",
+  "src/assets/models/planets/planet-1.glb",
+  "src/assets/models/planets/planet-2.glb",
+  "src/assets/models/planets/planet-3.glb",
+  "src/assets/models/planets/planet-4.glb",
+  "src/assets/models/planets/planet-5.glb",
+  "src/assets/models/planets/planet-6.glb",
+  "src/assets/models/planets/planet-7.glb",
+  "src/assets/models/planets/planet-8.glb",
+  "src/assets/models/planets/planet-9.glb",
+  "src/assets/models/planets/planet-10.glb",
+  "src/assets/models/planets/planet-11.glb",
+  "src/assets/models/planets/planet-12.glb",
+  "src/assets/models/planets/planet-13.glb",
+  "src/assets/models/planets/planet-14.glb",
+  "src/assets/models/planets/planet-15.glb",
+  "src/assets/models/planets/medium__elephant-balloon.glb",
+  "src/assets/models/planets/cloth_in_wind_on_ball_printable.glb",
 ];
 
 const SUPERGIANT_MODELS = {
-  "mastodon.social": "src/assets/textures/universe.glb",
-  "pixelfed.social": "src/assets/textures/disco_ball.glb",
-  "misskey.io": "src/assets/textures/futuristic_sci-fi_planet_scanner_radar.glb",
+  "mastodon.social": "src/assets/models/supergiants/universe.glb",
+  "pixelfed.social": "src/assets/models/supergiants/disco_ball.glb",
+  "misskey.io": "src/assets/models/supergiants/futuristic_sci-fi_planet_scanner_radar.glb",
 };
 
 const SUPERGIANT_MODEL_PATHS = new Set(Object.values(SUPERGIANT_MODELS));
@@ -216,27 +232,33 @@ async function ensureDecoderReady() {
  * @returns {Promise<THREE.Object3D|null>} Loaded scene or null on failure
  */
 export async function loadModelOnDemand(path) {
-  // Return cached model if already loaded
   if (loadedModelCache.has(path)) {
+    console.log("[Planet] Cache hit:", path);
     return loadedModelCache.get(path);
   }
 
-  // Return pending promise if already loading
   if (pendingLoads.has(path)) {
+    console.log("[Planet] Already loading:", path);
     return pendingLoads.get(path);
   }
 
-  // Ensure decoder is ready first
+  console.log("[Planet] Loading model:", path);
   const ready = await ensureDecoderReady();
-  if (!ready) return null;
+  if (!ready) {
+    console.warn("[Planet] Decoder not ready, cannot load:", path);
+    return null;
+  }
 
-  // Start loading
   const loadingPromise = loadGLB(path).then((scene) => {
     if (scene) {
+      console.log("[Planet] Model loaded successfully:", path);
       loadedModelCache.set(path, scene);
       if (!SUPERGIANT_MODEL_PATHS.has(path)) {
         planetBaseScenes.push(scene);
+        console.log("[Planet] Added to planetBaseScenes, total:", planetBaseScenes.length);
       }
+    } else {
+      console.warn("[Planet] Model load returned null:", path);
     }
     pendingLoads.delete(path);
     return scene;
@@ -626,9 +648,14 @@ export function createPlanetModel() {
 
   // Helper to process and add a specific base model
   root.setPlanetMesh = function (baseScene) {
-    if (!baseScene) return;
+    if (!baseScene) {
+      console.warn("[Planet] setPlanetMesh called with null/undefined scene");
+      return;
+    }
 
-    // Clear previous mesh
+    const modelName = baseScene.userData?.modelName || "unknown";
+    console.log("[Planet] Setting model:", modelName);
+
     if (this._planetMesh) {
       this.remove(this._planetMesh);
       this._planetMesh = null;
@@ -640,7 +667,6 @@ export function createPlanetModel() {
     const planetInstance = baseScene.clone(true);
     planetInstance.name = "planetMesh";
     attachPlanetModelName(planetInstance, baseScene);
-    const modelName = baseScene.userData ? baseScene.userData.modelName : "";
 
     planetInstance.rotation.set(0, 0, 0);
     
@@ -655,7 +681,6 @@ export function createPlanetModel() {
       }
     });
 
-    const meshesToRemove = [];
     planetInstance.traverse((obj) => {
       if (obj.isMesh) {
         if (!obj.geometry) {
@@ -664,23 +689,7 @@ export function createPlanetModel() {
         obj.frustumCulled = false;
         obj.castShadow = true;
         obj.receiveShadow = true;
-
-        const name = (obj.name || "").toLowerCase();
-        if (
-          name.includes("ring") ||
-          name.includes("orbit") ||
-          name.includes("circle") ||
-          name.includes("halo") ||
-          name.includes("chair") ||
-          name.includes("throne")
-        ) {
-          meshesToRemove.push(obj);
-        }
       }
-    });
-
-    meshesToRemove.forEach((mesh) => {
-      if (mesh.parent) mesh.parent.remove(mesh);
     });
 
     const box = new THREE.Box3().setFromObject(planetInstance);
@@ -717,36 +726,57 @@ export function createPlanetModel() {
     }
 
     planetInstance.visible = this.visible;
+    
+    let meshCount = 0;
+    planetInstance.traverse((obj) => { if (obj.isMesh) meshCount++; });
+    console.log("[Planet] Model set complete:", {
+      model: modelName,
+      meshCount,
+      scale: finalNormScale,
+      visible: this.visible,
+      rootVisible: planetInstance.visible
+    });
   };
 
   root.pickRandomModel = function () {
-    // Use cached models if available
+    console.log("[Planet] pickRandomModel called, cached models:", planetBaseScenes.length);
     if (planetBaseScenes.length > 0) {
       const randomIndex = Math.floor(Math.random() * planetBaseScenes.length);
-      this.setPlanetMesh(planetBaseScenes[randomIndex]);
+      const selected = planetBaseScenes[randomIndex];
+      console.log("[Planet] Selected cached model index:", randomIndex, "path:", selected?.userData?.modelName);
+      this.setPlanetMesh(selected);
       return;
     }
 
-    // Otherwise load on demand
+    console.log("[Planet] No cached models, loading on demand...");
     const self = this;
     loadRandomModel().then((scene) => {
       if (scene) {
+        console.log("[Planet] On-demand model loaded:", scene?.userData?.modelName);
         self.setPlanetMesh(scene);
+      } else {
+        console.warn("[Planet] On-demand model load returned null");
       }
     });
   };
 
   root.setModelForDomain = function (domain) {
+    console.log("[Planet] setModelForDomain called for:", domain);
     const modelPath = SUPERGIANT_MODELS[domain];
     if (!modelPath) {
+      console.log("[Planet] No supergiant model for domain, picking random");
       this.pickRandomModel();
       return;
     }
 
+    console.log("[Planet] Loading supergiant model:", modelPath);
     const self = this;
     loadModelOnDemand(modelPath).then((scene) => {
       if (scene) {
+        console.log("[Planet] Supergiant model loaded successfully");
         self.setPlanetMesh(scene);
+      } else {
+        console.warn("[Planet] Supergiant model load failed for:", modelPath);
       }
     });
   };

@@ -43,7 +43,7 @@
 ## 5. 后续建议 (Next Steps)
 
 虽然架构已经就绪，但如果在特定环境下仍不可见，建议在新的 Thread 中检查：
-1.  **资源加载**: 确认 `src/assets/textures/kamistar.glb` 是否成功加载（网络请求 200）。
+1.  **资源加载**: 确认 `src/assets/models/planets/kamistar.glb` 是否成功加载（网络请求 200）。
 2.  **光照微调**: 当前使用了简单的 DirectionalLight，可能需要根据 GLB 材质调整光强或环境光。
 3.  **相机同步逻辑**: 目前 `syncPlanetCamera` 只是固定在 `(0,0,3)`。未来可以让它同步主相机的旋转，以便观察行星的侧面或背面。
 
