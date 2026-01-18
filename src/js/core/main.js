@@ -516,7 +516,7 @@ function initScene() {
       if (window.fediverseInteraction)
         fediverseInteraction.lastViewedInstance = null;
     } else {
-      zoomOut(750);
+      zoomOut(CAMERA.POSITION.RETURN_Z);
     }
   });
 
@@ -617,7 +617,7 @@ function sceneSetup() {
     starModel.visible = false;
     window.starModel = starModel;
     window.enableStarModel = enableStarModel;
-    
+
     // Initialize debug GUI for planet materials/lighting
     initPlanetDebugGUI();
   }
@@ -642,8 +642,6 @@ function sceneSetup() {
       window.pDustSystem = pDustSystem;
     }
   }
-
-
 
   if (enableSkybox) {
   }
@@ -860,7 +858,7 @@ function render() {
       THREE,
       planetRenderConfig,
     );
-    
+
     renderer.clearDepth();
     renderer.render(window.planetScene, window.planetCamera);
     restorePlanetRenderConfig(renderer, prevRendererState);

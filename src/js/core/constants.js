@@ -32,6 +32,7 @@ export const CAMERA = {
     // Preset zoom levels
     CLOSE_UP_Z: 300,
     NORMAL_Z: 2000,
+    RETURN_Z: 1038.4, // Target zoom distance for returning (cursor ~29.6%)
     GRID_VIEW_Z: 1800,
     FAR_VIEW_Z: 5000,
     GALAXY_VIEW_Z: 40000,
