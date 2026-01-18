@@ -197,18 +197,12 @@ async function ensureDecoderReady() {
       // Step 2: If probe failed with Draco error, try fallback decoder
       if (!probeResult.success && probeResult.isDracoError) {
         if (switchToFallbackDecoder()) {
-          console.warn(
-            "[Draco] Primary decoder failed, retrying with fallback...",
-          );
           probeResult = await probeDecoder(DRACO_PROBE_MODEL);
         }
       }
 
       // Step 3: Short-circuit if decoder unavailable
       if (!probeResult.success && probeResult.isDracoError) {
-        console.error(
-          "[Draco] All decoder paths failed. Cannot load Draco-compressed models.",
-        );
         return false;
       }
 
@@ -233,32 +227,24 @@ async function ensureDecoderReady() {
  */
 export async function loadModelOnDemand(path) {
   if (loadedModelCache.has(path)) {
-    console.log("[Planet] Cache hit:", path);
     return loadedModelCache.get(path);
   }
 
   if (pendingLoads.has(path)) {
-    console.log("[Planet] Already loading:", path);
     return pendingLoads.get(path);
   }
 
-  console.log("[Planet] Loading model:", path);
   const ready = await ensureDecoderReady();
   if (!ready) {
-    console.warn("[Planet] Decoder not ready, cannot load:", path);
     return null;
   }
 
   const loadingPromise = loadGLB(path).then((scene) => {
     if (scene) {
-      console.log("[Planet] Model loaded successfully:", path);
       loadedModelCache.set(path, scene);
       if (!SUPERGIANT_MODEL_PATHS.has(path)) {
         planetBaseScenes.push(scene);
-        console.log("[Planet] Added to planetBaseScenes, total:", planetBaseScenes.length);
       }
-    } else {
-      console.warn("[Planet] Model load returned null:", path);
     }
     pendingLoads.delete(path);
     return scene;
@@ -345,7 +331,6 @@ export async function preloadAllModels() {
  */
 function processLoadedScene(scene, modelName) {
   if (!scene) {
-    console.warn("[Planet] Loaded scene is empty:", modelName);
     return;
   }
   
@@ -649,12 +634,10 @@ export function createPlanetModel() {
   // Helper to process and add a specific base model
   root.setPlanetMesh = function (baseScene) {
     if (!baseScene) {
-      console.warn("[Planet] setPlanetMesh called with null/undefined scene");
       return;
     }
 
     const modelName = baseScene.userData?.modelName || "unknown";
-    console.log("[Planet] Setting model:", modelName);
 
     if (this._planetMesh) {
       this.remove(this._planetMesh);
@@ -683,9 +666,6 @@ export function createPlanetModel() {
 
     planetInstance.traverse((obj) => {
       if (obj.isMesh) {
-        if (!obj.geometry) {
-          console.warn("[Planet] Mesh missing geometry:", obj.name);
-        }
         obj.frustumCulled = false;
         obj.castShadow = true;
         obj.receiveShadow = true;
@@ -726,57 +706,35 @@ export function createPlanetModel() {
     }
 
     planetInstance.visible = this.visible;
-    
-    let meshCount = 0;
-    planetInstance.traverse((obj) => { if (obj.isMesh) meshCount++; });
-    console.log("[Planet] Model set complete:", {
-      model: modelName,
-      meshCount,
-      scale: finalNormScale,
-      visible: this.visible,
-      rootVisible: planetInstance.visible
-    });
   };
 
   root.pickRandomModel = function () {
-    console.log("[Planet] pickRandomModel called, cached models:", planetBaseScenes.length);
     if (planetBaseScenes.length > 0) {
       const randomIndex = Math.floor(Math.random() * planetBaseScenes.length);
       const selected = planetBaseScenes[randomIndex];
-      console.log("[Planet] Selected cached model index:", randomIndex, "path:", selected?.userData?.modelName);
       this.setPlanetMesh(selected);
       return;
     }
 
-    console.log("[Planet] No cached models, loading on demand...");
     const self = this;
     loadRandomModel().then((scene) => {
       if (scene) {
-        console.log("[Planet] On-demand model loaded:", scene?.userData?.modelName);
         self.setPlanetMesh(scene);
-      } else {
-        console.warn("[Planet] On-demand model load returned null");
       }
     });
   };
 
   root.setModelForDomain = function (domain) {
-    console.log("[Planet] setModelForDomain called for:", domain);
     const modelPath = SUPERGIANT_MODELS[domain];
     if (!modelPath) {
-      console.log("[Planet] No supergiant model for domain, picking random");
       this.pickRandomModel();
       return;
     }
 
-    console.log("[Planet] Loading supergiant model:", modelPath);
     const self = this;
     loadModelOnDemand(modelPath).then((scene) => {
       if (scene) {
-        console.log("[Planet] Supergiant model loaded successfully");
         self.setPlanetMesh(scene);
-      } else {
-        console.warn("[Planet] Supergiant model load failed for:", modelPath);
       }
     });
   };
@@ -876,60 +834,3 @@ window.loadModelOnDemand = loadModelOnDemand;
 window.createPlanetModel = createPlanetModel;
 window.isPlanetModelLoaded = isPlanetModelLoaded;
 window.makeStarModels = makeStarModels;
-
-// Debug function - call from console: debugPlanetZFighting()
-window.debugPlanetZFighting = function () {
-  const cam = state.camera;
-  const planetCam = window.planetCamera;
-  const rend = state.renderer;
-  const star = state.starModel;
-
-  console.log("=== Dual Scene Debug Info ===");
-
-  console.log("Main Camera:", {
-    positionZ: cam?.position?.z,
-    near: cam?.near,
-    far: cam?.far,
-  });
-
-  console.log("Planet Camera:", {
-    position: planetCam?.position,
-    near: planetCam?.near,
-    far: planetCam?.far,
-    ratio: planetCam?.far / planetCam?.near,
-  });
-
-  console.log("Star Model:", {
-    position: star?.position,
-    parent: star?.parent?.name,
-    visible: star?.visible,
-    scale: star?.scale, // Shows Vector3 values
-    baseScale: star?._baseScale,
-    currentScale: star?._currentScale,
-  });
-
-  console.log("Renderer:", {
-    logarithmicDepthBuffer: rend?.capabilities?.logarithmicDepthBuffer,
-    precision: rend?.capabilities?.precision,
-  });
-
-  if (star?._planetMesh) {
-    star._planetMesh.traverse((obj) => {
-      if (obj.isMesh) {
-        const mat = obj.material;
-        console.log("Mesh:", obj.name, {
-          visible: obj.visible,
-          frustumCulled: obj.frustumCulled,
-          material: {
-            depthWrite: mat?.depthWrite,
-            depthTest: mat?.depthTest,
-            polygonOffset: mat?.polygonOffset,
-          },
-        });
-      }
-    });
-  } else {
-    console.log("Planet mesh not loaded yet");
-  }
-  console.log("=============================");
-};

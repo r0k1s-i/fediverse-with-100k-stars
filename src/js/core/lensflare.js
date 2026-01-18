@@ -8,9 +8,7 @@ if (typeof setLoadMessage !== "function") {
   if (typeof window.setLoadMessage === "function") {
     setLoadMessage = window.setLoadMessage;
   } else {
-    setLoadMessage = function (msg) {
-      console.log(msg);
-    };
+    setLoadMessage = function () {};
   }
 }
 

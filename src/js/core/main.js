@@ -70,8 +70,6 @@ import {
   applyPlanetShadowConfig,
   getPlanetShadowConfig,
 } from "../lib/planet-shadow-config.mjs";
-import { initPlanetDebugGUI } from "../debug/planet-debug-gui.js";
-
 import {
   updateMinimap,
   initializeMinimap,
@@ -617,9 +615,6 @@ function sceneSetup() {
     starModel.visible = false;
     window.starModel = starModel;
     window.enableStarModel = enableStarModel;
-
-    // Initialize debug GUI for planet materials/lighting
-    initPlanetDebugGUI();
   }
 
   state.pSystem = generateFediverseInstances();
