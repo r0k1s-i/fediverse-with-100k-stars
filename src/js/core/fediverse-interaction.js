@@ -19,7 +19,7 @@ import {
 } from "../utils/dom.js";
 import { InteractionMath } from "./interaction-math.js";
 import { state } from "./state.js";
-import { VISIBILITY } from "./constants.js";
+import { CAMERA, VISIBILITY } from "./constants.js";
 import { shouldZoomOnClick } from "../utils/interaction-zoom.js";
 import { activateWheelGuard } from "../utils/interaction-wheel-guard.js";
 
@@ -61,7 +61,7 @@ export function goToFediverseCenter() {
     );
   }
   if (typeof camera !== "undefined") {
-    camera.position.target.z = 15;
+    camera.position.target.z = CAMERA.POSITION.RETURN_Z;
   }
   if (typeof updateMinimap === "function") {
     updateMinimap();
@@ -163,18 +163,21 @@ export function updateFediverseInteraction() {
           starModel.randomizeSolarFlare();
         }
 
-          // Only randomize properties if it's a new instance to prevent flickering
-          if (isNewInstance) {
-            if (typeof starModel.randomizeRotationSpeed === "function") {
-              starModel.randomizeRotationSpeed();
-            }
-
-            if (isMajorFediverseInstance(closestInst.domain) && typeof starModel.setModelForDomain === "function") {
-              starModel.setModelForDomain(closestInst.domain);
-            } else if (typeof starModel.pickRandomModel === "function") {
-              starModel.pickRandomModel();
-            }
+        // Only randomize properties if it's a new instance to prevent flickering
+        if (isNewInstance) {
+          if (typeof starModel.randomizeRotationSpeed === "function") {
+            starModel.randomizeRotationSpeed();
           }
+
+          if (
+            isMajorFediverseInstance(closestInst.domain) &&
+            typeof starModel.setModelForDomain === "function"
+          ) {
+            starModel.setModelForDomain(closestInst.domain);
+          } else if (typeof starModel.pickRandomModel === "function") {
+            starModel.pickRandomModel();
+          }
+        }
 
         starModel.visible = true;
       }

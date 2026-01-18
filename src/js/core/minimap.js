@@ -11,6 +11,7 @@ import {
   ajax,
 } from "../utils/dom.js";
 import { ensureCameraTarget } from "../utils/app.js";
+import { CAMERA } from "./constants.js";
 
 import { state } from "./state.js";
 
@@ -413,7 +414,7 @@ function unfocus(home) {
         fediverseInteraction.lastViewedInstance = null;
       }
     } else {
-      if (zoomOut) zoomOut(555);
+      if (zoomOut) zoomOut(CAMERA.POSITION.RETURN_Z);
     }
   }
 }
