@@ -26,7 +26,7 @@
 ## 当前状态
 
 - **更新时间**: 2026-01-18
-- **当前阶段**: 文档完善（数据格式说明）
+- **当前阶段**: 文档修正（README 互链）
 - **下一步行动**:
   - [x] 生成详细的中英文 README
   - [x] 补充原始数据格式为 FediDB ServerEntity 结构
@@ -38,6 +38,7 @@
   - [x] 补充代码质量评估与改进建议（codebase-optimization-review.md）
   - [x] 修复相机 target 初始化缺失导致的启动崩溃
   - [x] 统一生产/开发使用 CDN 数据源
+  - [x] 修复 README 中英文互链
   - [x] 移除 data preload 以避免未使用预加载警告
   - [x] 完成黑屏排查并清理临时日志
   - [x] 初始化 camera.position.target.x/y 防止 NaN 黑屏
