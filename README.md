@@ -1,7 +1,8 @@
 # Fediverse with 100k Stars
-
+ [中文](README.zh.md)
+ 
 An interactive 3D WebGL visualization of the Fediverse, showing instances as stars in a galaxy.  
-基于中文说明请见 `README.zh.md`。
+
 
 ---
 

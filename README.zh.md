@@ -1,8 +1,8 @@
-# 联邦宇宙 100k Stars
+# Fediverse with 100k Stars
 
 本项目将联邦宇宙实例映射为星空中的星体，以银河结构呈现整体生态，并支持缩放、点击、标签与近距离行星模型预览。项目基于 Three.js（r158），采用 ES Modules，运行于现代浏览器的 WebGL 环境。
 
-English README: `README.md`
+English README: [README.md](README.md)
 
 ---
 
