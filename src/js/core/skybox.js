@@ -48,16 +48,7 @@ export function initSkybox(highres) {
   }
 
   setLoadMessage("Loading interstellar bodies");
-  var textureCube = new THREE.CubeTextureLoader().load(
-    urls,
-    function (loadedTexture) {
-      console.log("[Skybox] Starfield cubemap loaded");
-    },
-    undefined,
-    function (err) {
-      console.error("Error loading skybox:", err);
-    },
-  );
+  var textureCube = new THREE.CubeTextureLoader().load(urls);
   window.skyboxTexture = textureCube; // For visual background only
 
   // Load studio HDR for PBR reflections (separate from starfield background)
@@ -127,9 +118,6 @@ export function renderSkybox() {
  */
 function loadStudioEnvironment() {
   if (!state.renderer) {
-    console.warn(
-      "[Skybox] Renderer not ready, deferring studio environment load",
-    );
     return;
   }
 
@@ -148,7 +136,6 @@ function loadStudioEnvironment() {
       // Apply to planetScene for PBR model reflections
       if (window.planetScene) {
         window.planetScene.environment = envMap;
-        console.log("[Skybox] Studio HDR environment applied to planetScene");
       }
 
       // Reduce exposure to avoid overexposure with bright HDR
@@ -158,10 +145,6 @@ function loadStudioEnvironment() {
 
       texture.dispose();
       pmremGenerator.dispose();
-    },
-    undefined,
-    function (err) {
-      console.error("[Skybox] Error loading studio HDR:", err);
     },
   );
 }

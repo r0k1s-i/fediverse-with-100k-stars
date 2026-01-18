@@ -359,5 +359,4 @@
         };
     }
 
-    console.log('Three.js Compatibility Layer loaded (r58 -> r158)');
 })();
