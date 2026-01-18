@@ -33,6 +33,19 @@ var fediverseInteraction = {
   lastViewedInstance: null,
 };
 
+export function __setFediverseInteractionForTest(values) {
+  if (!values) return;
+  if (Object.prototype.hasOwnProperty.call(values, "intersected")) {
+    fediverseInteraction.intersected = values.intersected;
+  }
+  if (Object.prototype.hasOwnProperty.call(values, "lastHoveredInstance")) {
+    fediverseInteraction.lastHoveredInstance = values.lastHoveredInstance;
+  }
+  if (Object.prototype.hasOwnProperty.call(values, "lastViewedInstance")) {
+    fediverseInteraction.lastViewedInstance = values.lastViewedInstance;
+  }
+}
+
 var MAJOR_FEDIVERSE_DOMAINS = VISIBILITY.MAJOR_FEDIVERSE_DOMAINS;
 
 var FEDIVERSE_CENTER = { x: 0, y: 0, z: 0 };
@@ -140,8 +153,10 @@ export function updateFediverseInteraction() {
       var needsUpdate = !starModel.visible || isNewInstance;
 
       if (needsUpdate) {
+        var usedSetStarModel = false;
         if (window.setStarModel) {
           window.setStarModel(closestInst.position, closestInst.domain);
+          usedSetStarModel = true;
         } else {
           starModel.position.copy(closestInst.position);
         }
@@ -164,7 +179,7 @@ export function updateFediverseInteraction() {
         }
 
         // Only randomize properties if it's a new instance to prevent flickering
-        if (isNewInstance) {
+        if (isNewInstance && !usedSetStarModel) {
           if (typeof starModel.randomizeRotationSpeed === "function") {
             starModel.randomizeRotationSpeed();
           }
