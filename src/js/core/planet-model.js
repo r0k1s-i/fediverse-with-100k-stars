@@ -42,9 +42,11 @@ const PLANET_GLB_PATHS = [
 
 const SUPERGIANT_MODELS = {
   "mastodon.social": "src/assets/textures/universe.glb",
-  "pixelfed.social": "src/assets/textures/disco_flux.glb",
-  "misskey.io": "src/assets/textures/disco_ball_with_colored_lights.glb",
+  "pixelfed.social": "src/assets/textures/disco_ball.glb",
+  "misskey.io": "src/assets/textures/futuristic_sci-fi_planet_scanner_radar.glb",
 };
+
+const SUPERGIANT_MODEL_PATHS = new Set(Object.values(SUPERGIANT_MODELS));
 
 let loader;
 let dracoLoader;
@@ -232,7 +234,9 @@ export async function loadModelOnDemand(path) {
   const loadingPromise = loadGLB(path).then((scene) => {
     if (scene) {
       loadedModelCache.set(path, scene);
-      planetBaseScenes.push(scene);
+      if (!SUPERGIANT_MODEL_PATHS.has(path)) {
+        planetBaseScenes.push(scene);
+      }
     }
     pendingLoads.delete(path);
     return scene;
@@ -261,9 +265,11 @@ export async function loadRandomModel() {
     (p) => !loadedModelCache.has(p),
   );
   if (availablePaths.length === 0) {
-    // All loaded, pick random from cache
-    const all = Array.from(loadedModelCache.values());
-    return all[Math.floor(Math.random() * all.length)];
+    // All loaded, pick random from planetBaseScenes (already excludes supergiants)
+    if (planetBaseScenes.length > 0) {
+      return planetBaseScenes[Math.floor(Math.random() * planetBaseScenes.length)];
+    }
+    return null;
   }
 
   const randomPath =
