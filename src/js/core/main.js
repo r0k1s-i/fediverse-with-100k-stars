@@ -56,7 +56,7 @@ import {
 import { generateGalaxy } from "./galaxy.js";
 import { createBlackhole } from "./blackhole.js";
 import "./solarsystem.js";
-import { makeFediverseSystem } from "./fediverse-solarsystem.js";
+
 import "./sun.js";
 import {
   applyPlanetRenderConfig,
@@ -643,10 +643,7 @@ function sceneSetup() {
     }
   }
 
-  if (enableSolarSystem) {
-    var fediverseSystem = makeFediverseSystem();
-    translating.add(fediverseSystem);
-  }
+
 
   if (enableSkybox) {
   }
