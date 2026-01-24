@@ -757,10 +757,13 @@ function animate() {
     0.000001,
     40,
   );
-  camera.fov = targetFov;
+  var fovDiff = Math.abs(camera.fov - targetFov) / (camera.fov || 1);
+  if (fovDiff > 0.01) {
+    camera.fov = targetFov;
+    camera.updateProjectionMatrix();
+  }
   fovValue = (0.5 / Math.tan((camera.fov * Math.PI) / 360)) * screenHeight;
   window.fovValue = fovValue;
-  camera.updateProjectionMatrix();
 
   shaderTiming = (Date.now() - startTime) / 1000;
   window.shaderTiming = shaderTiming;
@@ -969,8 +972,25 @@ window.markerThreshold = markerThreshold;
 
 window.addEventListener("load", start);
 
-// Cleanup on page unload
-window.addEventListener("pagehide", function () {
+function cleanupEventListeners() {
+  if (!masterContainer) return;
+  window.removeEventListener("mousemove", onDocumentMouseMove, true);
+  masterContainer.removeEventListener("windowResize", onDocumentResize, true);
+  masterContainer.removeEventListener("mousedown", onDocumentMouseDown, true);
+  window.removeEventListener("mouseup", onDocumentMouseUp, false);
+  masterContainer.removeEventListener("click", onClick, true);
+  masterContainer.removeEventListener("mousewheel", onMouseWheel);
+  masterContainer.removeEventListener("DOMMouseScroll", onMouseWheel);
+  masterContainer.removeEventListener("wheel", onMouseWheel);
+  masterContainer.removeEventListener("keydown", onKeyDown, false);
+  masterContainer.removeEventListener("touchstart", touchStart);
+  window.removeEventListener("touchend", touchEnd, false);
+  window.removeEventListener("touchmove", touchMove);
+}
+
+window.addEventListener("pagehide", function (event) {
+  if (event.persisted) return;
+  cleanupEventListeners();
   if (typeof disposeFediverse === "function") {
     disposeFediverse();
   }

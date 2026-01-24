@@ -55,7 +55,7 @@ export function attachLegacyMarker(text, obj, size, visibleRange) {
 
   var nameLayer = marker.children[0];
   marker.nameLayer = nameLayer;
-  nameLayer.innerHTML = text;
+  nameLayer.textContent = text;
   marker.markerWidth = marker.offsetWidth;
 
   marker.zero = new THREE.Vector3();

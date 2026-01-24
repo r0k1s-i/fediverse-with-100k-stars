@@ -589,9 +589,9 @@ export function generateFediverseInstances() {
   container.shaderMaterial = shaderMaterial;
 
   container.toggleHeatVision = function (desired) {
-    if (desired !== undefined) container.heatVision = !desired;
-
-    if (container.heatVision == false) {
+    var targetState = (typeof desired === "boolean") ? desired : !container.heatVision;
+    
+    if (targetState) {
       container.shaderMaterial.blending = THREE.NormalBlending;
       container.shaderMaterial.depthTest = true;
       container.shaderMaterial.depthWrite = true;
@@ -603,7 +603,7 @@ export function generateFediverseInstances() {
       container.shaderMaterial.transparent = true;
     }
 
-    container.heatVision = !container.heatVision;
+    container.heatVision = targetState;
 
     if (container.heatVision) {
       addClass(spectralGraphEl, "heatvision");
@@ -850,11 +850,6 @@ export function generateFediverseInstances() {
       this.visible = true;
     }
   };
-
-  function smoothstep(min, max, value) {
-    var x = Math.max(0, Math.min(1, (value - min) / (max - min)));
-    return x * x * (3 - 2 * x);
-  }
 
   function smoothstep(min, max, value) {
     var x = Math.max(0, Math.min(1, (value - min) / (max - min)));

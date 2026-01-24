@@ -10,6 +10,8 @@ import { glowSpanTexture } from "./plane.js";
 
 var textureLoader = AssetManager.getInstance();
 
+var _tempLerpTarget = new THREE.Vector3();
+
 function onTextureError(err) {
   console.error("Error loading texture:", err);
 }
@@ -270,7 +272,8 @@ export function generateGalaxy() {
 
     if (galacticCentering) {
         galacticCentering.position.set(0, 0, 0);
-        galacticCentering.position.lerp(this.position.clone().negate(), targetLerp);
+        _tempLerpTarget.copy(this.position).negate();
+        galacticCentering.position.lerp(_tempLerpTarget, targetLerp);
     }
   };
 

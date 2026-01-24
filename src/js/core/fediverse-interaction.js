@@ -33,6 +33,12 @@ var fediverseInteraction = {
   lastViewedInstance: null,
 };
 
+var _tempVector = new THREE.Vector3();
+var _tempInverseMatrix = new THREE.Matrix4();
+var _tempRotationMatrix = new THREE.Matrix4();
+var _tempRayOrigin = new THREE.Vector3();
+var _tempRayDirection = new THREE.Vector3();
+
 export function __setFediverseInteractionForTest(values) {
   if (!values) return;
   if (Object.prototype.hasOwnProperty.call(values, "intersected")) {
@@ -255,47 +261,40 @@ function onFediverseMouseMove(event) {
 
   if (!camera) return;
 
-  // Update normalized device coordinates
   fediverseInteraction.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
   fediverseInteraction.mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
-  // Calculate ray from camera through mouse position
-  var vector = new THREE.Vector3(
+  _tempVector.set(
     fediverseInteraction.mouse.x,
     fediverseInteraction.mouse.y,
     1,
   );
-  vector.unproject(camera);
+  _tempVector.unproject(camera);
 
   fediverseInteraction.raycaster.set(
     camera.position,
-    vector.sub(camera.position).normalize(),
+    _tempVector.sub(camera.position).normalize(),
   );
 
   var closestInstance = null;
 
-  // Use unified InteractionMath for instance detection
   if (fediverseInstances && rotating && translating) {
     rotating.updateMatrixWorld(true);
     translating.updateMatrixWorld(true);
 
-    // Transform ray to local space
-    var worldMatrix = translating.matrixWorld.clone();
-    var inverseMatrix = new THREE.Matrix4();
-    inverseMatrix.copy(worldMatrix).invert();
+    _tempInverseMatrix.copy(translating.matrixWorld).invert();
 
-    var rayOrigin = fediverseInteraction.raycaster.ray.origin.clone();
-    rayOrigin.applyMatrix4(inverseMatrix);
+    _tempRayOrigin.copy(fediverseInteraction.raycaster.ray.origin);
+    _tempRayOrigin.applyMatrix4(_tempInverseMatrix);
 
-    var rayDirection = fediverseInteraction.raycaster.ray.direction.clone();
-    var rotationMatrix = new THREE.Matrix4();
-    rotationMatrix.extractRotation(inverseMatrix);
-    rayDirection.applyMatrix4(rotationMatrix);
-    rayDirection.normalize();
+    _tempRotationMatrix.extractRotation(_tempInverseMatrix);
+    _tempRayDirection.copy(fediverseInteraction.raycaster.ray.direction);
+    _tempRayDirection.applyMatrix4(_tempRotationMatrix);
+    _tempRayDirection.normalize();
 
     closestInstance = InteractionMath.findClosestInstance(
-      rayOrigin,
-      rayDirection,
+      _tempRayOrigin,
+      _tempRayDirection,
       fediverseInstances,
       getInteractionThreshold(),
     );
@@ -337,7 +336,14 @@ function handleHover(object) {
 
     if (!isZoomedInClose) {
       if (object) {
-        html(starNameEl, "<span>" + object.name + "</span>");
+        // Use textContent to prevent XSS - create span safely
+        var spanEl = starNameEl.querySelector("span");
+        if (!spanEl) {
+          spanEl = document.createElement("span");
+          starNameEl.innerHTML = "";
+          starNameEl.appendChild(spanEl);
+        }
+        spanEl.textContent = object.name;
         css(starNameEl, {
           opacity: "1.0",
           position: "fixed",
@@ -570,7 +576,7 @@ function onFediverseClick(event) {
     margin: "",
   });
   var spanEl = find(starNameEl, "span");
-  if (spanEl) html(spanEl, data.name || data.domain);
+  if (spanEl) spanEl.textContent = data.name || data.domain;
 
   showInstanceDetails(data);
 }
@@ -589,24 +595,30 @@ function showInstanceDetails(data) {
     titleEl.title = name;
   }
 
-  var html = '<div style="margin-top: 20px;">';
+  // Build detail content using DOM manipulation to prevent XSS
+  var container = document.createElement("div");
+  container.style.marginTop = "20px";
 
   if (data.description) {
-    var safeDescription = window.DOMPurify
-      ? DOMPurify.sanitize(data.description)
-      : data.description;
-    var tempDiv = document.createElement("div");
-    tempDiv.innerHTML = safeDescription;
-    var textContent = tempDiv.textContent || tempDiv.innerText || "";
+    var textContent;
+    if (window.DOMPurify) {
+      var safeDescription = DOMPurify.sanitize(data.description);
+      var parser = new DOMParser();
+      var doc = parser.parseFromString(safeDescription, "text/html");
+      textContent = doc.body.textContent || "";
+    } else {
+      textContent = data.description;
+    }
     var maxLength = 200;
     var truncated =
       textContent.length > maxLength
         ? textContent.substring(0, maxLength) + "…"
         : textContent;
-    html +=
-      '<p style="font-style: italic; margin-bottom: 20px;">' +
-      truncated +
-      "</p>";
+    var descP = document.createElement("p");
+    descP.style.fontStyle = "italic";
+    descP.style.marginBottom = "20px";
+    descP.textContent = truncated;
+    container.appendChild(descP);
   }
 
   var starType = "Unknown";
@@ -615,29 +627,31 @@ function showInstanceDetails(data) {
   }
   var softwareName = data.software ? data.software.name : "Unknown";
 
-  html +=
-    "<p><strong>Stellar Classification:</strong> " +
-    softwareName +
-    " · " +
-    starType +
-    "</p>";
+  var classP = document.createElement("p");
+  var classStrong = document.createElement("strong");
+  classStrong.textContent = "Stellar Classification:";
+  classP.appendChild(classStrong);
+  classP.appendChild(document.createTextNode(" " + softwareName + " · " + starType));
+  container.appendChild(classP);
 
   var temperature = 7300;
   if (data.color && data.color.temperature) {
     temperature = data.color.temperature;
   }
-  html +=
-    "<p><strong>Surface Temperature:</strong> " +
-    (numberWithCommas ? numberWithCommas(temperature) : temperature) +
-    "°K</p>";
+  var tempP = document.createElement("p");
+  var tempStrong = document.createElement("strong");
+  tempStrong.textContent = "Surface Temperature:";
+  tempP.appendChild(tempStrong);
+  tempP.appendChild(document.createTextNode(" " + (numberWithCommas ? numberWithCommas(temperature) : temperature) + "°K"));
+  container.appendChild(tempP);
 
   if (data.stats) {
-    html +=
-      "<p><strong>Planetary Population:</strong> " +
-      (numberWithCommas
-        ? numberWithCommas(data.stats.user_count)
-        : data.stats.user_count) +
-      "</p>";
+    var popP = document.createElement("p");
+    var popStrong = document.createElement("strong");
+    popStrong.textContent = "Planetary Population:";
+    popP.appendChild(popStrong);
+    popP.appendChild(document.createTextNode(" " + (numberWithCommas ? numberWithCommas(data.stats.user_count) : data.stats.user_count)));
+    container.appendChild(popP);
   }
 
   if (data.position) {
@@ -649,30 +663,27 @@ function showInstanceDetails(data) {
       return (val >= 0 ? "+" : "") + val;
     };
 
-    html +=
-      "<p><strong>Galactic Coordinates:</strong> " +
-      "α" +
-      formatCoord(x) +
-      " · " +
-      "β" +
-      formatCoord(y) +
-      " · " +
-      "γ" +
-      formatCoord(z) +
-      " ly" +
-      "</p>";
+    var coordP = document.createElement("p");
+    var coordStrong = document.createElement("strong");
+    coordStrong.textContent = "Galactic Coordinates:";
+    coordP.appendChild(coordStrong);
+    coordP.appendChild(document.createTextNode(" α" + formatCoord(x) + " · β" + formatCoord(y) + " · γ" + formatCoord(z) + " ly"));
+    container.appendChild(coordP);
   }
 
   if (data.first_seen_at) {
-    html +=
-      "<p><strong>First Observation:</strong> " +
-      new Date(data.first_seen_at).toLocaleDateString() +
-      "</p>";
+    var dateP = document.createElement("p");
+    var dateStrong = document.createElement("strong");
+    dateStrong.textContent = "First Observation:";
+    dateP.appendChild(dateStrong);
+    dateP.appendChild(document.createTextNode(" " + new Date(data.first_seen_at).toLocaleDateString()));
+    container.appendChild(dateP);
   }
 
-  html += "</div>";
-
-  if (bodyEl) bodyEl.innerHTML = html;
+  if (bodyEl) {
+    bodyEl.innerHTML = "";
+    bodyEl.appendChild(container);
+  }
 
   var instancePortalEl = $("#instance-portal");
   if (instancePortalEl) {

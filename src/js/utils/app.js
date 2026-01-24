@@ -1,3 +1,5 @@
+import * as THREE from "three";
+
 export function getZoomByStarRadius(radius) {
   return radius * 2.0;
 }
