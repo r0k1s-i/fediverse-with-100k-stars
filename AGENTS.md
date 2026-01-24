@@ -122,12 +122,20 @@ cd scripts/fediverse-processor && go test -v ./...
 ```
 fediverse-with-100k-stars/
 ├── index.html              # Main entry point
-├── data/                   # Generated data files
-│   └── fediverse_final.json  # Processed Fediverse instance data
+├── AGENTS.md               # Agent guidelines (this file)
+├── README.md               # Project documentation
+├── data/                   # Generated data files (gitignored)
+│   └── fediverse_final.json  # Processed Fediverse instance data (~17MB)
 ├── docs/                   # Documentation
+│   ├── README.md           # Documentation index
 │   ├── architecture/       # Architecture decision records
+│   │   └── coordinate-systems.md
 │   ├── plans/              # Implementation plans
-│   └── postmortems/        # Post-mortem analyses
+│   │   ├── fediverse-implementation.md  # Main implementation plan
+│   │   ├── dual-scene-architecture.md
+│   │   └── ...
+│   └── postmortems/        # Post-mortem analyses (15+ files)
+│       └── README.md       # Postmortem index
 ├── scripts/                # Data processing scripts
 │   └── fediverse-processor/  # Golang processor
 │       ├── main.go         # CLI entry point
@@ -135,37 +143,72 @@ fediverse-with-100k-stars/
 │       ├── colors.go       # Color calculation library
 │       ├── positions.go    # Position calculation library
 │       ├── types.go        # Data type definitions
-│       └── *_test.go       # Unit tests
+│       ├── go.mod          # Go module definition
+│       ├── colors_test.go  # Color unit tests
+│       └── positions_test.go # Position unit tests
 ├── src/                    # Application source
 │   ├── assets/             # Static assets
-│   │   ├── audio/          # Sound files
-│   │   ├── draco/          # Draco decoder for glTF
-│   │   ├── icons/          # UI icons
-│   │   ├── models/         # 3D models (glTF)
-│   │   └── textures/       # Textures and images
+│   │   ├── audio/          # Sound files (bgmusic.ogg)
+│   │   ├── draco/          # Draco decoder for glTF compression
+│   │   ├── icons/          # UI icons (SVG)
+│   │   ├── models/         # 3D models (glTF/GLB)
+│   │   │   ├── planets/    # Planet GLB models (25+ models)
+│   │   │   └── supergiants/# Supergiant GLB models
+│   │   └── textures/       # Textures and images (40+ files)
 │   ├── css/                # Stylesheets
+│   │   ├── style.css       # Main styles
+│   │   ├── fonts.css       # Font definitions
+│   │   └── context-menu.css
 │   ├── js/                 # JavaScript source
-│   │   ├── core/           # Core application modules
-│   │   │   ├── main.js       # Initialization and animation loop
-│   │   │   ├── fediverse.js  # Fediverse instance rendering
-│   │   │   ├── galaxy.js     # Galaxy particle system
-│   │   │   ├── solarsystem.js # Solar system rendering
+│   │   ├── core/           # Core application modules (30+ files)
+│   │   │   ├── main.js           # Initialization and animation loop
+│   │   │   ├── fediverse.js      # Fediverse instance rendering
+│   │   │   ├── fediverse-interaction.js  # Click/hover interactions
+│   │   │   ├── fediverse-labels.js       # Label rendering
+│   │   │   ├── galaxy.js         # Galaxy particle system
+│   │   │   ├── planet-model.js   # GLB planet model loading
+│   │   │   ├── minimap.js        # Minimap navigation
+│   │   │   ├── blackhole.js      # Black hole rendering
+│   │   │   ├── sun.js            # Sun rendering
+│   │   │   ├── constants.js      # Global constants
+│   │   │   ├── state.js          # Application state
 │   │   │   └── ...
 │   │   ├── lib/            # Third-party libraries
 │   │   │   ├── three.r158.min.js  # Three.js 0.158.0
-│   │   │   ├── tween.js          # Animation tweening
-│   │   │   └── underscore.js     # Utility functions
+│   │   │   ├── three-compat.js    # Three.js compatibility layer
+│   │   │   ├── tween.js           # Animation tweening
+│   │   │   ├── underscore.js      # Utility functions
+│   │   │   ├── model-config.mjs   # Model configuration
+│   │   │   ├── planet-render-config.mjs  # Planet rendering config
+│   │   │   └── ...
 │   │   ├── utils/          # Utility modules
+│   │   │   ├── app.js            # Application utilities
+│   │   │   ├── dom.js            # DOM utilities
+│   │   │   ├── math.js           # Math utilities
+│   │   │   ├── interaction-zoom.js
+│   │   │   └── ...
 │   │   └── workers/        # Web Workers
+│   │       └── data-loader.worker.js  # Background data loading
 │   └── shaders/            # GLSL vertex/fragment shaders
 │       ├── datastars.*     # Data star rendering
 │       ├── galactic*.*     # Galaxy rendering
+│       ├── starsurface.*   # Star surface rendering
+│       ├── starflare.*     # Star flare effects
 │       └── ...
 ├── tests/                  # Test suites
 │   ├── lib/                # Mocha/Chai test framework
-│   ├── unit/               # Unit tests (*.test.js)
+│   │   ├── mocha.js
+│   │   ├── mocha.css
+│   │   └── chai.js
+│   ├── unit/               # Unit tests (20+ files)
+│   │   ├── interaction-math.test.js
+│   │   ├── minimap.test.js
+│   │   ├── planet-render-config.test.mjs
+│   │   ├── zoom-in.test.js
+│   │   └── ...
 │   └── runner.html         # Browser test runner
 └── detail/                 # Detail page assets
+    └── about.html
 ```
 
 ---
@@ -336,13 +379,23 @@ if (mesh.update !== undefined) {
 
 ## Dependencies
 
+### Runtime Libraries (src/js/lib/)
+
 | Library | Version | Purpose |
 |---------|---------|---------|
-| Three.js | 0.158.0 (ES module via CDN) | 3D WebGL rendering |
+| Three.js | 0.158.0 (ES module via importmap) | 3D WebGL rendering |
 | Underscore.js | 1.x | Utility functions |
 | Tween.js | - | Animation interpolation |
+| Draco Decoder | - | glTF mesh compression |
 
-**Note**: jQuery has been removed. The codebase uses ES modules with `import * as THREE from 'three'` (via importmap). Legacy compatibility is maintained via `window.THREE = THREE` in main.js.
+### Dev Dependencies (package.json)
+
+| Package | Version | Purpose |
+|---------|---------|---------|
+| gltf-pipeline | ^4.3.0 | GLB/glTF optimization |
+| lil-gui | ^0.21.0 | Debug GUI (development) |
+
+**Note**: jQuery has been removed. The codebase uses ES modules with `import * as THREE from 'three'` (via importmap). Legacy compatibility is maintained via `window.THREE = THREE` in main.js. The `three-compat.js` module provides additional compatibility shims.
 
 ---
 
