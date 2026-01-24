@@ -80,7 +80,7 @@
 
 ## Project Overview
 
-**fediverse-with-100k-stars** is a fork of Chrome Experiments' "100,000 Stars" - an interactive 3D WebGL visualization of the stellar neighborhood showing over 100,000 nearby stars. Built with Three.js (r58-era), jQuery, and vanilla JavaScript.
+**fediverse-with-100k-stars** is a fork of Chrome Experiments' "100,000 Stars" - an interactive 3D WebGL visualization repurposed to display the Fediverse network. Built with Three.js 0.158.0 (ES modules), Mocha/Chai for testing, and vanilla JavaScript.
 
 **Live original**: https://stars.chromeexperiments.com
 
@@ -101,8 +101,13 @@ npx http-server .
 
 ### Testing
 ```bash
-# No test framework configured
-# Manual testing: Open index.html in Chrome with WebGL support
+# Unit tests (Mocha/Chai) - run in browser
+# Start a local server and open tests/runner.html
+python3 -m http.server 8000
+# Then open http://localhost:8000/tests/runner.html
+
+# Go tests for data processor
+cd scripts/fediverse-processor && go test -v ./...
 ```
 
 ### Linting
@@ -116,24 +121,51 @@ npx http-server .
 
 ```
 fediverse-with-100k-stars/
-├── index.html          # Main entry point (loads all scripts)
-├── index.css           # Minimal root styles (used by index.js)
-├── index.js            # Custom application wrapper (namespace pattern)
-├── index.sim.json      # Simulation configuration
-├── index_files/        # All source files and assets
-│   ├── main.js         # Core initialization and animation loop
-│   ├── galaxy.js       # Milky Way galaxy generation
-│   ├── fediverse.js    # Fediverse instance rendering
-│   ├── solarsystem.js  # Solar system planets and orbits
-│   ├── starmodel.js    # Individual star 3D models
-│   ├── sun.js          # Sun rendering
-
-│   ├── mousekeyboard.js # Input handling
-│   ├── util.js         # Utility functions
-│   ├── three.min.js    # Three.js r58 (legacy)
-│   ├── tween.js        # Animation tweening
-│   ├── style.css       # Main stylesheet
-│   └── [shaders, textures, data files...]
+├── index.html              # Main entry point
+├── data/                   # Generated data files
+│   └── fediverse_final.json  # Processed Fediverse instance data
+├── docs/                   # Documentation
+│   ├── architecture/       # Architecture decision records
+│   ├── plans/              # Implementation plans
+│   └── postmortems/        # Post-mortem analyses
+├── scripts/                # Data processing scripts
+│   └── fediverse-processor/  # Golang processor
+│       ├── main.go         # CLI entry point
+│       ├── cli.go          # Command-line interface
+│       ├── colors.go       # Color calculation library
+│       ├── positions.go    # Position calculation library
+│       ├── types.go        # Data type definitions
+│       └── *_test.go       # Unit tests
+├── src/                    # Application source
+│   ├── assets/             # Static assets
+│   │   ├── audio/          # Sound files
+│   │   ├── draco/          # Draco decoder for glTF
+│   │   ├── icons/          # UI icons
+│   │   ├── models/         # 3D models (glTF)
+│   │   └── textures/       # Textures and images
+│   ├── css/                # Stylesheets
+│   ├── js/                 # JavaScript source
+│   │   ├── core/           # Core application modules
+│   │   │   ├── main.js       # Initialization and animation loop
+│   │   │   ├── fediverse.js  # Fediverse instance rendering
+│   │   │   ├── galaxy.js     # Galaxy particle system
+│   │   │   ├── solarsystem.js # Solar system rendering
+│   │   │   └── ...
+│   │   ├── lib/            # Third-party libraries
+│   │   │   ├── three.r158.min.js  # Three.js 0.158.0
+│   │   │   ├── tween.js          # Animation tweening
+│   │   │   └── underscore.js     # Utility functions
+│   │   ├── utils/          # Utility modules
+│   │   └── workers/        # Web Workers
+│   └── shaders/            # GLSL vertex/fragment shaders
+│       ├── datastars.*     # Data star rendering
+│       ├── galactic*.*     # Galaxy rendering
+│       └── ...
+├── tests/                  # Test suites
+│   ├── lib/                # Mocha/Chai test framework
+│   ├── unit/               # Unit tests (*.test.js)
+│   └── runner.html         # Browser test runner
+└── detail/                 # Detail page assets
 ```
 
 ---
