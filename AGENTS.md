@@ -171,8 +171,6 @@ fediverse-with-100k-stars/
 │   │   │   ├── blackhole.js      # Black hole rendering (heat vision mode)
 │   │   │   ├── constants.js      # Global constants (CAMERA, VISIBILITY, etc.)
 │   │   │   ├── state.js          # Application state
-│   │   │   ├── sun.js            # (Legacy - imported but not actively used)
-│   │   │   ├── solarsystem.js    # (Legacy - imported but not actively used)
 │   │   │   └── ...
 │   │   ├── lib/            # Third-party libraries
 │   │   │   ├── three.r158.min.js  # Three.js 0.158.0
@@ -238,10 +236,10 @@ function generateGalaxy() { ... }
 **Function Style**:
 ```javascript
 // Named function declarations (preferred)
-function makeSolarSystem() {
-    var solarSystem = new THREE.Object3D();
+function generateFediverseInstances() {
+    var container = new THREE.Object3D();
     // ...
-    return solarSystem;
+    return container;
 }
 
 // Function expressions for callbacks

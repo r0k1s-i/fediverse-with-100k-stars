@@ -27,7 +27,6 @@ import "./marker.js";
 import "./mousekeyboard.js";
 import "../core/urlArgs.js";
 
-import "./infocallout.js";
 import "./starsystems.js";
 import { setStarModel } from "./starmodel.js"; // Import logic for positioning model
 import { makeStarModels } from "./planet-model.js"; // Use GLB model instead of shader star
@@ -55,9 +54,7 @@ import {
 } from "./fediverse-labels.js";
 import { generateGalaxy } from "./galaxy.js";
 import { createBlackhole } from "./blackhole.js";
-import "./solarsystem.js";
 
-import "./sun.js";
 import {
   applyPlanetRenderConfig,
   createPlanetSpotlight,
