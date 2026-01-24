@@ -166,12 +166,13 @@ fediverse-with-100k-stars/
 │   │   │   ├── fediverse-interaction.js  # Click/hover interactions
 │   │   │   ├── fediverse-labels.js       # Label rendering
 │   │   │   ├── galaxy.js         # Galaxy particle system
-│   │   │   ├── planet-model.js   # GLB planet model loading
+│   │   │   ├── planet-model.js   # GLB planet model loading (close-up views)
 │   │   │   ├── minimap.js        # Minimap navigation
-│   │   │   ├── blackhole.js      # Black hole rendering
-│   │   │   ├── sun.js            # Sun rendering
-│   │   │   ├── constants.js      # Global constants
+│   │   │   ├── blackhole.js      # Black hole rendering (heat vision mode)
+│   │   │   ├── constants.js      # Global constants (CAMERA, VISIBILITY, etc.)
 │   │   │   ├── state.js          # Application state
+│   │   │   ├── sun.js            # (Legacy - imported but not actively used)
+│   │   │   ├── solarsystem.js    # (Legacy - imported but not actively used)
 │   │   │   └── ...
 │   │   ├── lib/            # Third-party libraries
 │   │   │   ├── three.r158.min.js  # Three.js 0.158.0
@@ -229,10 +230,10 @@ function generateGalaxy() { ... }
 ```
 
 **Naming Conventions**:
-- Variables: `camelCase` - `starData`, `pGalacticSystem`, `rotateVX`
-- Functions: `camelCase` - `initScene()`, `loadStarData()`, `updateMarkers()`
-- Constants: `UPPER_SNAKE_CASE` (rare) or `camelCase`
-- Prefixes: `p` for particle systems (`pSystem`, `pGalaxy`), `$` for jQuery objects (`$starName`)
+- Variables: `camelCase` - `fediverseInstances`, `pGalacticSystem`, `rotateVX`
+- Functions: `camelCase` - `initScene()`, `loadFediverseData()`, `updateMarkers()`
+- Constants: `UPPER_SNAKE_CASE` - `CAMERA`, `VISIBILITY`, `COORDINATES`
+- Prefixes: `p` for particle systems (`pSystem`, `pGalaxy`)
 
 **Function Style**:
 ```javascript
@@ -286,10 +287,14 @@ const shaderMaterial = new THREE.ShaderMaterial({
 
 **Scene Hierarchy**:
 ```javascript
-// Nested Object3D for transforms
-rotating = new THREE.Object3D();
-translating = new THREE.Object3D();
-rotating.add(translating);
+// Actual scene structure in this project
+scene = new THREE.Scene();
+rotating = new THREE.Object3D();       // Handles rotation
+galacticCentering = new THREE.Object3D();  // Galactic center offset
+translating = new THREE.Object3D();    // Handles panning
+
+galacticCentering.add(translating);
+rotating.add(galacticCentering);
 scene.add(rotating);
 ```
 
@@ -341,20 +346,22 @@ pGalacticSystem.update = function() {
 ```
 
 ### Coordinate System
-- Units: Light years (LY)
-- Sun at origin (0, 0, 0)
-- Galactic center offset: `position.x = 27000` (27,000 LY from Sun)
-- Conversion: `KMToLY(km)` for kilometers to light years
+- Units: Internal coordinate units (scaled from raw data via `COORDINATES.FEDIVERSE_SCALE`)
+- Fediverse center at origin (0, 0, 0)
+- Major instances (mastodon.social, misskey.io, pixelfed.social) positioned in equilateral triangle
+- Blackhole visual effect appears in "heat vision" mode at far zoom levels
 
 ### Data Loading
-Star data loaded asynchronously from JSON:
+Fediverse instance data loaded asynchronously from JSON:
 ```javascript
-loadStarData("index_files/stars_all.json", function(loadedData) {
-    starData = loadedData.stars;
+loadFediverseData(window.fediverseDataPath, function(loadedData) {
+    window.fediverseInstances = loadedData;
+    state.fediverseInstances = loadedData;
     initScene();
     animate();
 });
 ```
+Data file: `data/fediverse_final.json` (processed by `scripts/fediverse-processor/`)
 
 ---
 
@@ -409,11 +416,11 @@ if (mesh.update !== undefined) {
 
 ## Common Modifications
 
-### Adding a New Star/Object
+### Adding a New Fediverse Instance Visual
 1. Create geometry and material
 2. Add to `translating` Object3D
 3. Implement `update()` method for animations
-4. Optionally attach marker via `attachMarker()` or `attachLegacyMarker()`
+4. Optionally attach marker via `attachLegacyMarker()`
 
 ### Modifying Camera Behavior
 Edit `camera.update()` in `main.js` - handles zoom easing and position updates.
