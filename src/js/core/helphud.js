@@ -21,5 +21,3 @@ setTimeout( function(){
 document.addEventListener( 'mousedown', function(){
 	hideHelp();
 }, true);	 
-
-window.hideHelp = hideHelp;

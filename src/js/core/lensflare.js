@@ -172,6 +172,3 @@ addStarLensFlare = function (x, y, z, size, overrideImage, hueShift) {
   lf.update = lensFlareUpdateCallback;
   return lf;
 };
-
-window.addLensFlare = addLensFlare;
-window.addStarLensFlare = addStarLensFlare;

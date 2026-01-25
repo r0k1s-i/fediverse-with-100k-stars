@@ -122,7 +122,3 @@ export function createDistanceMeasurement( vecA, vecB ){
 	var mesh = new THREE.Line( geometry, material );	
 	return mesh;
 }
-
-window.guidePointTexture = guidePointTexture;
-window.createSpaceRadius = createSpaceRadius;
-window.createDistanceMeasurement = createDistanceMeasurement;

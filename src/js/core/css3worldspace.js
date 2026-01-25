@@ -88,8 +88,3 @@ function epsilon(a) {
     }
     return a;
 }
-
-window.initCSS3D = initCSS3D;
-window.setCSSWorld = setCSSWorld;
-window.setCSSCamera = setCSSCamera;
-window.setDivPosition = setDivPosition;

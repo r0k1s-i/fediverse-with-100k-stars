@@ -138,5 +138,3 @@ export function generateDust() {
 
   return pDustSystem;
 }
-
-window.generateDust = generateDust;

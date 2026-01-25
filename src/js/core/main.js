@@ -22,8 +22,8 @@ import "./plane.js";
 import "./guides.js";
 import { generateDust } from "./dust.js";
 import { addLensFlare } from "./lensflare.js";
-import { attachLegacyMarker } from "./legacymarkers.js";
-import "./marker.js";
+import { attachLegacyMarker, updateLegacyMarkers } from "./legacymarkers.js";
+import { updateMarkers } from "./marker.js";
 import "./mousekeyboard.js";
 import "../core/urlArgs.js";
 
@@ -47,11 +47,6 @@ import {
   goToFediverseCenter,
 } from "./fediverse-interaction.js";
 import "./label-layout.js";
-import {
-  initFediverseLabels,
-  updateFediverseLabels,
-  destroyFediverseLabels,
-} from "./fediverse-labels.js";
 import { generateGalaxy } from "./galaxy.js";
 import { createBlackhole } from "./blackhole.js";
 
@@ -471,7 +466,6 @@ function initScene() {
   sceneSetup();
 
   initCSS3D();
-  if (initFediverseLabels) initFediverseLabels();
 
   var exoutEl = $("#ex-out");
   exoutEl.addEventListener("click", function (e) {
@@ -788,7 +782,6 @@ function animate() {
 
   updateMarkers();
   updateLegacyMarkers();
-  if (updateFediverseLabels) updateFediverseLabels();
 
   window.rotateX = rotateX;
   window.rotateY = rotateY;
@@ -996,9 +989,6 @@ window.addEventListener("pagehide", function (event) {
   }
   if (typeof destroyFediverseInteraction === "function") {
     destroyFediverseInteraction();
-  }
-  if (typeof destroyFediverseLabels === "function") {
-    destroyFediverseLabels();
   }
   if (typeof destroyMinimap === "function") {
     destroyMinimap();

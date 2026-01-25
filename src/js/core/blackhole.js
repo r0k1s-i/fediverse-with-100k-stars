@@ -130,5 +130,3 @@ export function createBlackhole() {
 
     return blackholeMesh;
 }
-
-window.createBlackhole = createBlackhole;

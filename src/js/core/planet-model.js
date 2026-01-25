@@ -826,11 +826,3 @@ export function createPlanetModel() {
 
 // Alias for compatibility with main.js expectation
 export const makeStarModels = createPlanetModel;
-
-window.preloadPlanetModel = preloadPlanetModel;
-window.preloadAllModels = preloadAllModels;
-window.loadRandomModel = loadRandomModel;
-window.loadModelOnDemand = loadModelOnDemand;
-window.createPlanetModel = createPlanetModel;
-window.isPlanetModelLoaded = isPlanetModelLoaded;
-window.makeStarModels = makeStarModels;

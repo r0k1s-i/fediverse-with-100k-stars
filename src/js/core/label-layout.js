@@ -71,7 +71,3 @@ export class LabelLayout {
                  r2.y + r2.height <= r1.y);
     }
 }
-
-if (typeof window !== 'undefined') {
-    window.LabelLayout = LabelLayout;
-}

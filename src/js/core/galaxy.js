@@ -287,5 +287,3 @@ export function generateGalaxy() {
 
   return pGalacticSystem;
 }
-
-window.generateGalaxy = generateGalaxy;

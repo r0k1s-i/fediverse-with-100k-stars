@@ -150,5 +150,3 @@ InteractionMath.isZoomedInClose = function (cameraZ, markerThreshold) {
   }
   return cameraZ < markerThreshold.min;
 };
-
-window.InteractionMath = InteractionMath;

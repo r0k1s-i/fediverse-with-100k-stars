@@ -12,5 +12,3 @@ export var glowSpanTexture = textureLoader.load(
   undefined,
   onTextureError,
 );
-
-window.glowSpanTexture = glowSpanTexture;

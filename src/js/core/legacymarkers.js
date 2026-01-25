@@ -110,7 +110,3 @@ export function detachLegacyMarker(obj) {
     obj.marker = null;
   }
 }
-
-window.updateLegacyMarkers = updateLegacyMarkers;
-window.attachLegacyMarker = attachLegacyMarker;
-window.detachLegacyMarker = detachLegacyMarker;

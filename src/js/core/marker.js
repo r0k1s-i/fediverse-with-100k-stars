@@ -8,6 +8,3 @@ export function updateMarkers() {
     marker.update();
   }
 }
-
-window.updateMarkers = updateMarkers;
-window.markers = markers;
