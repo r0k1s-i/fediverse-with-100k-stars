@@ -53,7 +53,7 @@ THREEx.WindowResize	= function(renderer, camera){
 			window.planetCamera.updateProjectionMatrix();
 		}
 		
-		initCSS3D();
+		if (typeof initCSS3D === "function") initCSS3D();
 	}
 	// bind the resize event
 	window.addEventListener('resize', callback, false);

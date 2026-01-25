@@ -88,3 +88,6 @@ function epsilon(a) {
     }
     return a;
 }
+
+// Legacy global for THREEx.WindowResize callback
+window.initCSS3D = initCSS3D;

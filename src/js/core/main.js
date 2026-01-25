@@ -29,7 +29,7 @@ import "../core/urlArgs.js";
 
 import "./starsystems.js";
 import { setStarModel } from "./starmodel.js"; // Import logic for positioning model
-import { makeStarModels } from "./planet-model.js"; // Use GLB model instead of shader star
+import { makeStarModels, preloadAllModels } from "./planet-model.js"; // Use GLB model instead of shader star
 import { initCSS3D, setCSSWorld, setCSSCamera } from "./css3worldspace.js";
 import "./helphud.js";
 import "./spacehelpers.js";
@@ -208,11 +208,11 @@ var postShadersLoaded = function () {
     // Preload remaining GLB models during idle time
     if (typeof requestIdleCallback === "function") {
       requestIdleCallback(function () {
-        if (typeof preloadAllModels === "function") preloadAllModels();
+        preloadAllModels();
       });
     } else {
       setTimeout(function () {
-        if (typeof preloadAllModels === "function") preloadAllModels();
+        preloadAllModels();
       }, 3000);
     }
   });
